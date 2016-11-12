@@ -43,7 +43,7 @@ http://black-tracker.gr/
 Ράδιο
 http://tunein.com/ 
 
-Κατέβασμα (κλοπή) από youtube για την δική σου συλλογή, πρόσθετο για firefox
+Κατέβασμα από youtube για την δική σου συλλογή, πρόσθετο για firefox
 https://addons.mozilla.org/en-US/firefox/addon/youtube-video-and-audio-dow/ …
 
 Μια ώρα Buena Vista Social Club
