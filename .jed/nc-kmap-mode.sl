@@ -1,13 +1,8 @@
-%
-%	This is a simple kernel keymap mode.
-%	
+%	This is a simple kernel's keymap mode.
 % 	Nicholas Christopoulos (nereus@freemail.gr)
-% 	
 % 	2016/10/04
-% 	
 
-require("keywords");
-
+require("keywords"); % from jedmodes (http://jedmodes.sourceforge.net/)
 private variable table = "KMAP";
 
 static define syntax_table()
@@ -56,5 +51,3 @@ public define kmap_mode()
 	set_mode(table, 4);
 	use_syntax_table(table);
 }
-
-
