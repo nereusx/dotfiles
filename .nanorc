@@ -1,0 +1,127 @@
+#
+#	.nanorc
+#	nicholas christopoulos (nereus@freemail.gr)
+#
+
+# TUI
+set titlecolor brightwhite,blue
+set numbercolor cyan
+set statuscolor brightwhite,green
+set keycolor green
+set functioncolor yellow
+
+#syntax "default"
+#color brightgreen,black ""
+
+# syntax
+#include /usr/share/nano/*.nanorc
+
+# settings
+set constantshow
+set speller "aspell -x -c"
+set nohelp
+unset quickblank
+set morespace
+set suspend
+set multibuffer
+set nowrap
+set smooth
+set positionlog
+
+set backup
+set backupdir ~/.backup/nano
+
+set tabsize 4
+unset tabstospaces
+set autoindent
+
+set casesensitive
+unset mouse
+unset cut
+
+# keys
+unbind F1 main
+unbind F2 main
+unbind F3 main
+unbind F4 main
+unbind F5 main
+unbind F6 main
+unbind F7 main
+unbind F8 main
+unbind F9 main
+unbind F10 main
+unbind F11 main
+
+#bind ^A free all
+#bind ^B line-to-bottom all
+bind ^C copytext all
+bind ^D scrolldown all
+bind ^E scrollup all
+bind ^F findprevious all
+bind ^G gotoline all
+#bind ^H free all
+bind ^I tab all
+#bind ^J free all
+#bind ^K del-to-bol all
+bind ^L refresh all
+#bind ^M free all
+#bind ^N next-error all
+bind ^O insert all
+#bind ^P prev-error all
+bind ^Q cancel all
+#bind ^R repeat all
+bind ^S savefile all
+#bind ^T free all
+bind ^U redo all
+bind ^V uncut all
+#bind ^W toggle-backup all
+bind ^X cut all
+#bind ^Y free all
+bind ^Z suspend all
+
+#bind M-1 drop-bkmark all
+
+bind M-A mark all
+#bind M-B buf-list
+bind M-C mark all
+bind M-D cut all
+bind M-E insert all
+bind M-F findnext all
+bind M-G gotoline all
+bind M-H help all
+#bind M-I toggle-ins
+#bind M-J jump to bookmark
+bind M-K cuttoend all
+bind M-L mark all
+bind M-M mark all
+bind M-N nextbuf all
+bind M-O writeout all
+bind M-P prevbuf all
+bind M-Q verbatim all
+#bind M-R insert-file all
+bind M-S whereis all
+bind M-T replace all
+bind M-U undo all
+#bind M-V free all
+bind M-W savefile all
+bind M-X exit all
+#bind M-Y free all
+bind M-Z suspend all
+
+unbind M-, all
+unbind M-. all
+unbind M-] all
+unbind M-$ all
+unbind M-/ all
+
+#bind M-, firstline all
+#bind M-. lastline all
+bind M-] findbracket all
+bind M-$ speller all
+bind M-/ comment all
+
+bind F5 whereis all
+#bind S-F5 findnext all
+bind F6 replace all
+
+
