@@ -1,4 +1,4 @@
-# -- mode: sh; encoding: utf-8; tab-width: 4; indent: 4; --
+# -- mode: sh; encoding: utf-8; tab-width: 4; indent-style: tab; --
 #	~/.cshrc
 #	nicholas christopoulos (nereus@freemail.gr)
 
