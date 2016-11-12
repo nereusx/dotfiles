@@ -1,7 +1,5 @@
-#
 #	.login, tcsh login script
 #	nicholas christopoulos (nereus@freemail.gr)
-#
 
 #	remake PATH
 if ( $LOGNAME == "root" ) set path = ( /sbin /usr/sbin $path /usr/local/sbin )
@@ -17,7 +15,7 @@ if ( $LOGNAME == "root" ) then
 	echo 1024 > /proc/sys/dev/hpet/max-user-freq
 endif
 
-#	welcome
+# dont bother me
 if ( $?TMUX ) exit
 
 # Welcome
