@@ -3,8 +3,6 @@
 #	~/.cshrc
 #	nicholas christopoulos (nereus@freemail.gr)
 #
-#	use ~/.login to change the path
-#
 
 # Skip remaining steps if not an interactive shell
 if ($?TERM == 0 || $?prompt == 0) exit
@@ -15,8 +13,6 @@ setenv MOST_SWITCHES "-w"
 #setenv EDITOR		/usr/bin/joe
 #setenv EDITOR		/usr/bin/nano
 setenv EDITOR		/usr/bin/jed
-setenv AWE_EDITOR	$EDITOR
-setenv AWE_TERMINAL	/usr/bin/urxvtcd
 setenv HEXEDITOR	/usr/bin/ht
 setenv LS_OPTIONS	"--color=auto"
 
@@ -112,7 +108,6 @@ endif
 #
 alias edit $EDITOR
 alias hexedit $HEXEDITOR
-#alias rcopy 'rsync -ah --progress'
 alias remake 'make clean; make'
 alias psaux 'ps aux k rss'
 alias diogenis 'fortune diogenis'
@@ -136,10 +131,6 @@ set padhour
 
 #alias helpcommand '\!:1 --help' 
 alias helpcommand 'man \!:1' 
-
-# Runs every tperiod minutes. This provides a convenient means for checking on common but infrequent changes such as new mail. For example, if one does 
-# set tperiod = 30
-# alias periodic checknews 
 
 #EOF
 
