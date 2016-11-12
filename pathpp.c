@@ -1,5 +1,6 @@
 /*
- * check and add directories to a path
+ * removes duplicated or non-working entries of system's path
+ * prints the new path to stdout
  * nicholas christopoulos (nereus@freemail.gr)
  *
  * PATH's penticure
