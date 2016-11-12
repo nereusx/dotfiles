@@ -1,0 +1,39 @@
+#!/usr/bin/cat
+C-Shell Short-help
+______________________________________________________________________________
+cmd > file  - write stdout to file    | >>  for append
+cmd >& file - write stdout and stderr | >>& for append
+cmd < file  - stdin from file
+cmd << string - stdin reads the following lines up to string
+______________________________________________________________________________
+@ variable = integer expression
+examples: @ i = 1, @ i = $i + 1, @ i ++
+$name or ${name} = variable
+$#name or ${#name} = number of words  | $name[selector] or ${name[selector]} 
+Selector can be one integer or start-to. If 'start' is omitted then its 1;
+If 'to' is omitted then its $#name. '*' is for all.
+$0, $n, $* = $argv[0], $argv[n], $argv[*]
+$?name or ${?name} = returns “1” if name is set, “0” if it is not
+$$ = the process number of the (parent) shell
+$! = the process number of the last background process started by this shell
+$< = stding, can be used to read from the keyboard in a shell script
+______________________________________________________________________________
+Valid expression operators:
+||  &&  | ↑  &  ==  !=  =~  !~  <=  >= <  > <<  >>  +  -  *  /  %  !  ~  (  )
+______________________________________________________________________________
+On file-test (i.e. if ( -op file ) ... )
+r read access | w write access | x execute access
+e existence   | o ownership    | z zero size
+f plain file  | d directory    | l symbolic link(tc)
+______________________________________________________________________________
+variable modifiers, i.e. ${name}:m = the 'm' is the modifier:
+h the directory | r directory and basename | e extension | $var:r:t = basename
+t the filename  | p Print the new command line but do not execute it.
+______________________________________________________________________________
+# short format     | switch ( string ) | while ( expr )    | foreach var (...)
+if ( expr ) ...    | case pattern:     |     ...           |     ...
+                   |     ...           | end               | end
+# long format      |     breaksw       |                   |
+if ( expr ) then   | default:          | repeat int cmd
+    ...            |     ...           | 
+endif              | endsw             | (break,continue,goto,exit as in C)

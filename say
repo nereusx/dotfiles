@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# list of greek voices: espeak --voices=el
+
+#voice=el # default voice, the default greek-voice
+#voice="-v greek-mbrola-1 -s 130"
+voice="-v el+klatt4 -s 128 -p 32"
+
+espeak $voice "$*" --stdout | play - -q
+
