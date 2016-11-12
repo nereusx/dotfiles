@@ -1,5 +1,5 @@
 #
-#	.nanorc
+#	.nanorc, BRIEF's like keys
 #	nicholas christopoulos (nereus@freemail.gr)
 #
 
@@ -9,9 +9,6 @@ set numbercolor cyan
 set statuscolor brightwhite,green
 set keycolor green
 set functioncolor yellow
-
-#syntax "default"
-#color brightgreen,black ""
 
 # syntax
 #include /usr/share/nano/*.nanorc
@@ -123,5 +120,3 @@ bind M-/ comment all
 bind F5 whereis all
 #bind S-F5 findnext all
 bind F6 replace all
-
-
