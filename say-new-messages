@@ -1,5 +1,5 @@
-#!/bin/tcsh
-
+#!/bin/csh -f
+# Ειδοποίηση (ομιλία) ότι έφτασε ταχυδρομείο...
 set text=""
 if ( "$1" != "0" ) then
 	if ( "$1" == "" ) then
@@ -12,6 +12,5 @@ if ( "$1" != "0" ) then
 		endif
 	endif
 endif
-
-/usr/local/bin/say $text
+say $text
 
