@@ -1,4 +1,4 @@
 #!/bin/sh
-
+# Ομιλεί το κείμενο που έχει πάρει ως παράμετρο.
 voice="-v el+klatt4 -s 128 -p 32"
 espeak $voice "$*" --stdout | play - -q
