@@ -12,7 +12,32 @@ set_jed_library_path(sprintf("%s,%s,%s", Jed_Home_Directory, Jed_Highlight_Cache
 Jed_Highlight_Cache_Path = sprintf("%s,%s,%s", Jed_Home_Directory, Jed_Highlight_Cache_Dir, Jed_Highlight_Cache_Path);
 Color_Scheme_Path = sprintf("%s/colors,%s", Jed_Home_Directory, Color_Scheme_Path);
 
+%{{{ auto-compile
+private variable local_files = listdir(strcat(Jed_Home_Directory, "/"));
+foreach $0 ( local_files ) {
+	if ( path_extname($0) ==  ".sl" ) {
+		$1 = strcat(Jed_Home_Directory, "/", $0);
+		$2 = strcat(Jed_Home_Directory, "/", $0, "c");
+		if ( access($2, R_OK) != 0 )
+			byte_compile_file($1, 1);
+		else
+			if ( 0 < file_time_compare($1, $2) )
+				byte_compile_file($1, 1);
+		}
+	}
+%}}}
+
+%{{{ terminal characteristics/keys
+private variable term_fixes = Jed_Home_Directory + "/terminal.sl";
+ifnot ( BATCH ) {
+	if ( file_status(term_fixes) == 1 )
+		() = evalfile(term_fixes);
+	}
+
+%}}}
+
 %% loading modules
+require("pcre");
 require("cbrief");
 require("hyperman");
 require("recent");
@@ -32,6 +57,11 @@ add_mode_for_extension("kmap_mode", "kmap");
 autoload("sql_mode", "sql");
 autoload("mysql_mode", "sql");
 add_mode_for_extension("sql", "sql");
+
+%%
+add_mode_for_extension("latex", "tex");        % overrides tex_mode
+add_mode_for_extension("latex", "sty");
+add_mode_for_extension("latex", "cls");
 
 %% makefile
 autoload("make_mode", "make");
@@ -101,17 +131,18 @@ define c_set_style_hook (name)
 %% --- colors -------------------------------------------------------------
 private variable term = getenv("TERM");
 
-if ( is_defined("x_server_vendor") ) {
-	set_color_scheme ("Xjed/cbrief-xjed");
-%	set_color_scheme ("Xjed/atom-xjed");
-	}
-else if ( term == "xterm" ) {
+#ifdef XWINDOWS
+%set_color_scheme ("Xjed/cbrief-xjed");
+set_color_scheme ("Xjed/atom-xjed");
+#else
+if ( term == "xterm" ) {
 	set_color_scheme ("cbrief-console");
 	DISPLAY_EIGHT_BIT = 0;
 	}
 else {
 	set_color_scheme ("cbrief-console");
 	}
+#endif
 
 % set_color_scheme ("green-console");
 

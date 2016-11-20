@@ -1,12 +1,19 @@
 % jed session save/restore
-% mini/simple version
-% Install: add the below line to your ~/.jedrc
+%
+% NDC version
+% 
 %    require ("nc-session");
+%
+
+require("nc-utils");
 
 provide("nc-session");
-private define getjhome() { return Jed_Home_Directory; }
-private variable session_file = getjhome() + "/.jedsession-nc";
 
+static variable session_file = getjhome() + "/.jedsession-nc";
+
+%
+%
+%
 public define nc_save_session ()
 {
 	variable files = {}, lines = {}, columns = {}, flags = {};
@@ -41,6 +48,9 @@ public define nc_save_session ()
 	() = chmod(session_file, 0600);
 }
 
+%
+%
+%
 public define nc_load_session ()
 {
 	variable fp = fopen(session_file, "r");
@@ -80,6 +90,8 @@ public define nc_load_session ()
 	() = fclose (fp);
 }
 
+%
+%
 %
 static define exit_save_session_hook ()
 {
