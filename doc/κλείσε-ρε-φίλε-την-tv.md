@@ -27,56 +27,55 @@ http://www.filmon.tv/tv/fotv-usa
 
 ### Ταινίες και θέατρο online
 
-http://greek-movies.com
-http://www.ert-archives.gr
+- http://greek-movies.com
+- http://www.ert-archives.gr
 
 ### Ντοκιμαντερ online
 
-http://video-morfwsh.blogspot.gr/
-http://tvxs.gr/webtv/all # Του κούλογλου το site με ταινίες και ντοκιμαντέρ μερικά είναι αστέρια
-http://ntokimanter.gr/
+- http://video-morfwsh.blogspot.gr/
+- http://tvxs.gr/webtv/all # Του κούλογλου το site με ταινίες και ντοκιμαντέρ μερικά είναι αστέρια
+- http://ntokimanter.gr/
 
 ### Βιβλία, ντοκιμαντέρ κ.α.
 
-http://black-tracker.gr/ 
+- http://black-tracker.gr/ 
 
 ## Μουσική
 
 Ράδιο
-http://tunein.com/ 
+- http://tunein.com/ 
 
-Κατέβασμα από youtube για την δική σου συλλογή, πρόσθετο για firefox
+- Κατέβασμα από youtube για την δική σου συλλογή, πρόσθετο για firefox
 https://addons.mozilla.org/en-US/firefox/addon/youtube-video-and-audio-dow/ …
 
-Μια ώρα Buena Vista Social Club
+- Μια ώρα Buena Vista Social Club
 https://www.youtube.com/watch?v=JNYOVEXJBBM&list=RDJNYOVEXJBBM …
 
 ## Ειδήσεις
 
-http://prezatv.blogspot.gr/
-http://www.thepressproject.gr/
-http://kollectnews.org/
-http://info-war.gr/
-http://www.imerodromos.gr/
+- http://prezatv.blogspot.gr/
+- http://www.thepressproject.gr/
+- http://kollectnews.org/
+- http://info-war.gr/
+- http://www.imerodromos.gr/
 
 ### Ειδήσεις (αγγλικά)
 
-https://www.rt.com/
-http://www.democracynow.org/
+- https://www.rt.com/
+- http://www.democracynow.org/
 
 ### Ειδήσεις (επιστήμη)
 
-http://osarena.net/
-http://physics4u.gr/blog/
-http://www.biology4u.gr/
+- http://osarena.net/
+- http://physics4u.gr/blog/
+- http://www.biology4u.gr/
 
 ## Συνομιλίες
 
-IRC
-http://xchat.org/
-http://irc.gr
-
-Twitter
+- IRC
+- http://xchat.org/
+- http://irc.gr
+- Twitter
 http://twitter.com
 
 ## Προχωρημένα
