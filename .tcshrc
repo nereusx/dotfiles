@@ -1,0 +1,233 @@
+# -- mode: sh; encoding: utf-8; tab-size: 4; indent: 4; --
+#
+#	~/.cshrc
+#	nicholas christopoulos (nereus@freemail.gr)
+#
+#	use ~/.login to change the path
+#
+
+# run tmux ?
+set use_tmux = 0
+
+# mode   umask
+# 0777 - 0000 -
+# 0775 - 0002 -
+# 0770 - 0007
+# 0755 - 0022 - default
+# 0750 - 0027 - logical
+# 0700 - 0077 - nice
+# 0000 - 0777 - paranoid
+
+# non-interactive absolute values
+set parseoctal
+set echo_style=both
+#unset ignoreeof
+#umask 027
+umask 022
+#limit stacksize 256k
+# slackpkg (bash script) needs > 256k !!!
+# sbpkg (bash script) build big projects needed even more,,,
+limit stacksize 4096k
+limit coredumpsize 0
+alias termbin 'nc termbin.com 9999'
+
+# skip remaining steps if not an interactive shell
+if ( $?TERM == 0 || $?prompt == 0 ) exit
+#if ($?loginsh) then              # A login shell..
+
+# redirect to tmux
+if ( $use_tmux == 1 ) then
+	set tmux_bin = /usr/bin/tmux
+	if ( -x $tmux_bin ) then
+		set tmux_terms = ( screen screen-256color tmux tmux-256color )
+		set found = 0
+		# am i inside tmux?
+		foreach t ( $tmux_terms )
+			if ( $TERM == $t ) then
+				set found = 1
+				break
+			endif
+		end
+		if ( $found == 0 ) then
+			echo "=== redirecting to tmux ==="
+			exec tmux
+		endif
+	endif
+endif
+# --- end ---
+
+# --- terminal attributes ---
+set t_reset      = "%{\033[0m%}"
+set bold_on      = "%{\033[1m%}"
+set bold_off     = "%{\033[21m%}"
+set halftone_on  = "%{\033[2m%}"
+set halftone_off = "%{\033[22m%}"
+set uline_on     = "%{\033[4m%}"
+set uline_off    = "%{\033[24m%}"
+set blink_on     = "%{\033[5m%}"
+set blink_off    = "%{\033[25m%}"
+set reversed_on  = "%{\033[7m%}"
+set reversed_off = "%{\033[27m%}"
+set red          = "%{\033[1;31m%}"
+set green        = "%{\033[0;32m%}"
+set yellow       = "%{\033[1;33m%}"
+set blue         = "%{\033[1;34m%}"
+set magenta      = "%{\033[1;35m%}"
+set cyan         = "%{\033[1;36m%}"
+set white        = "%{\033[0;37m%}"
+# -- end ---
+
+# --- EDITORS ---
+setenv backup		~/.backup/
+setenv JED_HOME		${HOME}/.jed
+setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
+setenv GRFLAGS		"-m grief-rc"
+setenv EDITOR		/usr/bin/jed
+setenv VISUAL		$EDITOR
+setenv HEXEDITOR	/usr/bin/ht
+# --- end ---
+
+# --- PAGER ---
+setenv LS_OPTIONS	"--color=auto"
+#setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
+setenv MOST_SWITCHES "-w"
+setenv MOST_EDITOR 'jed %s -g %d'
+setenv PAGER most
+# --- end ---
+
+### TERMINAL FIXES ###
+if ( $TERM == "xterm" ) then
+	bindkey "\033[1;3D" backward-word
+	bindkey "\033[1;3C" forward-word
+	bindkey "\033[1;3A" history-search-backward
+	bindkey "\033[1;3B" history-search-forward
+	bindkey "\033[15~" vi-search-fwd
+	bindkey "\033[15;2~" vi-search-back
+else
+	bindkey "\033\033[D" backward-word
+	bindkey "\033\033[C" forward-word
+	bindkey "\033\033[A" history-search-backward
+	bindkey "\033\033[B" history-search-forward
+	bindkey "\033[15~" vi-search-fwd
+	bindkey "\033[28~~" vi-search-back
+endif
+bindkey "\033s" vi-search-fwd
+#bindkey "" vi-search-back
+bindkey ^D copy-prev-word
+bindkey "" copy-prev-word
+bindkey "\033-" insert-last-word
+bindkey "" list-glob
+#bindkey "" run-fg-editor
+
+if ( $TERM == "rxvt" ) then
+	setenv TERM rxvt-unicode
+endif
+if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
+	bindkey "^[[8~" end-of-line
+endif
+if ( $TERM == "st-256color" ) then
+	bindkey "\033[P" delete-char
+endif
+# --- end ---
+
+# prompt
+set prompt = "%B%{\033[35m%}%t %{\033[32m%}%n@%m%b %C4 %# "
+
+#	history
+set history=128
+#set histdup=all
+set histdup
+set histlit
+set nohistclop
+alias h 'history 20'
+# --- end ---
+
+#	completion
+#	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
+source /etc/tcshrc.complete
+uncomplete ln
+uncomplete mount
+complete set		'p/1/s/'
+complete unset		'p/1/s/'
+complete setenv		'p/1/e/'
+complete unsetenv	'p/1/e/'
+complete env		'c/*=/f/' 'p/1/e/=/' 'p/2/c/'
+complete xdvi		'n/*/f:*.dvi/'
+complete latex		'n/*/f:*.{tex,ltx}/'
+complete pdflatex	'n/*/f:*.{tex,ltx}/'
+complete xelatex	'n/*/f:*.{tex,ltx}/'
+complete adb		'n/push/f:*.{apk}/'
+complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
+# --- end ---
+
+#	alieses
+#alias rcopy 'rsync -ah --progress'
+#alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
+alias psaux 'ps aux k rss'
+alias diogenis 'fortune diogenis'
+alias free-h 'free -h'
+alias df-h 'df -h'
+alias j 'jobs -l'
+# colorize
+set color
+set colorcat
+alias ls 'ls --color'
+alias ll 'ls --color -lha'
+alias grep 'grep --color=auto'
+alias egrep 'egrep --color=auto'
+alias dmesg 'dmesg --color=always'
+# info
+alias log30 'tail -n 30 /var/log/messages'
+alias netlog 'netstat -lptu4'
+alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
+alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
+alias xmerge 'xrdb -merge ~/.Xdefaults'
+# environment
+#alias beepcmd '/usr/bin/play -q /usr/share/sounds/shell-beep.mp3'
+unalias beepcmd
+set padhour
+#alias helpcommand '\!:1 --help'
+alias helpcommand 'man \!:1'
+# --- end ---
+
+# fonts --- just a note
+set bmpfonts = ( \
+'-xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1\n' \
+'-fontforge-macchicagobmp-regular-r-normal--15-140-75-75-p-76-iso10646-1\n' \
+'-xsg-xsg fixed 146-----14-140-72-72-c-80-iso10646-1\n' \
+'-xsg-nccode-bold-r-medium--14-140-75-75-c-70-iso10646-1\n' \
+'-xsg-nccode-bold-r-medium--14-140-75-75-c-70-iso10646-1\n' \
+'-xsg-nccode-bold-r-normal--15-150-75-75-c-70-iso10646-1\n' \
+)
+# --- end ---
+
+# directory stuff
+set dunique
+set cdpath = ( ${HOME} /usr/src /collections )
+set pushdsilent
+alias pd 'pushd'
+alias pd. 'pushd $PWD'
+alias cwdcmd devtodo --timeout --summary
+# --- end ---
+
+# Runs every tperiod minutes. This provides a convenient means for checking on common but infrequent changes such as new mail. For example, if one does
+# set tperiod = 30
+# alias periodic checknews
+
+### tmux specific ###
+if ( $use_tmux == 1 ) then
+	if ( $?TMUX != 0 ) then
+		alias tmux-lf		'tmux select-pane -L'
+		alias tmux-rt		'tmux select-pane -R'
+		alias tmux-up		'tmux select-pane -U'
+		alias tmux-dn		'tmux select-pane -D'
+		alias tmux-reload	'tmux source-file ~/.tmux.conf'
+		
+		set tmux_cmds = `tmux list-commands | awk '{print$1}'`
+		uncomplete tmux
+		complete   tmux     "p/1/(${tmux_cmds})/"
+	endif
+endif
+# --- end ---
+
+#EOF
