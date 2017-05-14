@@ -31,9 +31,18 @@ limit stacksize 4096k
 limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
 
-# skip remaining steps if not an interactive shell
-if ( $?TERM == 0 || $?prompt == 0 ) exit
-#if ($?loginsh) then              # A login shell..
+if ( $?prompt == 0 ) then # we are shell script
+	exit
+endif
+
+### this is an interactive shell ###
+
+if ( $?loginsh ) then # we are login shell..
+	if ( $tty =~ "tty[123456]" ) then
+		# enable keypad
+		/bin/echo -ne '='
+	endif
+endif
 
 # redirect to tmux
 if ( $use_tmux == 1 ) then
@@ -88,44 +97,70 @@ setenv HEXEDITOR	/usr/bin/ht
 # --- end ---
 
 # --- PAGER ---
-setenv LS_OPTIONS	"--color=auto"
+setenv LS_OPTIONS		'--color=auto'
+setenv LESS 			'-R'
+
+setenv LESS_TERMCAP_mb 	'[1;31m'		# begin bold,			ANSI: [1m
+setenv LESS_TERMCAP_md  '[1;36m'		# begin blink,			ANSI: [5m
+setenv LESS_TERMCAP_me  '[0m'     	# reset bold/blink,		ANSI: [21m[25m
+setenv LESS_TERMCAP_so  '[7m'			# begin reverse video,	ANSI: [7m
+setenv LESS_TERMCAP_se  '[27m'		# reset reverse video,	ANSI: [27m
+#setenv LESS_TERMCAP_so  '[01;44;33m'	# begin reverse video,	ANSI: [7m
+#setenv LESS_TERMCAP_se  '[0m'		# reset reverse video,	ANSI: [27m
+setenv LESS_TERMCAP_us  '[1;32m'		# begin underline,		ANSI: [4m
+setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
+setenv LESS_TERMCAP_mr	`tput rev`
+setenv LESS_TERMCAP_mh	`tput dim`
+setenv LESS_TERMCAP_ZN	`tput ssubm`
+setenv LESS_TERMCAP_ZV	`tput rsubm`
+setenv LESS_TERMCAP_ZO	`tput ssupm`
+setenv LESS_TERMCAP_ZW	`tput rsupm`
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
-setenv MOST_SWITCHES "-w"
-setenv MOST_EDITOR 'jed %s -g %d'
-setenv PAGER most
+setenv MOST_SWITCHES	'-w'
+setenv MOST_EDITOR		'jed %s -g %d'
+setenv PAGER less
+#setenv PAGER most
 # --- end ---
 
 ### TERMINAL FIXES ###
 if ( $TERM == "xterm" ) then
 	bindkey "\033[1;3D" backward-word
 	bindkey "\033[1;3C" forward-word
-	bindkey "\033[1;3A" history-search-backward
-	bindkey "\033[1;3B" history-search-forward
-	bindkey "\033[15~" vi-search-fwd
-	bindkey "\033[15;2~" vi-search-back
 else
 	bindkey "\033\033[D" backward-word
 	bindkey "\033\033[C" forward-word
-	bindkey "\033\033[A" history-search-backward
-	bindkey "\033\033[B" history-search-forward
-	bindkey "\033[15~" vi-search-fwd
-	bindkey "\033[28~~" vi-search-back
 endif
-bindkey "\033s" vi-search-fwd
-#bindkey "" vi-search-back
-bindkey ^D copy-prev-word
-bindkey "" copy-prev-word
-bindkey "\033-" insert-last-word
-bindkey "" list-glob
-#bindkey "" run-fg-editor
+#bindkey "" list-glob
+bindkey '' list-choices-raw
+#bindkey "" complete-word-fwd
+bindkey '[Z' complete-word-back
+bindkey 's' i-search-fwd
+bindkey '' i-search-back
+bindkey 'q' quoted-insert
+bindkey '' redisplay
+bindkey 'm' set-mark-command
+bindkey 'j' exchange-point-and-mark
+bindkey 'k' kill-line
+bindkey '' backward-kill-line
+bindkey 'd' kill-whole-line
+bindkey '' kill-region
+bindkey '' yank
+bindkey '' copy-prev-word
+bindkey '-' insert-last-word
+
+# pad--
+bindkey 'Om' kill-region
+# pad-+
+bindkey 'Ok' copy-region-as-kill
+# pad ins
+bindkey 'Op' yank
 
 if ( $TERM == "rxvt" ) then
 	setenv TERM rxvt-unicode
-endif
-if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "^[[8~" end-of-line
-endif
-if ( $TERM == "st-256color" ) then
+else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
+	bindkey "^[[8~" end-of-line
+else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 endif
 # --- end ---
@@ -146,6 +181,9 @@ alias h 'history 20'
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
 source /etc/tcshrc.complete
 uncomplete ln
+uncomplete rm
+uncomplete cp
+uncomplete mv
 uncomplete mount
 complete set		'p/1/s/'
 complete unset		'p/1/s/'
@@ -171,17 +209,19 @@ alias j 'jobs -l'
 # colorize
 set color
 set colorcat
-alias ls 'ls --color'
-alias ll 'ls --color -lha'
-alias grep 'grep --color=auto'
-alias egrep 'egrep --color=auto'
-alias dmesg 'dmesg --color=always'
+alias ls	'ls    --color'
+alias ll	'ls    --color -lha'
+alias grep	'grep  --color=auto'
+alias egrep	'egrep --color=auto'
+alias dmesg	'dmesg --color=always'
+alias diff	'diff  --color=auto'
 # info
 alias log30 'tail -n 30 /var/log/messages'
 alias netlog 'netstat -lptu4'
 alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
+alias xmonitor-off 'xset dpms force off'
 # environment
 #alias beepcmd '/usr/bin/play -q /usr/share/sounds/shell-beep.mp3'
 unalias beepcmd
