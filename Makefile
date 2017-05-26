@@ -7,7 +7,7 @@ CFLAGS = -std=c99 -O
 all: path++
 
 clean:
-	rm path++ gettermsize
+	rm path++
 
 path++: pathpp.c
 	$(CC) $(CFLAGS) pathpp.c -o path++
