@@ -1,0 +1,37 @@
+#!/bin/cat
+-- Every day commands ------------------------------------------------------------------------------------------------------------
+git add .                 :  add all files but .gitignore-specified for commit (see .gitignore file)
+git rm FILE               :  remove file from git database and physically from project
+git commit                :  record changes to the repository
+git commit -m "message"   :  commit with "message" entry in changelog
+git commit -a             :  automatically add any modified (but not new) files and commit changes
+git log ...               :  show commit logs
+git status ...            :  show the working tree status
+git diff ...              :  show changes between commits, commit and working tree, etc
+git diff --cached         :  you can see what is about to be committed using git diff with the --cached
+git push                  :  send changes to server (origin)
+git pull                  :  get changes from server (origin)
+git request-pull ...      :  generates a summary of pending changes
+git checkout ...          :  switch branches or restore working tree files
+git branch ...            :  list, create, or delete branches
+git reset ...             :  reset current HEAD to the specified state
+git merge ...             :  join two or more development histories (branches) together
+git rebase ...            :  reapply commits on top of another base tip
+git tag ...               :  create, list, delete or verify a tag object signed with GPG
+git clone ...             :  clone a repository into a new directory
+git format-patch          :  prepare patches for e-mail submission
+git send-email ...        :  send a collection of patches as emails
+-- Set origin --------------------------------------------------------------------------------------------------------------------
+git config remote.origin.url https://user:password@github.com/nereusx/project.git  :  for github.com
+git config remote.origin.url https://user:password@git.sf.net/wired_gr/project     :  for sourceforge.net
+-- Tips and tricks ---------------------------------------------------------------------------------------------------------------
+git reset PATH            :  opposite of 'git add PATH'
+git log                   :  at any point you can view the history of your changes
+git log -p                :  if you also want to see complete diffs at each step
+git log --stat --summary  :  often the overview of the change is useful to get a feel of each step
+git shortlog -sn          :  prints leaderboard
+git cat-file -t CID       :  ask git about this particular object (CID = Commit ID), this will print a "type"
+git cat-file type CID     :  view object (CID = Commit ID)
+git log --all --oneline --no-merges --author=nereus@freemail.gr  :  remind yourself what you’ve been up to
+git log --graph --all --decorate --stat --date=iso               :  view complex logs
+cd project; git add .; git commit -a -m "initial commit";        :  initialize git for an existing project
