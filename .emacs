@@ -7,6 +7,7 @@
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
+(setq backup-directory-alist `(("." . "~/.backup/saves")))
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (setq default-tab-width 4)
 (load-library "brief-mode")
@@ -25,16 +26,16 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(package-selected-packages
    (quote
-    (ac-php ac-c-headers tile php-mode json-mode html5-schema docbook cobol-mode wconf crisp)))
+	(vimrc-mode perl6-mode oberon msvc vala-mode modern-cpp-font-lock js3-mode go-mode lua-mode forth-mode glsl-mode elisp-docstring-mode ada-ref-man ada-mode gnu-apl-mode flymd flymake-vala flymake-shell flymake-phpcs flymake-php flymake-perlcritic flymake-lua flymake-css flymake-cppcheck flylisp flycheck-rust flycheck-perl6 flycheck-cstyle flycheck-css-colorguard flycheck-clangcheck flycheck-clang-tidy flycheck c-eldoc shell-here shell-current-directory shell-command popup-edit-menu org-cua-dwim org-bookmark-heading org ac-php ac-c-headers tile php-mode json-mode html5-schema docbook cobol-mode wconf crisp)))
  '(safe-local-variable-values
    (quote
-    ((indent-style . tab)
-     (indent_style . tab)
-     (tab_width . 4)
-     (charset . utf-8)
-     (indent . 4)
-     (tab . 4)
-     (encoding . utf8))))
+	((indent-style . tab)
+	 (indent_style . tab)
+	 (tab_width . 4)
+	 (charset . utf-8)
+	 (indent . 4)
+	 (tab . 4)
+	 (encoding . utf8))))
  '(save-place-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
