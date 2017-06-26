@@ -40,30 +40,19 @@ endif
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
 		# enable keypad
-		/bin/echo -ne '='
+		echo -n '\033='
 	endif
 endif
 
 # redirect to tmux
 if ( $use_tmux == 1 ) then
-	set tmux_bin = /usr/bin/tmux
-	if ( -x $tmux_bin ) then
-		set tmux_terms = ( screen screen-256color tmux tmux-256color )
-		set found = 0
-		# am i inside tmux?
-		foreach t ( $tmux_terms )
-			if ( $TERM == $t ) then
-				set found = 1
-				break
-			endif
-		end
-		if ( $found == 0 ) then
-			echo "=== redirecting to tmux ==="
-			exec tmux
-		endif
+	if ( $?TMUX == 0 ) then
+		exec tmux
 	endif
 endif
 # --- end ---
+
+set autolist
 
 # --- terminal attributes ---
 set t_reset      = "%{\033[0m%}"
@@ -122,6 +111,9 @@ setenv PAGER less
 #setenv PAGER most
 # --- end ---
 
+# other settings
+setenv PYTHONPATH /usr/lib/python2.7/site-packages
+
 ### TERMINAL FIXES ###
 if ( $TERM == "xterm" ) then
 	bindkey "\033[1;3D" backward-word
@@ -174,7 +166,7 @@ set history=128
 set histdup
 set histlit
 set nohistclop
-alias h 'history 20'
+alias hist 'history 20'
 # --- end ---
 
 #	completion
@@ -222,6 +214,9 @@ alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tai
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
 alias xmonitor-off 'xset dpms force off'
+alias hexdump 'hexdump -C'
+alias gity 'git add . ; git commit -m "generic update" ; git push'
+alias cdwrite 'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 # environment
 #alias beepcmd '/usr/bin/play -q /usr/share/sounds/shell-beep.mp3'
 unalias beepcmd
