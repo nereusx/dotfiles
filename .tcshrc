@@ -21,6 +21,7 @@ set use_tmux = 0
 # non-interactive absolute values
 set parseoctal
 set echo_style=both
+set backslash_quote
 #unset ignoreeof
 #umask 027
 umask 022
@@ -53,6 +54,7 @@ endif
 # --- end ---
 
 set autolist
+set highlight
 
 # --- terminal attributes ---
 set t_reset      = "%{\033[0m%}"
