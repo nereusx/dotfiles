@@ -12,6 +12,6 @@ clean:
 path++: pathpp.c
 	$(CC) $(CFLAGS) pathpp.c -o path++
 
-install: path++ gettermsize
+install: path++
 	install --mode=755 --owner=root --group=root -s path++ $(INSDIR)
 
