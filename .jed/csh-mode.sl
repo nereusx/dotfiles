@@ -5,13 +5,14 @@
 %%	Nicholas Christopoulos (nereus@freemail.gr)
 %%
 %%	Installation
-%%	if opening a document with .csh extension doesn't toggle docbook mode on,
+%%	if opening a document with .csh extension doesn't toggle csh-mode on,
 %%	then insert these lines in your .jedrc:
 %%	
 %%		autoload("csh_mode", "csh-mode");
 %%		add_mode_for_extension("csh_mode", "csh");
-%%%		enable_dfa_syntax_for_mode("CSH");
 %%
+%%	This file is the same with ycsh-mode.sl, there is a bug at jed and selects
+%%	mode by the she-bang.
 
 static variable cshmode = "CSH";
 

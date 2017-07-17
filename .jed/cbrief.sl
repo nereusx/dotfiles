@@ -2,9 +2,11 @@
 %%
 %%	BRIEF emulation for JED
 %%
-%%	Copyright (c) 2016 Nicholas Christopoulos.
+%%	Copyleft (c) 2016-17 Nicholas Christopoulos.
 %%	Released under the terms of the GNU General Public License (ver. 3 or later)
 %%
+%%	2017-07-17 Nicholas Christopoulos
+%%		RE help added
 %%	2016-09-05 Nicholas Christopoulos
 %%		Rewritten the old brief.sl from scratch, the old module
 %%		still included as mm-brief.sl file and it is used.
@@ -179,7 +181,7 @@ private define cbrief_unset_flags(n)	{ CBRIEF_FLAGS = CBRIEF_FLAGS & ~n; }
 %\description
 %	Numeric value of script version.
 %!%-
-public variable _cbrief_version = 0x10001;
+public variable _cbrief_version = 0x10002;
 
 %!%+
 %\variable{_cbrief_version_string}
