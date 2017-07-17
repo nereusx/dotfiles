@@ -1,6 +1,6 @@
-# -- mode: sh; encoding: utf-8; tab-size: 4; indent: 4; --
+# -- mode: csh; encoding: utf-8; tab-size: 4; indent: 4; --
 #
-#	~/.cshrc
+#	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
 #
 #	use ~/.login to change the path
@@ -90,7 +90,7 @@ setenv HEXEDITOR	/usr/bin/ht
 # --- PAGER ---
 setenv LS_OPTIONS		'--color=auto'
 setenv LESS 			'-R'
-
+setenv GROFF_ENCODING	'utf8'
 setenv LESS_TERMCAP_mb 	'[1;31m'		# begin bold,			ANSI: [1m
 setenv LESS_TERMCAP_md  '[1;36m'		# begin blink,			ANSI: [5m
 setenv LESS_TERMCAP_me  '[0m'     	# reset bold/blink,		ANSI: [21m[25m
@@ -115,6 +115,11 @@ setenv PAGER less
 
 # other settings
 setenv PYTHONPATH /usr/lib/python2.7/site-packages
+
+#
+#	How-To shut up KDE's debug messages
+#	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
+#
 
 ### TERMINAL FIXES ###
 if ( $TERM == "xterm" ) then
@@ -200,6 +205,7 @@ alias diogenis 'fortune diogenis'
 alias free-h 'free -h'
 alias df-h 'df -h'
 alias j 'jobs -l'
+alias jed-prep 'xjed -batch -n -l preparse'
 # colorize
 set color
 set colorcat
