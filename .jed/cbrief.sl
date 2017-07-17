@@ -101,7 +101,19 @@ require("chelp");					% help() replacement
 require("mini");
 require("tabs");					% Tab_Stops and tabs_edit()
 require("dired");					% Nice addon for F11
-require("compile");					%
+
+% --- compile.sl ---
+% 
+%   compile_parse_errors                parse next error
+%   compile_previous_error              parse previous error
+%   compile_parse_buf                   parse current buffer as error messages
+%   compile                             run program and parse it output
+%   compile_select_compiler             set compiler for parsing error messages
+%   compile_add_compiler                add a compiler to database
+%
+%   Compile_Default_Compiler			public variable
+% 
+require("compile");
 
 %% --- before start -------------------------------------------------------
 private variable jed_home = Jed_Home_Directory;
@@ -680,7 +692,7 @@ define	cbrief_bkgoto()
 private variable _scrap_type = 0;
 
 %% X Windows Copy/Paste
-#ifdef MSWINDOWS XWINDOWS
+#ifdef XWINDOWS
 %% copy selection to X
 define cbrief_xcopy() {
 #ifdef MOUSE
@@ -695,7 +707,8 @@ define cbrief_xcopy() {
 %% paste from X
 define cbrief_xpaste()
 {
-	() = x_insert_selection();
+	() = x_insert_selection(); 
+	message("Text inserted from clipboard");
 }
 #endif
 
@@ -2441,6 +2454,7 @@ private variable mac_list = {
 %	current buffer for the given pattern.
 
 	{ "dos", &cbrief_dos, C_LINE },
+	{ "sh", &cbrief_dos, C_LINE },
 % dos
 %	Gets parameter the command-line and pauses at exit,
 %	or just runs the shell.
@@ -2583,6 +2597,7 @@ private variable mac_list = {
 %	Jed's dired macro (file manager).
 
 	{ "build_it",			&cbrief_build_it,			NO_ARG },
+	{ "make",				&cbrief_build_it,			NO_ARG },
 % build_it
 %	Runs make (non-brief)
 
@@ -2615,7 +2630,21 @@ private variable mac_list = {
 %	Displays or selects a color scheme. ('^AiC' for UI)
 %	(non-brief)
 
-#ifdef MSWINDOWS XWINDOWS
+%	compile.sl module
+%   compile_parse_errors                parse next error
+%   compile_previous_error              parse previous error
+%   compile_parse_buf                   parse current buffer as error messages
+%   compile                             run program and parse it output
+%   compile_select_compiler             set compiler for parsing error messages
+%   compile_add_compiler                add a compiler to database
+	{ "compile_parse_errors", &compile_parse_errors, NO_ARG },
+	{ "compile_previous_error", &compile_previous_error, NO_ARG },
+	{ "compile_parse_buf", &compile_parse_buf, NO_ARG },
+	{ "compile_select_compiler", &compile_select_compiler, NO_ARG },
+	{ "compile_add_compiler", &compile_add_compiler, NO_ARG },
+	
+%
+#ifdef XWINDOWS
 	{ "xcopy",				&cbrief_xcopy,				NO_ARG },
 % xcopy
 %	Copies the selected block to system clipboard.
@@ -3176,10 +3205,10 @@ append_to_hook("_jed_startup_hooks", &cbrief_init);
 #ifdef UNIX
 %% initialize display
 private define cbrief_disp_init() {
-	variable term = getenv("TERM");
+	variable xterm = getenv("TERM");
 
-	if ( term != NULL ) {
-		if ( term == "linux" || term == "rxvt" || term == "rxvt-unicode" || term == "urxvt" )
+	if ( xterm != NULL ) {
+		if ( xterm == "linux" || xterm == "rxvt" || xterm == "rxvt-unicode" || xterm == "urxvt" )
 			tt_send("\e=");  % set linux console to application mode keypad
 		}
 	}
@@ -3212,11 +3241,11 @@ static variable _keymap = {
 	{ "cbrief_slide_out(1)",	"\e^I" },	 	% backtab
 	{ "brief_delete_to_bol",    "^K" },		 	% Brief Manual: Delete to beginning of line
 	{ "redraw",					"^L" },		 	% undefined in Brief -- redraw, not a BRIEF key, but Unix one
-	{ "cbrief_enter",			"" },		 	% enter
-	{ "brief_next_error",		"^N" },		 	% Brief Manual: Next Error
-	{ "brief_error_window",		"^P" },		 	% Brief Manual: Pop Up Error Window
+	{ "cbrief_enter",			"^M" },		 	% enter
+	{ "compile_parse_errors",	"^N" },		 	% Brief Manual: Next Error
+	{ "compile_parse_buf",		"^P" },		 	% Brief Manual: Pop Up Error Window
 	{ "brief_line_to_bow",		"^T" },		 	% Brief Manual: Line to Top
-	{ "redo",					"" },		 	% Brief Manual: Redo
+	{ "redo",					"^U" },		 	% Brief Manual: Redo
 	{ "cbrief_toggle_backup",	"^W" },		 	% Brief Manual: Backup File Toggle
 	{ "cbrief_write_and_exit",	"^X" },		 	% Brief Manual: Write Files and Exit, Windows Cut
 	{ "one_window",				"^Z" },		 	% Brief Manual: Zoom Window
@@ -3380,8 +3409,8 @@ private define cbrief_build_keymap()
 		list_append( _keymap, { "help_prefix", "^H" } );		% it is free for the JED's "help_prefix"
 	if ( is_xjed() && getenv("DISPLAY") != NULL )
 		list_append( _keymap, { "select_menubar", "[29~" } );	% windows menu key
-#ifdef MSWINDOWS XWINDOWS MOUSE
-	if ( is_xjed() ) {
+#ifdef XWINDOWS
+	if ( 1 == is_xjed() ) {
 		list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Ins  });	% ctrl+ins
 		list_append( _keymap, { "cbrief_xpaste",	Key_Shift_Ins });	% shift+ins
 		}
@@ -3426,7 +3455,12 @@ define cbrief_keys()
 	setkey("cbrief_compile_it",			Key_Alt_F10); 	% Brief Manual: Compile Buffer,
 	setkey("cbrief_build_it",			Key_Ctrl_F10); 	% make (non-brief)
 	setkey("cbrief_quote",				Key_Shift_F10);	% Brief Manual: undefined, I found it in KEYBOARD.H of 3.1 and 2.1 (macro 'key' not the 'quote')
-
+	setkey("compile_parse_errors",		"^P");
+	setkey_reserved("compile_parse_errors", "'");
+	setkey("compile_previous_error",	"^N");
+	setkey_reserved ("compile_previous_error", ",");
+%%	setkey ("ispell",					Key_F7);
+	
 	if ( cbrief_more_keys() ) {
 		setkey("cbrief_build_it",		Key_F9);		% Borland: build and run
 		setkey("cbrief_compile_it",		Key_Ctrl_F9);	% Borland: compile

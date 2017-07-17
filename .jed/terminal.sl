@@ -11,7 +11,7 @@ require("x-keydefs");
 #ifdef XWINDOWS
 private variable term = "xjed";
 private variable cterm = "xjed";
-putenv("TERM=xjed");
+%putenv("TERM=xjed");
 #else
 private variable term = getenv("TERM");
 if ( term == NULL )		term = "ansi";
@@ -150,6 +150,10 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 	Key_Ctrl_F10 = "[21;5~";
 	Key_F11 = "[23~";
 	Key_F12 = "[24~";
+	if ( cterm == "xfce4-terminal" ) {
+		Key_KP_7 = "[1~";
+		Key_KP_1 = "[4~";
+		}
 	}
 else if ( term == "linux" ) {
 	Key_BS = "";

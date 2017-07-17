@@ -7,7 +7,7 @@
 %%		2016/10/28 ndc: changed menu and status bg, lighter and a bit lighter
 %%
 
-implements("atom-colors");
+%implements("atom-colors");
 
 $0 = "#000000";	% black always
 $9 = "#ffffff";	% white always

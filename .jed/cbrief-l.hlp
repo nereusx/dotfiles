@@ -190,6 +190,47 @@
 [Alt+,]                       Uncomment
 [Alt+.]                       Comment
 
+=== Regular Expressions ================================================
+
+` You may perform search and replace operations with regular expression
+` (RE) support. The S-Lang library supports the following standard REs:
+
+.                 match any character except newline
+*                 matches zero or more occurences of previous RE
++                 matches one or more occurences of previous RE
+?                 matches zero or one occurence of previous RE
+^                 matches beginning of a line
+$                 matches end of line
+[ ... ]           matches any single character between brackets.
+                  For example, [-02468] matches `-' or any even digit.
+                  and [-0-9a-z] matches `-' and any digit between 0 and 9
+                  as well as letters a through z.
+\<                Match the beginning of a word.
+\>                Match the end of a word.
+\( ... \)
+\1, \2, ..., \9   Matches the match specified by nth \( ... \)
+                  expression.
+
+In addition, the following extensions are also supported:
+
+\c                turn on case-sensitivity (default)
+\C                turn off case-sensitivity
+\d                match any digit
+\e                match ESC char
+
+` For example, to replace "some text" with 'some text'
+` (notice: from double quotes to simple quotes), you will search for
+` "\([a-zA-Z]*\)" and replace it with '\1'.
+
+` RE matching does not work across multiple lines.
+` Moreover, Jed's REs differ from egrep's in the following aspects:
+` the OR operator | is not supported;
+` grouping operators \( and \) are not used to group REs to form a single RE.
+` Thus, an expression such as \(hello\)* is not a
+` pattern to match zero or more occurances of hello as it is in e.g., egrep.
+
+S-Lang files: regexp.sl 
+
 === MACROS =============================================================
 
 reset
