@@ -55,6 +55,8 @@ endif
 
 set autolist
 set highlight
+set mail = ( /var/mail/$user )
+unset noglob
 
 # --- terminal attributes ---
 set t_reset      = "%{\033[0m%}"
@@ -82,9 +84,10 @@ setenv backup		~/.backup/
 setenv JED_HOME		${HOME}/.jed
 setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
-setenv EDITOR		/usr/bin/jed
+setenv EDITOR		`which jed`
 setenv VISUAL		$EDITOR
-setenv HEXEDITOR	/usr/bin/ht
+setenv HEXEDITOR	`which ht`
+if ( ! -e $backup ) mkdir -p $backup
 # --- end ---
 
 # --- PAGER ---
@@ -165,13 +168,14 @@ endif
 # --- end ---
 
 # prompt
+set ellipsis
 set prompt = "%B%{\033[35m%}%t %{\033[32m%}%n@%m%b %C4 %# "
 
 #	history
+set histlit
 set history=128
 #set histdup=all
 set histdup
-set histlit
 set nohistclop
 alias hist 'history 20'
 # --- end ---
@@ -253,6 +257,10 @@ set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
 alias cwdcmd devtodo --timeout --summary
+# use always pushd instead of cd
+set pushdtohome
+alias cd 'pushd'
+alias dirs 'dirs -v'
 # --- end ---
 
 # Runs every tperiod minutes. This provides a convenient means for checking on common but infrequent changes such as new mail. For example, if one does
