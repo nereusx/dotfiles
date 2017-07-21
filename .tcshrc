@@ -1,4 +1,4 @@
-# -- mode: csh; encoding: utf-8; tab-size: 4; indent: 4; --
+# -- mode: tcsh; encoding: utf-8; tab-size: 4; indent: 4; --
 #
 #	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
@@ -85,9 +85,13 @@ setenv JED_HOME		${HOME}/.jed
 setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
 setenv EDITOR		`which jed`
+if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which joe`
+if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which nano`
+if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which vi`
 setenv VISUAL		$EDITOR
 setenv HEXEDITOR	`which ht`
-if ( ! -e $backup ) mkdir -p $backup
+if ( ! -e $backup ) mkdir -p $backup/saves
+if ( ! -e $backup/saves ) mkdir -p $backup/saves
 # --- end ---
 
 # --- PAGER ---
@@ -99,8 +103,6 @@ setenv LESS_TERMCAP_md  '[1;36m'		# begin blink,			ANSI: [5m
 setenv LESS_TERMCAP_me  '[0m'     	# reset bold/blink,		ANSI: [21m[25m
 setenv LESS_TERMCAP_so  '[7m'			# begin reverse video,	ANSI: [7m
 setenv LESS_TERMCAP_se  '[27m'		# reset reverse video,	ANSI: [27m
-#setenv LESS_TERMCAP_so  '[01;44;33m'	# begin reverse video,	ANSI: [7m
-#setenv LESS_TERMCAP_se  '[0m'		# reset reverse video,	ANSI: [27m
 setenv LESS_TERMCAP_us  '[1;32m'		# begin underline,		ANSI: [4m
 setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
 setenv LESS_TERMCAP_mr	`tput rev`
@@ -182,7 +184,7 @@ alias hist 'history 20'
 
 #	completion
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
-source /etc/tcshrc.complete
+source /etc/complete.tcsh
 uncomplete ln
 uncomplete rm
 uncomplete cp
@@ -227,7 +229,7 @@ alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
 alias xmonitor-off 'xset dpms force off'
 alias hexdump 'hexdump -C'
-alias gity 'git add . ; git commit -m "generic update" ; git push'
+alias gity 'git add .; git commit -m "!*" && git push'
 alias cdwrite 'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
