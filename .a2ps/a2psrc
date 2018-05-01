@@ -1,0 +1,33 @@
+Options: --ppd=Generic-PDF_Printer-PDF
+#Options: --print-anyway
+Options: --encoding=iso7
+Options: --print-anyway=1
+
+# bold, bw, gray, gray2, color, diff, fixed, matrix, ul
+#Options: --prologue=color
+Options: --prologue=bw
+
+Options: --columns=1
+Options: --portrait --medium=A4
+Options: --borders=1
+Options: --header=""
+Options: --left-title=$D{%Y/%m/%d\ %R}
+#Options: --left-footer="Printed by #{user.name} (#{user.login}@#{user.host})"
+#Options: --right-footer="%p. / %p#"
+Options: --left-footer=""
+#Options: --footer="%p. / %p#"
+Options: --footer=""
+Options: --right-footer=""
+Options: -g --tabsize=4 --non-printable-format=hex
+Options: --line-numbers=1
+#Options: --chars-per-line=96
+#Options: --chars-per-line=112
+#Options: --chars-per-line=120
+#Options: --chars-per-line=128
+#Options: --chars-per-line=132
+#Options: --chars-per-line=160
+Options: --font-size=9points
+
+
+
+

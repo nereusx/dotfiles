@@ -1,31 +1,22 @@
-#	.login, tcsh login script
-#	nicholas christopoulos (nereus@freemail.gr)
+# .login, this executes only if it is login shell (-l option)
+# after .[t]cshrc had executed
 
-#	remake PATH
-if ( $LOGNAME == "root" ) set path = ( /sbin /usr/sbin $path /usr/local/sbin )
-set path = ( /bin /usr/bin $path /usr/local/bin /usr/dt/bin /usr/games )
-
-## path's penticure
-if ( -x /bin/path++ ) then
+# cleanup path
+if ( -e '/bin/path++' ) then
 	setenv PATH `/bin/path++`
 endif
 
-# needed for android emulator
-if ( $LOGNAME == "root" ) then
-	echo 1024 > /proc/sys/dev/hpet/max-user-freq
+# check whatever
+#python-control isenabled
+#if ( $status == 1 ) echo 'WARNING: Python had activated!'
+
+# enable keypad
+if ( $tty =~ tty* ) then
+	/bin/echo -ne '\033='
 endif
 
-# dont bother me
-if ( $?TMUX ) exit
-
-# Welcome
-echo 
-if ( $?tcsh == 0 ) then
-	echo "Welcome to BSD C-Shell"
-else
-	echo "Welcome to Tenex C-Shell"
+#
+echo 'Welcome to tenex c-shell'
+if ( -e /usr/bin/screenfetch ) then
+	/usr/bin/screenfetch
 endif
-
-/bin/echo -e "\033="_______________________________________________________________________
-echo
-/usr/games/fortune /usr/share/games/fortunes/diogenis
