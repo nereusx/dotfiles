@@ -154,6 +154,9 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_KP_7 = "[1~";
 		Key_KP_1 = "[4~";
 		}
+% 2018-Apr xfce-terminal 'COLORTERM=truecolor' 
+	Key_Home = "[H";
+	Key_End = "[F";
 	}
 else if ( term == "linux" ) {
 	Key_BS = "";

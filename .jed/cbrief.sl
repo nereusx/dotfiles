@@ -124,6 +124,8 @@ private variable jed_home = Jed_Home_Directory;
 private variable term = "xjed";
 public define is_xjed() { return 1; }
 #else
+private define x_copy_to_selection()   { }
+private define x_copy_from_selection() { return "console-mode"; }
 private variable term = getenv("TERM");
 if ( term == NULL ) term = "ansi";
 public define is_xjed() { return 0; }
@@ -181,7 +183,7 @@ private define cbrief_unset_flags(n)	{ CBRIEF_FLAGS = CBRIEF_FLAGS & ~n; }
 %\description
 %	Numeric value of script version.
 %!%-
-public variable _cbrief_version = 0x10002;
+public variable _cbrief_version = 0x10003;
 
 %!%+
 %\variable{_cbrief_version_string}
@@ -189,7 +191,7 @@ public variable _cbrief_version = 0x10002;
 %\description
 %	String value of script version.
 %!%-
-public variable _cbrief_version_string = "1.0.2";
+public variable _cbrief_version_string = "1.0.3";
 
 %!%+
 %\variable{CBRIEF_KBDMODE}
@@ -207,7 +209,7 @@ public variable _cbrief_version_string = "1.0.2";
 %		0x08 = Additional keys (alt+],alt+<,alt+>,...)
 %		0x10 = Get control of line_indent
 %		0x20 = Get control of Tabs
-%		0x40 = laptop mode (ctrl+left/right = home/end, ctrl+up/down = page up/down)
+%		0x40 = LAPTOP mode (ctrl+left/right = home/end, ctrl+up/down = page up/down)
 %!%-
 custom_variable("CBRIEF_KBDMODE", 0x20 | 0x08 | 0x04 | 0x02 | 0x01);
 
@@ -242,6 +244,7 @@ private define cbrief_more_keys()		{ return (CBRIEF_KBDMODE & 0x08); }
 private define cbrief_control_wins()	{ return (CBRIEF_KBDMODE & 0x04); }
 private define cbrief_windows_keys()	{ return (CBRIEF_KBDMODE & 0x02); }
 private define cbrief_nopad_keys()		{ return (CBRIEF_KBDMODE & 0x01); }
+public  define cbrief_setlaptopmode()	{ CBRIEF_KBDMODE |= 0x40; }
 
 private define _argc(argv)		{ return (NULL == argv) ? 0 : length(argv); }
 %private define _isyes(s)		{ return (string_match(s, "[1YyTt]") != 0); }
@@ -698,7 +701,7 @@ private variable _scrap_type = 0;
 %% copy selection to X
 define cbrief_xcopy() {
 #ifdef MOUSE
-%%	copy_kill_to_mouse_buffer();
+%	copy_kill_to_mouse_buffer();
 	x_copy_region_to_selection ();
 #else
 	x_copy_region_to_selection ();

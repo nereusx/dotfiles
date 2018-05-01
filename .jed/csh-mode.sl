@@ -11,7 +11,7 @@
 %%		autoload("csh_mode", "csh-mode");
 %%		add_mode_for_extension("csh_mode", "csh");
 %%
-%%	This file is the same with tcsh-mode.sl, there is a bug at jed and selects
+%%	This file is the same with ycsh-mode.sl, there is a bug at jed and selects
 %%	mode by the she-bang.
 
 static variable cshmode = "CSH";

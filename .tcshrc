@@ -79,19 +79,28 @@ set cyan         = "%{\033[1;36m%}"
 set white        = "%{\033[0;37m%}"
 # -- end ---
 
+# --- create directories ---
+setenv backup ~/.backup/
+if ( ! -e $backup ) mkdir -p $backup
+set list = ( $backup/text $backup/saves )
+foreach e ( $list )
+	if ( ! -e $e ) mkdir -p $e
+end
+
 # --- EDITORS ---
-setenv backup		~/.backup/
 setenv JED_HOME		${HOME}/.jed
 setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
-setenv EDITOR		`which jed`
-if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which joe`
-if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which nano`
-if ( "$EDITOR" =~ '*not found*' ) setenv EDITOR	`which vi`
-setenv VISUAL		$EDITOR
-setenv HEXEDITOR	`which ht`
-if ( ! -e $backup ) mkdir -p $backup/saves
-if ( ! -e $backup/saves ) mkdir -p $backup/saves
+set list = ( /usr/bin/jed /usr/bin/nano /usr/bin/joe /usr/bin/vi )
+foreach e ( $list )
+	if ( -e $e ) then
+		setenv EDITOR $e
+		setenv VISUAL $e
+		break
+	endif
+end
+if ( -e /usr/bin/ht )   setenv HEXEDITOR /usr/bin/ht
+if ( -e /usr/bin/dhex ) setenv HEXEDITOR /usr/bin/dhex
 # --- end ---
 
 # --- PAGER ---
@@ -119,7 +128,9 @@ setenv PAGER less
 # --- end ---
 
 # other settings
-setenv PYTHONPATH /usr/lib/python2.7/site-packages
+setenv MAKEFLAGS '-j16'
+setenv PYTHONPATH '/usr/lib/python2.7/site-packages'
+setenv __GL_YIELD 'USLEEP'
 
 #
 #	How-To shut up KDE's debug messages
@@ -184,7 +195,9 @@ alias hist 'history 20'
 
 #	completion
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
-source /etc/complete.tcsh
+if ( -e /etc/complete.tcsh ) then
+	source /etc/complete.tcsh
+endif
 uncomplete ln
 uncomplete rm
 uncomplete cp
@@ -212,6 +225,7 @@ alias free-h 'free -h'
 alias df-h 'df -h'
 alias j 'jobs -l'
 alias jed-prep 'xjed -batch -n -l preparse'
+alias psx 'ps -eF f'
 # colorize
 set color
 set colorcat
@@ -229,7 +243,6 @@ alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
 alias xmonitor-off 'xset dpms force off'
 alias hexdump 'hexdump -C'
-alias gity 'git add .; git commit -m "!*" && git push'
 alias cdwrite 'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
@@ -241,24 +254,15 @@ set padhour
 alias helpcommand 'man \!:1'
 # --- end ---
 
-# fonts --- just a note
-set bmpfonts = ( \
-'-xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1\n' \
-'-fontforge-macchicagobmp-regular-r-normal--15-140-75-75-p-76-iso10646-1\n' \
-'-xsg-xsg fixed 146-----14-140-72-72-c-80-iso10646-1\n' \
-'-xsg-nccode-bold-r-medium--14-140-75-75-c-70-iso10646-1\n' \
-'-xsg-nccode-bold-r-medium--14-140-75-75-c-70-iso10646-1\n' \
-'-xsg-nccode-bold-r-normal--15-150-75-75-c-70-iso10646-1\n' \
-)
-# --- end ---
-
 # directory stuff
 set dunique
 set cdpath = ( ${HOME} /usr/src /collections )
 set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
-alias cwdcmd devtodo --timeout --summary
+if ( -e /usr/bin/devtodo ) then
+	alias cwdcmd devtodo --timeout --summary
+endif
 # use always pushd instead of cd
 set pushdtohome
 alias cd 'pushd'
@@ -284,5 +288,7 @@ if ( $use_tmux == 1 ) then
 	endif
 endif
 # --- end ---
+
+unset list
 
 #EOF
