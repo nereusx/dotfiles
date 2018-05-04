@@ -131,7 +131,6 @@ setenv PAGER less
 
 # other settings
 setenv MAKEFLAGS '-j16'
-setenv PYTHONPATH '/usr/lib/python2.7/site-packages'
 setenv __GL_YIELD 'USLEEP'
 
 #
