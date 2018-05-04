@@ -1,0 +1,53 @@
+#!/bin/cat
+-- Movement ----------------------------------------------------------------------------------------------------------------------
+arrows  :  move cursor around         |  <C-E/D>  :  scroll line up/down  |  <C-T/C/B>  :  move to top/center/bottom of the window
+<Home>          :  move to begin of line or window or file  |  <End>          :  move to end of line or window or file
+<C-Left/Right>  :  move to beginning of previous/next word  |  <C-PGUP/PGDN>  :  move to beginning/end of file
+<C-Home/End>    :  move to beginning/end of window          |  <A-Home/End>   :  move to the first/last character on screen
+<A-0..9>        :  mark bookmark 0..9                       |  <A-J>0..9      :  jump to a bookmark
+<A-G>N          :  go to Nth line                           |  <C-G>          :  go to routine
+-- Editing -----------------------------------------------------------------------------------------------------------------------
+<BS>    :  delete previous character                  |  <Del>    :  deletes character or marked block
+<TAB>   :  slide in                                   |  <S-TAB>  :  slide out
+<C-BS>  :  delete the previous word                   |  <A-BS>   :  delete the next word
+<A-D>   :  delete the current line                    |  <A-q>    :  quote the next character
+<C-R>NC :  repeat N times the C character             |  <A-u>,<KP-*> : undo last operation                      |  <C-U>  :  redo
+<A-K>   :  delete from the cursor to the end of line  |  <C-K>  :  delete from the cursor to the start of line
+<C-CR>  :  open a new line below the current line and goto that line (does not split current line)
+-- Search and Replace -------------------------------------------------------------------------------------------------------------
+<A-S>,<F5>  :  search from cursor     |  <S-F5>  :  search again     |  <A-F5>  :  search again backwards
+<A-T>,<F6>  :  translate from cursor  |  <S-F6>  :  translate again  |  <A-F6>  :  translate again backwards
+-- Clipboard ----------------------------------------------------------------------------------------------------------------------
+<A-M>         :  toggle standard text marking mode             |  <A-A>         :  toggle non-inclusive marking mode
+<A-L>         :  toggle line marking mode                      |  <A-C>         :  toggle column marking mode
+<C-C>,<KP-+>  :  COPY marked block or current line             |  <C-X>,<KP-->  :  CUT marked block or current line
+<C-V>,<Ins>   :  PASTE clipboard contents to current position
+-- Buffer Commands ----------------------------------------------------------------------------------------------------------------
+<A-E>  :  edit (open) file     |  <A-R>  :  read file          |  <C-->  :  unload current buffer
+<A-W>  :  write block or file  |  <A-O>  :  change file name   |  <A-X>  :  exit (confirm save)
+<A-B>  :  buffer list          |  <A-P>  :  previous buffer    |  <A-N>  :  next buffer
+-- Toggles ------------------------------------------------------------------------------------------------------------------------
+<C-F5> :  toggle case sensitivity of search commands           |  none   :  search/replace inside block (block_search macro)
+<C-W>  :  toggle automatic backup                              |  <A-F1> :  toggle window borders
+<A-I>  :  toggle insert/overwrite mode                         |  <C-F6> :  toggle regular expression search
+<S-F7> :  toggle pause recording
+-- Macros -------------------------------------------------------------------------------------------------------------------------
+<F7> : remember | <F8> : playback | <S-F7> : pause recording toggle | <A-F7> : load keystroke macro | <A-F8> : save keystroke macro
+<F9> : load macro                 | <S-F9> : unload macro
+-- Compilers and commands ---------------------------------------------------------------------------------------------------------
+<A-F10> :  compile current buffer  |  <C-P>  :  view compiler output     |  <C-N>  :  move to the next error
+<F10>   :  execute command         |  <A-Z>  :  (suspend) start a shell  |  <A-H>  :  HELP
+-- Windows ------------------------------------------------------------------------------------------------------------------------
+<F1>arrow    :  change window  |  <F2>arrow  :  resize window  |  <F3>arrow  :  create window  |  <F4>arrow  :  delete window
+<C-Z>,<A-F2> :  toggle zoom/unzoom window
+<S-arrow> or <A-arrow> : quick window switch
+
+*<KP-5> : move to center to window (undocumented)
+*<C-C>  :  copy or move to center of window
+*<A-F>  :  display filename (BRIEF), display buffer info (vim)
+*<A-V>  :  display version number
+*<C-BRK> : halt
+*<A--> : previous buffer
+*<A-P> : print block
+*<C-X> : write all and exit
+*<A-/> : complete a partially typed word

@@ -1,0 +1,76 @@
+#!/bin/cat
+-- mksh ---------------------------------------------------------------------------------------------------------------------------
+>file   :  standard output is redirected to file
+>>file  :  same as >, except if file exists it is appended to instead of being truncated
+<file   :  standard input is redirected from file, which is opened for reading
+<>file  :  same as <, except the file is opened for reading and writing
+<<mark  :  here document
+<<-mark :  same as <<, except leading tabs are stripped from lines in the here document
+<<<word :  same as <<, except that word is the here document. this is called a here string
+<&fd    :  standard input is duplicated from file descriptor fd. fd can be a single digit, indicating the number of an existing
+           file descriptor; the letter 'p', indicating the file descriptor associated with the output of the current co-process;
+           or the character '-', indicating standard input is to be closed.
+>&fd    :  same as <&, except the operation is done on standard output.
+&>file  :  same as >file 2>&1. This is a deprecated (legacy) GNU bash extension supported by mksh which also supports the
+           preceding explicit fd digit, for example, 3&>file is the same as 3>file
+&>|file, &>>file, &>&fd
+        :  same as >|file, >>file or >&fd, followed by 2>&1, as above.
+-- commands -----------------------------------------------------------------------------------------------------------------------
+(list)     :  execute list in a subshell. There is no implicit way to pass environment changes from a subshell back to its parent
+{ list; }  :  compound construct; list is executed, but not in a subshell
+case word in [[(] pattern [| pattern] ...) list terminator] ... esac
+           terminators: ;; exit list; ;& fall into the next; ;| evaluate the remaining pattern-list tuples
+for name [in word ...]; do list; done
+if list; then list; [elif list; then list;] ... [else list;] fi
+select name [in word ...]; do list; done
+until list; do list; done
+while list; do list; done
+function name { list; }
+(( expression )) : The arithmetic expression expression is evaluated
+[[ expression ]] : Similar to the test and [ ... ] commands (described later), with some exceptions
+$(<foo)       : has the same effect as $(cat foo)
+-- mksh modifiers -----------------------------------------------------------------------------------------------------------------
+${name:-word} : if name is set and not empty, it is substituted; otherwise, word is substituted.
+${name:+word} : if name is set and not empty, word is substituted; otherwise, nothing is substituted.
+${name:=word} : if name is set and not empty, it is substituted; otherwise, it is assigned word and the resulting value of name is substituted.
+${name:?word} : if name is set and not empty, it is substituted; otherwise, word is printed on standard error (preceded by name:)
+             and an error occurs (normally causing termination of a shell script, function, or a script sourced using the "."
+             built-in). If word is omitted, the string "parameter null or not set" is used instead
+-- mksh variables -----------------------------------------------------------------------------------------------------------------
+${#name}     :  the length (in characters) of the string value of parameter name
+${#name[*]} or ${#name[@]}  :  the number of elements in the array name.
+${%name}     :  the width (in screen columns) of the string value of parameter name, or -1 if ${name} contains a control character.
+${!name}     :  the name of the variable referred to by name. This will be name except when name is a name reference
+             (bound variable), created by the nameref command (which is an alias for typeset -n). name cannot be one of most
+             special parameters (see below).
+${!name[*]} or ${!name[@]}  :  the names of indices (keys) in the array name.
+${name#pattern} or ${name##pattern}  
+             If pattern matches the beginning of the value of parameter name, the matched text is deleted from the result of
+             substitution. A single '#' results in the shortest match, and two of them result in the longest match.
+             Cannot be applied to a vector (${*} or ${@} or ${array[*]} or ${array[@]}).
+${name%pattern} or ${name%%pattern}
+             like ${...#...} substitution, but it deletes from the end of the value. Cannot be applied to a vector.
+${name/pattern/string} or ${name/#pattern/string} or ${name/%pattern/string} or ${name//pattern/string}
+             the longest match of pattern in the value of parameter name is replaced with string (deleted if string is empty;
+             the trailing slash ('/') may be omitted in that case). A leading slash followed by '#' or '%' causes the pattern to
+             be anchored at the beginning or end of the value, respectively; empty unanchored patterns cause no replacement;
+             a single leading slash or use of a pattern that matches the empty string causes the replacement to happen only once;
+             two leading slashes cause all occurrences of matches in the value to be replaced. Cannot be applied to a vector.
+${name@/pattern/string} : as ${name//pattern/string}, except that both pattern and string are expanded anew for each iteration.
+${name:pos:len} : the first len characters of name, starting at position pos, are substituted; both pos and :len are optional.
+			 If pos is negative, counting starts at the end of the string; if it is omitted, it defaults to 0. 
+			 If len is omitted or greater than the length of the remaining string, all of it is substituted. Both pos and len
+             are evaluated as arithmetic expressions. Currently, pos must start with a space, opening parenthesis or digit to
+			 be recognised. Cannot be applied to a vector.
+${name@#}  :  the hash (using the BAFH algorithm) of the expansion of name.
+${name@Q}  :  a quoted expression safe for re-entry, whose value is the value of the name parameter, is substituted.
+$!  :  process ID of the last background process started. If no back ground processes have been started, the parameter is not set.
+$#  :  the number of positional parameters ($1, $2, etc.).
+$$  :  the PID of the shell or, if it is a subshell, the PID of the original shell.
+$-  :  the concatenation of the current single letter options (see the set command below for a list of options).
+$?  :  the exit status of the last non-asynchronous command executed.
+$0  :  the name of the shell or shellscript, (argv[0] in C).
+${num} or $1..9 : the parameters that were supplied to the shell, function, or script.
+$*  :  all positional parameters (except 0), i.e. $1, $2, $3, ...
+$@  :  same as $*, unless it is used inside double quotes, in which case a separate word is generated for each positional
+       parameter. If there are no positional parameters, no word is generated.

@@ -38,6 +38,16 @@ endif
 
 ### this is an interactive shell ###
 
+setenv backup $home/.backup
+set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help )
+foreach e ( $list )
+	if ( ! -e $e ) mkdir -m=0700 -p $e
+end
+
+set path = ( $home/.bin $home/.help $path )
+if ( -e '/bin/path++' ) setenv PATH `/bin/path++`
+
+#
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
 		# enable keypad
@@ -78,14 +88,6 @@ set magenta      = "%{\033[1;35m%}"
 set cyan         = "%{\033[1;36m%}"
 set white        = "%{\033[0;37m%}"
 # -- end ---
-
-# --- create directories ---
-setenv backup ~/.backup/
-if ( ! -e $backup ) mkdir -p $backup
-set list = ( $backup/text $backup/saves )
-foreach e ( $list )
-	if ( ! -e $e ) mkdir -p $e
-end
 
 # --- EDITORS ---
 setenv JED_HOME		${HOME}/.jed

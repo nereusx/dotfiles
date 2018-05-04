@@ -1,0 +1,15 @@
+/root/.tcshrc
+/ext/srv/public/conf/userhome/.tcshrc
+/ext/srv/public/conf/userhome/.login
+/ext/srv/public/conf/userhome/.mkshrc
+/root/.nanorc
+/root/.jed/.jedrc
+/var/www/htdocs/ndc/index.php
+/etc/samba/smb.conf
+/ext/srv/public/conf/userhome/create-tcshjednano
+/ext/srv/public/conf/readme.txt
+/root/.config/gtk-3.0/gtk.css
+/root/.config/gtk-3.0/settings.ini
+/etc/fstab
+/ext/srv/setup-collections-attrs.csh
+/etc/passwd
