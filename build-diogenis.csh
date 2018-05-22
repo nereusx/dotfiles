@@ -1,4 +1,4 @@
-#!/bin/tcsh
+#!/bin/tcsh -f
 #
 # diogenis data file and installation utility
 #
