@@ -1,0 +1,26 @@
+#!/bin/csh -f
+# -*- mode: shell -*-
+
+# get default parameter ("help" for none)
+set todo = help
+if ( $#argv > 0 ) then
+	set todo = $argv[1]
+endif
+
+# available options
+set opts = `cat /sys/power/state`
+
+# is known?
+foreach o ( $opts )
+	if ( $todo == $o ) then
+		# found; execute it
+		echo -n $todo > /sys/power/state
+		break
+	endif
+end
+
+# print help and exit
+echo "usage: $0 [option]"
+echo "available options on kernel: $opts"
+
+
