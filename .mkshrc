@@ -1,0 +1,37 @@
+#
+
+[[ $- == *i* ]] || return
+#shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
+
+if [ $TERM == "rxvt" ]; then
+	export TERM=rxvt-unicode
+fi
+
+PS1='${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}"
+PS1=$PS1' $PWD '
+PS1=$PS1"$(if (( USER_ID )); then print \$; else print \#; fi) "
+export PS1
+						  
+export GRPATH=${HOME}/.Grief/:/usr/share/grief/macros
+export GRFLAGS="-m grief-rc"
+export JED_HOME=$HOME/.jed
+export EDITOR=/usr/bin/jed
+export VISUAL=$EDITOR
+export HEXEDITOR=/usr/bin/ht
+
+export LS_OPTIONS="--color=auto"
+export MOST_SWITCHES="-w"
+export MOST_EDITOR='jed %s -g %d'
+export PAGER=most
+
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias dmesg='dmesg --color=always'
+
+alias ls='ls --color'
+alias ll='ls --color -lha'
+
+alias log30='tail -n 30 /var/log/messages'
+alias netlog='netstat -lptu4'
+alias xmerge='xrdb -merge ~/.Xdefaults'
+

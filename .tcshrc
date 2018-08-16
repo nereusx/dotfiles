@@ -148,8 +148,10 @@ setenv __GL_YIELD 'USLEEP'
 #
 
 ### TERMINAL FIXES ###
-if ( $COLORTERM == "truecolor" ) then
-	setenv COLORTERM color
+if ( $?COLORTERM ) then
+	if ( $COLORTERM == "truecolor" ) then
+		setenv COLORTERM color
+	endif
 endif
 if ( $TERM == "xterm" ) then
 	bindkey "\033[1;3D" backward-word
