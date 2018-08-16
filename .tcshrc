@@ -232,13 +232,10 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 #	aliases
 #alias rcopy 'rsync -ah --progress'
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
-alias psaux 'ps aux k rss'
 alias diogenis 'fortune diogenis'
 alias free-h 'free -h'
 alias df-h 'df -h'
-alias j 'jobs -l'
 alias jed-prep 'xjed -batch -n -l preparse'
-alias psx 'ps -eF f'
 # colorize
 set color
 set colorcat
