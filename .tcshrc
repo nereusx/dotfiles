@@ -247,6 +247,11 @@ alias grep	'grep  --color=auto'
 alias egrep	'egrep --color=auto'
 alias dmesg	'dmesg --color=always'
 alias diff	'diff  --color=auto'
+if $USER != 'root' then
+	alias htop 'sudo htop'
+	alias fdisk 'sudo fdisk'
+	alias cfdisk 'sudo cfdisk'
+endif
 # info
 alias log30 'tail -n 30 /var/log/messages'
 alias netlog 'netstat -lptu4'
