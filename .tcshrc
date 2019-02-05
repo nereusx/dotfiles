@@ -35,6 +35,11 @@ alias termbin 'nc termbin.com 9999'
 if ( $?prompt == 0 ) then # we are shell script
 	exit
 endif
+if ( "`uname -a | grep -i ubuntu`" != "" ) then
+	set distro=ubuntu
+else
+	set distro=unix
+endif
 
 ### this is an interactive shell ###
 
@@ -254,7 +259,7 @@ if $USER != 'root' then
 	alias cfdisk 'sudo cfdisk'
 endif
 # info
-alias log30 'tail -n 30 /var/log/messages'
+alias log30 'sudo tail -n 30 /var/log/messages'
 alias netlog 'netstat -lptu4'
 alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
