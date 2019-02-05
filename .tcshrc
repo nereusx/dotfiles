@@ -104,7 +104,7 @@ foreach e ( $list )
 end
 alias edit "$EDITOR"
 
-set list = ( /usr/bin/dhex /usr/bin/ht )
+set list = ( /usr/bin/hte /usr/bin/dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
 	if ( -e $e ) then
