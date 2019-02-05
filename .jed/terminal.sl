@@ -157,6 +157,11 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 % 2018-Apr xfce-terminal 'COLORTERM=truecolor' 
 	Key_Home = "[H";
 	Key_End = "[F";
+% 2019-Feb xfce-terminal on ubuntu 18.10 'COLORTERM=color' 
+	if ( cterm == "color" ) {
+		Key_Home = "OH";
+		Key_End = "OF";
+		}
 	}
 else if ( term == "linux" ) {
 	Key_BS = "";
