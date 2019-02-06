@@ -1,0 +1,8 @@
+.xfce4-panel.panel {
+	margin: 4px !important;
+	padding: 4px !important;
+	}
+
+VteTerminal, vte-terminal {
+    padding: 4px;
+	}
