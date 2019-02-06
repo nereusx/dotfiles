@@ -24,29 +24,34 @@ end
 
 set src = "$1"
 if ( $#argv > 0 ) then
+	set catcmd = cat
+	if ( $src:e == "gz" ) then
+		set catcmd = zcat
+		set src = $src:r
+	endif
 	set tf = `mktemp -t xmanx-XXXXXXXX`
 	set nf = ${tf}.ps
 	mv $tf $nf
 	set ext = $src:e
 	switch ( $ext )
 	case ms:
-		cat "$*" | groff -Tps -m ms > $nf
+		$catcmd "$*" | groff -Tps -m ms > $nf
 		breaksw
 	case me:
-		cat "$*" | groff -Tps -m me > $nf
+		$catcmd "$*" | groff -Tps -m me > $nf
 		breaksw
 	case mm:
-		cat "$*" | groff -Tps -m me > $nf
+		$catcmd "$*" | groff -Tps -m me > $nf
 		breaksw
 	case mdoc:
-		cat "$*" | groff -Tps -m mdoc > $nf
+		$catcmd "$*" | groff -Tps -m mdoc > $nf
 		breaksw
 	case man:
-	case [0-9n]+:
-		cat "$*" | groff -Tps -m man > $nf
+	case [1-9n]:
+		$catcmd "$*" | groff -Tps -m man > $nf
 		breaksw
 	default:
-		cat "$*" | groff -Tps -m mom > $nf
+		$catcmd "$*" | groff -Tps -m mom > $nf
 	endsw
 	$vw $nf
 	rm $nf
