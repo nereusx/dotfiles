@@ -257,9 +257,16 @@ if $USER != 'root' then
 	alias htop 'sudo htop'
 	alias fdisk 'sudo fdisk'
 	alias cfdisk 'sudo cfdisk'
+	if ( -e /usr/bin/apt ) then
+		alias apt 'sudo apt'
+	endif
 endif
 # info
-alias log30 'sudo tail -n 30 /var/log/messages'
+if ( $distro == "linux" ) then
+	alias log30 'sudo tail -n 30 /var/log/messages'
+else
+	alias log30 'sudo tail -n 30 /var/log/syslog'
+endif
 alias netlog 'netstat -lptu4'
 alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
