@@ -1,7 +1,7 @@
 /* XFCE's panel */
 .xfce4-panel.panel {
-	margin: 4px !important;
-	padding: 4px !important;
+	margin: 4px;
+	padding: 4px;
 	}
 
 /* terminals based on VTE (gnome, tilix, etc) */
