@@ -2,12 +2,14 @@
 #
 #	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
-#
-#	use ~/.login to change the path
-#
 
 # run tmux ?
 set use_tmux = 0
+
+# (non-)interactive absolute values
+set parseoctal
+set echo_style=both
+set backslash_quote
 
 # mode   umask
 # 0777 - 0000 -
@@ -17,17 +19,13 @@ set use_tmux = 0
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
-
-# non-interactive absolute values
-set parseoctal
-set echo_style=both
-set backslash_quote
 #unset ignoreeof
 #umask 027
 umask 022
+
 #limit stacksize 256k
 # slackpkg (bash script) needs > 256k !!!
-# sbpkg (bash script) build big projects needed even more,,,
+# sbpkg (bash script) needs even more...
 limit stacksize 4096k
 limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
@@ -35,13 +33,13 @@ alias termbin 'nc termbin.com 9999'
 if ( $?prompt == 0 ) then # we are shell script
 	exit
 endif
+
+### this is an interactive shell ###
 if ( "`uname -a | grep -i ubuntu`" != "" ) then
 	set distro=ubuntu
 else
 	set distro=unix
 endif
-
-### this is an interactive shell ###
 
 setenv backup $home/.backup
 set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
@@ -117,8 +115,22 @@ foreach e ( $list )
 		break
 	endif
 end
-#alias hexdump 'od -t x1'
 alias hexedit "$HEXEDITOR"
+if ( -X hexdump ) then
+	alias hexdump 'hexdump -C'
+else
+	alias hexdump 'od -t x1'
+endif
+
+# Select BRIEF editor
+alias b 'vi'
+set list = ( jed grief emacs nano joe vi )
+foreach e ( $list )
+	if ( -X $e ) then
+		alias b "$e"
+		break
+	endif
+end
 # --- end ---
 
 # --- PAGER ---
@@ -263,26 +275,21 @@ alias grep	'grep  --color=auto'
 alias egrep	'egrep --color=auto'
 alias dmesg	'dmesg --color=always'
 alias diff	'diff  --color=auto'
+
+# sudo
 if ( $USER != 'root' ) then
 	alias htop 'sudo htop'
 	alias fdisk 'sudo fdisk'
 	alias cfdisk 'sudo cfdisk'
-	if ( -e /usr/bin/apt ) alias apt 'sudo apt'
-	if ( -e /usr/bin/apt-get ) alias apt-get 'sudo apt-get'
-	endif
+	if ( -X apt ) alias apt 'sudo apt'
+	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
+
 # info
-if ( $distro == "linux" ) then
+if ( $distro == "unix" ) then
 	alias log30 'sudo tail -n 30 /var/log/messages'
 else
 	alias log30 'sudo tail -n 30 /var/log/syslog'
-endif
-if ( ! -X calc ) then
-	if ( -X wcalc ) then
-		alias calc 'wcalc'
-	else if ( -X bc ) then
-		alias calc 'echo \!* | bc -l'
-	endif
 endif
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog 'sudo netstat -lptu4'
@@ -290,9 +297,9 @@ alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tai
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
 alias xmonitor-off 'xset dpms force off'
-alias hexdump 'hexdump -C'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
+
 # environment
 #alias beepcmd '/usr/bin/play -q /usr/share/sounds/shell-beep.mp3'
 unalias beepcmd
@@ -301,10 +308,16 @@ set padhour
 alias helpcommand 'man \!:1'
 
 # programs
-alias b		 	'jed'
 alias cdwrite	'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 #alias chrome	'google-chrome-stable --no-sandbox'
 alias chrome	'chromium --no-sandbox'
+if ( ! -X calc ) then
+	if ( -X wcalc ) then
+		alias calc 'wcalc'
+	else if ( -X bc ) then
+		alias calc 'echo \!* | bc -l'
+	endif
+endif
 # --- end ---
 
 # directory stuff
