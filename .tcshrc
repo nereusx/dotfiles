@@ -180,10 +180,18 @@ bindkey 'j' exchange-point-and-mark
 bindkey 'k' kill-line
 bindkey '' backward-kill-line
 bindkey 'd' kill-whole-line
+#bindkey '' copy-region-as-kill
 bindkey '' kill-region
 bindkey '' yank
 bindkey '' copy-prev-word
 bindkey '-' insert-last-word
+
+# shift+f5; alt+p (tcsh's default)
+bindkey '[15;2~' history-search-backward
+bindkey 'p' history-search-backward
+# f5; alt+n (tcsh's default)
+bindkey '[15~' history-search-forward
+bindkey 'n' history-search-forward
 
 # pad--
 bindkey 'Om' kill-region
@@ -241,6 +249,7 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 #	aliases
 #alias rcopy 'rsync -ah --progress'
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
+alias cls 'clear'
 alias diogenis 'fortune diogenis'
 alias free-h 'free -h'
 alias df-h 'df -h'
@@ -254,7 +263,7 @@ alias grep	'grep  --color=auto'
 alias egrep	'egrep --color=auto'
 alias dmesg	'dmesg --color=always'
 alias diff	'diff  --color=auto'
-if $USER != 'root' then
+if ( $USER != 'root' ) then
 	alias htop 'sudo htop'
 	alias fdisk 'sudo fdisk'
 	alias cfdisk 'sudo cfdisk'
@@ -267,6 +276,13 @@ if ( $distro == "linux" ) then
 	alias log30 'sudo tail -n 30 /var/log/messages'
 else
 	alias log30 'sudo tail -n 30 /var/log/syslog'
+endif
+if ( ! -X calc ) then
+	if ( -X wcalc ) then
+		alias calc 'wcalc'
+	else if ( -X bc ) then
+		alias calc 'echo \!* | bc -l'
+	endif
 endif
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog 'sudo netstat -lptu4'
