@@ -99,9 +99,9 @@ setenv JED_HOME		${HOME}/.jed
 setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
 
-set list = ( /usr/bin/jed /usr/bin/nano /usr/bin/joe /usr/bin/vi )
+set list = ( jed nano joe vi )
 foreach e ( $list )
-	if ( -e $e ) then
+	if ( -X $e ) then
 		setenv EDITOR $e
 		setenv VISUAL $e
 		break
@@ -109,14 +109,15 @@ foreach e ( $list )
 end
 alias edit "$EDITOR"
 
-set list = ( /usr/bin/hte /usr/bin/dhex )
+set list = ( hte dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
-	if ( -e $e ) then
+	if ( -X $e ) then
 		setenv HEXEDITOR $e
 		break
 	endif
 end
+#alias hexdump 'od -t x1'
 alias hexedit "$HEXEDITOR"
 # --- end ---
 
@@ -267,7 +268,8 @@ if ( $distro == "linux" ) then
 else
 	alias log30 'sudo tail -n 30 /var/log/syslog'
 endif
-alias netlog 'netstat -lptu4'
+alias check-journal 'sudo iotop -obtqqq | grep jbd2'
+alias netlog 'sudo netstat -lptu4'
 alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias xmerge 'xrdb -merge ~/.Xdefaults'
