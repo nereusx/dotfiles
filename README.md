@@ -20,4 +20,5 @@ Help files are written for 132x35 terminals
 	tcsh is rich of features and still is too light comparing with bash or ksh;
 	interactive mode it is excellent; if you want something more use a real language.
 4. all are free under GPL; a few are not mine
-
+5. in .jed directory there is the 'terminal.sl' file to change escape key codes;
+	yep, in 2019 and still terminals in every distro has incompatibilities
