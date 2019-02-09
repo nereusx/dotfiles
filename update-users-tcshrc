@@ -1,4 +1,8 @@
 #!/bin/tcsh -f
+#
+#	copies the .tcshrc to all users of the system
+#
+
 set echo_style=both
 set src = .tcshrc
 if ( ! -e $src ) set src = dotfiles/.tcshrc
