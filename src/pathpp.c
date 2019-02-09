@@ -2,6 +2,8 @@
  * check and add directories to a path
  * nicholas christopoulos (nereus@freemail.gr)
  *
+ * this software is released under GPLv3 or newer license
+ *
  * PATH's penticure
  *
  * usage: setenv PATH `path++ [[new-dir] ...]`
@@ -157,7 +159,7 @@ int main(int argc, char **argv)
 		write(0, "setenv PATH ", 12);
 		puts(pathstr);
 		}
-	else if ( flags & 0x04 ) {	/* return bourne-shell text for eval */
+	else if ( flags & 0x04 ) {	/* return posix-shell text for eval */
 		write(0, "export PATH=", 12);
 		puts(pathstr);
 		}
