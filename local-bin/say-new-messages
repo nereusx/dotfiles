@@ -1,4 +1,4 @@
-#!/bin/tcsh
+#!/bin/tcsh -f
 
 set text=""
 if ( "$1" != "0" ) then
@@ -13,5 +13,5 @@ if ( "$1" != "0" ) then
 	endif
 endif
 
-/usr/local/bin/e-say $text
+speak $text
 
