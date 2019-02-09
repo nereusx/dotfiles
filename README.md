@@ -17,7 +17,7 @@ Help files are written for 132x35 terminals
 2. local-bin could be installed at ~/.bin
 3. [t]csh is true that it has the worst parser, that creates bugs;
 	on the other hand, just use spaces and you'll find none (undocumented);
-	tcsh it is full of features and still is too light comparing with bash or ksh;
-	interactive mode its excellent; if you want something more use a real language.
+	tcsh is rich of features and still is too light comparing with bash or ksh;
+	interactive mode it is excellent; if you want something more use a real language.
 4. all are free under GPL; a few are not mine
 
