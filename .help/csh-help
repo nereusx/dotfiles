@@ -31,8 +31,8 @@ g : apply the following modifier once to each word  |  a  : apply the following 
 s/l/r/ : search for `l' and replace with `r', not regex; the `&' in the r is replaced by l |  & : Repeat the previous substitution
 
 -- Commands ----------------------------------------------------------------------------------------------------------------------
-# short format     | switch ( string ) | while ( expr )    | foreach var (...)
-if ( expr ) ...    | case pattern:     |     ...           |     ...
+# short format     | switch ( string ) | while ( expr )    | foreach var (...) | if ( { command } ) echo "command succeed"
+if ( expr ) ...    | case pattern:     |     ...           |     ...           | command1 && command2 || command3
                    |     ...           | end               | end
 # long format      |     breaksw       |                   |
 if ( expr ) then   | default:          | repeat int cmd
