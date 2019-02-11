@@ -10,7 +10,9 @@
 (setq backup-directory-alist `(("." . "~/.backup/saves")))
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (setq default-tab-width 4)
-(load-library "brief-mode")
+(require 'brief)
+(brief-easy-start) 
+(menu-bar-mode)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -36,10 +38,11 @@
 	 (indent . 4)
 	 (tab . 4)
 	 (encoding . utf8))))
- '(save-place-mode t))
+ '(save-place-mode t)
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "PragmataPro" :foundry "fsdf" :slant normal :weight normal :height 117 :width normal)))))
+ '(default ((t (:family "Fantasque Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 120 :width normal)))))
