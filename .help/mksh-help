@@ -15,20 +15,6 @@
            preceding explicit fd digit, for example, 3&>file is the same as 3>file
 &>|file, &>>file, &>&fd
         :  same as >|file, >>file or >&fd, followed by 2>&1, as above.
--- commands -----------------------------------------------------------------------------------------------------------------------
-(list)     :  execute list in a subshell. There is no implicit way to pass environment changes from a subshell back to its parent
-{ list; }  :  compound construct; list is executed, but not in a subshell
-case word in [[(] pattern [| pattern] ...) list terminator] ... esac
-           terminators: ;; exit list; ;& fall into the next; ;| evaluate the remaining pattern-list tuples
-for name [in word ...]; do list; done
-if list; then list; [elif list; then list;] ... [else list;] fi
-select name [in word ...]; do list; done
-until list; do list; done
-while list; do list; done
-function name { list; }
-(( expression )) : The arithmetic expression expression is evaluated
-[[ expression ]] : Similar to the test and [ ... ] commands (described later), with some exceptions
-$(<foo)       : has the same effect as $(cat foo)
 -- mksh modifiers -----------------------------------------------------------------------------------------------------------------
 ${name:-word} : if name is set and not empty, it is substituted; otherwise, word is substituted.
 ${name:+word} : if name is set and not empty, word is substituted; otherwise, nothing is substituted.
@@ -74,3 +60,14 @@ ${num} or $1..9 : the parameters that were supplied to the shell, function, or s
 $*  :  all positional parameters (except 0), i.e. $1, $2, $3, ...
 $@  :  same as $*, unless it is used inside double quotes, in which case a separate word is generated for each positional
        parameter. If there are no positional parameters, no word is generated.
+$RANDOM : a different number every time you access it
+-- commands -----------------------------------------------------------------------------------------------------------------------
+( ... )   :  execute cmds in a subshell. There is no implicit way to pass environment changes from a subshell back to its parent
+{ ...; }  :  compound construct; cmds are executed, but not in a subshell
+for var in list; do ...; done                                | for var in {0..N}; do ...; done
+if expr; then ...; [ elif expr; then ...; ] [ else ...; ] fi
+while expr; do ...; done                                     | until expr; do ...; done
+case $var in; wc-expr) ... [1] ; ...; *) [1] ; esac
+function name { ...; }                                       | select v in list; do ...; done
+(( expression )) : The arithmetic expression;                | [[ expression ]] : Similar to the test plus a lot
+[1] ;; = break; ;& = fall into the next; ;| = evaluate the remaining pattern-list tuples

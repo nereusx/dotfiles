@@ -17,6 +17,12 @@ endif
 
 #
 echo 'Welcome to tenex c-shell'
-if ( -e /usr/bin/screenfetch ) then
-	/usr/bin/screenfetch
-endif
+set list = ( screenfetch neofetch diogenis fortunes )
+foreach f ( $list )
+	if ( -X $f ) then
+		$f
+		break
+	endif
+end
+
+
