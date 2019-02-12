@@ -96,6 +96,7 @@ set white        = "%{\033[0;37m%}"
 setenv JED_HOME		${HOME}/.jed
 setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
+setenv GRUTF8_FORCE
 
 set list = ( jed nano joe vi )
 foreach e ( $list )
