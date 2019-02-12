@@ -140,8 +140,9 @@ version: 2
 ;
 autoindent: no
 autosave: 0 120
-colorscheme256: darktango
-colorscheme: darktango
+;colorscheme256: darktango
+colorscheme256: corp
+colorscheme: corp
 ;colorscheme256: brief
 ;colorscheme: brief
 ;colors: dark-blue white 7:bold 15:bold 115:bold dark-blue white 236 clear clear clear 15,none:bold,link@message 194,236:bold,link@hilite clear:link@message 236,186 181,none:link@message
@@ -150,7 +151,7 @@ window_color: 0
 syntax: grief
 modeline: yes
 echo_line: 0x11bb
-menubar: yes
+menubar: no
 borders: yes
 case_sensitive: yes
 autowrap: yes
