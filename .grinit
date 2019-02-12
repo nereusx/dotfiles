@@ -158,13 +158,13 @@ case_sensitive: yes
 autowrap: yes
 justification: no
 margin: 1,72
-tabs: default=5 .0
+tabs: default=5
 hard_tabs: default=yes
 indents: .f=2 .m=3 .cr=3 .c=4 .cc=4 .cpp=4 .h=4 .hpp=4 .pl=4 .pm=4 .sh=4 .csh=4 default=0
 package: .c.cc.CC.cpp.cr-c:hilite,t 1 1 0 1;.h.hpp-c:hilite;.mk.mak-mak:hilite;.f-f:hilite,t;.default:hilite,r
 restore: save=full cache=~/.backup/saves savehist=yes scrapper=yes
 backup: dir=~/.backup/text version=9
 utf-8: yes
-encoding:utf-8
+encoding: utf-8
 auditlog: mode=no
 linenumbers: default=no
