@@ -15,5 +15,7 @@ void _startup_complete(int mode)
 	
 	assign_to_key("<Ctrl-Left>", inq_assignment("<Home>"));
 	assign_to_key("<Ctrl-Right>", inq_assignment("<End>"));
+
+	assign_to_key("<Alt-F10>", "make");
 }
 
