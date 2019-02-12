@@ -1,4 +1,4 @@
-;
+;encoding:utf-8
 ; GRIEF user configuration -- example.
 ;
 version: 2
@@ -138,14 +138,15 @@ version: 2
 ;
 ;                       default=[yes|no] extension,[extension]:[yes|no] ...
 ;
-autoindent: no
-autosave: 0 120
 ;colorscheme256: darktango
-colorscheme256: corp
-colorscheme: corp
 ;colorscheme256: brief
 ;colorscheme: brief
 ;colors: dark-blue white 7:bold 15:bold 115:bold dark-blue white 236 clear clear clear 15,none:bold,link@message 194,236:bold,link@hilite clear:link@message 236,186 181,none:link@message
+autoindent: no
+autosave: 0 120
+colorscheme256: corp
+colorscheme: corp
+colors: #192224 #f9f9ff #f9f9ff:bold none:link@code none:link@alert #f9f9ff #192224 clear clear clear clear clear:link@message #f9f9ff,#a1a6a8:link@hilite clear:link@message #192224,#bd9800:bold none,dynamic-bg:link@preprocessor
 color_index: 0
 window_color: 0
 syntax: grief
@@ -157,11 +158,13 @@ case_sensitive: yes
 autowrap: yes
 justification: no
 margin: 1,72
-tabs: default=5 9
+tabs: default=5 .0
 hard_tabs: default=yes
 indents: .f=2 .m=3 .cr=3 .c=4 .cc=4 .cpp=4 .h=4 .hpp=4 .pl=4 .pm=4 .sh=4 .csh=4 default=0
 package: .c.cc.CC.cpp.cr-c:hilite,t 1 1 0 1;.h.hpp-c:hilite;.mk.mak-mak:hilite;.f-f:hilite,t;.default:hilite,r
 restore: save=full cache=~/.backup/saves savehist=yes scrapper=yes
 backup: dir=~/.backup/text version=9
+utf-8: yes
+encoding:utf-8
 auditlog: mode=no
 linenumbers: default=no
