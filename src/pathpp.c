@@ -1,10 +1,10 @@
 /*
- * check and add directories to a path
+ * check directories (exists,is_dir,!duplicate)
+ * and/or add directories to a path
+ * 
  * nicholas christopoulos (nereus@freemail.gr)
  *
  * this software is released under GPLv3 or newer license
- *
- * PATH's penticure
  *
  * usage: setenv PATH `path++ [[new-dir] ...]`
  */
