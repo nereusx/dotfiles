@@ -1,0 +1,2 @@
+#!/bin/sh
+lsblk -f | grep -v loop
