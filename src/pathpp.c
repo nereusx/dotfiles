@@ -31,6 +31,7 @@ struct s_list {
 static list_t path_list;
 static list_t new_dirs;
 
+// clone a string
 static char *strdup(const char *src)
 {
 	char *buf = malloc(strlen(src) + 1);
@@ -38,6 +39,7 @@ static char *strdup(const char *src)
 	return buf;
 }
 
+// add node to list
 static void node_add(list_t *list, const char *str)
 {
 	node_t *np = (node_t *) malloc(sizeof(node_t));
@@ -51,32 +53,35 @@ static void node_add(list_t *list, const char *str)
 		list->root = list->tail = np;
 }
 
+// add directory to list
 static void dir_add(list_t *root, const char *dir)
 {
 	struct stat st;
 	
-	if ( stat(dir, &st) == 0 ) {
-		if ( S_ISDIR(st.st_mode) ) {
+	if ( stat(dir, &st) == 0 ) { // if directory exists
+		if ( S_ISDIR(st.st_mode) ) { // if directory is directory (and not a file)
 			const node_t *cur;
 			for ( cur = path_list.root; cur; cur = cur->next ) {
 				if ( strcmp(cur->str, dir) == 0 )
 					break;
 				}
-			if ( cur == NULL )
-				node_add(&path_list, dir);
+			if ( cur == NULL ) // if directory is not already in the list
+				node_add(&path_list, dir); // then add it
 			}
 		}
 }
 
+// add a list of directories to the list
 static void list_add(list_t *root, const list_t *source)
 {
 	for ( const node_t *cur = source->root; cur; cur = cur->next )
 		dir_add(root, cur->str);
 }
 
+// clear memory
 static void delete_list(list_t *list)
 {
-	node_t *cur, *pre;
+	node_t *cur = list->root, *pre;
 	while ( cur ) {
 		pre = cur;
 		cur = cur->next;
@@ -85,6 +90,7 @@ static void delete_list(list_t *list)
 		}
 }
 
+// creates a $PATH string
 static char *duppath()
 {
 	const node_t *cur;
@@ -136,6 +142,7 @@ int main(int argc, char **argv)
 	if ( new_dirs.root && (flags & 0x08) )
 		list_add(&path_list, &new_dirs);
 
+	// for each directory in path
 	for ( p = cspath, d = dest; *p; p ++ ) {
 		if ( *p == ':' ) {
 			*d = '\0'; d = dest;
@@ -152,6 +159,7 @@ int main(int argc, char **argv)
 	if ( new_dirs.root && (flags & 0x08) == 0 )
 		list_add(&path_list, &new_dirs);
 
+	// recreate path
 	char *pathstr = duppath();
 
 	/* ready... */

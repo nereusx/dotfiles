@@ -2,7 +2,7 @@
 
 INSDIR = /bin
 CC = gcc
-CFLAGS = -std=c99 -O
+CFLAGS = -std=c99 -O -Wall -Wno-unused-result
 
 all: path++
 
