@@ -94,7 +94,7 @@ set white        = "%{\033[0;37m%}"
 
 # --- EDITORS ---
 setenv JED_HOME		${HOME}/.jed
-setenv GRPATH		${HOME}/.Grief/:/usr/share/grief/macros
+setenv GRPATH		${HOME}/.grief-local/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES en,el
