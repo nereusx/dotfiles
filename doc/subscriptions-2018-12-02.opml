@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>Subscriptions</title>
+  </head>
+  <body>
+    <outline title="Οικονομία" text="Οικονομία">
+      <outline title="Kώστας Λαπαβίτσας" text="Kώστας Λαπαβίτσας" type="rss" xmlUrl="https://costaslapavitsas.blogspot.com/feeds/posts/default" htmlUrl="https://costaslapavitsas.blogspot.com/"/>
+      <outline title="ΔΗΜΗΤΡΗΣ ΚΑΖΑΚΗΣ" text="ΔΗΜΗΤΡΗΣ ΚΑΖΑΚΗΣ" type="rss" xmlUrl="https://dimitriskazakis.blogspot.com/feeds/posts/default" htmlUrl="https://dimitriskazakis.blogspot.com/"/>
+      <outline title="Leonidas Vatikiotis" text="Leonidas Vatikiotis" type="rss" xmlUrl="https://leonidasvatikiotis.wordpress.com/feed/" htmlUrl="https://leonidasvatikiotis.wordpress.com/"/>
+    </outline>
+    <outline title="Ειδησεις/Πολιτική" text="Ειδησεις/Πολιτική">
+      <outline title="Democracy Now!" text="Democracy Now!" type="rss" xmlUrl="http://www.democracynow.org/democracynow.rss" htmlUrl="http://www.democracynow.org/"/>
+      <outline title="RT - Daily news" text="RT - Daily news" type="rss" xmlUrl="http://rt.com/rss/" htmlUrl="https://www.rt.com/"/>
+      <outline title="Ημεροδρόμος" text="Ημεροδρόμος" type="rss" xmlUrl="http://www.imerodromos.gr/feed/" htmlUrl="http://www.imerodromos.gr/"/>
+      <outline title="INFOWAR" text="INFOWAR" type="rss" xmlUrl="http://info-war.gr/feed/" htmlUrl="https://info-war.gr/"/>
+      <outline title="Η Εφημερίδα των Συντακτών - Η Εφημερίδα των Συντακτών στο διαδίκτυο" text="Η Εφημερίδα των Συντακτών - Η Εφημερίδα των Συντακτών στο διαδίκτυο" type="rss" xmlUrl="http://www.efsyn.gr/?feed=rss2" htmlUrl="http://www.efsyn.gr/node"/>
+      <outline title="The PressProject - www.thepressproject.gr" text="The PressProject - www.thepressproject.gr" type="rss" xmlUrl="http://www.thepressproject.gr/xml/rss_analiseis.xml" htmlUrl="https://www.thepressproject.gr/"/>
+      <outline title="ΠΡΕΖΑ TV ©" text="ΠΡΕΖΑ TV ©" type="rss" xmlUrl="http://feeds.feedburner.com/blogspot/zDhNz?format=xml" htmlUrl="http://prezatv.blogspot.com/"/>
+      <outline title="Νέα, κατάλογος για Αλληλέγγυα, Κοινωνική Οικονομία enallaktikos.gr" text="Νέα, κατάλογος για Αλληλέγγυα, Κοινωνική Οικονομία enallaktikos.gr" type="rss" xmlUrl="http://www.enallaktikos.gr/rss.php" htmlUrl="http://www.enallaktikos.gr/"/>
+      <outline title="teleSURtv.net" text="teleSURtv.net" type="rss" xmlUrl="https://www.telesurenglish.net/rss/RssWorld.xml" htmlUrl="http://www.telesurenglish.net/"/>
+    </outline>
+    <outline title="Επιστήμη" text="Επιστήμη">
+      <outline title="Biology4u.gr" text="Biology4u.gr" type="rss" xmlUrl="http://www.biology4u.gr/?feed=rss2" htmlUrl="http://www.biology4u.gr/"/>
+      <outline title="Breaking Science News | Sci-News.com" text="Breaking Science News | Sci-News.com" type="rss" xmlUrl="http://feeds.feedburner.com/BreakingScienceNews?format=xml" htmlUrl="http://www.sci-news.com/"/>
+      <outline title="Latest Science News -- ScienceDaily" text="Latest Science News -- ScienceDaily" type="rss" xmlUrl="https://rss.sciencedaily.com/all.xml" htmlUrl="https://www.sciencedaily.com/news/"/>
+      <outline title="physicsgg" text="physicsgg" type="rss" xmlUrl="http://physicsgg.me/?feed=rss2" htmlUrl="https://physicsgg.me/"/>
+      <outline title="Archaeological Headlines - Archaeology Magazine" text="Archaeological Headlines - Archaeology Magazine" type="rss" xmlUrl="http://www.archaeology.org/feed" htmlUrl="http://www.archaeology.org/feed"/>
+      <outline title="Φυσική για όλους" text="Φυσική για όλους" type="rss" xmlUrl="http://physics4u.gr/blog/?feed=rss2" htmlUrl="http://physics4u.gr/blog"/>
+    </outline>
+    <outline title="Πολιτικά: Αναρχία" text="Πολιτικά: Αναρχία">
+      <outline title="Anarxeio RSS library" text="Anarxeio RSS library" type="rss" xmlUrl="https://anarxeio.gr/contents/library.rss" htmlUrl="https://anarxeio.gr/"/>
+      <outline title="kinimatorama.net - ημερολόγιο από/για το κίνημα..." text="kinimatorama.net - ημερολόγιο από/για το κίνημα..." type="rss" xmlUrl="https://www.kinimatorama.net/events.xml" htmlUrl="https://www.kinimatorama.net/"/>
+      <outline title="Τοπικά Νέα" text="Τοπικά Νέα" type="rss" xmlUrl="https://athens.indymedia.org/feed/1/" htmlUrl="http://athens.indymedia.org/archive/today/"/>
+      <outline title="Βιβλιοθήκη" text="Βιβλιοθήκη" type="rss" xmlUrl="https://athens.indymedia.org/feed/7/" htmlUrl="http://athens.indymedia.org/archive/today/"/>
+      <outline title="Διεθνή Νέα" text="Διεθνή Νέα" type="rss" xmlUrl="https://athens.indymedia.org/feed/2/" htmlUrl="http://athens.indymedia.org/archive/today/"/>
+      <outline title="Αναλύσεις" text="Αναλύσεις" type="rss" xmlUrl="https://athens.indymedia.org/feed/3/" htmlUrl="http://athens.indymedia.org/archive/today/"/>
+      <outline title="Mpalothia" text="Mpalothia" type="rss" xmlUrl="https://mpalothia.net/feed/" htmlUrl="https://mpalothia.net/"/>
+      <outline title="Ανακοινώσεις" text="Ανακοινώσεις" type="rss" xmlUrl="https://athens.indymedia.org/feed/11/" htmlUrl="http://athens.indymedia.org/archive/today/"/>
+    </outline>
+    <outline title="Πολιτικά: ΚΚΕ" text="Πολιτικά: ΚΚΕ">
+      <outline title="ΡΙΖΟΣΠΑΣΤΗΣ: Πρώτα θέματα" text="ΡΙΖΟΣΠΑΣΤΗΣ: Πρώτα θέματα" type="rss" xmlUrl="https://www.rizospastis.gr/rssFeed.do?channel=Top" htmlUrl="https://www.rizospastis.gr/rssFeed.do"/>
+      <outline title="ΡΙΖΟΣΠΑΣΤΗΣ: Κόσμος" text="ΡΙΖΟΣΠΑΣΤΗΣ: Κόσμος" type="rss" xmlUrl="https://www.rizospastis.gr/rssFeed.do?channel=World" htmlUrl="https://www.rizospastis.gr/rssFeed.do"/>
+    </outline>
+    <outline title="OpenSource" text="OpenSource">
+      <outline title="Ανοιχτό περιεχόμενο" text="Ανοιχτό περιεχόμενο" type="rss" xmlUrl="https://mycontent.ellak.gr/feed" htmlUrl="https://mycontent.ellak.gr/"/>
+      <outline title="Ανοιχτή Διακυβέρνηση" text="Ανοιχτή Διακυβέρνηση" type="rss" xmlUrl="https://opengov.ellak.gr/?feed=rss2" htmlUrl="https://opengov.ellak.gr/"/>
+      <outline title="Linux Journal - The Original Magazine of the Linux Community" text="Linux Journal - The Original Magazine of the Linux Community" type="rss" xmlUrl="http://feeds.feedburner.com/linuxjournalcom?format=xml" htmlUrl="https://www.linuxjournal.com/node/feed"/>
+      <outline title="Ανοιχτά Δεδομένα" text="Ανοιχτά Δεδομένα" type="rss" xmlUrl="https://opendata.ellak.gr/?feed=rss2" htmlUrl="https://opendata.ellak.gr/"/>
+      <outline title="Ελεύθερο Λογισμικό / Λογισμικό ανοιχτού κώδικα" text="Ελεύθερο Λογισμικό / Λογισμικό ανοιχτού κώδικα" type="rss" xmlUrl="https://ellak.gr/feed/" htmlUrl="https://ellak.gr/"/>
+      <outline title="Alien Pastures" text="Alien Pastures" type="rss" xmlUrl="http://alien.slackbook.org/blog/feed/atom/" htmlUrl="https://alien.slackbook.org/blog"/>
+      <outline title="Richard Stallman's Political Notes" text="Richard Stallman's Political Notes" type="rss" xmlUrl="https://www.stallman.org/rss/rss.xml" htmlUrl="https://stallman.org/archives/polnotes.html"/>
+      <outline title="Linux Magazine Full Feed" text="Linux Magazine Full Feed" type="rss" xmlUrl="http://www.linux-magazine.com/rss/feed/lmi_full" htmlUrl="http://www.linux-magazine.com/"/>
+      <outline title="https://www.linux.com/feeds/rss" text="https://www.linux.com/feeds/rss" type="rss" xmlUrl="https://www.linux.com/feeds/rss" htmlUrl="https://www.linux.com/feeds/rss"/>
+      <outline title="Linuxtoday.com" text="Linuxtoday.com" type="rss" xmlUrl="http://www.linuxtoday.com/rss.xml" htmlUrl="https://www.linuxtoday.com/"/>
+    </outline>
+  </body>
+</opml>
