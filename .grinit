@@ -139,14 +139,13 @@ version: 2
 ;                       default=[yes|no] extension,[extension]:[yes|no] ...
 ;
 ;colorscheme256: darktango
-;colorscheme256: brief
-;colorscheme: brief
-;colors: dark-blue white 7:bold 15:bold 115:bold dark-blue white 236 clear clear clear 15,none:bold,link@message 194,236:bold,link@hilite clear:link@message 236,186 181,none:link@message
-autoindent: no
+;colorscheme: darktango
+;colors: #2e3436 #d3d7cf #eeeeec #ce5c00 red #fcaf3e #ce5c00 #2e3436 clear clear clear #aabbcc,#2e3436:link@message clear:link@hilite clear:link@message #eeeeec,#555753 #eeeeec,#2e3436:link@message
+autoindent: yes
 autosave: 0 120
-colorscheme256: corp
-colorscheme: corp
-colors: #192224 #f9f9ff #f9f9ff:bold none:link@code none:link@alert #f9f9ff #192224 clear clear clear clear clear:link@message #f9f9ff,#a1a6a8:link@hilite clear:link@message #192224,#bd9800:bold none,dynamic-bg:link@preprocessor
+colorscheme256: brief
+colorscheme: brief
+colors: blue light-white light-cyan light-green red magenta light-white white clear clear clear clear:link@message clear:link@hilite clear:link@message clear light-cyan,dynamic-bg:link@message
 color_index: 0
 window_color: 0
 syntax: grief
@@ -155,7 +154,7 @@ echo_line: 0x11bb
 menubar: no
 borders: yes
 case_sensitive: yes
-autowrap: yes
+autowrap: no
 justification: no
 margin: 1,72
 tabs: default=5

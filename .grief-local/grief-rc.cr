@@ -27,3 +27,8 @@ void _startup_complete(int mode)
 /*	assign_to_key("<Ctrl-F10>", "run"); */
 }
 
+void showkey(string val)
+{
+	message(val + ": [" + inq_assignment(val) + "]");
+}
+

@@ -1,0 +1,24 @@
+#!/bin/tcsh -f
+#
+#	copies the .tcshrc to all users of the system
+#
+
+set echo_style=both
+set list = ( .emacs.d .emacs )
+foreach elem ( $list )
+	set src = $elem
+	if ( ! -e $src ) set src = dotfiles/$elem
+	if ( ! -e $src ) set src = /root/$elem
+
+	echo "root\t$src -> /root"
+	cp -r $src /root
+	foreach dir ( /home/* )
+		set name = $dir:t
+		echo "$name\t$src -> $dir"
+		cp -r $src $dir
+		chown -R ${name}:${name} $dir/${src:t}
+	end
+end
+
+
+
