@@ -139,27 +139,29 @@ version: 2
 ;                       default=[yes|no] extension,[extension]:[yes|no] ...
 ;
 ;colorscheme256: darktango
-;colorscheme: darktango
-;colors: #2e3436 #d3d7cf #eeeeec #ce5c00 red #fcaf3e #ce5c00 #2e3436 clear clear clear #aabbcc,#2e3436:link@message clear:link@hilite clear:link@message #eeeeec,#555753 #eeeeec,#2e3436:link@message
-autoindent: yes
+;colorscheme256: brief
+;colorscheme: brief
+;colors: dark-blue white 7:bold 15:bold 115:bold dark-blue white 236 clear clear clear 15,none:bold,link@message 194,236:bold,link@hilite clear:link@message 236,186 181,none:link@message
+;colors: #192224 #f9f9ff #f9f9ff:bold none:link@code none:link@alert #f9f9ff #192224 clear clear clear clear clear:link@message #f9f9ff,#a1a6a8:link@hilite clear:link@message #192224,#bd9800:bold none,dynamic-bg:link@preprocessor
+autoindent: no
 autosave: 0 120
-colorscheme256: brief
-colorscheme: brief
-colors: blue light-white light-cyan light-green red magenta light-white white clear clear clear clear:link@message clear:link@hilite clear:link@message clear light-cyan,dynamic-bg:link@message
+colorscheme256: darktango
+colorscheme: darktango
+colors: #2e3436 #d3d7cf #eeeeec #ce5c00 red #fcaf3e #ce5c00 #2e3436 clear clear clear #aabbcc,#2e3436:link@message clear:link@hilite clear:link@message #eeeeec,#555753 #eeeeec,#2e3436:link@message
 color_index: 0
 window_color: 0
 syntax: grief
 modeline: yes
 echo_line: 0x11bb
 menubar: no
-borders: yes
+borders: no
 case_sensitive: yes
-autowrap: no
+autowrap: yes
 justification: no
 margin: 1,72
 tabs: default=5
 hard_tabs: default=yes
-indents: .f=2 .m=3 .cr=3 .c=4 .cc=4 .cpp=4 .h=4 .hpp=4 .pl=4 .pm=4 .sh=4 .csh=4 default=0
+indents: .f=2 .m=3 .cr=4 .c=4 .cc=4 .cpp=4 .h=4 .hpp=4 .pl=4 .pm=4 .sh=4 .csh=4 default=4
 package: .c.cc.CC.cpp.cr-c:hilite,t 1 1 0 1;.h.hpp-c:hilite;.mk.mak-mak:hilite;.f-f:hilite,t;.default:hilite,r
 restore: save=full cache=~/.backup/saves savehist=yes scrapper=yes
 backup: dir=~/.backup/text version=9
