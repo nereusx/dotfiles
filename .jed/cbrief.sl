@@ -3583,6 +3583,8 @@ private variable color_status = color_number("status");
 private variable color_cursor_ins = color_number("cursor");
 private variable color_cursor_ovr = color_number("cursorovr");
 private variable color_menu_text = color_number("menu");
+
+if ( CBRIEF_API <= 2 ) {
 private variable _sb_colors = [ 
 sprintf("%%+%d", color_status),
 sprintf("%%+%d", color_cursor_ins),
@@ -3590,13 +3592,30 @@ sprintf("%%+%d", color_cursor_ovr),
 sprintf("%%+%d", color_menu_text ) ];
 
 set_status_line(
-	sprintf(" %s %%b %s %s%%5l:%%03c %s %%S -%s %%m%%a%%n%%o %s- %%F - %s %%t %s ",
+		sprintf(" %s %%b %s %s%%5l:%%03c %s %%S -%s %%m%%a%%n%%o %s- %%F - %s %%t %s ",
 			_sb_colors[1],	_sb_colors[0],	% name
 			_sb_colors[2],	_sb_colors[0],	% line/col
 			_sb_colors[3],	_sb_colors[0],	% mode
 			_sb_colors[3],	_sb_colors[0]	% time
 			),
 	1);
+	}
+else {
+private variable _sb_colors = [ 
+sprintf("%%%dC", color_status),
+sprintf("%%%dC", color_cursor_ins),
+sprintf("%%%dC", color_cursor_ovr),
+sprintf("%%%dC", color_menu_text ) ];
+
+	set_status_line(
+		sprintf(" %s %%b %s %s%%5l:%%03c %s %%S -%s %%m%%a%%n%%o %s- %%F - %s %%t %s ",
+			_sb_colors[1],	_sb_colors[0],	% name
+			_sb_colors[2],	_sb_colors[0],	% line/col
+			_sb_colors[3],	_sb_colors[0],	% mode
+			_sb_colors[3],	_sb_colors[0]	% time
+			),
+	1);
+}
 #else
 set_status_line(" [ %b ] %l:%c %S - %m%a%n%o - %F - %t ", 1);
 #endif
