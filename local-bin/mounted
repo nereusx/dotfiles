@@ -1,2 +1,2 @@
 #!/bin/sh
-lsblk -f | grep -v loop
+lsblk -f -o +size | grep -v loop
