@@ -1,0 +1,30 @@
+#!/bin/cat
+MOD+ENTER        Start a new terminal
+MOD+S+Q          Kill focused window
+MOD+D            Start dmenu
+
+MOD+[arrow]      Change focus to window
+MOD+S+[arrow]    Move focused window
+MOD+R            Enter resize window mode (you can also use the mouse for that)
+        Resize mode:
+        ENTER or ESC   Back to normal mode
+        Left/Right     Pressing left/right will shrink/grow the window’s width.
+        Up/Down        Pressing up/down will shrink/grow the window’s height.
+MOD+H            Split in horizontal orientation
+MOD+V            Split in vertical orientation
+
+MOD+F            Enter fullscreen mode for the focused container
+MOD-S+SPACE      Toggle tiling / floating
+MOD+SPACE        Change focus between tiling / floating windows
+MOD+A            Focus the parent container
+
+MOD+[S,W,E]      Change container layout (stacked, tabbed, toggle split)
+MOD+[1..9]       Switch to workspace
+MOD+S+[1..9]     Move focused container to workspace
+
+MOD+S+C          Reload the configuration file
+MOD+S+R          Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+MOD+S+E          Exit i3 (logout of your X session)
+
+
+
