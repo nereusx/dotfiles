@@ -321,7 +321,6 @@ if ( ! -X calc ) then
 		alias calc 'echo \!* | bc -l'
 	endif
 endif
-alias qgit 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 # --- end ---
 
