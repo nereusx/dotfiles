@@ -1,4 +1,4 @@
-# -- mode: tcsh; encoding: utf-8; tab-size: 4; indent: 4; --
+# -*- mode: tcsh; encoding: utf-8; tab-size: 4; indent: 4; -*-
 #
 #	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
@@ -100,7 +100,7 @@ setenv GRUTF8_FORCE
 setenv GRDICTIONARIES en,el
 setenv GRDICTIONARY /usr/share/aspell
 
-set list = ( jed nano joe vi )
+set list = ( jed gr emacs nano joe vi )
 foreach e ( $list )
 	if ( -X $e ) then
 		setenv EDITOR $e
@@ -127,19 +127,10 @@ endif
 
 # Select BRIEF editor
 alias b 'vi'
-set list = ( jed grief emacs nano joe vi )
+set list = ( jed gr emacs nano joe vi )
 foreach e ( $list )
 	if ( -X $e ) then
 		alias b "$e"
-		break
-	endif
-end
-
-# Select default terminal emulator (used by i3)
-set list = ( urxvtcd urxvt rxvt-unicode xfce-terminal xterm )
-foreach e ( $list )
-	if ( -X $e ) then
-		setenv TERMINAL "$e"
 		break
 	endif
 end
@@ -331,6 +322,7 @@ if ( ! -X calc ) then
 	endif
 endif
 alias qgit 'git add .; git commit -m "quick and dirty fix"; git push'
+alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 # --- end ---
 
 # directory stuff
