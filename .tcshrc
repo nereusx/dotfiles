@@ -134,6 +134,15 @@ foreach e ( $list )
 		break
 	endif
 end
+
+# Select default terminal emulator (used by i3)
+set list = ( urxvtcd urxvt rxvt-unicode xfce-terminal xterm )
+foreach e ( $list )
+	if ( -X $e ) then
+		setenv TERMINAL "$e"
+		break
+	endif
+end
 # --- end ---
 
 # --- PAGER ---
