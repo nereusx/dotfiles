@@ -1,0 +1,12 @@
+# This is Git's per-user configuration file.
+
+[user]
+name=Nicholas Christopoulos
+email=nereus@freemail.gr
+
+[color]
+ui=true
+
+[color "diff"]
+old=red strike
+new=green
