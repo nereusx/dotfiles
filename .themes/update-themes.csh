@@ -12,8 +12,6 @@ set list = (\
 	https://github.com/EliverLara/Sweet.git\
 	https://github.com/daniruiz/flat-remix-gtk.git\
 	https://github.com/vinceliuice/Qogir-theme.git\
-	https://github.com/paullinuxthemer/Telinkrin-GTK\
-	https://github.com/EliverLara/Nordic\
 	https://github.com/paullinuxthemer/Mc-OS-themes\
 	https://github.com/bolimage/Ultimate-Maia\
 	https://gitlab.com/LinxGem33/X-Arc-White\
@@ -35,6 +33,19 @@ foreach repo ( $list )
 		cd $name; git pull; cd ..
 	else
 		git clone $repo
+	endif
+	if ( -d $name ) then
+		cd $name
+		if ( $name == "Ultimate-Maia" ) then
+			cp -r Ult* ..
+		else if ( $name == "matcha" ) then
+			./Install
+		else if ( $name =~ "theme-obsidian-2*" ) then
+			cp -r Obsidian-2* ..
+		else if ( $name =~ "Ant-*" ) then
+			cp -r Ant* ..
+		endif
+		cd ..
 	endif
 end
 

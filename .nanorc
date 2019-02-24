@@ -11,7 +11,7 @@ set keycolor green
 set functioncolor yellow
 
 # syntax
-#include /usr/share/nano/*.nanorc
+include /usr/share/nano-syntax-highlighting/*.nanorc
 
 # settings
 set constantshow

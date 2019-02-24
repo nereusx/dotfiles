@@ -337,6 +337,7 @@ if ( ! -X calc ) then
 	endif
 endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
+alias git-s 'git add .; git commit -m ''\!*''; git push'
 # --- end ---
 
 # directory stuff

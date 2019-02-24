@@ -211,7 +211,7 @@ public variable _cbrief_version_string = "1.0.3";
 %		0x20 = Get control of Tabs
 %		0x40 = LAPTOP mode (ctrl+left/right = home/end, ctrl+up/down = page up/down)
 %!%-
-custom_variable("CBRIEF_KBDMODE", 0x20 | 0x08 | 0x04 | 0x02 | 0x01);
+custom_variable("CBRIEF_KBDMODE", 0x20 | 0x08 | 0x04 | 0x02 | 0x01 | 0x40);
 
 %!%+
 %\variable{CBRIEF_OPTSF}
