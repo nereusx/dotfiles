@@ -9,4 +9,5 @@ ui=true
 
 [color "diff"]
 old=red strike
-new=green
+new=green bold
+
