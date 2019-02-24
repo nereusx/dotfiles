@@ -1,4 +1,4 @@
-# -*- mode: tcsh; encoding: utf-8; tab-size: 4; indent: 4; -*-
+# -- mode: tcsh; encoding: utf-8; tab-size: 4; indent: 4; --
 #
 #	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
@@ -35,22 +35,26 @@ if ( $?prompt == 0 ) then # we are shell script
 endif
 
 ### this is an interactive shell ###
+
+# find distro
 if ( "`uname -a | grep -i ubuntu`" != "" ) then
 	set distro=ubuntu
 else
 	set distro=unix
 endif
 
+# setup several local directories
 setenv backup $home/.backup
 set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
 foreach e ( $list )
 	if ( ! -e $e ) mkdir -m=0700 -p $e
 end
 
+# setup and cleanup PATH
 set path = ( $home/.bin $home/.help $path )
 if ( -e '/bin/path++' ) setenv PATH `/bin/path++`
 
-#
+# login shell?
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
 		# enable keypad
@@ -66,6 +70,7 @@ if ( $use_tmux == 1 ) then
 endif
 # --- end ---
 
+### setup tcsh
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -93,13 +98,18 @@ set white        = "%{\033[0;37m%}"
 # -- end ---
 
 # --- EDITORS ---
+
+# JED
 setenv JED_HOME		${HOME}/.jed
+
+# GRIEF
 setenv GRPATH		${HOME}/.grief-local/:/usr/share/grief/macros
 setenv GRFLAGS		"-m grief-rc"
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES en,el
 setenv GRDICTIONARY /usr/share/aspell
 
+# default editor
 set list = ( jed gr emacs nano joe vi )
 foreach e ( $list )
 	if ( -X $e ) then
@@ -110,6 +120,7 @@ foreach e ( $list )
 end
 alias edit "$EDITOR"
 
+# default binary editor
 set list = ( hte dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
@@ -125,7 +136,7 @@ else
 	alias hexdump 'od -t x1'
 endif
 
-# Select BRIEF editor
+# select BRIEF editor
 alias b 'vi'
 set list = ( jed gr emacs nano joe vi )
 foreach e ( $list )
@@ -161,7 +172,12 @@ setenv PAGER less
 # --- end ---
 
 # other settings
-setenv MAKEFLAGS '-j16'
+setenv BROWSER firefox
+
+set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
+@ cpus ++
+setenv MAKEFLAGS "-j$cpus"
+
 setenv __GL_YIELD 'USLEEP'
 
 #
@@ -312,7 +328,6 @@ alias helpcommand 'man \!:1'
 
 # programs
 alias cdwrite	'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
-#alias chrome	'google-chrome-stable --no-sandbox'
 alias chrome	'chromium --no-sandbox'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
@@ -326,7 +341,7 @@ alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 
 # directory stuff
 set dunique
-set cdpath = ( ${HOME} /usr/src /collections )
+set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
@@ -339,7 +354,9 @@ alias cd 'pushd'
 alias dirs 'dirs -v'
 # --- end ---
 
-# Runs every tperiod minutes. This provides a convenient means for checking on common but infrequent changes such as new mail. For example, if one does
+# Runs every tperiod minutes.
+# This provides a convenient means for checking on common but infrequent changes such as new mail.
+# For example, if one does
 # set tperiod = 30
 # alias periodic checknews
 
