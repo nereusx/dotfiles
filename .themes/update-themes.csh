@@ -8,6 +8,7 @@
 # the top themes of www.xfce-look.org
 # last update: Feb 2019
 set list = (\
+	https://github.com/horst3180/Arc-theme\
 	https://github.com/EliverLara/Sweet.git\
 	https://github.com/daniruiz/flat-remix-gtk.git\
 	https://github.com/vinceliuice/Qogir-theme.git\
@@ -18,6 +19,7 @@ set list = (\
 	https://gitlab.com/LinxGem33/X-Arc-White\
 	https://github.com/bolimage/Dark-Aurora\
 	https://github.com/EliverLara/Ant\
+	https://github.com/vinceliuice/matcha\
 	)
 
 # prepare
