@@ -8,10 +8,10 @@ Xft.autohint: 1
 
 !Xcursor.theme: Oxygen_White
 Xcursor.size:  32
-!rxvt.font: -xsg-xsg fixed 16-*-*-*-*-*-140-*-*-*-*-*-*
-uterm*Font: -xsg-xsg fixed 16-*-*-*-*-*-140-*-*-*-*-*-*
-uterm*font: -xsg-xsg fixed 16-*-*-*-*-*-140-*-*-*-*-*-*
-pterm.Font: -xsg-xsg fixed 16-*-*-*-*-*-140-*-*-*-*-*-*
+!rxvt.font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
+uterm*Font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
+uterm*font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
+pterm.Font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
 pterm.ScrollBar: 0
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -220,40 +220,14 @@ xjed*Geometry: 160x40+100+100
 
 ! Xorg 6x13B
 !xjed*font: -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
-!UXjed*font: -misc-fixed-bold-r-semicondensed--13-120-75-75-c-60-iso10646-1
 
 ! Xorg 7x14
 !xjed*font: -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
-!UXjed*font:  -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
 
 ! Xorg 7x14B
 !xjed*font: -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso10646-1
-!UXjed*font: -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso10646-1
-!xjed*font: 7x14B
-!UXjed*font: 7x14B
 
-! NDC VGA
-!xjed*font: -ndchristopoulos-vgac-c16-r-normal--17-160-75-75-c-80-iso10646-1
-!UXjed*font: -ndchristopoulos-vgac-c16-r-normal--17-160-75-75-c-80-iso10646-1
-
-! xsg fixed 167
-!xjed*font: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
-!UXjed*font: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
-
-! nc7x15B
-xjed*font: -xsg-nccode-bold-b-normal--15-150-75-75-c-70-iso10646-1
-UXjed*font: -xsg-nccode-bold-b-normal--15-150-75-75-c-70-iso10646-1
-
-! nc6x13
-!xjed*font: -xsg-nccode-medium-r-normal--13-130-75-75-c-60-iso10646-1
-!UXjed*font: -xsg-nccode-medium-r-normal--13-130-75-75-c-60-iso10646-1
-
-! nc6x13B
-!xjed*font: -xsg-nccode-bold-b-normal--13-130-75-75-c-60-iso10646-1
-!UXjed*font: -xsg-nccode-bold-b-normal--13-130-75-75-c-60-iso10646-1
-
-!! xvile
-xvile*Geometry: 160x40+100+100
-xvile*font:	-xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
+! XSG 7x16B
+xjed*font: -xsg-xsg fixed 167-*-*-*-*-*-*-*-*-*-*-iso10646-1
 
 Xcursor.theme: Oxygen_Zion

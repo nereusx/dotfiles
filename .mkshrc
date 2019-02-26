@@ -80,7 +80,7 @@ alias cls='clear'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias log30='tail -n 30 /var/log/messages'
 alias netlog='netstat -lptu4'
-alias xmerge='xrdb -merge ~/.Xdefaults'
+alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
 alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 function _bc {
