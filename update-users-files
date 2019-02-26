@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
 #
-#	copies the .tcshrc to all users of the system
+#	copies list of files to all users of the system
 #
 
 set echo_style=both
