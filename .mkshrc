@@ -1,37 +1,100 @@
-#
+# -- mode: sh; tab-size: 4; --
 
+# if non-interactive shell, exit
 [[ $- == *i* ]] || return
+
+# login shell
 #shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
 
+# interactive shell
+
+#
 if [ $TERM == "rxvt" ]; then
 	export TERM=rxvt-unicode
 fi
 
-PS1='${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}"
+# PROMPT
+# smul/rmul = underline, sitm/ritm = italics
+# bold, setaf (forground), setab (background), op (reset)
+PS1='$(tput bold)$(tput setaf 2)${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}$(tput op)"
 PS1=$PS1' $PWD '
 PS1=$PS1"$(if (( USER_ID )); then print \$; else print \#; fi) "
 export PS1
-						  
-export GRPATH=${HOME}/.Grief/:/usr/share/grief/macros
+
+# --- EDITORS ---
+export GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 export GRFLAGS="-m grief-rc"
 export JED_HOME=$HOME/.jed
-export EDITOR=/usr/bin/jed
-export VISUAL=$EDITOR
-export HEXEDITOR=/usr/bin/ht
+# customise your favourite editor here; the first one found is used
+for EDITOR in jed gr joe nano emacs vi; do
+	EDITOR=$(\\builtin whence -p "$EDITOR") && break
+done
+export EDITOR
+export VISUAL="$EDITOR"
+alias b="$EDITOR"
+for HEXEDITOR in hte mcedit dhex; do
+	HEXEDITOR=$(\\builtin whence -p "$HEXEDITOR") && break
+done
+alias hexedit="$HEXEDITOR"
 
-export LS_OPTIONS="--color=auto"
-export MOST_SWITCHES="-w"
+# --- PAGER ---
+export LS_OPTIONS='--color=auto'
+export LESS='-R'
+export GROFF_ENCODING='utf8'
+export LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
+export LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
+export LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
+export LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
+export LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
+export LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
+export LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+export LESS_TERMCAP_ZN=$(tput ssubm)
+export LESS_TERMCAP_ZV=$(tput rsubm)
+export LESS_TERMCAP_ZO=$(tput ssupm)
+export LESS_TERMCAP_ZW=$(tput rsupm)
+#export LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
+export MOST_SWITCHES='-w'
 export MOST_EDITOR='jed %s -g %d'
-export PAGER=most
+export PAGER=less
+#export PAGER=most
+# --- end ---
+
+# other settings
+export LS_OPTIONS="--color=auto"
+export BROWSER=firefox
+cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
+cpus=$(($cpus + 1))
+export MAKEFLAGS="-j$cpus"
+export __GL_YIELD='USLEEP'
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --color=always'
 
-alias ls='ls --color'
-alias ll='ls --color -lha'
+alias ll='ls --color=auto -lha'
+alias ls='ls --color=auto'
 
+alias cls='clear'
+alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias log30='tail -n 30 /var/log/messages'
 alias netlog='netstat -lptu4'
 alias xmerge='xrdb -merge ~/.Xdefaults'
+alias xmonitor-off='xset dpms force off'
+alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
+if [ ! -x "$(command -v calc)" ]; then
+	if [ -x "$(command -v wcalc)" ]; then
+		alias calc='wcalc'
+	else
+		alias calc='function _bc(){ echo $* | bc -l };_bc'
+	fi
+fi
+alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
+_git_s(){
+	git add .
+	git commit -m "$*"
+	git push
+}
+alias git-s='_git_s'
 
