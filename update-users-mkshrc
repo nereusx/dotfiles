@@ -1,0 +1,20 @@
+#!/bin/tcsh -f
+#
+#	copies the .mkshrc to all users of the system
+#
+
+set echo_style=both
+set src = .mkshrc
+if ( ! -e $src ) set src = dotfiles/.mkshrc
+if ( ! -e $src ) set src = /root/.mkshrc
+
+echo "root\t$src -> /root"
+cp $src /root
+foreach dir ( /home/* )
+	set name = $dir:t
+	echo "$name\t$src -> $dir"
+	cp $src $dir
+	chown ${name}:${name} $dir/${src:t}
+end
+
+

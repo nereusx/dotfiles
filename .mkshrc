@@ -87,7 +87,10 @@ if [ ! -x "$(command -v calc)" ]; then
 	if [ -x "$(command -v wcalc)" ]; then
 		alias calc='wcalc'
 	else
-		alias calc='function _bc(){ echo $* | bc -l };_bc'
+		_bc(){
+			echo "$*" | bc -l
+			}
+		alias calc='_bc'
 	fi
 fi
 alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
