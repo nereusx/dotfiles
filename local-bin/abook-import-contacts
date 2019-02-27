@@ -1,0 +1,3 @@
+#!/bin/tcsh -f
+
+abook --convert --informat vcard --infile "$*" --outformat abook --outfile ~/.abook/addressbook
