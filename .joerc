@@ -6,7 +6,7 @@
 -force
 -autoindent
 -linums
--backpath ~/.backup/saves
+-backpath ~/.backup/text
 -marking
 --wordwrap
 -restore
