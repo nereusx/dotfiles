@@ -14,11 +14,11 @@
       <outline title="RT - Daily news" text="RT - Daily news" type="rss" xmlUrl="http://rt.com/rss/" htmlUrl="https://www.rt.com/"/>
       <outline title="Ημεροδρόμος" text="Ημεροδρόμος" type="rss" xmlUrl="http://www.imerodromos.gr/feed/" htmlUrl="http://www.imerodromos.gr/"/>
       <outline title="INFOWAR" text="INFOWAR" type="rss" xmlUrl="http://info-war.gr/feed/" htmlUrl="https://info-war.gr/"/>
-      <outline title="Η Εφημερίδα των Συντακτών - Η Εφημερίδα των Συντακτών στο διαδίκτυο" text="Η Εφημερίδα των Συντακτών - Η Εφημερίδα των Συντακτών στο διαδίκτυο" type="rss" xmlUrl="http://www.efsyn.gr/?feed=rss2" htmlUrl="http://www.efsyn.gr/node"/>
+      <outline title="Η Εφημερίδα των Συντακτών - Η Εφημερίδα των Συντακτών στο διαδίκτυο" text="Η Εφημερίδα των Συντακτών" type="rss" xmlUrl="http://www.efsyn.gr/feed.xml" htmlUrl="http://www.efsyn.gr/node"/>
       <outline title="The PressProject - www.thepressproject.gr" text="The PressProject - www.thepressproject.gr" type="rss" xmlUrl="http://www.thepressproject.gr/xml/rss_analiseis.xml" htmlUrl="https://www.thepressproject.gr/"/>
       <outline title="ΠΡΕΖΑ TV ©" text="ΠΡΕΖΑ TV ©" type="rss" xmlUrl="http://feeds.feedburner.com/blogspot/zDhNz?format=xml" htmlUrl="http://prezatv.blogspot.com/"/>
       <outline title="Νέα, κατάλογος για Αλληλέγγυα, Κοινωνική Οικονομία enallaktikos.gr" text="Νέα, κατάλογος για Αλληλέγγυα, Κοινωνική Οικονομία enallaktikos.gr" type="rss" xmlUrl="http://www.enallaktikos.gr/rss.php" htmlUrl="http://www.enallaktikos.gr/"/>
-      <outline title="teleSURtv.net" text="teleSURtv.net" type="rss" xmlUrl="https://www.telesurenglish.net/rss/RssWorld.xml" htmlUrl="http://www.telesurenglish.net/"/>
+      <outline title="teleSURtv.net" text="teleSURtv.net" type="rss" xmlUrl="https://www.telesurenglish.net/rss/RssHome.html" htmlUrl="http://www.telesurenglish.net/"/>
     </outline>
     <outline title="Επιστήμη" text="Επιστήμη">
       <outline title="Biology4u.gr" text="Biology4u.gr" type="rss" xmlUrl="http://www.biology4u.gr/?feed=rss2" htmlUrl="http://www.biology4u.gr/"/>
