@@ -338,6 +338,9 @@ if ( ! -X calc ) then
 endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-s 'git add .; git commit -m ''\!*''; git push'
+if ( -X paps ) then
+	alias a2ps 'paps'
+endif
 # --- end ---
 
 # directory stuff
@@ -378,5 +381,8 @@ endif
 # --- end ---
 
 unset list
+if ( -f ~/.tcshrc.local ) then
+	source ~/.tcshrc.local
+endif
 
 #EOF
