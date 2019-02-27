@@ -31,6 +31,7 @@ struct s_list {
 static list_t path_list;
 static list_t new_dirs;
 
+/*
 // clone a string
 static char *strdup(const char *src)
 {
@@ -38,6 +39,7 @@ static char *strdup(const char *src)
     strcpy(buf, src);
 	return buf;
 }
+*/
 
 // add node to list
 static void node_add(list_t *list, const char *str)
