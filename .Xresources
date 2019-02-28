@@ -8,10 +8,10 @@ Xft.autohint: 1
 
 !Xcursor.theme: Oxygen_White
 Xcursor.size:  32
-!rxvt.font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
-uterm*Font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
-uterm*font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
-pterm.Font: -xsg-xsg fixed 166-*-*-*-*-*-140-*-*-*-*-*-*
+!rxvt.font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
+uterm*Font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
+uterm*font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
+pterm.Font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
 pterm.ScrollBar: 0
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -57,7 +57,7 @@ XTerm*font6: -*-fixed-medium-r-*-*-20-*-*-*-*-*-iso10646-*
 ! Resources:
 ! http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
-urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
+;urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 1024
@@ -82,6 +82,7 @@ urxvt.secondaryScroll:  true
 !urxvt.boldItalicFont: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
 
 urxvt.font: \
+	xft:XSG Fixed 167:pixelsize=16,\
 	xft:NCCode:pixelsize=15, \
 	xft:NCCode:pixelsize=13, \
 	7x14B,7x14, \

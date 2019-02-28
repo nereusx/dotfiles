@@ -3,8 +3,9 @@
 #	~/.tcshrc
 #	nicholas christopoulos (nereus@freemail.gr)
 
-# run tmux ?
-set use_tmux = 0
+# toys
+#set use_tmux		# run tmux ?
+#set use_powerline	# enable `powerline' status line
 
 # (non-)interactive absolute values
 set parseoctal
@@ -63,7 +64,7 @@ if ( $?loginsh ) then # we are login shell..
 endif
 
 # redirect to tmux
-if ( $use_tmux == 1 ) then
+if ( $?use_tmux ) then
 	if ( $?TMUX == 0 ) then
 		exec tmux
 	endif
@@ -365,7 +366,7 @@ alias dirs 'dirs -v'
 # alias periodic checknews
 
 ### tmux specific ###
-if ( $use_tmux == 1 ) then
+if ( $?use_tmux ) then
 	if ( $?TMUX != 0 ) then
 		alias tmux-lf		'tmux select-pane -L'
 		alias tmux-rt		'tmux select-pane -R'
@@ -377,11 +378,20 @@ if ( $use_tmux == 1 ) then
 		uncomplete tmux
 		complete   tmux     "p/1/(${tmux_cmds})/"
 	endif
+else
+	if ( $?use_powerline ) then
+		if ( -f `which powerline-daemon` ) then
+			powerline-daemon -q
+			setenv POWERLINE_TCSH_CONTINUATION 1
+			setenv POWERLINE_TCSH_SELECT 1
+			source /usr/share/powerline/bindings/tcsh/powerline.tcsh
+		endif
+	endif
 endif
 # --- end ---
 
 unset list
-if ( -f ~/.tcshrc.local ) then
+if ( -r ~/.tcshrc.local ) then
 	source ~/.tcshrc.local
 endif
 
