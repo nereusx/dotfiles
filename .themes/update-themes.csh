@@ -10,12 +10,10 @@
 set list = (\
 	https://github.com/horst3180/Arc-theme\
 	https://github.com/EliverLara/Sweet.git\
-	https://github.com/daniruiz/flat-remix-gtk.git\
 	https://github.com/vinceliuice/Qogir-theme.git\
 	https://github.com/paullinuxthemer/Mc-OS-themes\
 	https://github.com/bolimage/Ultimate-Maia\
 	https://gitlab.com/LinxGem33/X-Arc-White\
-	https://github.com/bolimage/Dark-Aurora\
 	https://github.com/EliverLara/Ant\
 	https://github.com/vinceliuice/matcha\
 	)

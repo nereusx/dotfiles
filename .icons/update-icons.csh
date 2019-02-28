@@ -27,7 +27,31 @@ foreach repo ( $list )
 	else
 		git clone $repo
 	endif
+	if ( $name == "Ultimate-Maia-Icons" ) then
+		cd $name
+		foreach ic ( *Maia )
+			if ( -d $ic ) then
+				cp -r $ic ~/.icons
+				gtk-update-icon-cache ~/.icons/$ic
+			endif
+		end
+		cd ..
+	else
+		gtk-update-icon-cache "$name"
+	endif
 end
+
+# papirus
+if ( -X apt-get ) then
+	set ppa=papirus
+	if ( ! { grep -q "^deb .*$ppa" /etc/apt/sources.list /etc/apt/sources.list.d/* } ) then
+		sudo add-apt-repository ppa:papirus/papirus } )
+		sudo apt-get update
+		sudo apt-get install papirus-icon-theme
+	endif
+else
+	sudo wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-icon-theme/master/install.sh | sh
+endif
 
 echo "\e[1m### done ###\e[0m"
 
