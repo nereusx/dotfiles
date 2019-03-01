@@ -2,15 +2,15 @@
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
 !urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
-urxvt.iconFile: ~/.icons/urxvt-icon.png
+urxvt.iconFile: /home/nikosc/.icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 1024
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
-!urxvt.geometry: 132x35
-urxvt.geometry: 150x40
+urxvt.geometry: 133x37
+!urxvt.geometry: 150x40
 
 urxvt.cursorColor: #00ff00
 urxvt.cursorBlink: true
@@ -48,8 +48,8 @@ urxvt.scrollBar:false
 !urxvt.scrollTtyKeypress: true
 
 ! clipboard
-!urxvt.clipboard.copycmd: xsel -ib
-!urxvt.clipboard.pastecmd: xsel -cb
+urxvt.clipboard.copycmd: xsel -ib
+urxvt.clipboard.pastecmd: xsel -cb
 
 ! URL selection
 !urxvt.url-select.launcher: /usr/bin/xdg-open
@@ -152,8 +152,8 @@ URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
 
 ! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
 ! I dont know why, but I needed to use hex keysym values to get it to work
-!URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
-!URxvt.keysym.C-S-0x56: eval:paste_clipboard
+URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
+URxvt.keysym.C-S-0x56: eval:paste_clipboard
 
 !Xft.dpi: 126
 !Xft.dpi: 96

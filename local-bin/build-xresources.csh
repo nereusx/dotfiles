@@ -5,10 +5,15 @@ if ( -d ~/.xres ) then
 	foreach f ( ~/.xres/*.res )
 		cat $f >> ~/.Xresources
 	end
+	echo -n "${HOME}/.Xresources created"
 	if ( $?DISPLAY ) then
-		xrdb -merge ~/.Xresources
+		if ( { xrdb -merge ~/.Xresources } ) then
+			echo -n " and merged"
+		else
+			echo -n ", but NOT merged"
+		endif
 	endif
-	echo "done"
+	echo .
 else
 	echo "~/.xres does not exists"
 endif

@@ -152,6 +152,6 @@ URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
 
 ! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
 ! I dont know why, but I needed to use hex keysym values to get it to work
-!URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
-!URxvt.keysym.C-S-0x56: eval:paste_clipboard
+URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
+URxvt.keysym.C-S-0x56: eval:paste_clipboard
 
