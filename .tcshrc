@@ -342,6 +342,12 @@ alias git-s 'git add .; git commit -m ''\!*''; git push'
 if ( -X paps ) then
 	alias a2ps 'paps'
 endif
+if ( -X surfraw ) then
+	setenv SURFRAW_graphical_browser /usr/bin/firefox
+	setenv SURFRAW_text_browser /usr/bin/w3m
+	setenv SURFRAW_graphical no
+	alias ddg 'surfraw duckduckgo'
+endif
 # --- end ---
 
 # directory stuff
