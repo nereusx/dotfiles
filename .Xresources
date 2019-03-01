@@ -58,6 +58,7 @@ XTerm*font6: -*-fixed-medium-r-*-*-20-*-*-*-*-*-iso10646-*
 ! http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
 !urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
+urxvt.iconFile: ~/.icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 1024
