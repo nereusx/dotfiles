@@ -1,4 +1,5 @@
-;Xft.dpi: 96
+!Xft.dpi: 126
+!Xft.dpi: 96
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.hintstyle: hintfull
@@ -8,7 +9,6 @@ Xft.autohint: 1
 
 !Xcursor.theme: Oxygen_White
 Xcursor.size:  32
-!rxvt.font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
 uterm*Font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
 uterm*font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
 pterm.Font: -xsg-xsg fixed 166-*-*-*-*-*-*-*-*-*-*-*-*
@@ -57,14 +57,13 @@ XTerm*font6: -*-fixed-medium-r-*-*-20-*-*-*-*-*-iso10646-*
 ! Resources:
 ! http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
-;urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
+!urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 1024
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
-!urxvt.geometry: 112x28
 !urxvt.geometry: 132x35
 urxvt.geometry: 150x40
 
@@ -82,13 +81,9 @@ urxvt.secondaryScroll:  true
 !urxvt.boldItalicFont: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
 
 urxvt.font: \
+	xft:XSG Fixed 178:pixelsize=17,\
 	xft:XSG Fixed 167:pixelsize=16,\
-	xft:NCCode:pixelsize=15, \
-	xft:NCCode:pixelsize=13, \
 	7x14B,7x14, \
-	xft:XSG Fixed 167:pixelsize=16,\
-	xft:PragmataPro:pixelsize=14,\
-	-ndchristopoulos-vgac-c16-r-normal--17-160-75-75-c-80-iso10646-1,\
 	xft:Terminus:bold:pixelsize=15
 
 ! full example of xft format, URxvt.font: xft:monaco:bold:size=10
@@ -120,7 +115,8 @@ urxvt.reverseVideo: false
 
 ! blackish with transparency
 urxvt.depth: 32
-urxvt.background: rgba:0000/0000/0000/cccc
+urxvt.background: rgba:0000/0000/0000/dddd
+!urxvt.background: rgba:0000/0000/0000/cccc
 !urxvt.foreground: white
 
 ! VGA Colors
@@ -182,9 +178,9 @@ urxvt*color15: #FFFFFF
 
 !! shift+down = newtab, shift+left/right = go to prev/next tab, ctrl+left/right=move tab
 !! ctrl+d = close tab
-urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbedex
+urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
 
-URxvt.url-launcher: dwb
+URxvt.url-launcher: firefox
 URxvt.matcher.button:  1
 URxvt.colorUL: #4682B4
 URxvt.tabbed.tabbar-fg: 2
@@ -195,12 +191,12 @@ URxvt.tabbed.autohide:  yes
 URxvt.tabbed.new-button: no
 URxvt.tabbed.title: yes
 URxvt.tabbed.reopen-on-close: yes
-URxvt.keysym.Control-t: perl:tabbedex:new_tab
-URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
-!URxvt.keysym.Control-Shift-Left: perl:tabbedex:move_tab_left
-!URxvt.keysym.Control-Shift-Right: perl:tabbedex:move_tab_right
-!URxvt.keysym.Control-Shift-R: perl:tabbedex:rename_tab
+!URxvt.keysym.Control-t: perl:tabbed:new_tab
+!URxvt.keysym.Control-Tab: perl:tabbed:next_tab
+!URxvt.keysym.Control-Shift-Tab: perl:tabbed:prev_tab
+!URxvt.keysym.Control-Shift-Left: perl:tabbed:move_tab_left
+!URxvt.keysym.Control-Shift-Right: perl:tabbed:move_tab_right
+!URxvt.keysym.Control-Shift-R: perl:tabbed:rename_tab
 
 URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
 
