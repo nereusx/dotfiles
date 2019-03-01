@@ -2,15 +2,15 @@
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
 !urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
-urxvt.iconFile: ~/.icons/urxvt-icon.png
+urxvt.iconFile: /home/nikosc/.icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 1024
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
-!urxvt.geometry: 132x35
-urxvt.geometry: 150x40
+urxvt.geometry: 133x37
+!urxvt.geometry: 150x40
 
 urxvt.cursorColor: #00ff00
 urxvt.cursorBlink: true
@@ -48,8 +48,8 @@ urxvt.scrollBar:false
 !urxvt.scrollTtyKeypress: true
 
 ! clipboard
-!urxvt.clipboard.copycmd: xsel -ib
-!urxvt.clipboard.pastecmd: xsel -cb
+urxvt.clipboard.copycmd: xsel -ib
+urxvt.clipboard.pastecmd: xsel -cb
 
 ! URL selection
 !urxvt.url-select.launcher: /usr/bin/xdg-open
