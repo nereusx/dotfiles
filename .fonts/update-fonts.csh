@@ -3,7 +3,7 @@
 set list = (\
 	https://github.com/agarick/agave\
 	https://github.com/nereusx/xsg-fonts\
-	https://github.com/phoikoi/VT323\
+	https://github.com/wlifferth/paragon\
 	)
 
 # system installation
