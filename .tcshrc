@@ -344,7 +344,7 @@ if ( -X paps ) then
 endif
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser /usr/bin/firefox
-	setenv SURFRAW_text_browser /usr/bin/w3m
+	setenv SURFRAW_text_browser /usr/bin/links2
 	setenv SURFRAW_graphical no
 	alias ddg 'surfraw duckduckgo'
 endif
