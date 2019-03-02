@@ -17,8 +17,6 @@ rsync
 exfat-utils
 samba
 nbtscan
-hexdump
-hte
 surfraw
 console-setup
 xfonts-terminus
@@ -64,7 +62,7 @@ xclip
 x11-apps
 build-essential
 gawk
-ncurses-dev
+libncurses-dev
 make
 cmake
 autoconf
@@ -90,3 +88,4 @@ libbsd-dev
 wput
 vlock
 mpg123
+elinks

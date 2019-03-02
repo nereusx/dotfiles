@@ -45,7 +45,7 @@ end
 if ( -X apt-get ) then
 	set ppa=papirus
 	if ( ! { grep -q "^deb .*$ppa" /etc/apt/sources.list /etc/apt/sources.list.d/* } ) then
-		sudo add-apt-repository ppa:papirus/papirus } )
+		sudo add-apt-repository ppa:papirus/papirus
 		sudo apt-get update
 		sudo apt-get install papirus-icon-theme
 	endif
