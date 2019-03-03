@@ -174,6 +174,7 @@ setenv PAGER less
 
 # other settings
 setenv BROWSER firefox
+setenv TEXTBROWSER elinks
 
 set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
 @ cpus ++
@@ -342,9 +343,14 @@ alias git-s 'git add .; git commit -m ''\!*''; git push'
 if ( -X paps ) then
 	alias a2ps 'paps'
 endif
+if ( -X neomutt ) then
+	if ( ! -X mutt ) then
+		alias mutt 'neomutt'
+	endif
+endif
 if ( -X surfraw ) then
-	setenv SURFRAW_graphical_browser /usr/bin/firefox
-	setenv SURFRAW_text_browser /usr/bin/links2
+	setenv SURFRAW_graphical_browser $BROWSER
+	setenv SURFRAW_text_browser $TEXTBROWSER
 	setenv SURFRAW_graphical no
 	alias ddg 'surfraw duckduckgo'
 endif

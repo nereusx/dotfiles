@@ -1,0 +1,18 @@
+#!/bin/tcsh -f
+
+set echo_style=both
+set src = .tcshrc
+if ( ! -e $src ) set src = dotfiles/.tcshrc
+if ( ! -e $src ) set src = /root/.tcshrc
+
+echo "root\t$src -> /root"
+cp -r $src /root
+foreach dir ( /home/* )
+	set name = $dir:t
+	echo "$name\t$src -> $dir"
+	cp -r $src $dir
+	chmod 0600 $dir/${src:t}
+	chown ${name}:${name} $dir/${src:t}
+end
+
+
