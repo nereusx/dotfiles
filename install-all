@@ -12,9 +12,15 @@ foreach file ( .tcshrc .mkshrc .login .Xresources .nanorc .jed .help .emacs .ema
 		set name = $dir:t
 		cp -r $src $dir
 		chown -R ${name}:${name} $dir/${src:t}
-		chmod -R 0600 $dir/${src:t}
+		if ( $file == ".help" || $file == ".bin" ) then
+			chmod -R 0700 $dir/${src:t}
+		else
+			chmod -R 0600 $dir/${src:t}
+		endif
 		chmod -R u+X $dir/${src:t}
 	end
 end
+install -m 755 local-bin/* /usr/local/bin/
+tar xvfz nano-syntax-hl.tgz -C /
 
 
