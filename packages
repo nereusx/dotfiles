@@ -105,3 +105,6 @@ recode
 libhunspell-dev
 arc-theme
 alien
+lnav
+htop
+iotop
