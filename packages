@@ -77,6 +77,8 @@ mupdf
 mupdf-tools
 zenity
 musl
+musl-dev
+musl-tools
 adb
 fastboot
 avahi-daemon
@@ -90,3 +92,15 @@ vlock
 mpg123
 elinks
 intltool
+texlive-lang-english
+texlive-lang-greek
+texlive-xetex
+texlive-pstricks
+xindy
+texlive-pictures
+binutils-dev
+bison
+flex
+recode
+libhunspell-dev
+arc-theme
