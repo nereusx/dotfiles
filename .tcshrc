@@ -221,8 +221,9 @@ endif
 # --- end ---
 
 ### prompt
+unset ampm
 set ellipsis
-set prompt = "%B%{\033[35m%}%t %{\033[32m%}%n@%m%b %C4 %# "
+set prompt = "%B%{\033[35m%}%T %{\033[32m%}%n@%m%b %C4 %# "
 
 ###	history
 set histlit
