@@ -1,8 +1,8 @@
 # Environment variable assignments
 PATH=/bin:/usr/bin:/usr/local/bin 
 VERBOSE=off                   # Turn on for verbose log
-MAILDIR=$HOME/Mail            # Where Procmail recipes deliver
-LOGFILE=$HOME/.procmaillog    # Keep a log for troubleshooting.
+MAILDIR=$HOME/mail            # Where Procmail recipes deliver
+LOGFILE=$HOME/.procmail.log   # Keep a log for troubleshooting.
 
 # Recipes
 :0:
@@ -11,5 +11,5 @@ mutt
 
 #sort spam
 :0
-* ^Subject:.*(mortgage|debt|free|training|mentor|ENTOS|SATO)
+* ^Subject:.*(mortgage|debt|training|mentor|ENTOS|SATO)
 garbage
