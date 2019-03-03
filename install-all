@@ -3,10 +3,11 @@
 set echo_style=both
 foreach file ( .tcshrc .mkshrc .login .Xresources .nanorc\
 				.jed .help .emacs .emacs.d .joerc .xres .themes .icons .fonts\
-				.bc .procmailrc .fetchmailrc .msmtprc .msmtp.log .gitconfig .muttrc )
+				.bc .gitconfig )
 	set src = $file
 	if ( ! -e $src ) set src = dotfiles/$file
 	if ( ! -e $src ) set src = /root/$file
+	if ( ! -e $src ) continue
 
 	echo "$src"
 	cp -r $src /root
