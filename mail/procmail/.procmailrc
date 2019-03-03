@@ -1,7 +1,7 @@
 # Environment variable assignments
 PATH=/bin:/usr/bin:/usr/local/bin 
 VERBOSE=off                   # Turn on for verbose log
-MAILDIR=$HOME/mail            # Where Procmail recipes deliver
+MAILDIR=$HOME/.mail           # Where Procmail recipes deliver
 LOGFILE=$HOME/.procmail.log   # Keep a log for troubleshooting.
 
 # Recipes

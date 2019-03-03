@@ -10,10 +10,10 @@ set sendmail="/usr/bin/msmtp"
 set query_command = "abook --mutt-query '%s'"
 
 # if not set in environment variables:
-set spoolfile = /var/spool/mail/user
+set spoolfile = /var/spool/mail/$USER
 
 # folders
-set folder="~/mail"                # Mailboxes in here
+set folder="~/.mail"                # Mailboxes in here
 set record="+sent"                 # where to store sent messages
 set postponed="+postponed"         # where to store draft messages
 set move=no                        # Don't move mail from the spool.
