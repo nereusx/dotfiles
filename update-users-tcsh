@@ -6,7 +6,7 @@ foreach file ( .tcshrc .login )
 	set src = $file
 	if ( ! -e $src ) set src = dotfiles/$file
 	if ( ! -e $src ) set src = /root/$file
-	if ( ! -e $src ) exit 1
+	if ( ! -e $src ) continue
 
 	echo "root\t$src -> /root"
 	cp -r $src /root
