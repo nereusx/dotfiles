@@ -3,7 +3,7 @@
 if ( -d ~/.xres ) then
 	if ( -e ~/.Xresources ) mv ~/.Xresources ~/.Xresources.bak
 	foreach f ( ~/.xres/*.res )
-		echo "!! === ${f}: " >> ~/.Xresources
+		echo "!  === ${f}: " >> ~/.Xresources
 		cat $f >> ~/.Xresources
 	end
 	echo -n "${HOME}/.Xresources created"
