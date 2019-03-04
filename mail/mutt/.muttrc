@@ -1,19 +1,17 @@
-# generic .muttrc
-# for multiple accounts see ./mutt/*
-
-set realname = "Nicholas Christopoulos"
-set from = user@server.gr
-set use_from = yes
-set envelope_from ="yes"
+# .muttrc for use with multiple accounts of ~/.mutt
+# copy it to ${home}
+set realname      = "My Name"
+set from          = username@server.domain
+set send_charset  = "utf-8"
 
 # SMTP client: msmtp 
-set sendmail="/usr/bin/msmtp"
+set sendmail="/usr/bin/msmtp -a default"
 
 # address book
 set query_command = "abook --mutt-query '%s'"
 
 # if not set in environment variables:
-set spoolfile = /var/spool/mail/$USER
+set spoolfile = /var/spool/mail/$user
 
 # folders
 set folder="~/mail"                # Mailboxes in here
@@ -21,8 +19,16 @@ set record="+sent"                 # where to store sent messages
 set postponed="+postponed"         # where to store draft messages
 set move=no                        # Don't move mail from the spool.
 
+set header_cache = "~/.cache/mutt"
+set message_cachedir = "~/.cache/mutt"
+set imap_check_subscribed
+set imap_keepalive = 300
+unset imap_passive
+set mail_check = 60
+
 # watch these mailboxes for new mail:
 mailboxes ! +Fetchmail +slrn +mutt
+
 set sort_browser=alpha    # Sort mailboxes by alpha(bet)
 
 # Order of headers and what to show
@@ -46,3 +52,5 @@ set smart_wrap       # Don't wrap mid-word
 set pager_context=5  # Retain 5 lines of previous page when scrolling.
 set status_on_top    # Status bar on top.
 push <show-version>  # Shows mutt version at startup
+
+

@@ -1,0 +1,6 @@
+# create mutt commands for every account in ~/.mutt
+# copy it to ${home}
+foreach f ( ~/.mutt/* )
+	set name = $f:t
+	alias mutt-$name "mutt -F ~/.mutt/$name"
+end
