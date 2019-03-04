@@ -144,7 +144,7 @@ URxvt.tabbed.reopen-on-close: yes
 !URxvt.keysym.Control-Shift-Right: perl:tabbed:move_tab_right
 !URxvt.keysym.Control-Shift-R: perl:tabbed:rename_tab
 
-URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
+!URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
 
 ! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
 !URxvt.keysym.C-M-c:    builtin-string:
