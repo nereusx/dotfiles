@@ -1,9 +1,10 @@
 #!/bin/tcsh -f
 
 set echo_style=both
-foreach file ( .tcshrc .mkshrc .login .Xresources .nanorc\
-				.jed .help .emacs .emacs.d .joerc .xres .themes .icons .fonts\
-				.bc .gitconfig )
+foreach file ( .tcshrc .mkshrc .login .nanorc\
+				.jed .help .emacs .emacs.d .joerc\
+				.Xresources .xres .themes .icons .fonts\
+				.bc .gitconfig .abook )
 	set src = $file
 	if ( ! -e $src ) set src = dotfiles/$file
 	if ( ! -e $src ) set src = /root/$file
@@ -27,6 +28,5 @@ install -m 755 local-bin/* /usr/local/bin/
 tar xvfz nano-syntax-hl.tgz -C /
 echo "copy .config manually"
 echo "copy .doc-templates and .wallpapers manually"
-echo "edit .msmtprc .muttrc and .fetchmailrc per user"
-
+echo "mail files does not copied"
 
