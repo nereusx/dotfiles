@@ -1,0 +1,2 @@
+#!/bin/sh
+abook --convert --infile ~/.abook/addressbook --outformat pine --outfile ~/.addressbook
