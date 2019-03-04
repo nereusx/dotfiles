@@ -1,0 +1,16 @@
+#!/bin/tcsh -f
+
+set echo_style=both
+tar xvfz nano-syntax-hl.tgz -C /
+
+set src = .nanorc
+echo "root\t$src -> /root"
+cp -r $src /root
+foreach dir ( /home/* )
+	set name = $dir:t
+	echo "$name\t$src -> $dir"
+	cp -r $src $dir
+	chown -R ${name}:${name} $dir/${src:t}
+end
+
+
