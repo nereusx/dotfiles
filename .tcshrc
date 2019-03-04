@@ -378,8 +378,11 @@ endif
 # --- end ---
 
 ### load additional settings if you use my script
-foreach localconf ( ~/.tcshrc-* )
-	source $localconf
-end
+set list = `ls ~/.* | grep '.tcshrc-'`
+if ( $#list ) then
+	foreach conf ( $list )
+		source $conf
+	end
+endif
 
 #EOF
