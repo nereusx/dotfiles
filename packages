@@ -108,3 +108,6 @@ alien
 lnav
 htop
 iotop
+dovecot-imapd
+dovecot-sqlite
+dovecot-antispam

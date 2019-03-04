@@ -4,7 +4,7 @@ set echo_style=both
 foreach file ( .tcshrc .mkshrc .login .nanorc\
 				.jed .help .emacs .emacs.d .joerc\
 				.Xresources .xres .themes .icons .fonts\
-				.bc .gitconfig .abook )
+				.bc .gitconfig .abook .newsboat )
 	set src = $file
 	if ( ! -e $src ) set src = dotfiles/$file
 	if ( ! -e $src ) set src = /root/$file
