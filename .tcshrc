@@ -307,7 +307,6 @@ alias helpcommand 'man \!:1'
 
 ### programs
 alias cdwrite	'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
-alias chrome	'chromium --no-sandbox'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
@@ -317,17 +316,16 @@ if ( ! -X calc ) then
 endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-s 'git add .; git commit -m ''\!*''; git push'
-if ( -X paps ) then
-	alias a2ps 'paps'
-endif
-if ( -X neomutt && ( ! -X mutt ) ) then
-	alias mutt 'neomutt'
-endif
+if ( -X paps ) alias a2ps 'paps'
+if ( -X zssh ) alias ssh  'zssh'
+if ( -X neomutt && ( ! -X mutt ) ) alias mutt 'neomutt'
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser	"$BROWSER"
 	setenv SURFRAW_text_browser			"$TEXTBROWSER"
 	setenv SURFRAW_graphical			no
 	alias ddg 'surfraw duckduckgo'
+else
+	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
 # --- end ---
 
