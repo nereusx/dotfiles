@@ -111,3 +111,5 @@ iotop
 dovecot-imapd
 dovecot-sqlite
 dovecot-antispam
+zssh
+lrzsz
