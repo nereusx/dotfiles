@@ -210,8 +210,9 @@ public variable _cbrief_version_string = "1.0.3";
 %		0x10 = Get control of line_indent
 %		0x20 = Get control of Tabs
 %		0x40 = LAPTOP mode (ctrl+left/right = home/end, ctrl+up/down = page up/down)
+%		0x80 = Readline Home/End (ctrl+a/e = home/end)
 %!%-
-custom_variable("CBRIEF_KBDMODE", 0x20 | 0x08 | 0x04 | 0x02 | 0x01 | 0x40);
+custom_variable("CBRIEF_KBDMODE", 0x20 | 0x08 | 0x04 | 0x02 | 0x01 | 0x40 | 0x80);
 
 %!%+
 %\variable{CBRIEF_OPTSF}
@@ -237,6 +238,7 @@ custom_variable("CBRIEF_OPTSF", 0x00);
 custom_variable("CBRIEF_XTERM", "");
 
 %% --- utilities ----------------------------------------------------------
+private define cbrief_readline_mode()	{ return (CBRIEF_KBDMODE & 0x80); }
 private define cbrief_laptop_mode()		{ return (CBRIEF_KBDMODE & 0x40); }
 private define cbrief_control_tabs()	{ return (CBRIEF_KBDMODE & 0x20); }
 private define cbrief_control_indent()	{ return (CBRIEF_KBDMODE & 0x10); }
@@ -3235,12 +3237,9 @@ static variable _keymap = {
 	{ "cbrief_slide_out(1)",	Key_Shift_Tab },	% Brief Manual: Shift-Tab. Back Tab
 
 	%%	Control keys
-	{ "select_menubar",			"^A" },		 	% undefined in Brief, screen/tmux key, home in readline,
-											 	%	menu key for using in macros (we need a ctrl key for menu) that has no problem with screen/tmux
 	{ "brief_line_to_eow",		"^B" },		 	% Brief Manual: Line to Bottom
 	{ "brief_line_to_mow",		"^C" },		 	% Brief Manual: Center Line in Window. Here: Windows Copy
 	{ "scroll_up_in_place", 	"^D" },		 	% Brief Manual: Scroll Buffer Down
-	{ "scroll_down_in_place",	"^E" },		 	% Brief Manual: Scroll Buffer Up
 	{ "@^AoF",					"^G" },		 	% Brief Manual: Go To Routine (popup list and select); JED/EMACS = abort
 	{ "cbrief_slide_in(1)",		"^I" },		 	% tab
 	{ "cbrief_slide_out(1)",	"\e^I" },	 	% backtab
@@ -3380,6 +3379,18 @@ private define cbrief_build_keymap()
 	_for (0, 9, 1) {
 		e = (); s = string(e);
 		list_append( _keymap, { "cbrief_bkdrop(" + s + ")", "\e" + s });
+		}
+
+	if ( cbrief_readline_mode() ) {
+		list_append( _keymap, { "brief_home",	"^A" } );
+		list_append( _keymap, { "brief_end",	"^E" } );
+		}
+	else {
+		% undefined in Brief, screen/tmux key, home in readline,
+		%	menu key for using in macros (we need a ctrl key for menu) that has no problem with screen/tmux
+		list_append( _keymap, { "select_menubar",			"^A" } );
+		% Brief Manual: Scroll Buffer Up
+		list_append( _keymap, { "scroll_down_in_place",		"^E" } );
 		}
 
 	ifnot ( cbrief_laptop_mode() ) {

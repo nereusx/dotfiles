@@ -1,9 +1,9 @@
-# -*- tab-width: 4; indent-tabs-mode: t -*-
+# -*- tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
 #
 #	~/.tcshrc
-#	nicholas christopoulos (nereus@freemail.gr)
+#	Nicholas Christopoulos (nereus@freemail.gr)
 
-# toys
+# options
 #set use_tmux		# run tmux
 #set use_powerline	# enable `powerline' status line
 
@@ -71,25 +71,36 @@ if ( $?use_tmux ) then
 endif
 # --- end ---
 
-### setup tcsh
+### setup tcsh's environment ###
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
 unset noglob
+#alias beepcmd 'play -q ~/.sounds/shell-beep.mp3'
+unalias beepcmd
+set padhour
+#alias helpcommand '\!:1 --help'
+alias helpcommand 'man \!:1'
+# Runs every tperiod minutes.
+# This provides a convenient means for checking on common but infrequent changes such as new mail.
+# For example, if one does
+#set tperiod = 30
+#alias periodic checknews
 
-# --- EDITORS ---
+### EDITORS ###
 
-# JED
+# settings for JED
 setenv JED_HOME		${HOME}/.jed
+alias jed-prep     'xjed -batch -n -l preparse'
 
-# GRIEF
+# settings for GRIEF
 setenv GRPATH			${HOME}/.grief-local/:/usr/share/grief/macros:/usr/local/share/grief/macros
 setenv GRFLAGS			"-m grief-rc"
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
 
-# default editor
+# select default editor
 set list = ( jed gr nano joe vi )
 foreach e ( $list )
 	if ( -X $e ) then
@@ -100,7 +111,7 @@ foreach e ( $list )
 end
 alias edit "$EDITOR"
 
-# default binary editor
+# select default hex editor
 set list = ( hte dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
@@ -125,9 +136,8 @@ foreach e ( $list )
 		break
 	endif
 end
-# --- end ---
 
-# --- PAGER ---
+### PAGER ###
 setenv LS_OPTIONS		'--color=auto'
 setenv LESS 			'-R'
 setenv GROFF_ENCODING	'utf8'
@@ -149,22 +159,39 @@ setenv MOST_SWITCHES	'-w'
 setenv MOST_EDITOR		'jed %s -g %d'
 setenv PAGER less
 #setenv PAGER most
-# --- end ---
 
-# other settings
-setenv BROWSER			firefox
-setenv TEXTBROWSER		links
+### other settings
 
+# select graphics browser
+set list = ( firefox falkon yandex-browser surf midori dillo chromium chrome )
+foreach e ( $list )
+	if ( -X $e ) then
+		setenv BROWSER "$e"
+		break
+	endif
+end
+
+# select textmode browser
+set list = ( links links2 w3m elinks lynx )
+foreach e ( $list )
+	if ( -X $e ) then
+		setenv TEXTBROWSER "$e"
+		break
+	endif
+end
+
+# use make in so many threads as your processors
 set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
 @ cpus ++
 setenv MAKEFLAGS "-j$cpus"
 
+# OpenGL settings
 setenv __GL_YIELD 'USLEEP'
 
 # HOW-TO: shut up KDE's debug messages; 
 #	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
 
-### TERMINAL FIXES ###
+### TERMINAL FIXES and KEYBINDs
 if ( $?COLORTERM ) then
 	if ( $COLORTERM == "truecolor" ) then
 		setenv COLORTERM color
@@ -218,7 +245,6 @@ else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 endif
-# --- end ---
 
 ### prompt
 unset ampm
@@ -257,56 +283,49 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 # --- end ---
 
 ###	aliases
-#alias rcopy 'rsync -ah --progress'
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
-alias cls 'clear'
-alias diogenis 'fortune diogenis'
-alias free-h 'free -h'
-alias df-h 'df -h'
-alias jed-prep 'xjed -batch -n -l preparse'
+alias cls          'clear'
+alias diogenis     'fortune diogenis'
+alias free-h       'free -h'
+alias df-h         'df -h'
+alias xcopy        'rsync -ah --progress'
 # colorize
 set color
 set colorcat
-alias ls	'ls    --color'
-alias ll	'ls    --color -lha'
-alias grep	'grep  --color=auto'
-alias egrep	'egrep --color=auto'
-alias dmesg	'dmesg --color=always'
-alias diff	'diff  --color=auto'
+alias ls	       'ls    --color'
+alias ll	       'ls    --color -lha'
+alias grep	       'grep  --color=auto'
+alias egrep	       'egrep --color=auto'
+alias dmesg	       'dmesg --color=always'
+alias diff	       'diff  --color=auto'
 
 if ( $USER != 'root' ) then
 	# sudo
-	alias htop 'sudo htop'
-	alias fdisk 'sudo fdisk'
-	alias cfdisk 'sudo cfdisk'
-	if ( -X apt ) alias apt 'sudo apt'
+	alias htop     'sudo htop'
+	alias fdisk    'sudo fdisk'
+	alias cfdisk   'sudo cfdisk'
+	if ( -X dpkg )    alias dpkg    'sudo dpkg'
+	if ( -X apt )     alias apt     'sudo apt'
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
-# info
+### information utilities
 if ( $distro == "unix" ) then
-	alias log30 'sudo tail -n 30 /var/log/messages'
+	alias log30    'sudo tail -n 30 /var/log/messages'
 else
-	alias log30 'sudo tail -n 30 /var/log/syslog'
+	alias log30    'sudo tail -n 30 /var/log/syslog'
 endif
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
-alias netlog 'sudo netstat -lptu4'
-alias topmemproc '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
-alias whereami	'echo "`hostname -f` (`hostname -i`):`pwd`"'
-alias xmerge 'xrdb -merge ~/.Xresources'
+alias netlog       'sudo netstat -lptu4'
+alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
+alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
+alias xmerge       'xrdb -merge ~/.Xresources'
 alias xmonitor-off 'xset dpms force off'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
 
-# environment
-#alias beepcmd '/usr/bin/play -q /usr/share/sounds/shell-beep.mp3'
-unalias beepcmd
-set padhour
-#alias helpcommand '\!:1 --help'
-alias helpcommand 'man \!:1'
-
-### programs
-alias cdwrite	'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
+### generic programs
+alias cdwrite	   'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
@@ -316,9 +335,13 @@ if ( ! -X calc ) then
 endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-s 'git add .; git commit -m ''\!*''; git push'
+# paps support UTF8, a2ps don't
 if ( -X paps ) alias a2ps 'paps'
+# zssh is ssh with ZModem support
 if ( -X zssh ) alias ssh  'zssh'
+# mutt or neomutt ?
 if ( -X neomutt && ( ! -X mutt ) ) alias mutt 'neomutt'
+# command line web search
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser	"$BROWSER"
 	setenv SURFRAW_text_browser			"$TEXTBROWSER"
@@ -327,9 +350,8 @@ if ( -X surfraw ) then
 else
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
-# --- end ---
 
-# directory stuff
+### directory stuff
 set dunique
 set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
@@ -342,13 +364,6 @@ endif
 set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
-# --- end ---
-
-# Runs every tperiod minutes.
-# This provides a convenient means for checking on common but infrequent changes such as new mail.
-# For example, if one does
-# set tperiod = 30
-# alias periodic checknews
 
 ### tmux specific ###
 if ( $?use_tmux ) then
@@ -359,6 +374,7 @@ if ( $?use_tmux ) then
 		alias tmux-dn		'tmux select-pane -D'
 		alias tmux-reload	'tmux source-file ~/.tmux.conf'
 		
+		# create completion for tmux
 		set tmux_cmds = `tmux list-commands | awk '{print$1}'`
 		uncomplete tmux
 		complete   tmux     "p/1/(${tmux_cmds})/"
