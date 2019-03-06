@@ -12,7 +12,7 @@ void _startup_complete(int mode)
 	assign_to_key("<Ctrl-V>", "paste");
 
 /* Easy search */
-	assign_to_key("<Ctrl-Q>", "feature");
+/*	assign_to_key("<Ctrl-Q>", "feature"); this was alt+f */
 	assign_to_key("<Alt-S>",  "search_fwd");
 	assign_to_key("<Ctrl-S>", "search_back");
 	assign_to_key("<Alt-F>",  "search_next");
@@ -22,6 +22,10 @@ void _startup_complete(int mode)
 	assign_to_key("<Ctrl-Down>", inq_assignment("<PgDn>"));
 	assign_to_key("<Ctrl-Left>", inq_assignment("<Home>"));
 	assign_to_key("<Ctrl-Right>", inq_assignment("<End>"));
+
+/* Readline mode */
+	assign_to_key("<Ctrl-A>", inq_assignment("<Home>"));
+	assign_to_key("<Ctrl-E>", inq_assignment("<End>"));
 
 /* Borland's BCB6 keys */
 /*	assign_to_key("<Ctrl-F1>", "topic help"); */

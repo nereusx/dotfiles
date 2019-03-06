@@ -1,0 +1,22 @@
+#!/bin/tcsh -f
+#	copies the GRIEF settings to all users of the system
+
+set echo_style=both
+foreach f ( .grief-local .grinit )
+	set src = $f
+	if ( ! -e $src ) set src = dotfiles/$f
+	if ( ! -e $src ) set src = /root/$f
+	if ( ! -e $src ) continue
+
+	echo "root\t$src -> /root"
+	cp -r $src /root
+	foreach dir ( /home/* )
+		set name = $dir:t
+		echo "$name\t$src -> $dir"
+		cp -r $src $dir
+		chown -R ${name}:${name} $dir/$f
+	end
+end
+echo "\e[33m\e[1mremember to use 'grunch *.cr' at ~/.grief-local\e[0m"
+
+
