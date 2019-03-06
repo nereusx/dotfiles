@@ -2,6 +2,7 @@
 #	copies the GRIEF settings to all users of the system
 
 set echo_style=both
+alias warn 'echo "\e[33m\e[1m"\!*"\e[0m"'
 foreach f ( .grief-local .grinit )
 	set src = $f
 	if ( ! -e $src ) set src = dotfiles/$f
@@ -17,6 +18,7 @@ foreach f ( .grief-local .grinit )
 		chown -R ${name}:${name} $dir/$f
 	end
 end
-echo "\e[33m\e[1mremember to use 'grunch *.cr' at ~/.grief-local\e[0m"
+warn "remember to use 'grunch *.cr' at ~/.grief-local"
+
 
 

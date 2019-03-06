@@ -289,6 +289,9 @@ alias diogenis     'fortune diogenis'
 alias free-h       'free -h'
 alias df-h         'df -h'
 alias xcopy        'rsync -ah --progress'
+alias xmerge       'xrdb -merge ~/.Xresources'
+alias xmonitor-off 'xset dpms force off'
+alias warn         'echo "\e[7m\e[5m "\!*" \e[0m"'
 # colorize
 set color
 set colorcat
@@ -319,8 +322,6 @@ alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog       'sudo netstat -lptu4'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
-alias xmerge       'xrdb -merge ~/.Xresources'
-alias xmonitor-off 'xset dpms force off'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
 
