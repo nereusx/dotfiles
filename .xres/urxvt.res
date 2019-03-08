@@ -1,11 +1,10 @@
 !!	URXVT
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
-!urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
 urxvt.iconFile: /home/nikosc/.icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
-urxvt.saveLines: 1024
+urxvt.saveLines: 4096
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
@@ -151,7 +150,6 @@ URxvt.tabbed.reopen-on-close: yes
 !URxvt.keysym.C-M-v:    builtin-string:
 
 ! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
-! I dont know why, but I needed to use hex keysym values to get it to work
-URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
-URxvt.keysym.C-S-0x56: eval:paste_clipboard
+URxvt.keysym.C-S-c: eval:selection_to_clipboard
+URxvt.keysym.C-S-v: eval:paste_clipboard
 
