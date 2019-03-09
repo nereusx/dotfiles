@@ -1,11 +1,13 @@
 #!/bin/tcsh -f
+#
+#	copy files or directories to all users and sets the ownership
+#
+#	usage:
+#		install-to-users [directory [file [...]]]
 
 set echo_style=both
-
-foreach file ( .tcshrc .login )
-	set src = $file
-	if ( ! -e $src ) set src = dotfiles/$file
-	if ( ! -e $src ) set src = /root/$file
+foreach f ( $* )
+	set src = $f
 	if ( ! -e $src ) continue
 
 	echo "root\t$src -> /root"
@@ -14,9 +16,9 @@ foreach file ( .tcshrc .login )
 		set name = $dir:t
 		echo "$name\t$src -> $dir"
 		cp -r $src $dir
-		chmod 0600 $dir/$file
-		chown ${name}:${name} $dir/$file
+		chown -R ${name}:${name} $dir/$f
 	end
 end
+
 
 
