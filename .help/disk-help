@@ -3,7 +3,7 @@
 hdparm -S 36 /dev/sdX                  Set standby mode after ~3min inactivity
 umount /dev/sdX; hdparm -y /dev/sdX    Set standby mode (-y) or sleep mode (-Y) now
 hdparm -C /dev/sdX                     Report power mode
-hdparm -W /dev/sda                     Enable write-back internal cache
+hdparm -W /dev/sdX                     Enable write-back internal cache
 === FileSystem (ext)
 tune2fs -o journal_data_writeback /dev/sdX
                                        Enable writeback mode. This mode will typically provide the best ext4 performance.
@@ -11,7 +11,7 @@ tune2fs -O ^has_journal /dev/sdX       Disable (and remove) journal
 tune2fs -O has_journal /dev/sdX        Enable journal
 e2fsck -f /dev/sdX                     Required fsck
 e2fsck -a /dev/sdX                     Auto repair fsck
-dumpe2fs /dev/sda10 |more              Check fs options
+dumpe2fs /dev/sdaX | more              Check fs options
 mount ... -o data=writeback,noatime,nodiratime
                                        For less I/O and more performance use these opions
 iotop -obtqqq | grep jbd2              Check journal I/O
