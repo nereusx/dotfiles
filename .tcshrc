@@ -306,7 +306,10 @@ if ( $USER != 'root' ) then
 	# sudo
 	alias htop     'sudo htop'
 	alias fdisk    'sudo fdisk'
+	alias gdisk    'sudo gdisk'
 	alias cfdisk   'sudo cfdisk'
+	alias cgdisk   'sudo cgdisk'
+	alias parted   'sudo parted'
 	if ( -X dpkg )    alias dpkg    'sudo dpkg'
 	if ( -X apt )     alias apt     'sudo apt'
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
