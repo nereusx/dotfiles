@@ -35,3 +35,6 @@ git cat-file type CID     :  view object (CID = Commit ID)
 git log --all --oneline --no-merges --author=nereus@freemail.gr  :  remind yourself what you’ve been up to
 git log --graph --all --decorate --stat --date=iso               :  view complex logs
 cd project; git add .; git commit -a -m "initial commit";        :  initialize git for an existing project
+--- Keep your fork updated
+git remote add firstguy git://github.com/firstguy/repo.git
+git pull firstguy master; git push origin
