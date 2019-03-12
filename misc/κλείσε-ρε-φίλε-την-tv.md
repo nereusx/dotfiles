@@ -97,3 +97,6 @@ http://www.sweethome3d.com/
 
 Εικονικό κομμωτήριο
 http://www.thehairstyler.com/virtual-hairstyler
+
+Εντυπωσιακά προγράμμα σχεδιασμού (και όχι μόνο)
+https://github.com/LisaDziuba/Awesome-Design-Tools
