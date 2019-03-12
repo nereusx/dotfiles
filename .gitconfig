@@ -4,10 +4,18 @@
 name=Nicholas Christopoulos
 email=nereus@freemail.gr
 
-[color]
-ui=true
+[core]
+editor=jed
 
-[color "diff"]
-old=red strike
-new=green bold
+[color]
+status=auto
+branch=auto
+diff=auto
+interactive=auto
+ui=auto
+
+[sendmail]
+smtpserver=/usr/bin/msmtp
+suppresscc=self
+multiedit=false
 
