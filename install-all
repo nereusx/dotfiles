@@ -25,7 +25,7 @@ foreach file ( .tcshrc .mkshrc .login .nanorc\
 	end
 end
 install -m 755 local-bin/* /usr/local/bin/
-tar xvfz nano-syntax-hl.tgz -C /
+./install-nano-syntax-files
 echo "copy .config manually"
 echo "copy .doc-templates and .wallpapers manually"
 echo "mail files does not copied"

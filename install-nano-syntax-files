@@ -1,0 +1,10 @@
+#!/bin/tcsh -f
+set dir=/usr/share/nano-syntax-highlighting/
+if ( ! -e $dir ) then
+	mkdir $dir
+	git clone https://github.com/scopatz/nanorc.git $dir
+else
+	cd $dir
+	git pull
+	cd -
+endif
