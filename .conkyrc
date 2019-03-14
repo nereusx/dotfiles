@@ -9,7 +9,7 @@ imlib_cache_size 10
 gap_x 80
 gap_y 80
 minimum_size 300 0
-maximum_width 500
+maximum_width 300
 alignment top_right
 own_window yes
 own_window_type normal
@@ -68,7 +68,7 @@ ${color 00ff00}${time %H:%M:%S}${color}
 === CPU ===
 ${cpugraph 26,300 FFFFFF FFFFFF -l}
 Cpu:${alignr}${cpu}%
-
+ 
 ${memgraph 26,300 FFFFFF FFFFFF -l}
 Mem:${alignr}$mem / $memmax - ${color FFA300}${memperc}%${color}
 
@@ -86,6 +86,21 @@ ${goto 50}${fs_bar 12,210 /srv}${alignr}${fs_used_perc /srv}%
 ${upspeedgraph enp3s0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph enp3s0 26,145 FFFFFF FFFFFF}
 ${color5}Up: ${color2}${upspeed enp3s0}${color5}${goto 155}Down: ${color2}${downspeed enp3s0}${color}
 ${color5}Sent: ${color2}${totalup enp3s0}${color5}${goto 155}Received: ${color2}${totaldown enp3s0}${color}
+
+${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
+Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
+${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
+${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
+${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
+${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
+${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
+#${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
+${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
+${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
+${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
+${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
+${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
+${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
 
 === PROC ===
 ${color2}${top name 1}${color}${alignr}${top cpu 1} %
