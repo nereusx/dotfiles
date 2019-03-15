@@ -113,3 +113,5 @@ dovecot-sqlite
 dovecot-antispam
 zssh
 lrzsz
+texinfo
+texi2html

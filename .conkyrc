@@ -1,6 +1,6 @@
 # Conky settings #
 background yes
-update_interval 1
+update_interval .5
 double_buffer yes
 no_buffers yes
 imlib_cache_size 10
@@ -53,7 +53,7 @@ default_color FFFFFF
 color0 ffffff
 color1 FFFFFF
 color2 ffa300
-color3 FFFFFF
+color3 00ff00
 color4 FFFFFF
 color5 DCDCDC
 color6 FFFFFF
@@ -61,31 +61,48 @@ color7 FFFFFF
 color8 FFFFFF
 
 TEXT
-NDC System
-${time %A} ${color FFA300}${time %d} ${color EAEAEA}${time %B} ${color FFA300}${time %Y}${color}
-${color 00ff00}${time %H:%M:%S}${color}
+${alignc}NDC System
+${alignc}${time %A} ${color FFA300}${time %d} ${color EAEAEA}${time %B} ${color FFA300}${time %Y}${color}
+Time: ${color 00ff00}${time %H:%M:%S}${color}${alignr}Up: $uptime
 
-=== CPU ===
-${cpugraph 26,300 FFFFFF FFFFFF -l}
-Cpu:${alignr}${cpu}%
- 
-${memgraph 26,300 FFFFFF FFFFFF -l}
-Mem:${alignr}$mem / $memmax - ${color FFA300}${memperc}%${color}
+${alignc}${color3}=== CPU ===${color}
+Cores: 16x${alignr}${color2}${cpu}%${color} - ${freq_g}GHz - ${hwmon temp 1}°C
+${cpu cpu1}%${goto 50}${color4}${cpubar cpu1 13,90}${color}${goto 160}${cpu cpu2}%${goto 210}${color4}${cpubar cpu2 13,90}${color}
+${cpu cpu3}%${goto 50}${color4}${cpubar cpu3 13,90}${color}${goto 160}${cpu cpu4}%${goto 210}${color4}${cpubar cpu4 13,90}${color}
+${cpu cpu5}%${goto 50}${color4}${cpubar cpu5 13,90}${color}${goto 160}${cpu cpu6}%${goto 210}${color4}${cpubar cpu6 13,90}${color}
+${cpu cpu7}%${goto 50}${color4}${cpubar cpu7 13,90}${color}${goto 160}${cpu cpu8}%${goto 210}${color4}${cpubar cpu8 13,90}${color}
+${cpu cpu9}%${goto 50}${color4}${cpubar cpu9 13,90}${color}${goto 160}${cpu cpu10}%${goto 210}${color4}${cpubar cpu10 13,90}${color}
+${cpu cpu11}%${goto 50}${color4}${cpubar cpu11 13,90}${color}${goto 160}${cpu cpu12}%${goto 210}${color4}${cpubar cpu12 13,90}${color}
+${cpu cpu13}%${goto 50}${color4}${cpubar cpu13 13,90}${color}${goto 160}${cpu cpu14}%${goto 210}${color4}${cpubar cpu14 13,90}${color}
+${cpu cpu15}%${goto 50}${color4}${cpubar cpu15 13,90}${color}${goto 160}${cpu cpu16}%${goto 210}${color4}${cpubar cpu16 13,90}${color}
 
-=== DISK ===
-${diskiograph 26,300 FFFFFF FFFFFF -l}
-Disk I/O:${alignr}${diskio}
+${color2}${top name 1}${color}${alignr}${top cpu 1} %
+${color1}${top name 2}${color}${alignr}${top cpu 2} %
+${color1}${top name 3}${color}${alignr}${top cpu 3} %
+${color1}${top name 4}${color}${alignr}${top cpu 4} %
+${color1}${top name 5}${color}${alignr}${top cpu 5} %
 
+${alignc}${color3}=== MEMORY ===${color}
+Mem:${alignr}${color2}$mem${color} / $memmax - ${color2}${memperc}%${color}
+${color2}${top_mem name 1}${color}${alignr}${top_mem mem_res 1}
+${color1}${top_mem name 2}${color}${alignr}${top_mem mem_res 2}
+${color1}${top_mem name 3}${color}${alignr}${top_mem mem_res 3}
+${color1}${top_mem name 4}${color}${alignr}${top_mem mem_res 4}
+${color1}${top_mem name 5}${color}${alignr}${top_mem mem_res 5}
+
+${alignc}${color3}=== STORAGE ===${color}
 Disk${goto 50}Free${goto 100}Used${goto 150}Size
 /${goto 50}${color FFA300}${fs_free /}${color}${goto 100}${fs_used /}${goto 150} ${fs_size /}
 ${goto 50}${fs_bar 12,210 /}${alignr}${fs_used_perc /}%
 /srv${goto 50}${color FFA300}${fs_free /srv}${color}${goto 100}${fs_used /srv}${goto 150}${fs_size /srv}
 ${goto 50}${fs_bar 12,210 /srv}${alignr}${fs_used_perc /srv}%
 
-=== NETWORK ===
-${upspeedgraph enp3s0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph enp3s0 26,145 FFFFFF FFFFFF}
+I/O: ${diskio}${goto 100}${diskiograph 26,200 FFFFFF FFFFFF -l}
+
+${alignc}${color3}=== NETWORK ===${color}
 ${color5}Up: ${color2}${upspeed enp3s0}${color5}${goto 155}Down: ${color2}${downspeed enp3s0}${color}
 ${color5}Sent: ${color2}${totalup enp3s0}${color5}${goto 155}Received: ${color2}${totaldown enp3s0}${color}
+${upspeedgraph enp3s0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph enp3s0 26,145 FFFFFF FFFFFF}
 
 ${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
 Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
@@ -101,16 +118,3 @@ ${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 
 ${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
 ${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
 ${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
-
-=== PROC ===
-${color2}${top name 1}${color}${alignr}${top cpu 1} %
-${color1}${top name 2}${color}${alignr}${top cpu 2} %
-${color1}${top name 3}${color}${alignr}${top cpu 3} %
-${color1}${top name 4}${color}${alignr}${top cpu 4} %
-${color1}${top name 5}${color}${alignr}${top cpu 5} %
-
-${color2}${top_mem name 1}${color}${alignr}${top_mem mem_res 1}
-${color1}${top_mem name 2}${color}${alignr}${top_mem mem_res 2}
-${color1}${top_mem name 3}${color}${alignr}${top_mem mem_res 3}
-${color1}${top_mem name 4}${color}${alignr}${top_mem mem_res 4}
-${color1}${top_mem name 5}${color}${alignr}${top_mem mem_res 5}
