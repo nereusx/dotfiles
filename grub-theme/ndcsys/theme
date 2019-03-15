@@ -1,0 +1,74 @@
+title-text     : ""
+terminal-left  : "0"
+terminal-top   : "0"
+terminal-width : "100%"
+terminal-height: "100%"
+terminal-border: "0"
+desktop-image  : "background.png"
+
++ boot_menu {
+    left                       = "15%"
+    top                        = "20%"
+    width                      = "70%"
+    height                     = "60%"
+    item_font                  = "xsg-fixed199.pf2"
+    item_color                 = "#256cee"
+    selected_item_color        = "white"
+    item_height                = "48"
+    item_spacing               = "10"
+    icon_width                 = "24"
+    icon_height                = "24"
+    item_icon_space            = "20"
+    selected_item_pixmap_style = "selected_*.png"
+}
+
++ label {
+    left  = "0"
+    top   = "100"
+    width = "100%"
+    align = "center"
+    color = "#256cee"
+    font  = "xsg-fixed199.pf2"
+    text  = "CHRISTOPOULOS INDUSTRIES UNIFIED OPERATING SYSTEM"
+}
+
++ label {
+    left  = "0"
+    top   = "140"
+    width = "100%"
+    align = "center"
+    color = "#256cee"
+    font  = "xsg-fixed199.pf2"
+    text  = "COPYRIGHT 1983-2020 CHRISTOPOULOS INDUSTRIES"
+}
+
++ label {
+    left  = "0"
+    top   = "180"
+    width = "100%"
+    align = "center"
+    color = "#25d46c"
+    font  = "xsg-fixed199.pf2"
+    text  = "-Server 1-"
+}
+
++ label {
+    id    = "__timeout__"
+    left  = "0"
+    top   = "98%-120"
+    width = "100%"
+    align = "center"
+    color = "#25d46c"
+    font  = "xsg-fixed199.pf2"
+    text  = "Booting selected entry in %02ds..."
+}
+
++ label {
+    left  = "0"
+    top   = "98%-70"
+    width = "100%"
+    align = "center"
+    color = "#25d46c"
+    font  = "xsg-fixed199.pf2"
+    text  = "↑↓: select, 'c': command-line, 'e': edit"
+}
