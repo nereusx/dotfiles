@@ -41,7 +41,7 @@ if ( $#argv > 0 ) then
 		$catcmd "$*" | groff -Tps -m me > $nf
 		breaksw
 	case mm:
-		$catcmd "$*" | groff -Tps -m me > $nf
+		$catcmd "$*" | groff -Tps -m mm > $nf
 		breaksw
 	case mdoc:
 		$catcmd "$*" | groff -Tps -m mdoc > $nf
