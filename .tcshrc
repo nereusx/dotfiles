@@ -93,14 +93,14 @@ setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
 
 # select default editor
-set list = ( jed gr nano joe vi )
+set list = ( jed gr nano joe vim vi emacs ed )
 foreach e ( $list )
 	if ( -X $e ) then
 		setenv EDITOR $e
-		setenv VISUAL $e
 		break
 	endif
 end
+setenv VISUAL "$EDITOR"
 alias edit "$EDITOR"
 
 # select default hex editor
@@ -120,8 +120,8 @@ else
 endif
 
 # select BRIEF editor
-alias b 'vi'
-set list = ( jed gr emacs nano joe vi )
+alias b "$EDITOR"
+set list = ( jed gr emacs nano )
 foreach e ( $list )
 	if ( -X $e ) then
 		alias b "$e"
@@ -176,9 +176,6 @@ end
 set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
 @ cpus ++
 setenv MAKEFLAGS "-j$cpus"
-
-# OpenGL settings
-setenv __GL_YIELD 'USLEEP'
 
 # HOW-TO: shut up KDE's debug messages; 
 #	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
