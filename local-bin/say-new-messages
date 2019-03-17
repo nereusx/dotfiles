@@ -11,7 +11,6 @@ if ( "$1" != "0" ) then
 			set text="$1 νέα μυνήματα."
 		endif
 	endif
+	speak $text
 endif
-
-speak $text
 

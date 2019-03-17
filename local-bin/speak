@@ -1,14 +1,13 @@
 #!/bin/tcsh -f
 
-# list of greek voices: espeak --voices=el
-
 #set voice=el # default voice, the default greek-voice
 set voice="-v greek-mbrola-1 -s 110 -p 40"
 #set voice="-v el+klatt4 -s 128 -p 32"
 
-set mac = espeak
 if ( -X espeak-ng ) then
 	set mac = espeak-ng
+else
+	set mac = espeak
 endif
 $mac $voice "$*" --stdout | play - -q >& /dev/null
 
