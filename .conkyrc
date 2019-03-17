@@ -1,6 +1,6 @@
 # Conky settings #
 background yes
-update_interval .5
+update_interval 1
 double_buffer yes
 no_buffers yes
 imlib_cache_size 10

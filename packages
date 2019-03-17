@@ -115,3 +115,5 @@ zssh
 lrzsz
 texinfo
 texi2html
+davfs2
+smbnetfs
