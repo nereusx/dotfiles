@@ -1,2 +1,4 @@
-to-ogg: *.{wav,mp3}          do ffmpeg -i %f %b.ogg
-to-png: *.{jpg,gif,jpeg,JPG} do convert %f %b.png
+help: -h
+version: -v
+to-ogg: *.wav *.mp3          do ffmpeg -i %f %b.ogg
+to-png: *.jpg *.jpeg         do convert %f %b.png
