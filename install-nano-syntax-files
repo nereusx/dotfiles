@@ -2,7 +2,7 @@
 set dir=/usr/share/nano-syntax-highlighting/
 if ( ! -e $dir ) then
 	mkdir $dir
-	git clone https://github.com/scopatz/nanorc.git $dir
+	git clone https://github.com/scopatz/nanorc $dir
 else
 	cd $dir
 	git pull
