@@ -335,12 +335,12 @@ if ( ! -X calc ) then
 endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-s 'git add .; git commit -m ''\!*''; git push'
-# paps support UTF8, a2ps don't
-if ( -X paps ) alias a2ps 'paps'
-# zssh is ssh with ZModem support
-if ( -X zssh ) alias ssh  'zssh'
-# mutt or neomutt ?
-if ( -X neomutt && ( ! -X mutt ) ) alias mutt 'neomutt'
+## paps support UTF8, a2ps don't
+#if ( -X paps ) alias a2ps 'paps'
+## zssh is ssh with ZModem support
+#if ( -X zssh ) alias ssh  'zssh'
+## mutt or neomutt ?
+#if ( -X neomutt && ( ! -X mutt ) ) alias mutt 'neomutt'
 # command line web search
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser	"$BROWSER"
