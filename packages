@@ -117,3 +117,9 @@ texinfo
 texi2html
 davfs2
 smbnetfs
+xlockmore
+php-db
+php-log
+php-mbstring
+php-intl
+php-cache-lite
