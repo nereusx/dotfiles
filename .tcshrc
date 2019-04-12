@@ -378,8 +378,17 @@ endif
 # --- end ---
 
 ### load additional settings if you use my script
-set list = `ls ~/.* | grep '.tcshrc-'`
-if ( $#list ) then
+
+if ( -d ~/.tcsh ) then
+	if ( `ls ~/.tcsh/*` != "" ) then
+		set list = ( ~/.tcsh/* )
+		foreach conf ( $list )
+			source $conf
+		end
+	endif
+endif
+if ( `ls ~/.tcshrc-*` != "" ) then
+	set list = ( ~/.tcshrc-* )
 	foreach conf ( $list )
 		source $conf
 	end
