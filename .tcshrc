@@ -334,6 +334,9 @@ if ( ! -X calc ) then
 		alias calc 'echo \!* | bc -l'
 	endif
 endif
+if ( -r /var/lib/dpkg/status ) then
+	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
+endif
 alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
 alias git-s 'git add .; git commit -m ''\!*''; git push'
 ## paps support UTF8, a2ps don't
@@ -366,7 +369,7 @@ set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
 
-### tmux specific ###
+# 
 if ( $?use_powerline ) then
 	if ( -f `which powerline-daemon` ) then
 		powerline-daemon -q
@@ -379,19 +382,17 @@ endif
 
 ### load additional settings if you use my script
 
+set nonomatch
 if ( -d ~/.tcsh ) then
-	if ( `ls ~/.tcsh/*` != "" ) then
-		set list = ( ~/.tcsh/* )
-		foreach conf ( $list )
-			source $conf
-		end
-	endif
-endif
-if ( `ls ~/.tcshrc-*` != "" ) then
-	set list = ( ~/.tcshrc-* )
+	set list = ( ~/.tcsh/* )
 	foreach conf ( $list )
-		source $conf
+		if ( -r $conf ) source $conf
 	end
 endif
+set list = ( ~/.tcshrc-* )
+foreach conf ( $list )
+	if ( -r $conf ) source $conf
+end
+unset nonomatch
 
 #EOF
