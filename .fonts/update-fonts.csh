@@ -30,6 +30,7 @@ foreach repo ( $list )
                 git clone $repo
         endif
 end
+#wget https://github.com/be5invis/Iosevka/releases/latest
 
 # system install
 if ( $?install_to_system ) then
