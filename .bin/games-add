@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$#" -eq  "0" ]; then
+	echo go to game directory and use
+	echo '$ games-add <executable> [<shortname>]'
+	exit
+fi
+
+if [ -z "$2" ]; then
+	name="$1"
+	name="${name%.*}"
+else
+	name="$2"
+fi
+
+file="$HOME/.bin/.games/$name"
+echo 'dir="'$(pwd)'"' > "$file"
+echo 'exe="./'"$1"'"' >> "$file"
+
+echo $(basename "$file") added

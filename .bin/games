@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cd ~/.bin
+games=$(ls ~/.bin/.games/)
+for f in $games; do
+	echo $f
+	if [ "$1" = "$f" ]; then
+		. ~/.bin/.games/$f
+		pgrep wineserver && wineserver -k
+		cd "$dir"
+		exec wine "$exe"
+		#pgrep wineserver && wineserver -k
+	fi
+done
+
+
+
