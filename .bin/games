@@ -1,6 +1,5 @@
 #!/bin/sh
 
-cd ~/.bin
 if [ ! -d ~/.bin/.games ]; then
 	mkdir ~/.bin/.games
 fi
@@ -10,9 +9,14 @@ for f in $games; do
 	if [ "$1" = "$f" ]; then
 		. ~/.bin/.games/$f
 		pgrep wineserver && wineserver -k
-		cd "$dir"
-		exec wine "$exe"
-		#pgrep wineserver && wineserver -k
+		if [ -d "$dir" ]; then
+			cd "$dir"
+			exec wine "$exe"
+			#pgrep wineserver && wineserver -k
+		else
+			echo "the game's [$dir] directory does not exists"
+			exit 1
+		fi
 	fi
 done
 
