@@ -1,6 +1,9 @@
 #!/bin/sh
 
 cd ~/.bin
+if [ ! -d ~/.bin/.games ]; then
+	mkdir ~/.bin/.games
+fi
 games=$(ls ~/.bin/.games/)
 for f in $games; do
 	echo $f
