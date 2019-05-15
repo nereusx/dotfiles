@@ -1,13 +1,13 @@
-# file: /etc/systemd/system/hdsleep.service
+# file: /etc/systemd/system/hdparm.service
 #
-# Set HDD parameters tp sleep...
+# Set HDD parameters on boot and after resume...
 #
-# systemctl enable hdsleep
+# systemctl enable hdparm
 # systemctl daemon-reload
 
 [Unit]
-Description=Sleep HD
-After=suspend.target
+Description=HDD Parameters
+After=sleep.target
 
 [Service]
 Type=oneshot
@@ -17,4 +17,4 @@ ExecStart=/sbin/hdparm -S 6 /dev/disk/by-id/ata-WDC_WD40EFRX-68N32N0_WD-WCC7K2XJ
 ExecStart=/sbin/hdparm -S 6 /dev/disk/by-id/ata-WDC_WD40EFRX-68WT0N0_WD-WCC4E4YTFZ2K
 
 [Install]
-WantedBy=suspend.target basic.target
+WantedBy=sleep.target basic.target
