@@ -36,12 +36,27 @@ endif
 
 ### this is an interactive shell ###
 set DS = \$
+if ( ! $?HOSTNAME ) then
+	setenv HOSTNAME `hostname`
+endif
 
 # find distro
-if ( "`uname -a | grep -i ubuntu`" != "" ) then
-	set distro=ubuntu
+if ( -X apt-get ) then
+	if ( "`uname -a | grep -i ubuntu`" != "" ) then
+		set distro = ubuntu
+	else
+		set distro = debian
+	endif
+	set dstype = debian
 else
-	set distro=unix
+	set dstype = unix
+	if ( -X slackpkg ) then
+		set distro = slackware
+	else if ( -X pkg ) then
+		set distro = bsd
+	else
+		set distro = unix
+	endif
 endif
 
 # dirty hack for ssh on slack
@@ -330,7 +345,7 @@ if ( $USER != 'root' ) then
 endif
 
 ### information utilities
-if ( $distro == "unix" ) then
+if ( $dstype == "unix" ) then
 	alias log30    'sudo tail -n 30 /var/log/messages'
 else
 	alias log30    'sudo tail -n 30 /var/log/syslog'
