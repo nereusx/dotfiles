@@ -35,12 +35,21 @@ if ( $?prompt == 0 ) then # we are shell script
 endif
 
 ### this is an interactive shell ###
+set DS = \$
 
 # find distro
 if ( "`uname -a | grep -i ubuntu`" != "" ) then
 	set distro=ubuntu
 else
 	set distro=unix
+endif
+
+# dirty hack for ssh on slack
+set x = `ps aux | grep "sshd\: $USER" | wc -l`
+if ( $x >= 2 ) then
+	echo "ssh connection detected"
+	setenv TCSH_SSH_SESSION 1
+	setenv TERM screen
 endif
 
 # setup several local directories
@@ -235,6 +244,12 @@ else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 endif
 
+if ( $?TCSH_SSH_SESSION ) then
+	bindkey "OH" beginning-of-line
+	bindkey "OF" end-of-line
+	bindkey "[3~" delete-char
+endif
+
 ### prompt
 unset ampm
 set ellipsis
@@ -288,6 +303,9 @@ alias xcopy        'rsync -ah --progress'
 alias xmerge       'xrdb -merge ~/.Xresources'
 alias xmonitor-off 'xset dpms force off'
 alias warn         'echo "\e[7m\e[5m "\!*" \e[0m"'
+alias ltrim		   "sed 's/^[ \t\n\r]*//'"
+alias rtrim		   "sed 's/[ \t\n\r]*$DS//'"
+alias trim		   "sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 # colorize
 set color
 set colorcat

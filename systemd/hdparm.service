@@ -13,8 +13,10 @@ After=sleep.target
 Type=oneshot
 
 # Enable automatic spin down after 30 seconds for the second, infrequently used disk
-ExecStart=/sbin/hdparm -S 6 /dev/disk/by-id/ata-WDC_WD40EFRX-68N32N0_WD-WCC7K2XJU6P0
-ExecStart=/sbin/hdparm -S 6 /dev/disk/by-id/ata-WDC_WD40EFRX-68WT0N0_WD-WCC4E4YTFZ2K
+# 5 sec * 6  = 30 sec
+# 5 sec * 60 =  5 min
+ExecStart=/sbin/hdparm -S 60 /dev/disk/by-id/ata-WDC_WD40EFRX-68N32N0_WD-WCC7K2XJU6P0
+ExecStart=/sbin/hdparm -S 60 /dev/disk/by-id/ata-WDC_WD40EFRX-68WT0N0_WD-WCC4E4YTFZ2K
 
 [Install]
 WantedBy=sleep.target basic.target
