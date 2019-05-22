@@ -71,7 +71,10 @@ endif
 setenv backup $home/.backup
 set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
 foreach e ( $list )
-	if ( ! -e $e ) mkdir -m=0700 -p $e
+	if ( ! -e $e ) then
+		mkdir -p $e
+		chmod 0700 $e
+	endif
 end
 
 # setup and cleanup PATH
@@ -197,9 +200,11 @@ foreach e ( $list )
 end
 
 # use make in so many threads as your processors
-set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
-@ cpus ++
-setenv MAKEFLAGS "-j$cpus"
+if ( -e /proc/cpuinfo ) then
+	set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
+	@ cpus ++
+	setenv MAKEFLAGS "-j$cpus"
+endif
 
 # HOW-TO: shut up KDE's debug messages; 
 #	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
