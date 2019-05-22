@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
 
-set todo = def
+set todo = help
 if ( $#argv > 0 ) then
 	set todo = $1
 endif
@@ -86,6 +86,10 @@ case restart:
 	sv restart $2
 	breaksw
 
+case status:
+	sv status $2
+	breaksw
+
 case -av:
 case avail:
 	set la = ( /etc/sv/* )
@@ -138,7 +142,7 @@ default:
 	echo "--- services ---"
 	echo "-e | enable  service"
 	echo "-d | disable service"
-	echo "start | stop | restart service"
+	echo "start | stop | restart | status service"
 	echo "-av  | avail                 available services"
 	echo "-nav | notavail              not available services"
 endsw
