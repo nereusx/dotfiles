@@ -1,0 +1,99 @@
+#!/bin/tcsh -f
+
+set todo = def
+if ( $#argv > 0 ) then
+	set todo = $1
+endif
+switch ( $todo )
+case -i:
+case i:
+case install:
+	xbps-install $argv[2-]
+	breaksw
+case remove:
+	xbps-remove $argv[2-]
+	breaksw
+case reinstall:
+	xbps-remove $argv[2-]
+	xbps-install $argv[2-]
+	breaksw
+case -u:
+case u:
+case update:
+	xbps-install -SAuy $argv[2-]
+	breaksw
+
+#
+case show:
+	xbps-query -S $argv[2-]
+	breaksw
+case -s:
+case s:
+case search:
+	xbps-query -R -s $argv[2-]
+	breaksw
+case -rs:
+case rs:
+	xbps-query -R --regex -s $argv[2-]
+	breaksw
+case -f:
+case -fs:
+case f:
+case fs:
+case file-search:
+	xbps-query -f $argv[2-]
+	breaksw
+
+#
+#	services
+#
+case enable:
+	if ( -d /etc/sv/$2 ) then
+		ln -svf /etc/sv/$2 /var/service/$2
+	else
+		echo "ERROR [/etc/sv/$2] not a directory"
+	endif
+	breaksw
+
+case disable:
+	if ( -e /var/service/$2 ) then
+		rm /var/service/$2
+	else
+		echo "ERROR [/var/service/$2] does not exists"
+	endif
+	breaksw
+
+case start:
+	sv start $2
+	breaksw
+
+case stop:
+	sv stop $2
+	breaksw
+
+case restart:
+	sv restart $2
+	breaksw
+
+case avail:
+	set la = ( /etc/sv/* )
+	set lb = ( /var/service/* )
+	foreach a ( $la )
+		set found = 0
+		foreach b ( $lb )
+			if ( $a:t == $b:t ) then
+				set found = 1
+				break
+			endif
+		end
+		
+		if ( $found == 0 ) then
+			echo $a:t
+		endif
+	end
+	breaksw
+
+default:
+	xbps-install $*
+endsw
+

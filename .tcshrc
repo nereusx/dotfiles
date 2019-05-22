@@ -41,31 +41,44 @@ if ( ! $?HOSTNAME ) then
 endif
 
 # find distro
-if ( -X apt-get ) then
-	if ( "`uname -a | grep -i ubuntu`" != "" ) then
-		set distro = ubuntu
-	else
-		set distro = debian
-	endif
-	set dstype = debian
+if ( -X xbps-install ) then
+	setenv DISTRO void
+	setenv OSTYPE void
+else if ( -X slackpkg ) then
+	setenv DISTRO slackware
+	setenv OSTYPE unix
+else if ( $?OSTYPE ) then
+	setenv DISTRO "$OSTYPE"
 else
-	set dstype = unix
-	if ( -X slackpkg ) then
-		set distro = slackware
-	else if ( -X pkg ) then
-		set distro = bsd
+	if ( -X apt-get ) then
+		if ( "`uname -a | grep -i ubuntu`" != "" ) then
+			setenv DISTRO ubuntu
+		else
+			setenv DISTRO debian
+		endif
+		setenv OSTYPE debian
+	else if ( -X xbps-install ) then
+		setenv DISTRO void
+		setenv OSTYPE void
 	else
-		set distro = unix
+		setenv OSTYPE unix
+		if ( -X slackpkg ) then
+			setenv DISTRO slackware
+		else if ( -X pkg ) then
+			setenv DISTRO bsd
+		else
+			setenv DISTRO unix
+		endif
 	endif
 endif
 
 # dirty hack for ssh on slack
-set x = `ps aux | grep "sshd\: $USER" | wc -l`
-if ( $x >= 2 ) then
-	echo "ssh connection detected"
-	setenv TCSH_SSH_SESSION 1
-	setenv TERM screen
-endif
+#set x = `ps aux | grep "sshd\: $USER" | wc -l`
+#if ( $x >= 2 ) then
+#	echo "ssh connection detected"
+#	setenv TCSH_SSH_SESSION 1
+#	setenv TERM screen
+#endif
 
 # setup several local directories
 setenv backup $home/.backup
@@ -264,7 +277,8 @@ else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 endif
 
-if ( $?TCSH_SSH_SESSION ) then
+# SSH ???
+if ( $?REMOTEHOST ) then
 	bindkey "OH" beginning-of-line
 	bindkey "OF" end-of-line
 	bindkey "[3~" delete-char
@@ -350,8 +364,10 @@ if ( $USER != 'root' ) then
 endif
 
 ### information utilities
-if ( $dstype == "unix" ) then
+if ( $OSTYPE == "unix" ) then
 	alias log30    'sudo tail -n 30 /var/log/messages'
+else if ( $OSTYPE == "void" ) then
+	alias log30    'sudo tail -n 30 /var/log/dmesg.log'
 else
 	alias log30    'sudo tail -n 30 /var/log/syslog'
 endif
