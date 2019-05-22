@@ -364,13 +364,13 @@ if ( $USER != 'root' ) then
 endif
 
 ### information utilities
-if ( $OSTYPE == "unix" ) then
-	alias log30    'sudo tail -n 30 /var/log/messages'
-else if ( $OSTYPE == "void" ) then
-	alias log30    'sudo tail -n 30 /var/log/dmesg.log'
-else
-	alias log30    'sudo tail -n 30 /var/log/syslog'
-endif
+set list = ( /var/log/messages /var/log/syslog /var/log/dmesg.log )
+foreach e ( $list )
+	if ( -r $e ) then
+		alias log30 "tail -n 30 $e"
+		break
+	endif
+end
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog       'sudo netstat -lptu4'
 alias phplog		'sudo tail /var/log/apache2/error.log'
