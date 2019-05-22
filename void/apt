@@ -10,6 +10,8 @@ case i:
 case install:
 	xbps-install $argv[2-]
 	breaksw
+case -r:
+case r:
 case remove:
 	xbps-remove $argv[2-]
 	breaksw
@@ -24,7 +26,10 @@ case update:
 	breaksw
 
 #
+case -v:
+case info:
 case show:
+case view:
 	xbps-query -S $argv[2-]
 	breaksw
 case -s:
@@ -47,20 +52,26 @@ case file-search:
 #
 #	services
 #
+case -e:
 case enable:
-	if ( -d /etc/sv/$2 ) then
-		ln -svf /etc/sv/$2 /var/service/$2
-	else
-		echo "ERROR [/etc/sv/$2] not a directory"
-	endif
+	foreach f ( $argv[2-] )
+		if ( -d /etc/sv/$f ) then
+			ln -svf /etc/sv/$f /var/service/$f
+		else
+			echo "ERROR [/etc/sv/$f] not a directory"
+		endif
+	end
 	breaksw
 
+case -d
 case disable:
-	if ( -e /var/service/$2 ) then
-		rm /var/service/$2
-	else
-		echo "ERROR [/var/service/$2] does not exists"
-	endif
+	foreach f ( $argv[2-] )
+		if ( -e /var/service/$f ) then
+			rm /var/service/$f
+		else
+			echo "ERROR [/var/service/$f] does not exists"
+		endif
+	end
 	breaksw
 
 case start:
@@ -75,6 +86,7 @@ case restart:
 	sv restart $2
 	breaksw
 
+case -av:
 case avail:
 	set la = ( /etc/sv/* )
 	set lb = ( /var/service/* )
@@ -93,7 +105,41 @@ case avail:
 	end
 	breaksw
 
+case -nav:
+case notavail:
+	set la = ( /etc/sv/* )
+	set lb = ( /var/service/* )
+	foreach a ( $la )
+		set found = 0
+		foreach b ( $lb )
+			if ( $a:t == $b:t ) then
+				set found = 1
+				break
+			endif
+		end
+		
+		if ( $found != 0 ) then
+			echo $a:t
+		endif
+	end
+	breaksw
+
+help:
 default:
-	xbps-install $*
+	echo "--- packages ---"
+	echo "-i | install packs"
+	echo "-r | remove packs"
+	echo "-u | update/upgrade all"
+	echo "reinstall packs"
+	echo "s | search pattern"
+	echo "s | search pattern"
+	echo "show | info | view package"
+	echo " "
+	echo "--- services ---"
+	echo "-e | enable  service"
+	echo "-d | disable service"
+	echo "start | stop | restart service"
+	echo "-av  | avail                 available services"
+	echo "-nav | notavail              not available services"
 endsw
 
