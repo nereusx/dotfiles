@@ -4,7 +4,7 @@ xorg-apps
 xapps-devel
 xorg-fonts
 nerd-fonts
-dejavu-fonts-tt
+dejavu-fonts-ttf
 font-fantasque-sans-ttf
 ttf-ubuntu-font-family
 terminus-font
