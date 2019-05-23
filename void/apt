@@ -27,11 +27,13 @@ case update:
 
 #
 case -v:
+case v:
 case info:
 case show:
 case view:
-	xbps-query -S $argv[2-]
+	xbps-query -R -S $argv[2-]
 	breaksw
+
 case -s:
 case s:
 case search:
