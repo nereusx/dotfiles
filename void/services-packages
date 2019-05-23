@@ -6,4 +6,5 @@ avahi-ui-utils
 avahi-utils
 avahi-discover
 fuse-sshfs
+nfs-utils
 
