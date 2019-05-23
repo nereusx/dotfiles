@@ -1,10 +1,15 @@
 cronie
 rsyslog
+mariadb
+mariadb-client
+fuse-sshfs
+dovecot
 avahi
 avahi-autoipd
 avahi-ui-utils
 avahi-utils
 avahi-discover
-fuse-sshfs
 nfs-utils
+samba
+smbclient
 
