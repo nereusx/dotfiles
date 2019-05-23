@@ -1,0 +1,4 @@
+echo 'LANG=el_GR.UTF-8' >> /etc/environment
+edit /etc/default/libc-locales and uncomment el_GR.UTF-8, C and en_US.UTF-8
+xbps-reconfigure -f glibc-locales
+

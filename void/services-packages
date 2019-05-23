@@ -1,0 +1,9 @@
+cronie
+rsyslog
+avahi
+avahi-autoipd
+avahi-ui-utils
+avahi-utils
+avahi-discover
+fuse-sshfs
+
