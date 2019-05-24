@@ -85,7 +85,18 @@ case stop:
 	breaksw
 
 case restart:
-	sv restart $2
+	switch ( $2 )
+	case avahi:
+		set service = avahi-daemon
+		breaksw
+	case nfs:
+	case nfsd:
+		set service = nfs-server
+		breaksw
+	default:
+		set service = $2
+	endsw
+	sv restart $service
 	breaksw
 
 case status:
