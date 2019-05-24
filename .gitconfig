@@ -7,6 +7,9 @@ email=nereus@freemail.gr
 [core]
 editor=jed
 
+[http]
+postBuffer=1073741824
+
 [color]
 status=auto
 branch=auto
