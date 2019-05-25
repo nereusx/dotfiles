@@ -1,6 +1,6 @@
 # dotfiles
 
-Slackware64 14.2, VoidLinux, Xubuntu64 18.10
+Slackware64 14.2, VoidLinux, Xubuntu64 18.10, FreeBSD
 
 ## Help files
 Help files are written for 132x35 terminals
