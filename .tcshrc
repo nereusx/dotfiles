@@ -57,15 +57,10 @@ else
 			setenv DISTRO debian
 		endif
 		setenv OSTYPE debian
-	else if ( -X xbps-install ) then
-		setenv DISTRO void
-		setenv OSTYPE void
 	else
 		setenv OSTYPE unix
-		if ( -X slackpkg ) then
-			setenv DISTRO slackware
-		else if ( -X pkg ) then
-			setenv DISTRO bsd
+		if ( -X pkg ) then
+			setenv DISTRO BSD
 		else
 			setenv DISTRO unix
 		endif
