@@ -75,30 +75,43 @@ endif
 #	setenv TERM screen
 #endif
 
-# setup several local directories
+#
+#	setup several local directories
+#
 setenv backup $home/.backup
-set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
-foreach e ( $list )
-	if ( ! -e $e ) then
-		mkdir -p $e
-		chmod 0700 $e
-	endif
-end
+if ( ! -d $backup ) then
+	# setup several local directories
+	set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
+	foreach e ( $list )
+		if ( ! -e $e ) then
+			mkdir -p $e
+			chmod 0700 $e
+		endif
+	end
+endif
 
-# setup and cleanup PATH
+#
+#	setup and cleanup path
+#
 set path = ( $home/.bin $home/.help $path )
-if ( -e '/bin/path++' ) setenv PATH `/bin/path++`
+if ( -X 'path++' ) then
+	setenv PATH `/bin/path++`
+endif
 
-# login shell?
+#
+#	login shell
+#
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
+		# code for TTY, (i.e. setterm --blank ... etc)
 		# enable keypad
 		echo -n '\033='
 	endif
 endif
-# --- end ---
 
-### setup tcsh's environment ###
+#
+#	setup tcsh's environment
+#
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -114,7 +127,9 @@ alias helpcommand 'man \!:1'
 #set tperiod = 30
 #alias periodic checknews
 
-### EDITORS ###
+#
+#	Default Applications
+#
 
 # settings for JED
 setenv JED_HOME		${HOME}/.jed
@@ -217,7 +232,9 @@ endif
 # HOW-TO: shut up KDE's debug messages; 
 #	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
 
-### TERMINAL FIXES and KEYBINDs
+#
+#	TERMINAL FIXES and KEYBINDs
+#
 if ( $?COLORTERM ) then
 	if ( $COLORTERM == "truecolor" ) then
 		setenv COLORTERM color
@@ -279,10 +296,14 @@ if ( $?REMOTEHOST ) then
 	bindkey "[3~" delete-char
 endif
 
-### prompt
+#
+#	prompt
+#
 unset ampm
 set ellipsis
 set prompt = "%B%{\033[35m%}%T %{\033[32m%}%n@%m%b %C4 %# "
+
+### other settings 
 
 ###	history
 set histlit
