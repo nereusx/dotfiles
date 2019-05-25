@@ -154,7 +154,7 @@ setenv VISUAL "$EDITOR"
 alias edit "$EDITOR"
 
 # select default hex editor
-set list = ( hte dhex )
+set list = ( hte mcedit dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
 	if ( -X $e ) then
