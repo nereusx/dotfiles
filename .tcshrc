@@ -67,14 +67,6 @@ else
 	endif
 endif
 
-# dirty hack for ssh on slack
-#set x = `ps aux | grep "sshd\: $USER" | wc -l`
-#if ( $x >= 2 ) then
-#	echo "ssh connection detected"
-#	setenv TCSH_SSH_SESSION 1
-#	setenv TERM screen
-#endif
-
 #
 #	setup several local directories
 #
