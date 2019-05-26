@@ -22,7 +22,7 @@ switch ( $todo )
 #
 case -i:
 case install:
-	xbps-install -y $argv[2-]
+	xbps-install $argv[2-]
 	breaksw
 case -r:
 case remove:
@@ -34,7 +34,7 @@ case reinstall:
 	breaksw
 case -u:
 case update:
-	xbps-install -Suy $argv[2-]
+	xbps-install -Su $argv[2-]
 	breaksw
 
 #
