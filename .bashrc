@@ -1,9 +1,18 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+umask 022
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+
+#
+if [ -f /etc/os-release ]; then
+	. /etc/os-release
+	export DISTRO="$NAME"
+else
+	export DISTRO="$(uname -o)"
+fi
 
 # setup several local directories
 backup=$HOME/.backup
@@ -198,6 +207,10 @@ elif [ -f /var/log/httpd/error.log ]; then
 fi
 alias netlog='netstat -lptu4'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
+
+if [[ $DISTRO == "Void" ]]; then
+	alias man="man -O width=$(tput cols) "
+fi
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
