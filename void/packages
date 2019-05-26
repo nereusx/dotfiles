@@ -79,3 +79,5 @@ sc
 tcpdump
 ufw
 ufw-extras
+meld
+units
