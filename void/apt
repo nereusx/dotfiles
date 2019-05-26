@@ -89,30 +89,42 @@ case disable:
 	breaksw
 
 case start:
-	sv start $2
-	breaksw
-
 case stop:
-	sv stop $2
-	breaksw
-
-case restart:
-	switch ( $2 )
-	case avahi:
-		set service = avahi-daemon
-		breaksw
-	case nfs:
-	case nfsd:
-		set service = nfs-server
-		breaksw
-	default:
-		set service = $2
-	endsw
-	sv restart $service
-	breaksw
-
 case status:
-	sv status $2
+case restart:
+	foreach f ( $argv[2-] )
+		#	
+		switch ( $f )
+		case avahi:
+			set service = avahi-daemon
+			breaksw
+		case nfs:
+		case nfsd:
+			set service = nfs-server
+			breaksw
+		case samba:
+		case smb:
+			set service = smbd
+			breaksw
+		default:
+			set service = $f
+		endsw
+		#
+		switch ( $todo )
+		case start:
+			sv restart $service
+			breaksw
+		case stop:
+			sv stop $service
+			breaksw
+		case restart:
+			sv restart $service
+			breaksw
+		case status:
+			sv status $service
+			breaksw
+		endsw
+	end
 	breaksw
 
 case -av:
