@@ -380,9 +380,11 @@ if ( $USER != 'root' ) then
 endif
 
 alias setxtitle		"echo '''\033]0;\!*\007'''"
-alias setxhost		"echo '''\033]0;⟪$HOSTNAME:au⟫\007'''"
+alias setxhost		"echo '''\033]0;※$HOSTNAME:au※\007'''"
 if ( $?REMOTEHOST ) then
-	setxhost
+	if ( $TERM =~ "xterm*" ) then
+		setxhost
+	endif
 endif
 
 
