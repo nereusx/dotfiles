@@ -231,3 +231,13 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+#####
+for e in ~/.bashrc-*; do
+	if [ -f $e ]; then
+		. $e
+	fi
+done
+
+
+
