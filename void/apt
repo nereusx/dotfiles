@@ -93,7 +93,6 @@ case stop:
 case status:
 case restart:
 	foreach f ( $argv[2-] )
-		#	
 		switch ( $f )
 		case avahi:
 			set service = avahi-daemon
@@ -109,21 +108,7 @@ case restart:
 		default:
 			set service = $f
 		endsw
-		#
-		switch ( $todo )
-		case start:
-			sv restart $service
-			breaksw
-		case stop:
-			sv stop $service
-			breaksw
-		case restart:
-			sv restart $service
-			breaksw
-		case status:
-			sv status $service
-			breaksw
-		endsw
+		sv $todo $service
 	end
 	breaksw
 
