@@ -379,6 +379,13 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
+alias setxtitle		"echo '''\033]0;\!*\007'''"
+alias setxhost		"echo '''\033]0;⟪$HOSTNAME:au⟫\007'''"
+if ( $?REMOTEHOST ) then
+	setxhost
+endif
+
+
 ### information utilities
 set list = ( /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )

@@ -162,6 +162,10 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_Home = "OH";
 		Key_End = "OF";
 		}
+	if ( getenv("OSTYPE") == "void" && getenv("REMOTEHOST") != NULL ) {
+		Key_Home = "OH";
+		Key_End = "OF";
+		}
 	}
 else if ( term == "linux" ) {
 	Key_BS = "";
