@@ -389,6 +389,10 @@ if ( $?REMOTEHOST ) then
 	endif
 endif
 
+if ( $DISTRO == "void" ) then
+	alias man 'man -O width=`tput cols` '
+endif
+
 
 ### information utilities
 set list = ( /var/log/messages /var/log/syslog /var/log/dmesg.log )
