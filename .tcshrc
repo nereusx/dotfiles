@@ -394,9 +394,16 @@ foreach e ( $list )
 		break
 	endif
 end
+set list = ( /var/log/apache2/error.log /var/log/httpd/error.log /var/log/apache/error.log )
+foreach e ( $list )
+	if ( -r $e ) then
+		alias phplog "tail -n 30 $e"
+		break
+	endif
+end
+
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog       'sudo netstat -lptu4'
-alias phplog		'sudo tail /var/log/apache2/error.log'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 # use system time command (time of process execution statistics) instead of tcsh time
