@@ -78,7 +78,18 @@ alias ls='ls --color=auto'
 
 alias cls='clear'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-alias log30='tail -n 30 /var/log/messages'
+list=(/var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
+for e in $list; do
+	if [ -f $e ]; then
+		alias log30="tail -n 30 $e"
+		break
+	fi
+done
+if [ -f /var/log/apache2/error.log ]; then
+	alias phplog='tail /var/log/apache2/error.log'
+elif [ -f /var/log/httpd/error.log ]; then
+	alias phplog='tail /var/log/httpd/error.log'
+fi
 alias netlog='netstat -lptu4'
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
@@ -101,3 +112,9 @@ function _git_s {
 }
 alias git-s='_git_s'
 
+# load local mkshrc files
+for e in ~/.mkshrc-*; do
+	if [ -f $e ]; then
+		. $e
+	fi
+done

@@ -36,5 +36,9 @@ if ( ! -d /usr/share/wallpapers ) then
 fi
 cp wallpapers/* /usr/share/wallpapers
 
+if ( ! -d /srv/file-server ) then
+	mkdir -p /srv/file-server
+endif
+cp fserv-sync /srv/file-server
 
 
