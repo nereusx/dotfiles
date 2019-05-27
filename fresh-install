@@ -54,7 +54,7 @@ cp wallpapers/*.{png,jpg} /usr/share/wallpapers
 if ( ! -d /usr/share/sounds/generic ) then
 	mkdir /usr/share/sounds/generic
 fi
-cp sounds/* /usr/share/sounds/generic
+cp sounds/*.ogg /usr/share/sounds/generic
 
 
 
