@@ -61,3 +61,7 @@ arc-theme
 papirus-icon-theme
 lazarus
 rawtherapee
+lightdm
+dia
+lightdm-gtk3-greeter
+lightdm-gtk-greeter-settings
