@@ -1,2 +1,0 @@
-#!/bin/sh
-ntpdate -s 3.gr.pool.ntp.org

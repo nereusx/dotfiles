@@ -1,0 +1,40 @@
+#!/bin/tcsh -f
+
+if ( ! -d /usr/local/bin ) then
+	mkdir /usr/local/bin
+endif
+if ( -d /usr/local/sbin ) then
+	set lsbin = /usr/local/sbin
+else
+	set lsbin = /usr/local/bin
+endif
+
+cp local-bin/* /usr/local/bin
+cp local-sbin/* $lsbin
+
+if ( ! -d /usr/share/jed ) then
+	mkdir /usr/share/jed
+endif
+if ( ! -l /usr/jed ) then
+	ln -s /usr/share/jed /usr/jed
+endif
+
+./install-nano-syntax-files
+./install-to-users .tcshrc .login .bashrc .mkshrc .bin .help \
+	.jed .nanorc .grief-local .grinit \
+	.newsboat \
+	.gitconfig .config .xres \
+	.dof .conkyrc .bc .tmux.conf .vimrc .a2ps .abook
+
+if ( ! -d /usr/share/icons ) then
+	mkdir /usr/share/icons
+fi
+cp .icons/*.png /usr/share/icons
+
+if ( ! -d /usr/share/wallpapers ) then
+	mkdir /usr/share/wallpapers
+fi
+cp wallpapers/* /usr/share/wallpapers
+
+
+
