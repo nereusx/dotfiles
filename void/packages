@@ -42,7 +42,6 @@ usbutils
 acpi
 lm_sensors
 udisks2
-exfat-dkms
 exfat-utils
 fuse-exfat
 htop

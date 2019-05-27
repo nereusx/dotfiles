@@ -1,5 +1,5 @@
 cronie
-rsyslog
+socklog-void
 mariadb
 mariadb-client
 fuse-sshfs
