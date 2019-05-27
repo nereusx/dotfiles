@@ -1,0 +1,16 @@
+name_english Greek
+lang el
+author:
+  name Evripidis Papakostas
+  email evris at source gr
+copyright GPL
+version 0.50-3
+charset iso8859-7
+special ' -** - -** . -**
+soundslike phonet
+source-version 0.03
+url http://ispell.source.gr/index_aspell.html
+alias el greek
+dict:
+  name el
+  add el

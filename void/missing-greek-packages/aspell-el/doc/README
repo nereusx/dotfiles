@@ -1,0 +1,21 @@
+                    Evripidis Papakostas Greek Dictionary (v0.03)
+
+These words have been verified as correct from at least two reviewers as
+well as some commercial spellchecker progs. Despite that, it is a fact
+that every time a new reviewer scans the list, wrong words are found.
+
+You can read more about the project or download new ispell, aspell,
+openoffice myspell etc versions at:
+
+   http://ispell.source.gr
+
+For any suggestions, corrections, ideas : 
+   evris@source.gr or 
+   ep@rocketmail.com
+   evris@gourmet.gr
+----------------------------------------------------------------------------
+
+You install the aspell wordlist with the commands:
+
+   $ make all ; make install
+
