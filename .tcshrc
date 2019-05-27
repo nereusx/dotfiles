@@ -386,7 +386,7 @@ if ( $DISTRO == "void" ) then
 endif
 
 ### information utilities
-set list = ( /var/log/messages /var/log/syslog /var/log/dmesg.log )
+set list = ( /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
 		alias log30 "tail -n 30 $e"
