@@ -1,0 +1,24 @@
+#!/bin/tcsh -f
+
+set langcode = el_GR.UTF-8
+
+#
+if ( "$1" == "-f" ) then
+	set force
+endif
+
+if ( { grep $langcode /etc/environment } ) then
+	echo "language is installed"
+	if ( ! $?force ) then
+		echo "use -f to force update"
+		exit 0
+	endif
+else
+	echo "LANG=$langcode" >> /etc/environment
+endif
+
+sed -i 's/\#$langcode/$langcode/g' /etc/default/libc-locales
+sed -i 's/\#en_US.UTF-8/en_US.UTF-8/g' /etc/default/libc-locales
+
+xbps-reconfigure -f glibc-locales
+
