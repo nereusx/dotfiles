@@ -56,5 +56,7 @@ if ( ! -d /usr/share/sounds/generic ) then
 fi
 cp sounds/*.ogg /usr/share/sounds/generic
 
+# post-install scripts
+local-sbin/enable-bitmap-fonts
 
 
