@@ -1,0 +1,2 @@
+#!/bin/sh
+apt -e dbus cgmanager consolekit polkitd lightdm
