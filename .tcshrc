@@ -278,10 +278,9 @@ else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "\033[8~" end-of-line
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
-else if ( $TERM == "linux" ) then
-	if ( $DISTRO == "Void" ) then
-		bindkey "\033[3~" delete-char	
-	endif
+endif
+if ( $DISTRO == "Void" ) then
+	bindkey "\033[3~" delete-char	
 endif
 
 # SSH ???
