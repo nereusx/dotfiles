@@ -1,4 +1,8 @@
-alsa-utils apulse alsa-tools alsa-firmware alsa-plugins alsa-sndio sndio
-install service sndiod
-usermod -aG audio <username>
+alsa-utils
+apulse
+alsa-tools
+alsa-firmware
+alsa-plugins
+alsa-sndio
+sndio
 

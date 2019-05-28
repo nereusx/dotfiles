@@ -1,0 +1,10 @@
+#!/bin/sh
+
+uname=nikosc
+
+usermod -aG audio $uname
+usermod -aG socklog $uname
+usermod -aG video $uname
+usermod -aG wireshark $uname
+
+# also edit sudo
