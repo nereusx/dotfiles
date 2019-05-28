@@ -1,0 +1,10 @@
+linux-firmware
+nvidia
+nvidia-dkms
+nvidia-gtklibs
+nvidia-libs
+nvidia-libs-32bit
+wine-gecko
+wine-mono
+winetricks
+wine-32bit
