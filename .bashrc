@@ -9,11 +9,7 @@ umask 022
 #
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
-	DISTRO="$NAME"
-	if [ "$DISTRO" == "void" ]; then
-		DISTRO="Void"
-	fi
-	export DISTRO
+	export DISTRO="$NAME"
 else
 	export DISTRO="$(uname -o)"
 fi
@@ -213,7 +209,7 @@ fi
 alias netlog='netstat -lptu4'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 
-if [ "$DISTRO" == "Void" ]; then
+if [ "$DISTRO" == "void" ]; then
 	alias man="man -O width=$(tput cols) "
 fi
 
