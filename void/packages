@@ -8,6 +8,7 @@ void-repo-nonfree
 vpsm
 xtools
 sv-helper
+socklog-void
 gdb
 gdbm
 gdbm-devel

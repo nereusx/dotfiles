@@ -7,4 +7,7 @@ usermod -aG socklog $uname
 usermod -aG video $uname
 usermod -aG wireshark $uname
 
-# also edit sudo
+#sudoedit /etc/sudoers
+apt -e alsa acpid sshd sndiod smartd uuidd
+apt -e bluetoothd
+
