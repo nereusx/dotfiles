@@ -241,50 +241,54 @@ endif
 #bindkey "" list-glob
 bindkey '' list-choices-raw
 #bindkey "" complete-word-fwd
-bindkey '[Z' complete-word-back
-bindkey 's' i-search-fwd
+bindkey "\033[Z" complete-word-back
+bindkey "\033s" i-search-fwd
 bindkey '' i-search-back
-bindkey 'q' quoted-insert
+bindkey "\033q" quoted-insert
 bindkey '' redisplay
-bindkey 'm' set-mark-command
-bindkey 'j' exchange-point-and-mark
-bindkey 'k' kill-line
+bindkey "\033m" set-mark-command
+bindkey "\033j" exchange-point-and-mark
+bindkey "\033k" kill-line
 bindkey '' backward-kill-line
-bindkey 'd' kill-whole-line
+bindkey "\033d" kill-whole-line
 #bindkey '' copy-region-as-kill
 bindkey '' kill-region
 bindkey '' yank
 bindkey '' copy-prev-word
-bindkey '-' insert-last-word
+bindkey "\033-" insert-last-word
 
 # shift+f5; alt+p (tcsh's default)
-bindkey '[15;2~' history-search-backward
-bindkey 'p' history-search-backward
+bindkey "\033[15;2~" history-search-backward
+bindkey "\033p" history-search-backward
 # f5; alt+n (tcsh's default)
-bindkey '[15~' history-search-forward
-bindkey 'n' history-search-forward
+bindkey "\033[15~" history-search-forward
+bindkey "\033n" history-search-forward
 
 # pad--
-bindkey 'Om' kill-region
+bindkey "\033Om" kill-region
 # pad-+
-bindkey 'Ok' copy-region-as-kill
+bindkey "\033Ok" copy-region-as-kill
 # pad ins
-bindkey 'Op' yank
+bindkey "\033Op" yank
 
 if ( $TERM == "rxvt" ) then
 	setenv TERM rxvt-unicode
-	bindkey "^[[8~" end-of-line
+	bindkey "\033[8~" end-of-line
 else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
-	bindkey "^[[8~" end-of-line
+	bindkey "\033[8~" end-of-line
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
+else if ( $TERM == "linux" ) then
+	if ( $DISTRO == "Void" ) then
+		bindkey "\033[3~" delete-char	
+	endif
 endif
 
 # SSH ???
 if ( $?REMOTEHOST ) then
-	bindkey "OH" beginning-of-line
-	bindkey "OF" end-of-line
-	bindkey "[3~" delete-char
+	bindkey "\033OH" beginning-of-line
+	bindkey "\033OF" end-of-line
+	bindkey "\033[3~" delete-char
 endif
 
 #
