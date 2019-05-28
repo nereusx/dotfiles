@@ -21,15 +21,16 @@ fi
 # setup several local directories
 backup=$HOME/.backup
 if [ ! -d $backup ]; then
-	# setup several local directories
-	list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
-	for e in $list; do
-		if [ ! -d $e ]; then
-			mkdir -p $e
-			chmod 0700 $e
-		fi
-	done
+	mkdir $backup
 fi
+# setup several local directories
+list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
+for e in $list; do
+	if [ ! -d $e ]; then
+		mkdir -p $e
+		chmod 0700 $e
+	fi
+done
 
 # setup and cleanup path
 if [[ :$PATH: != *:"${HOME}/.bin":* ]] ; then

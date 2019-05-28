@@ -71,16 +71,15 @@ endif
 #	setup several local directories
 #
 setenv backup $home/.backup
-if ( ! -d $backup ) then
-	# setup several local directories
-	set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
-	foreach e ( $list )
-		if ( ! -e $e ) then
-			mkdir -p $e
-			chmod 0700 $e
-		endif
-	end
-endif
+if ( ! -d $backup ) mkdir $backup
+# setup several local directories
+set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
+foreach e ( $list )
+	if ( ! -e $e ) then
+		mkdir -p $e
+		chmod 0700 $e
+	endif
+end
 
 #
 #	setup and cleanup path
