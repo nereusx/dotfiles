@@ -151,6 +151,11 @@ case notavail:
 	end
 	breaksw
 
+case -o:
+case autoremove:
+	xbps-remove -Oo
+	breaksw
+
 help:
 default:
 	cat <<EOF
@@ -172,6 +177,9 @@ Services:
     start | stop | restart | status service
     -av  | avail                  display all available services
     -nav | notavail               display all used services
+
+Special:
+	-o  | autoremove              remove obsolete packages
 
 EOF
 endsw
