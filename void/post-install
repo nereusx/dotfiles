@@ -6,6 +6,8 @@ usermod -aG audio $uname
 usermod -aG socklog $uname
 usermod -aG video $uname
 usermod -aG wireshark $uname
+usermod -aG input $uname
+usermod -aG kvm $uname
 
 #sudoedit /etc/sudoers
 apt -e alsa acpid sshd sndiod smartd uuidd
