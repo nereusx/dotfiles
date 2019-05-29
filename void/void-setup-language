@@ -17,6 +17,9 @@ else
 	echo "LANG=$langcode" >> /etc/environment
 endif
 
+echo "LANG=$langcode" > /etc/locale.conf
+echo "LC_COLLATE=C" >> /etc/locale.conf
+
 sed -i 's/\#$langcode/$langcode/g' /etc/default/libc-locales
 sed -i 's/\#en_US.UTF-8/en_US.UTF-8/g' /etc/default/libc-locales
 
