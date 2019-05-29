@@ -176,10 +176,10 @@ setenv LESS 			'-R'
 setenv GROFF_ENCODING	'utf8'
 setenv LESS_TERMCAP_mb 	'[1;31m'		# begin bold,			ANSI: [1m
 setenv LESS_TERMCAP_md  '[1;36m'		# begin blink,			ANSI: [5m
-setenv LESS_TERMCAP_me  '[0m'     	# reset bold/blink,		ANSI: [21m[25m
+setenv LESS_TERMCAP_me  '[0m'     	# reset bold/blink,		ANSI: [22m[25m
 setenv LESS_TERMCAP_so  '[7m'			# begin reverse video,	ANSI: [7m
 setenv LESS_TERMCAP_se  '[27m'		# reset reverse video,	ANSI: [27m
-setenv LESS_TERMCAP_us  '[1;32m'		# begin underline,		ANSI: [4m
+setenv LESS_TERMCAP_us  '[4m[1;32m'	# begin underline,		ANSI: [4m
 setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
 setenv LESS_TERMCAP_mr	`tput rev`
 setenv LESS_TERMCAP_mh	`tput dim`
