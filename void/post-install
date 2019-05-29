@@ -14,3 +14,6 @@ apt -e alsa acpid sshd sndiod smartd uuidd
 apt -e bluetoothd
 
 apt -e socklog-unix nanoklogd
+
+# edit /etc/ssh/sshd_config
+# remove RootPermit
