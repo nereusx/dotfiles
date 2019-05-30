@@ -35,6 +35,7 @@ case reinstall:
 case -u:
 case update:
 	xbps-install -Su $argv[2-]
+	xlocate -S
 	breaksw
 
 #
@@ -60,7 +61,6 @@ case regex-search:
 case -f:
 case -fs:
 case file-search:
-	xlocate -S
 	xlocate $argv[2-]
 	breaksw
 
@@ -68,9 +68,9 @@ case file-search:
 #	services
 #
 case -e:
+case -es:
 case enable:
-case -a:
-case activate:
+case enable-service:
 	foreach f ( $argv[2-] )
 		if ( -d /etc/sv/$f ) then
 			ln -svf /etc/sv/$f /var/service/$f
@@ -81,8 +81,9 @@ case activate:
 	breaksw
 
 case -d:
+case -ds:
 case disable:
-case deactivate:
+case disable-service:
 	foreach f ( $argv[2-] )
 		if ( -e /var/service/$f ) then
 			rm /var/service/$f
@@ -116,7 +117,9 @@ case restart:
 	end
 	breaksw
 
+case -lds:
 case -av:
+case list-disabled:
 case avail:
 	set la = ( /etc/sv/* )
 	set lb = ( /var/service/* )
@@ -137,8 +140,9 @@ case avail:
 	end
 	breaksw
 
-case -ac:
-case active:
+case -les:
+case -nav:
+case list-enabled:
 	set la = ( /etc/sv/* )
 	set lb = ( /var/service/* )
 	foreach a ( $la )
@@ -179,11 +183,11 @@ Packages:
     -f  | file-search ...         search file in packages
 
 Services:
-    -a activate <service>
-    -d deactivate <service>
+    -e[s] | enable[-service] <service>
+    -d[s] | disable[-service] <service>
+    -les  | -nav | list-enabled   display all actived services
+    -lds  | -av | list-disabled   display all available (disabled) services
     start | stop | restart | status <service>
-    -av | avail                   display all available (disabled) services
-    -ac | active                  display all active services
 
 Special:
     -o  | autoremove              remove obsolete packages
