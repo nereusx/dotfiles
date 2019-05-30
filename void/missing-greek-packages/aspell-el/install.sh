@@ -1,5 +1,3 @@
 #!/bin/sh
-./configure
-make
-make install
+./configure && make && make install
 
