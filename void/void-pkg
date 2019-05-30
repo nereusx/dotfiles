@@ -69,6 +69,8 @@ case file-search:
 #
 case -e:
 case enable:
+case -a:
+case activate:
 	foreach f ( $argv[2-] )
 		if ( -d /etc/sv/$f ) then
 			ln -svf /etc/sv/$f /var/service/$f
@@ -80,6 +82,7 @@ case enable:
 
 case -d:
 case disable:
+case deactivate:
 	foreach f ( $argv[2-] )
 		if ( -e /var/service/$f ) then
 			rm /var/service/$f
@@ -118,35 +121,39 @@ case avail:
 	set la = ( /etc/sv/* )
 	set lb = ( /var/service/* )
 	foreach a ( $la )
-		set found = 0
-		foreach b ( $lb )
-			if ( $a:t == $b:t ) then
-				set found = 1
-				break
-			endif
-		end
+		if ( ! -l $a ) then
+			set found = 0
+			foreach b ( $lb )
+				if ( $a:t == $b:t ) then
+					set found = 1
+					break
+				endif
+			end
 		
-		if ( $found == 0 ) then
-			echo $a:t
+			if ( $found == 0 ) then
+				echo $a:t
+			endif
 		endif
 	end
 	breaksw
 
-case -nav:
-case notavail:
+case -ac:
+case active:
 	set la = ( /etc/sv/* )
 	set lb = ( /var/service/* )
 	foreach a ( $la )
-		set found = 0
-		foreach b ( $lb )
-			if ( $a:t == $b:t ) then
-				set found = 1
-				break
+		if ( ! -l $a ) then
+			set found = 0
+			foreach b ( $lb )
+				if ( $a:t == $b:t ) then
+					set found = 1
+					break
+				endif
+			end
+			
+			if ( $found != 0 ) then
+				echo $a:t
 			endif
-		end
-		
-		if ( $found != 0 ) then
-			echo $a:t
 		endif
 	end
 	breaksw
@@ -159,7 +166,7 @@ case autoremove:
 help:
 default:
 	cat <<EOF
-Package and service manager for Void Linux, version 1.0
+Package and service manager for Void Linux, version 1.1
 
 Packages:
     -i  | install ...             install package[s]
@@ -169,17 +176,17 @@ Packages:
     -s  | search <pattern>        search for packages by matching package-name
     -rs | regex-search <pattern>  as above but using regular expressions
     -v  | show | info | view ...  display information about package[s]
-	-f  | file-search ...         search file in packages
+    -f  | file-search ...         search file in packages
 
 Services:
-    -e  | enable  service
-    -d  | disable service
-    start | stop | restart | status service
-    -av  | avail                  display all available services
-    -nav | notavail               display all used services
+    -a activate <service>
+    -d deactivate <service>
+    start | stop | restart | status <service>
+    -av | avail                   display all available (disabled) services
+    -ac | active                  display all active services
 
 Special:
-	-o  | autoremove              remove obsolete packages
+    -o  | autoremove              remove obsolete packages
 
 EOF
 endsw
