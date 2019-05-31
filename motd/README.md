@@ -9,6 +9,14 @@ The `/etc/motd` is a file on Unix-like systems that contains a "message of the d
   `motd-create` must used after new message to update MOTD.
 * `motd-daily-update` used in cron or `rc.local` to refresh MOTD; admins messages are not cleared.
 
+## files
+
+* `/etc/motd-head`
+* `/etc/motd-quote`
+* `/etc/motd-queue`
+* `/etc/motd-tail`
+* `/etc/motd`
+
 ## install
 
 ```
