@@ -2,6 +2,8 @@
 #	.nanorc, BRIEF's like keys
 #	nicholas christopoulos (nereus@freemail.gr)
 #
+#	2019-05-31, updated for nano version 4.2+
+#
 
 # TUI
 set titlecolor brightwhite,blue
@@ -34,11 +36,11 @@ set autoindent
 
 set casesensitive
 unset mouse
-unset cut
+#unset cut
 
 #bind ^A free all
 #bind ^B line-to-bottom all
-bind ^C copytext all
+bind ^C copy all
 bind ^D scrolldown all
 bind ^E scrollup all
 bind ^F findprevious all
@@ -57,7 +59,7 @@ bind ^Q cancel all
 bind ^S savefile all
 #bind ^T free all
 bind ^U redo all
-bind ^V uncut all
+bind ^V paste all
 #bind ^W toggle-backup all
 bind ^X cut all
 #bind ^Y free all
@@ -68,14 +70,14 @@ bind ^Z suspend all
 bind M-A mark all
 #bind M-B buf-list
 bind M-C mark all
-bind M-D cut all
+bind M-D zap all
 bind M-E insert all
 bind M-F findnext all
 bind M-G gotoline all
 bind M-H help all
 #bind M-I toggle-ins
 #bind M-J jump to bookmark
-bind M-K cuttoend all
+#bind M-K del-to-eol all
 bind M-L mark all
 bind M-M mark all
 bind M-N nextbuf all
@@ -101,3 +103,5 @@ bind M-/ comment all
 bind F5 whereis all
 #bind S-F5 findnext all
 bind F6 replace all
+bind F7 recordmacro all
+bind F8 runmacro all
