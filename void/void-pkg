@@ -198,7 +198,7 @@ Services:
 
 Special:
     -o  | autoremove              remove obsolete packages
-	-rc | reconfigure <package>
+    -rc | reconfigure <package>
 
 EOF
 endsw
