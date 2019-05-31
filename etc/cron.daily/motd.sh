@@ -1,3 +1,3 @@
 #!/bin/sh
-fortune diogenis >> /etc/motd
+fortune diogenis > /etc/motd
 
