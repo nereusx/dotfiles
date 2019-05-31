@@ -17,14 +17,6 @@ VteTerminal, vte-terminal, terminal-window {
 	margin-right: 1px;
 }
 
-#whiskermenu-button
-{
-	padding-left: 4px;
-	padding-right: 6px;
-	margin-left: 2px;
-	margin-right: 2px;
-}
-
 .xfce4-panel.background .tasklist*
 {
 	-gtk-icon-transform: scale(0.9);
