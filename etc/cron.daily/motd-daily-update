@@ -1,0 +1,15 @@
+#!/bin/sh
+
+FILE=/etc/motd
+AUTO=/usr/local/sbin/motd-create
+
+if [ -x $AUTO ]; then
+	$AUTO
+else
+	uname -a  > $FILE
+	date     >> $FILE
+	fortune  >> $FILE
+	echo     >> $FILE
+fi
+
+

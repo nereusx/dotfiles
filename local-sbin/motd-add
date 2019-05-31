@@ -1,0 +1,10 @@
+#!/bin/sh
+
+FILE=/etc/motd-queue
+if [ -z $1 ]; then
+	rm $FILE
+else
+	echo "ADMIN NOTE:" >> $FILE
+	echo "\t$1" >> $FILE
+fi
+
