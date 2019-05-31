@@ -169,6 +169,11 @@ case autoremove:
 	xbps-remove -Oo
 	breaksw
 
+case -rc:
+case reconfigure:
+	xbps-reconfigure -f $argv[2-]
+	breaksw
+
 help:
 default:
 	cat <<EOF
@@ -193,6 +198,7 @@ Services:
 
 Special:
     -o  | autoremove              remove obsolete packages
+	-rc | reconfigure <package>
 
 EOF
 endsw
