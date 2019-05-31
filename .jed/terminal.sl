@@ -162,7 +162,7 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_Home = "OH";
 		Key_End = "OF";
 		}
-	if ( getenv("OSTYPE") == "void" && getenv("REMOTEHOST") != NULL ) {
+	if ( getenv("REMOTEHOST") != NULL ) { % SSH
 		Key_Home = "OH";
 		Key_End = "OF";
 		}
