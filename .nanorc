@@ -38,11 +38,18 @@ set casesensitive
 unset mouse
 #unset cut
 
-#bind ^A free all
-#bind ^B line-to-bottom all
 bind ^C copy all
+bind ^X cut all
+bind ^V paste all
+bind M-D zap all
+
+#bind ^A free all
+#bind ^E scrollup all
+bind ^A home all
+bind ^E end all
+
+#bind ^B line-to-bottom all
 bind ^D scrolldown all
-bind ^E scrollup all
 bind ^F findprevious all
 bind ^G gotoline all
 #bind ^H free all
@@ -59,9 +66,7 @@ bind ^Q cancel all
 bind ^S savefile all
 #bind ^T free all
 bind ^U redo all
-bind ^V paste all
 #bind ^W toggle-backup all
-bind ^X cut all
 #bind ^Y free all
 bind ^Z suspend all
 
@@ -78,7 +83,6 @@ bind M-H help all
 #bind M-I toggle-ins
 #bind M-J jump to bookmark
 #bind M-K del-to-eol all
-bind M-L mark all
 bind M-M mark all
 bind M-N nextbuf all
 bind M-O writeout all
@@ -105,3 +109,12 @@ bind F5 whereis all
 bind F6 replace all
 bind F7 recordmacro all
 bind F8 runmacro all
+
+#
+#	combined
+#
+bind ^K "mOHd" all
+bind M-K "mOFd" all
+bind M-L "OHmOF" all
+
+
