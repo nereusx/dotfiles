@@ -1,20 +1,8 @@
 #!/bin/tcsh -f
 
-# make sure that there is local directory
-if ( ! -d /usr/local/bin ) then
-	mkdir /usr/local/bin
-endif
-
-# find local/sbin
-if ( -d /usr/local/sbin ) then
-	set lsbin = /usr/local/sbin
-else
-	set lsbin = /usr/local/bin
-endif
-
 # install generic scripts
-cp local-bin/* /usr/local/bin
-cp local-sbin/* $lsbin
+cd local-bin  && ./install.sh && cd ..
+cd local-sbin && ./install.sh && cd ..
 
 # fix JED installation path
 if ( ! -d /usr/share/jed ) then
@@ -24,7 +12,7 @@ if ( ! -l /usr/jed ) then
 	ln -s /usr/share/jed /usr/jed
 endif
 
-# install 
+# install configuration files
 ./install-nano-syntax-files
 ./install-to-users .tcshrc .login .bashrc .mkshrc .bin .help \
 	.jed .nanorc .grief-local .grinit \
@@ -33,28 +21,14 @@ endif
 	.dof .conkyrc .bc .tmux.conf .vimrc .a2ps .abook
 
 # rsync
-if ( ! -d /srv/file-server ) then
-	mkdir -p /srv/file-server
+if ( -d /srv/file-server ) then
+	cp fserv-sync /srv/file-server
 endif
-cp fserv-sync /srv/file-server
 
-# icons
-if ( ! -d /usr/share/icons ) then
-	mkdir /usr/share/icons
-fi
-cp icons/*.png /usr/share/icons
-
-# wallpapers
-if ( ! -d /usr/share/wallpapers ) then
-	mkdir /usr/share/wallpapers
-fi
-cp wallpapers/*.{png,jpg} /usr/share/wallpapers
-
-# sounds
-if ( ! -d /usr/share/sounds/generic ) then
-	mkdir /usr/share/sounds/generic
-fi
-cp sounds/*.ogg /usr/share/sounds/generic
+# various data files
+cd icons      && ./install.sh && cd ..
+cd wallpapers && ./install.sh && cd ..
+cd sounds     && ./install.sh && cd ..
 
 # post-install scripts
 local-sbin/enable-bitmap-fonts
