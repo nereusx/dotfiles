@@ -11,11 +11,11 @@ The `/etc/motd` is a file on Unix-like systems that contains a "message of the d
 
 ## files
 
-* `/etc/motd-head`
-* `/etc/motd-quote`
-* `/etc/motd-queue`
-* `/etc/motd-tail`
-* `/etc/motd`
+* `/etc/motd-head` the header
+* `/etc/motd-quote` quote to be displayed
+* `/etc/motd-queue` list of admin messages
+* `/etc/motd-tail` the footer
+* `/etc/motd` the final MOTD text file
 
 ## install
 
