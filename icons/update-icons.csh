@@ -8,15 +8,12 @@
 # themes from www.xfce-look.org
 # last update: Feb 2019
 set list = (\
-	https://github.com/bolimage/Ultimate-Maia-Icons\
 	https://github.com/zayronxio/Zafiro-icons\
 	https://gitlab.com/froodo_alexis/Antu-icons\
 	)
 
 # prepare
 set echo_style = both
-mkdir ~/.icons >& /dev/null
-cd ~/.icons
 
 # download and install or update
 foreach repo ( $list )
@@ -27,18 +24,7 @@ foreach repo ( $list )
 	else
 		git clone $repo
 	endif
-	if ( $name == "Ultimate-Maia-Icons" ) then
-		cd $name
-		foreach ic ( *Maia )
-			if ( -d $ic ) then
-				cp -r $ic ~/.icons
-				gtk-update-icon-cache ~/.icons/$ic
-			endif
-		end
-		cd ..
-	else
-		gtk-update-icon-cache "$name"
-	endif
+	gtk-update-icon-cache "$name"
 end
 
 # papirus

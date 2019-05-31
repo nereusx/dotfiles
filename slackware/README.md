@@ -1,0 +1,3 @@
+# Slackware
+
+Slackware only
