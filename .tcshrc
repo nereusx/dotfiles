@@ -56,11 +56,9 @@ else
 		endif
 		setenv OSTYPE debian
 	else
-		setenv OSTYPE unix
-		if ( -X pkg ) then
-			setenv DISTRO BSD
-		else
-			setenv DISTRO unix
+		setenv DISTRO `uname -n` 
+		if ( $?OSTYPE == 0 ) then
+			setenv OSTYPE `uname -s`
 		endif
 	endif
 endif
