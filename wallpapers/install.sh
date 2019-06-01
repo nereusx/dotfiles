@@ -7,5 +7,6 @@ foreach e ( $list )
 		exit 0
 	endif
 end
-echo "no suitable directory found"
-exit 1
+set e=/usr/local/share/backgrounds
+mkdir -p $e
+cp *.png $e
