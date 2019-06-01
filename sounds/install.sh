@@ -1,6 +1,11 @@
 #!/bin/tcsh -f
 
-set dir=/usr/share/sounds
+if ( $OSTYPE =~ "*BSD" ) then
+	set dir=/usr/local/share/sounds
+else
+	set dir=/usr/share/sounds
+endif
+
 set list = ( /usr/share/sounds /usr/local/share/sounds )
 foreach e ( $list )
 	if ( -d $e ) then
