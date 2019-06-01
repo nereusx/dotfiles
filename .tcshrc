@@ -381,6 +381,10 @@ endif
 
 if ( $DISTRO == "void" ) then
 	alias man 'man -O width=`tput cols` '
+	if ( -X void-pkg ) then
+		alias vpk 'void-pkg'
+		alias apt 'void-pkg'
+	endif
 endif
 
 ### information utilities
