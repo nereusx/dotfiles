@@ -56,7 +56,7 @@ else
 		endif
 		setenv OSTYPE debian
 	else
-		setenv DISTRO `uname -n` 
+		setenv DISTRO `uname -s` 
 		if ( $?OSTYPE == 0 ) then
 			setenv OSTYPE `uname -s`
 		endif
@@ -275,8 +275,8 @@ else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 endif
-if ( $DISTRO == "void" ) then
-	bindkey "\033[3~" delete-char	
+if ( $DISTRO == "void" || $DISTRO =~ "*BSD" ) then
+	bindkey "\033[3~" delete-char
 endif
 
 # SSH ???
