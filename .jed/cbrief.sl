@@ -3421,7 +3421,7 @@ private define cbrief_build_keymap()
 		}
 
 	%% special keys for JED
-	ifnot ( Key_BS == "^H" || Key_BS == "" )
+	if ( Key_BS != "^H" && Key_BS != "" )
 		list_append( _keymap, { "help_prefix", "^H" } );		% it is free for the JED's "help_prefix"
 	if ( is_xjed() && getenv("DISPLAY") != NULL )
 		list_append( _keymap, { "select_menubar", "[29~" } );	% windows menu key

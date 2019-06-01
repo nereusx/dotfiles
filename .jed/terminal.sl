@@ -26,6 +26,9 @@ if ( cterm == NULL )	cterm = "console";
 %	XTerm*backarrowKeyIsErase: true
 % 
 static variable xterm_backspace = ""; % xterm only, ^? or ^H
+if ( getenv("OSTYPE") == "FreeBSD" ) {
+	xterm_backspace = "^H";
+	}
 
 %%
 if ( term == "xjed" ) { % key codes for xjed (term=="xterm")
@@ -162,9 +165,16 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_Home = "OH";
 		Key_End = "OF";
 		}
-	if ( getenv("REMOTEHOST") != NULL ) { % SSH
+	%% SSH
+	if ( getenv("REMOTEHOST") != NULL ) {
 		Key_Home = "OH";
 		Key_End = "OF";
+		}
+	else {
+		if ( getenv("OSTYPE") == "FreeBSD" ) {
+			Key_Home = "OH";
+			Key_End = "OF";
+			}
 		}
 	}
 else if ( term == "linux" ) {
