@@ -210,7 +210,8 @@ alias netlog='netstat -lptu4'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 
 if [ "$DISTRO" == "void" ]; then
-	alias man="man -O width=$(tput cols) "
+	_man() { man -O width=$COLUMNS $*; }
+	alias man='_man'
 fi
 
 # Alias definitions.
