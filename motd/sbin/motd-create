@@ -8,11 +8,10 @@ rm $FILE
 if [ -f /etc/motd-head ]; then
 	cat motd-head  >> $FILE
 else
-#	echo -n "\033[1m\033[32m" >> $FILE
-	echo -n "=============================" >> $FILE
-	echo -n " Message Of The Day " >> $FILE
-	echo -n "=============================" >> $FILE
-#	echo "\033[0m" >> $FILE
+	echo >> $FILE
+	echo -n "\033[1m\033[32m" >> $FILE
+	echo -n "Message Of The Day " >> $FILE
+	echo "\033[0m" >> $FILE
 	echo >> $FILE
 	echo >> $FILE
 fi
