@@ -174,6 +174,11 @@ case reconfigure:
 	xbps-reconfigure -f $argv[2-]
 	breaksw
 
+case -rok:
+case remove-old-kernels:
+	vkpurge rm all
+	breaksw
+
 help:
 default:
 	cat <<EOF
@@ -196,8 +201,9 @@ Services:
     start | stop | restart | status <service>
 
 Special:
-    -o  | autoremove              remove obsolete packages
-    -rc | reconfigure <package>
+    -o   | autoremove              remove obsolete packages
+    -rc  | reconfigure <package>
+    -rok | remove-old-kernels
 
 EOF
 endsw
