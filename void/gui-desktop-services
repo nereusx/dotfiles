@@ -11,8 +11,7 @@ avahi-daemon
 bluetoothd
 cgmanager
 consolekit
-crond
-cronie
+dcron
 dbus
 dhcpcd
 lightdm
