@@ -6,7 +6,7 @@ ALLOW_COUNTRIES="GR"
 LOGDENY_FACILITY="authpriv.notice"
 
 if [ $# -ne 1 ]; then
-  echo "Usage:  `basename $0` " 1>&2
+  echo "Usage:  `basename $0` ip " 1>&2
   exit 0 # return true in case of config issue
 fi
 
