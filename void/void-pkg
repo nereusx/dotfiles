@@ -179,6 +179,10 @@ case remove-old-kernels:
 	vkpurge rm all
 	breaksw
 
+case -files:
+	xbps-query -f $argv[2-]
+	breaksw
+
 help:
 default:
 	cat <<EOF
@@ -204,6 +208,7 @@ Special:
     -o   | autoremove              remove obsolete packages
     -rc  | reconfigure <package>
     -rok | remove-old-kernels
+    -files <package>               shows the files of the package
 
 EOF
 endsw
