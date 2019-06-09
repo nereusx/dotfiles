@@ -24,3 +24,4 @@ else
 	end
 endif
 
+echo "the iptables.rules will be not installed"
