@@ -1,0 +1,23 @@
+#!/bin/tcsh -f
+
+set allow = ( GR CY )
+set iprcnt = /proc/net/xt_recent
+
+#
+set list = `cat $iprcnt/SSH | awk '/src=/ { print substr($1,5) }'`
+foreach e ( $list )
+	set geoinfo = `geoiplookup "$e" | head -n 1 | awk -F ": " '{print$2}'`
+	set country = `echo "$geoinfo" | awk -F "," '{ print $1 }'`
+	set found = 0
+	foreach cc ( $allow )
+		if ( $cc == $country ) then
+			set found = 1
+		endif
+	end
+	if ( $found != 1 ) then
+		logger -t "BANLIST" "$e $geoinfo"
+		echo "+$e" > $iprcnt/BANLIST
+		echo "-$e" > $iprcnt/SSH
+	endif
+end
+

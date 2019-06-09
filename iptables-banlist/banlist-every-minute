@@ -1,0 +1,4 @@
+#!/bin/tcsh -f
+
+/usr/local/sbin/banlist-deny-countries
+

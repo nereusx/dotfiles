@@ -1,0 +1,5 @@
+#!/bin/tcsh -f
+
+set iprcnt = /proc/net/xt_recent
+echo "/" > $iprcnt/BANLIST
+logger -t "BANLIST" "cleared"

@@ -1,0 +1,9 @@
+#!/bin/tcsh -f
+set iprcnt = /proc/net/xt_recent
+set list=`cat $iprcnt/BANLIST | awk '/src=/ { print substr($1,5) }'`
+foreach e ( $list )
+	echo $e
+	geoiplookup $e
+	echo
+end
+
