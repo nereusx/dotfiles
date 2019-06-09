@@ -1,9 +1,0 @@
-#!/bin/tcsh -f
-set iprcnt = /proc/net/xt_recent
-set list=`cat $iprcnt/SSH | awk '/src=/ { print substr($1,5) }'`
-foreach e ( $list )
-	echo $e
-	geoiplookup $e
-	echo
-end
-
