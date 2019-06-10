@@ -141,7 +141,7 @@ setenv VISUAL "$EDITOR"
 alias edit "$EDITOR"
 
 # select default hex editor
-set list = ( hte mcedit dhex )
+set list = ( hte ht mcedit dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
 	if ( -X $e ) then
@@ -150,10 +150,12 @@ foreach e ( $list )
 	endif
 end
 alias hexedit "$HEXEDITOR"
-if ( -X hexdump ) then
-	alias hexdump 'hexdump -C'
-else
-	alias hexdump 'od -t x1'
+if ( ! -X hex ) then
+	if ( -X hexdump ) then
+		alias hex 'hexdump -C'
+	else
+		alias hex 'od -t x1'
+	endif
 endif
 
 # select BRIEF editor
