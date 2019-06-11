@@ -10,10 +10,6 @@
 # check if IP it is in ban list
 -A INPUT -m recent --name BANLIST --rcheck -j DROP
 
-# block HTTP flooding
--A INPUT -p tcp --dport 80 -m limit --limit 20/minute --limit-burst 40 -j ACCEPT
--A INPUT -p tcp --dport 443 -m limit --limit 20/minute --limit-burst 40 -j ACCEPT
-
 # store new SSH connections
 -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --set --name CHECKIP --rsource
 
