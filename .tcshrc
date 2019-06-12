@@ -41,7 +41,12 @@ if ( ! $?HOSTNAME ) then
 endif
 
 # find distro
-if ( -X xbps-install ) then
+if ( -r /etc/os-release ) then
+	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print $1}'`
+	if ( $?OSTYPE == 0 ) then
+		setenv OSTYPE `uname -s`
+	endif
+else if ( -X xbps-install ) then
 	setenv DISTRO void
 	setenv OSTYPE void
 else if ( -X slackpkg ) then
@@ -390,7 +395,7 @@ if ( $DISTRO == "void" ) then
 endif
 
 ### information utilities
-set list = ( /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
+set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
 		alias log30 "tail -n 30 $e"

@@ -196,7 +196,7 @@ alias ltrim="sed 's/^[ \t\n\r]*//'"
 alias rtrim="sed 's/[ \t\n\r]*$DS//'"
 alias trim="sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 
-list=(/var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
+list=(/var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
 for e in $list; do
 	if [ -f $e ]; then
 		alias log30="tail -n 30 $e"
