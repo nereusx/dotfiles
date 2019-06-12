@@ -70,6 +70,35 @@ case -d:
 case disable:
 	systemctl disable $argv[2-]
 	breaksw
+
+help:
+default:
+	cat <<EOF
+Package and service manager for Arch/Manjaro Linux, version 1.1
+
+Packages:
+    -i  | install ...             install package[s]
+    -r  | remove ...              remove package[s]
+    -u  | update ...              update package list and upgrade all installed packages
+#    reinstall ...                 reinstall package[s]
+    -s  | search <pattern>        search for packages by matching package-name
+    -v  | show | info | view ...  display information about package[s]
+    -f  | file-search ...         search file in packages
+
+Services:
+    -e[s]  | enable[-service] <service>
+    -d[s]  | disable[-service] <service>
+#    -le[s] | -nav | list-enabled  display all actived services
+#    -ld[s] | -av | list-disabled  display all available (disabled) services
+    start | stop | restart | status <service>
+
+Special:
+#    -o   | autoremove              remove obsolete packages
+#    -rc  | reconfigure <package>
+#    -rok | remove-old-kernels
+    -files <package>               shows the files of the package
+
+EOF
 endsw
 
 
