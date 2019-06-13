@@ -14,8 +14,7 @@ if ( $#argv > 0 ) then
 	foreach o ( $opts )
 		if ( $todo == $o ) then
 			# found; execute it
-			echo -n $todo > /sys/power/state
-			exit 0
+			exec echo -n $todo > /sys/power/state
 		endif
 	end
 endif

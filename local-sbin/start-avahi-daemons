@@ -1,0 +1,5 @@
+#!/bin/sh
+
+avahi-daemon -D
+sleep 1
+avahi-dnsconfd -D
