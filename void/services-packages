@@ -1,5 +1,7 @@
 dcron
 metalog
+logrotate
+procmail
 mariadb
 mariadb-client
 fuse-sshfs
