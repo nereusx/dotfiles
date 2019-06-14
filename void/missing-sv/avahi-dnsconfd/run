@@ -1,0 +1,10 @@
+#!/bin/sh
+# if dbus is enabled wait for it.
+if [ -e /var/service/dbus ]; then
+	sv check dbus > /dev/null || exit 1
+fi
+# avahi-daemon req
+if [ -e /var/service/avahi-daemon ]; then
+	sv check avahi-daemon > /dev/null || exit 1
+fi
+exec avahi-dnsconfd -s
