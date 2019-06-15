@@ -1,5 +1,5 @@
-#!/bin/tcsh -f
+#!/bin/sh
 
-set iprcnt = /proc/net/xt_recent
-echo "/" > $iprcnt/BANLIST
+IPRCNT=/proc/net/xt_recent
+echo "/" > $IPRCNT/BANLIST
 logger -t "BANLIST" "cleared"
