@@ -13,14 +13,14 @@ for IP in $IPLIST; do
 	else
 		COUNTRY=$(echo "$geoinfo" | awk -F "," '{ print $1 }')
 	fi
-	FOUND=0
+	FOUND="0"
 	for CC in $ALLOWED; do
-		if [[ $CC == $COUNTRY ]]; then
-			FOUND=1
+		if [[ "$CC" == "$COUNTRY" ]]; then
+			FOUND="1"
 			break
 		fi
 	done
-	if [[ $FOUND==1 ]]; then
+	if [[ "$FOUND" == "0" ]]; then
 		logger -t "BANLIST" "Add $IP $geoinfo"
 		echo "+$IP" > $IPRCNT/BANLIST
 		echo "-$IP" > $IPRCNT/CHECKIP
