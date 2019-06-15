@@ -1,23 +1,29 @@
-#!/bin/tcsh -f
+#!/bin/bash
 
-set allow = ( GR CY )
-set iprcnt = /proc/net/xt_recent
+# LC = local
+allow=(LC GR CY)
+iprcnt=/proc/net/xt_recent
 
 #
-set list = `cat $iprcnt/CHECKIP | awk '/src=/ { print substr($1,5) }'`
-foreach e ( $list )
-	set geoinfo = `geoiplookup "$e" | head -n 1 | awk -F ": " '{print$2}'`
-	set country = `echo "$geoinfo" | awk -F "," '{ print $1 }'`
-	set found = 0
-	foreach cc ( $allow )
-		if ( $cc == $country ) then
-			set found = 1
-		endif
-	end
-	if ( $found != 1 ) then
+list=`cat $iprcnt/CHECKIP | awk '/src=/ { print substr($1,5) }'`
+for e in $list; do
+	geoinfo=$(geoiplookup "$e" | head -n 1 | awk -F ": " '{print$2}')
+	if [[ $geoinfo =~ ^.*not\ found$ ]]; then
+		country="LC"
+	else
+		country=$(echo "$geoinfo" | awk -F "," '{ print $1 }')
+	fi
+	found=n
+	for cc in $allow; do
+		if [[ $cc == $country ]]; then
+			found=y
+		fi
+	done
+	if [[ $found == "y" ]]; then
 		logger -t "BANLIST" "$e $geoinfo"
 		echo "+$e" > $iprcnt/BANLIST
 		echo "-$e" > $iprcnt/CHECKIP
-	endif
-end
+	fi
+done
+
 
