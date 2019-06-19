@@ -5,6 +5,6 @@ if [ ! -d /srv/public ]; then
 	chown -R nobody:nogroup /srv/public
 	chmod -R ugo+rswX /srv/public
 fi
-$app -i smbclient samba smb4k fusesmb
+$app -i smbclient samba smb4k fusesmb smbnetfs
 cp etc/samba/* /etc/samba/
 $app -e smbd
