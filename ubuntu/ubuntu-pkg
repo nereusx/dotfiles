@@ -119,6 +119,7 @@ case list-enabled:
 case -o:
 case autoremove:
 	apt autoremove
+	dpkg -l | awk '/^rc/ {print $2}' | xargs sudo dpkg --purge
 	breaksw
 
 case -rc:
