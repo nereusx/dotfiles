@@ -5,4 +5,4 @@
 #
 #GRUB_GFXMODE=1920x1200x32
 GRUB_BACKGROUND=/boot/grub/pics/bg.png
-GRUB_FONT=/boot/grub/fonts/199.pf2
+GRUB_FONT=/boot/grub/fonts/241.pf2
