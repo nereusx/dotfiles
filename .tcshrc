@@ -41,7 +41,12 @@ if ( ! $?HOSTNAME ) then
 endif
 
 # find distro
-if ( -X xbps-install ) then
+if ( -r /etc/os-release ) then
+	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print $1}'`
+	if ( $?OSTYPE == 0 ) then
+		setenv OSTYPE `uname -s`
+	endif
+else if ( -X xbps-install ) then
 	setenv DISTRO void
 	setenv OSTYPE void
 else if ( -X slackpkg ) then
@@ -141,7 +146,7 @@ setenv VISUAL "$EDITOR"
 alias edit "$EDITOR"
 
 # select default hex editor
-set list = ( hte mcedit dhex )
+set list = ( hte ht mcedit dhex )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
 	if ( -X $e ) then
@@ -150,10 +155,12 @@ foreach e ( $list )
 	endif
 end
 alias hexedit "$HEXEDITOR"
-if ( -X hexdump ) then
-	alias hexdump 'hexdump -C'
-else
-	alias hexdump 'od -t x1'
+if ( ! -X hex ) then
+	if ( -X hexdump ) then
+		alias hex 'hexdump -C'
+	else
+		alias hex 'od -t x1'
+	endif
 endif
 
 # select BRIEF editor
@@ -342,6 +349,7 @@ alias df-h         'df -h'
 alias xcopy        'rsync -ah --progress'
 alias xmerge       'xrdb -merge ~/.Xresources'
 alias xmonitor-off 'xset dpms force off'
+#alias xmonitor-on  'xset dpms force on'
 alias warn         'echo "\e[7m\e[5m "\!*" \e[0m"'
 alias ltrim		   "sed 's/^[ \t\n\r]*//'"
 alias rtrim		   "sed 's/[ \t\n\r]*$DS//'"
@@ -388,7 +396,7 @@ if ( $DISTRO == "void" ) then
 endif
 
 ### information utilities
-set list = ( /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
+set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
 		alias log30 "tail -n 30 $e"

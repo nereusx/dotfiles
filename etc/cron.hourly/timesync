@@ -1,2 +1,8 @@
 #!/bin/sh
+
+# get time from a server
 ntpdate -s 3.gr.pool.ntp.org
+
+# update hardware-clock
+hwclock --systohc
+

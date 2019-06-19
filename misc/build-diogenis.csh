@@ -16,10 +16,21 @@
 #
 
 # destination directory
-set data=/usr/share/fortunes
-if ( -d /usr/share/games/fortunes ) then
-	set data=/usr/share/games/fortunes
-endif
+set list = ( \
+	/usr/local/share/fortunes\
+	/usr/local/share/fortune\
+	/usr/share/fortunes\
+	/usr/share/fortune\
+	/usr/share/games/fortunes\
+	/usr/share/games/fortune\
+	/tmp )
+
+foreach data ( $list )
+	if ( -d $data ) then
+		break
+	endif
+end
+echo "directory [$data] found"
 
 #
 set todo = install

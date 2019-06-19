@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/local/sbin/banlist-deny-countries
+

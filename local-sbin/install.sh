@@ -8,14 +8,19 @@ if ( ! -d $dest ) then
 endif
 if ( "$1" == "-s" ) then
 	foreach f ( * )
-		if ( $f != "install.sh" ) then
+		if ( $f:e == "" ) then
 			if ( -x $f ) then
 				ln -svf "$PWD/$f" "$dest/$f"
 			endif
 		endif
 	end
 else
-	cp * $dest
-	rm $dest/install.sh
+	foreach f ( * )
+		if ( $f:e == "" ) then
+			if ( -x $f ) then
+				cp $f $dest/$f
+			endif
+		endif
+	end
 endif
 

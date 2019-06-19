@@ -117,7 +117,7 @@ export VISUAL="$EDITOR"
 alias edit="$EDITOR"
 
 # select default hex editor
-list=(hte mcedit dhex)
+list=(hte ht mcedit dhex)
 export HEXEDITOR="/usr/bin/od -t x1 "
 for e in $list; do
 	if [ -x /usr/bin/$e ]; then
@@ -126,10 +126,12 @@ for e in $list; do
 	fi
 done
 alias hexedit="$HEXEDITOR"
-if [ -x /usr/bin/hexdump ]; then
-	alias hexdump='hexdump -C'
-else
-	alias hexdump='od -t x1'
+if [ ! -x /usr/bin/hex ]; then
+	if [ -x /usr/bin/hexdump ]; then
+		alias hex='hexdump -C'
+	else
+		alias hex='od -t x1'
+	fi
 fi
 
 # select BRIEF editor
@@ -194,7 +196,7 @@ alias ltrim="sed 's/^[ \t\n\r]*//'"
 alias rtrim="sed 's/[ \t\n\r]*$DS//'"
 alias trim="sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 
-list=(/var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
+list=(/var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
 for e in $list; do
 	if [ -f $e ]; then
 		alias log30="tail -n 30 $e"

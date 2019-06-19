@@ -1,0 +1,5 @@
+#!/bin/sh
+
+IPRCNT=/proc/net/xt_recent
+echo "/" > $IPRCNT/BANLIST
+logger -t "BANLIST" "cleared"

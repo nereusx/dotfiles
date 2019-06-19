@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# LC = local
+ALLOWED=(LC GR CY)
+IPRCNT=/proc/net/xt_recent
+
+#
+IPLIST=`cat $IPRCNT/CHECKIP | awk '/src=/ { print substr($1,5) }'`
+for IP in $IPLIST; do
+	geoinfo=$(geoiplookup "$IP" | head -n 1 | awk -F ": " '{print$2}')
+	if [[ $geoinfo =~ ^.*not\ found$ ]]; then
+		COUNTRY="LC"
+	else
+		COUNTRY=$(echo "$geoinfo" | awk -F "," '{ print $1 }')
+	fi
+	FOUND="0"
+	for CC in $ALLOWED; do
+		if [[ "$CC" == "$COUNTRY" ]]; then
+			FOUND="1"
+			break
+		fi
+	done
+	if [[ "$FOUND" == "0" ]]; then
+		logger -t "BANLIST" "Add $IP $geoinfo"
+		echo "+$IP" > $IPRCNT/BANLIST
+		echo "-$IP" > $IPRCNT/CHECKIP
+	fi
+done
+
+

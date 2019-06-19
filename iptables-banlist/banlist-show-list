@@ -1,0 +1,10 @@
+#!/bin/sh
+IPRCNT=/proc/net/xt_recent
+IPLIST=$(cat $IPRCNT/BANLIST | awk '/src=/ { print substr($1,5) }')
+for IP in $IPLIST; do
+	echo $IP
+	geoiplookup $IP
+	echo
+done
+
+

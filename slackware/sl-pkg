@@ -1,0 +1,199 @@
+#!/bin/tcsh -f
+#
+#	Package and service manager for Void Linux
+#
+#	Copyright (C) 2019, Nicholas Christopoulos <nereus@freemail.gr>
+#
+#	This program is free software; you can redistribute it and/or modify it
+#	under the terms of the GNU General Public License as published by the Free
+#	Software Foundation; either version 3 of the License, or (at your option)
+#	any later version.
+#
+
+###
+set todo = help
+if ( $#argv > 1 ) then
+	set todo = $1
+endif
+
+switch ( $todo )
+#
+#	packages
+#
+case -i:
+case install:
+	slackpkg install $argv[2-]
+	breaksw
+case -r:
+case remove:
+	slackpkg remove $argv[2-]
+	breaksw
+case -u:
+case upgrade:
+	slackpkg update && slackpkg upgrade-all && slackpkg install-new
+	breaksw
+case -v:
+case info:
+case view:
+case show:
+	slackpkg info $argv[2-]
+	breaksw
+case -f:
+case file-search:
+case search-file:
+	slackpkg file-search $argv[2-]
+	breaksw
+	
+#
+#	services
+#
+case start:
+case stop:
+case restart:
+case status:
+	set prg = $2
+	switch ( $prg )
+	case apache:
+	case httpd:
+	case http:
+	case apache2:
+		/etc/rc.d/rc.httpd $todo
+		breaksw
+	case smbd:
+	case smb:
+	case samba:
+		/etc/rc.d/rc.samba $todo
+		breaksw
+	case avahi:
+	case mdns:
+		/etc/rc.d/rc.avahi $todo
+		breaksw
+	case nfs:
+	case nfsd:
+		/etc/rc.d/rc.nfsd $todo
+		breaksw
+	default:
+		/etc/rc.d/rc.$prg $todo
+	endsw
+	breaksw
+
+case -e:
+case enable:
+	set prg = $2
+	switch ( $prg )
+	case apache:
+	case httpd:
+	case http:
+	case apache2:
+		chmod +x /etc/rc.d/rc.httpd
+		/etc/rc.d/rc.httpd start
+		breaksw
+	case smbd:
+	case smb:
+	case samba:
+		chmod +x /etc/rc.d/rc.samba
+		/etc/rc.d/rc.samba start
+		breaksw
+	case avahi:
+	case mdns:
+		chmod +x /etc/rc.d/rc.avahi
+		/etc/rc.d/rc.avahi start
+		breaksw
+	case nfs:
+	case nfsd:
+		chmod +x /etc/rc.d/rc.nfsd
+		/etc/rc.d/rc.nfsd start
+		breaksw
+	default:
+		chmod +x /etc/rc.d/rc.$prg
+		/etc/rc.d/rc.$prg start
+	endsw
+	breaksw
+
+case -d:
+case disable:
+	set prg = $2
+	switch ( $prg )
+	case apache:
+	case httpd:
+	case http:
+	case apache2:
+		/etc/rc.d/rc.httpd stop
+		chmod -x /etc/rc.d/rc.httpd
+		breaksw
+	case smbd:
+	case smb:
+	case samba:
+		/etc/rc.d/rc.samba stop
+		chmod -x /etc/rc.d/rc.samba
+		breaksw
+	case avahi:
+	case mdns:
+		/etc/rc.d/rc.avahi stop
+		chmod -x /etc/rc.d/rc.avahi
+		breaksw
+	case nfs:
+	case nfsd:
+		/etc/rc.d/rc.nfsd stop
+		chmod -x /etc/rc.d/rc.nfsd
+		breaksw
+	default:
+		/etc/rc.d/rc.$prg stop
+		chmod -x /etc/rc.d/rc.$prg
+	endsw
+	breaksw
+
+case -av:
+case -ld:
+case -lds:
+case list-disabled:
+	set list = ( /etc/rc.d/* )
+	foreach e ( $list )
+		if ( ! -x $e ) then
+			echo $e
+		endif
+	end
+	breaksw
+
+case -nav:
+case -le:
+case -les:
+case list-enabled:
+	set list = ( /etc/rc.d/* )
+	foreach e ( $list )
+		if ( -x $e ) then
+			echo $e
+		endif
+	end
+	breaksw
+
+help:
+default:
+	cat <<EOF
+Package and service manager for Slackware Linux, version 1.1
+
+Packages:
+    -i  | install ...             install package[s]
+    -r  | remove ...              remove package[s]
+    -u  | update ...              update package list and upgrade all installed packages
+#    reinstall ...                 reinstall package[s]
+    -s  | search <pattern>        search for packages by matching package-name
+    -v  | show | info | view ...  display information about package[s]
+    -f  | file-search ...         search file in packages
+
+Services:
+    -e[s]  | enable[-service] <service>
+    -d[s]  | disable[-service] <service>
+    -le[s] | -nav | list-enabled  display all actived services
+    -ld[s] | -av | list-disabled  display all available (disabled) services
+    start | stop | restart | status <service>
+
+Special:
+#    -o   | autoremove              remove obsolete packages
+#    -rc  | reconfigure <package>
+#    -rok | remove-old-kernels
+#    -files <package>               shows the files of the package
+
+EOF
+endsw
+
