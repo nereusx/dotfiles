@@ -116,3 +116,5 @@ php-intl
 php-cache-lite
 aspell-el
 hunspell-el
+gpart
+gparted
