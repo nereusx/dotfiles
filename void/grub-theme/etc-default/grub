@@ -1,8 +1,8 @@
-# Configuration file for GRUB.
-GRUB_DEFAULT=0
-GRUB_TIMEOUT=5
-GRUB_DISTRIBUTOR="Void"
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=4 slub_debug=P page_poison=1 consoleblank=300"
+# Add these lines to the end of /etc/default/grub file
+
+#
+#	GRUB Void-Linux theme
+#
+#GRUB_GFXMODE=1920x1200x32
 GRUB_BACKGROUND=/boot/grub/pics/bg.png
-GRUB_GFXMODE=1920x1200x32
 GRUB_FONT=/boot/grub/fonts/199.pf2
