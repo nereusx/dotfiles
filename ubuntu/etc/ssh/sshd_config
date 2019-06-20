@@ -121,6 +121,5 @@ Subsystem	sftp	/usr/lib/openssh/sftp-server
 #	PermitTTY no
 #	ForceCommand cvs server
 
-#AllowUsers @sudo
 AllowGroups sudo
 
