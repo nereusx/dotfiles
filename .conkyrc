@@ -94,15 +94,17 @@ ${alignc}${color3}=== STORAGE ===${color}
 Disk${goto 50}Free${goto 100}Used${goto 150}Size
 /${goto 50}${color FFA300}${fs_free /}${color}${goto 100}${fs_used /}${goto 150} ${fs_size /}
 ${goto 50}${fs_bar 12,210 /}${alignr}${fs_used_perc /}%
+/home${goto 50}${color FFA300}${fs_free /home}${color}${goto 100}${fs_used /home}${goto 150}${fs_size /home}
+${goto 50}${fs_bar 12,210 /home}${alignr}${fs_used_perc /home}%
 /srv${goto 50}${color FFA300}${fs_free /srv}${color}${goto 100}${fs_used /srv}${goto 150}${fs_size /srv}
 ${goto 50}${fs_bar 12,210 /srv}${alignr}${fs_used_perc /srv}%
 
 I/O: ${diskio}${goto 100}${diskiograph 26,200 FFFFFF FFFFFF -l}
 
 ${alignc}${color3}=== NETWORK ===${color}
-${color5}Up: ${color2}${upspeed enp3s0}${color5}${goto 155}Down: ${color2}${downspeed enp3s0}${color}
-${color5}Sent: ${color2}${totalup enp3s0}${color5}${goto 155}Received: ${color2}${totaldown enp3s0}${color}
-${upspeedgraph enp3s0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph enp3s0 26,145 FFFFFF FFFFFF}
+${color5}Up: ${color2}${upspeed eth0}${color5}${goto 155}Down: ${color2}${downspeed eth0}${color}
+${color5}Sent: ${color2}${totalup eth0}${color5}${goto 155}Received: ${color2}${totaldown eth0}${color}
+${upspeedgraph eth0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph eth0 26,145 FFFFFF FFFFFF}
 
 ${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
 Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
