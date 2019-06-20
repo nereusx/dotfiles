@@ -123,7 +123,15 @@ case list-enabled:
 case -o:
 case autoremove:
 	apt autoremove
-	dpkg -l | awk '/^rc/ {print $2}' | xargs sudo dpkg --purge
+	set tmp = /tmp/autopurge.tmp
+	dpkg -l | awk '/^rc/ {print $2}' > $tmp
+	set n = `cat $tmp | wc -l`
+	echo "Autopurge: $n packages to be cleaned"
+	if ( $n > 0 ) then
+		cat $tmp | xargs sudo dpkg --purge
+	endif
+	rm $tmp
+	apt-get auto-clean
 	breaksw
 
 case -rc:
