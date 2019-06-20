@@ -62,6 +62,10 @@ case -fs:
 case file-search:
 	breaksw
 
+case --files:
+	dpkg -L $argv[2-]
+	breaksw
+
 #
 #	services
 #
@@ -140,6 +144,7 @@ Packages:
     -s  | search <pattern>        search for packages by matching package-name
     -v  | show | info | view ...  display information about package[s]
     -f  | file-search ...         search file in packages
+    --files <package>             show files of specific package
 
 Services:
     -e[s]  | enable[-service] <service>
