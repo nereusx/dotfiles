@@ -1,2 +1,2 @@
 #!/bin/sh
-apt -e dbus cgmanager consolekit polkitd lightdm
+./void-pkg -e dbus cgmanager consolekit polkitd lightdm
