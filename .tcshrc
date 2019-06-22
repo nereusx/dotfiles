@@ -343,6 +343,7 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 ###	aliases
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
 alias cls          'clear'
+alias ps-all       'ps aux | grep -v "\["'
 alias diogenis     'fortune diogenis'
 alias free-h       'free -h'
 alias df-h         'df -h'
