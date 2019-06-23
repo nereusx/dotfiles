@@ -1,0 +1,11 @@
+#!/bin/tcsh -f
+set eth=eno1
+set eth_addr=192.168.1.100
+set eth_net=192.168.1.0/24
+set gateway=192.168.1.254
+ip address change $eth_addr dev $eth
+ip link set dev $eth up
+ip route add $eth_net dev $eth
+ip route add default via $gateway dev $eth
+ip route flush
+ip route list

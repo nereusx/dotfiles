@@ -48,9 +48,9 @@ case show:
 case -f:
 case file-search:
 case search-file:
-	pacman -Qo $argv[2-]
+	pacman -Fy $argv[2-]
 	breaksw
-case -files:
+case --files:
 case files:
 	pacman -Ql $argv[2-]
 	breaksw
@@ -96,7 +96,7 @@ Special:
 #    -o   | autoremove              remove obsolete packages
 #    -rc  | reconfigure <package>
 #    -rok | remove-old-kernels
-    -files <package>               shows the files of the package
+    --files <package>               shows the files of the package
 
 EOF
 endsw
