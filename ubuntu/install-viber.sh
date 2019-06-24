@@ -1,5 +1,5 @@
 #!/bin/sh
-{ dpkg -l flatpak | grep flatpak; } || apt install flatpak
+apt install flatpak
 [ ! -d ~/.bin ] && mkdir ~/.bin
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update

@@ -104,6 +104,7 @@ endif
 #
 #	setup tcsh's environment
 #
+set autorehash
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
