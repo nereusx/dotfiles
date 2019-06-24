@@ -12,7 +12,7 @@
 
 ###
 set todo = help
-if ( $#argv > 1 ) then
+if ( $#argv > 0 ) then
 	set todo = $1
 endif
 
