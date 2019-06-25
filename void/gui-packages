@@ -56,8 +56,6 @@ xfce4
 xfce4-plugins
 xfce4-screenshooter
 xfce4-screensaver
-arc-theme
-papirus-icon-theme
 lazarus
 rawtherapee
 lightdm
@@ -67,3 +65,12 @@ lightdm-gtk-greeter-settings
 light-locker
 purple-plugin-pack
 noto-fonts-ttf
+xfwm4-themes
+blackbird-themes
+xcursor-themes
+clearlooks-phenix-darkpurpy-theme
+adwaita-icon-theme
+adwaita-qt
+arc-theme
+arc-icon-theme
+papirus-icon-theme
