@@ -16,7 +16,7 @@ endif
 ./install-nano-syntax-files
 ./install-to-users .tcshrc .login .bashrc .mkshrc .bin .help \
 	.jed .nanorc .grief-local .grinit \
-	.newsboat \
+	.newsboat .clogrc \
 	.gitconfig .config .xres \
 	.dof .conkyrc .bc .tmux.conf .vimrc .a2ps .abook
 

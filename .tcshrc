@@ -404,7 +404,11 @@ endif
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
-		alias log30 "tail -n 30 $e"
+		if ( -X clog ) then
+			alias log30 "tail -n 30 $e | clog"
+		else
+			alias log30 "tail -n 30 $e"
+		endif
 		break
 	endif
 end
