@@ -22,7 +22,6 @@ gzip
 zutils
 xz
 p7zip
-p7zip-unrar
 zip
 unzip
 git
