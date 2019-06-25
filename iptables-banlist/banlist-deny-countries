@@ -15,12 +15,12 @@ for IP in $IPLIST; do
 	fi
 	FOUND="0"
 	for CC in $ALLOWED; do
-		if [[ "$CC" == "$COUNTRY" ]]; then
+		if [ "$CC" == "$COUNTRY" ]; then
 			FOUND="1"
 			break
 		fi
 	done
-	if [[ "$FOUND" == "0" ]]; then
+	if [ "$FOUND" == "0" ]; then
 		logger -t "BANLIST" "Add $IP $geoinfo"
 		echo "+$IP" > $IPRCNT/BANLIST
 		echo "-$IP" > $IPRCNT/CHECKIP
