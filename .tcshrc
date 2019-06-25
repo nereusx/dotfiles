@@ -40,7 +40,9 @@ if ( ! $?HOSTNAME ) then
 	setenv HOSTNAME `hostname`
 endif
 
-# find distro
+#
+#	find distro
+#
 if ( -r /etc/os-release ) then
 	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print $1}'`
 	if ( $?OSTYPE == 0 ) then
@@ -67,6 +69,7 @@ else
 		endif
 	endif
 endif
+########################################
 
 #
 #	setup several local directories

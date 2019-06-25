@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# here you will find more servers
+# https://www.pool.ntp.org/en/
+#
+# add this script to /etc/cron.hourly it should be good idea
+
+# europe: 0.europe.pool.ntp.org
+# greece: 3.gr.pool.ntp.org
+server=3.gr.pool.ntp.org
+
+# update system clock
+ntpdate -s $server
+
+# update hardware clock from systemclock
+hwclock --systohc

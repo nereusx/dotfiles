@@ -21,3 +21,5 @@ sc
 ufw
 ufw-extras
 meld
+fwupd
+fwupdate
