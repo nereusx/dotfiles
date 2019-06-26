@@ -1,0 +1,15 @@
+#!/bin/tcsh -f
+# https://wiki.archlinux.org/index.php/Intel_graphics#Installation
+
+# for <= 3rd generation GPU
+#xbps-install -y xf86-video-intel
+
+xbps-install -y void-repo-multilib void-repo-multi-nonfree
+xbps-install -y lib32-mesa
+
+# for ivy >= 
+#xbps-install -y vulkan-intel
+
+# for sky lake >=
+echo options i915 enable_guc=2 >> /etc/modprobe.d/i915.conf
+
