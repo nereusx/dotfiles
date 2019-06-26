@@ -70,6 +70,7 @@ bash-completion
 bc
 bc-gh
 bdftopcf
+beard
 beep
 binutils
 binutils-doc
@@ -291,6 +292,7 @@ glslang
 glxinfo
 gmp
 gmp-32bit
+gmp-devel
 gnome-desktop
 gnome-icon-theme
 gnome-online-accounts
@@ -451,10 +453,12 @@ less
 lesstif
 libICE
 libICE-32bit
+libICE-devel
 libOSMesa
 libOSMesa-32bit
 libSM
 libSM-32bit
+libSM-devel
 libX11
 libX11-32bit
 libX11-devel
@@ -464,6 +468,7 @@ libXau
 libXau-32bit
 libXau-devel
 libXaw
+libXaw-devel
 libXcomposite
 libXcomposite-32bit
 libXcomposite-devel
@@ -481,7 +486,10 @@ libXext-devel
 libXfixes
 libXfixes-32bit
 libXfixes-devel
+libXfont
+libXfont-devel
 libXfont2
+libXfont2-devel
 libXfontcache
 libXft
 libXft-devel
@@ -492,8 +500,10 @@ libXinerama
 libXinerama-32bit
 libXinerama-devel
 libXmu
+libXmu-devel
 libXp
 libXpm
+libXpm-devel
 libXrandr
 libXrandr-32bit
 libXrandr-devel
@@ -501,12 +511,17 @@ libXrender
 libXrender-32bit
 libXrender-devel
 libXres
+libXres-devel
 libXt
+libXt-devel
 libXtst
 libXtst-32bit
 libXtst-devel
 libXv
+libXv-devel
 libXvMC
+libXxf86dga
+libXxf86dga-devel
 libXxf86misc
 libXxf86vm
 libXxf86vm-32bit
@@ -584,6 +599,9 @@ libdbusmenu-qt5
 libdca
 libdjvulibre
 libdmx
+libdmx-devel
+libdri2-devel-git
+libdri2-git
 libdrm
 libdrm-32bit
 libdrm-devel
@@ -620,6 +638,7 @@ libflac
 libflac-32bit
 libfluidsynth
 libfontenc
+libfontenc-devel
 libfreehand
 libfstrcmp
 libfwup
@@ -813,6 +832,7 @@ libreoffice-postgresql
 libreoffice-writer
 libreoffice-xtensions
 libressl
+libressl-devel
 librevenge
 librsvg
 librsvg-utils
@@ -922,6 +942,9 @@ libxkbcommon-32bit
 libxkbcommon-devel
 libxkbcommon-x11
 libxkbfile
+libxkbfile-devel
+libxkbui
+libxkbui-devel
 libxklavier
 libxklavier-devel
 libxml2
@@ -1008,6 +1031,7 @@ netcat
 nethogs
 nettle
 nettle-32bit
+nettle-devel
 network-manager-applet
 networkmanager-qt5
 newsboat
@@ -1320,10 +1344,15 @@ xbps-triggers
 xcalc
 xcb-proto
 xcb-util
+xcb-util-devel
 xcb-util-image
+xcb-util-image-devel
 xcb-util-keysyms
+xcb-util-keysyms-devel
 xcb-util-renderutil
+xcb-util-renderutil-devel
 xcb-util-wm
+xcb-util-wm-devel
 xclip
 xclipboard
 xclock
@@ -1414,6 +1443,7 @@ xorg-apps
 xorg-fonts
 xorg-input-drivers
 xorg-server
+xorg-server-devel
 xorg-video-drivers
 xorgproto
 xpr
