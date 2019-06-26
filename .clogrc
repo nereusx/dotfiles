@@ -17,3 +17,11 @@ default rule /useradd/ --> bold green match
 default rule /passwd/ --> bold green match
 default rule /ntpdate/ --> bold yellow match
 default rule /xbps-install/ --> bold black match
+default rule /kernel/ --> bold cyan match
+default rule /bluetoothd/ --> bold blue match
+default rule /dhcpcd/ --> bold red match
+default rule /dbus-daemon/ --> bold red match
+default rule /NetworkManager/ --> bold green match
+default rule /sudo/ --> bold red match
+default rule /su/ --> bold red match
+default rule /rtkit-daemon/ --> bold blue match
