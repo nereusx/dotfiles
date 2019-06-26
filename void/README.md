@@ -1,3 +1,3 @@
 # Void Linux
 
-[VoidLinux](https://voidlinux.org/) is an wonderfull bleeding edge distribution.
+[VoidLinux](https://voidlinux.org/) is a wonderfull bleeding edge distribution.
