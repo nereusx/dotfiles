@@ -57,4 +57,8 @@ if [ ! -d /srv/public ]; then
 fi
 
 #
+[ ! -d /usr/share/icons ] && mkdir /usr/share/icons
+cp usr-share-icons/* /usr/share/icons
+
+#
 echo "see post-install for next steps"
