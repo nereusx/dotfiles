@@ -12,16 +12,18 @@ apache rule / 4[0-9][0-9] / --> red match
 apache rule / 5[0-9][0-9] / --> bold red match
 
 #
-default rule /groupadd/ --> bold green match
-default rule /useradd/ --> bold green match
-default rule /passwd/ --> bold green match
-default rule /ntpdate/ --> bold yellow match
-default rule /xbps-install/ --> bold black match
-default rule /kernel/ --> bold cyan match
-default rule /bluetoothd/ --> bold blue match
-default rule /dhcpcd/ --> bold red match
-default rule /dbus-daemon/ --> bold red match
-default rule /NetworkManager/ --> bold green match
-default rule /sudo/ --> bold red match
-default rule /su/ --> bold red match
-default rule /rtkit-daemon/ --> bold blue match
+default rule /\[groupadd\]/ --> bold green match
+default rule /\[useradd\]/ --> bold green match
+default rule /\[passwd\]/ --> bold green match
+default rule /\[ntpdate\]/ --> bold green match
+default rule /\[xbps-install\]/ --> bold black match
+default rule /\[kernel\]/ --> bold cyan match
+default rule /\[bluetoothd\]/ --> bold blue match
+default rule /\[dhcpcd\]/ --> bold red match
+default rule /\[dbus-daemon\]/ --> bold red match
+default rule /\[NetworkManager\]/ --> bold green match
+default rule /\[sudo\]/ --> bold red match
+default rule /\[su\]/ --> bold red match
+default rule /\[rtkit-daemon\]/ --> bold blue match
+default rule /\[mtp-probe\]/ --> bold yellow match
+default rule /\[nm-dispatcher\]/ --> bold yellow match
