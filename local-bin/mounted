@@ -1,2 +1,5 @@
 #!/bin/sh
-lsblk -f -o +size | grep -v loop
+
+#lsblk -f -o +size | grep -v loop
+
+mount | grep -Ev '^(cgroup|proc|sys|dev|security|none|tmpfs)' | grep -v 'AppImage'
