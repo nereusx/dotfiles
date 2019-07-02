@@ -23,6 +23,7 @@ default rule /\[dhcpcd\]/ --> bold red match
 default rule /\[dbus-daemon\]/ --> bold red match
 default rule /\[NetworkManager\]/ --> bold green match
 default rule /\[sudo\]/ --> bold red match
+default rule /\[root\]/ --> bold red match
 default rule /\[su\]/ --> bold red match
 default rule /\[rtkit-daemon\]/ --> bold blue match
 default rule /\[mtp-probe\]/ --> bold yellow match
