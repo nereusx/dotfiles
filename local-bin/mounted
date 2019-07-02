@@ -2,4 +2,4 @@
 
 #lsblk -f -o +size | grep -v loop
 
-mount | grep -Ev '^(cgroup|proc|sys|dev|security|none|tmpfs)' | grep -v 'AppImage'
+mount | grep -Ev '^(cgroup|proc|sysfs|devpts|devtmpfs|security|none)' | grep -Ev 'AppImage|/dev/shm'

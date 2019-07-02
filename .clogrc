@@ -28,3 +28,4 @@ default rule /\[su\]/ --> bold red match
 default rule /\[rtkit-daemon\]/ --> bold blue match
 default rule /\[mtp-probe\]/ --> bold yellow match
 default rule /\[nm-dispatcher\]/ --> bold yellow match
+default rule /\[smbd\]/ --> bold red match

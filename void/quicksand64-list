@@ -164,6 +164,8 @@ e2fsprogs-libs
 ebook-tools
 ed
 efibootmgr
+efitools
+efivar
 elfutils-devel
 elinks
 emacs
@@ -235,6 +237,8 @@ fontconfig
 fontconfig-32bit
 fontconfig-devel
 fontforge
+fonts-croscore-ttf
+fonts-roboto-ttf
 fortune-mod
 fpc
 fpc-src
@@ -279,6 +283,8 @@ gimp
 gir-freedesktop
 gist
 git
+glew
+glew-devel
 glib
 glib-32bit
 glib-devel
@@ -289,6 +295,8 @@ glibc-devel
 glibc-locales
 glibmm
 glslang
+glu
+glu-devel
 glxinfo
 gmp
 gmp-32bit
@@ -337,6 +345,7 @@ gtkmm
 gtkmm2
 gtksourceview
 gtkspell
+gucharmap
 gufw
 gupnp
 gupnp-igd
@@ -414,6 +423,7 @@ kcrash
 kdbusaddons
 kdeclarative
 kdecoration
+kdesu
 kdoctools
 kernel-libc-headers
 kglobalaccel
@@ -1056,6 +1066,7 @@ nvidia-opencl
 ocl-icd
 ocl-icd-32bit
 oclock
+octoxbps
 okteta
 okular
 oniguruma
@@ -1225,7 +1236,6 @@ smartmontools
 smbclient
 smproxy
 snappy
-sndio
 snooze
 sonnet
 sound-theme-freedesktop
@@ -1379,6 +1389,7 @@ xf86-video-mga
 xf86-video-nouveau
 xf86-video-vesa
 xf86-video-vmware
+xfce-polkit
 xfce4
 xfce4-appfinder
 xfce4-battery-plugin
