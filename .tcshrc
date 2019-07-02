@@ -456,6 +456,15 @@ if ( -X surfraw ) then
 else
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
+if ( -X youtube-dl ) then
+	if ( -X youtube-dl2 ) then
+		alias yt-get-ogg  'youtube-dl2 -i -c --extract-audio --audio-format vorbis ''\!*'''
+		alias yt-get-list 'youtube-dl2 -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+	else
+		alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
+		alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+	endif
+endif
 
 ### directory stuff
 set dunique
