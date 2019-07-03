@@ -107,7 +107,7 @@ endif
 #
 #	setup tcsh's environment
 #
-set autorehash
+unset autorehash
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -290,7 +290,7 @@ if ( $DISTRO == "void" || $DISTRO =~ "*BSD" ) then
 	bindkey "\033[3~" delete-char
 endif
 
-# SSH ???
+# SSH
 if ( $?REMOTEHOST ) then
 	bindkey "\033OH" beginning-of-line
 	bindkey "\033OF" end-of-line
@@ -382,22 +382,15 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
+# xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
 if ( $?REMOTEHOST ) then
-	if ( $TERM =~ "xterm*" ) then
-		setxhost
-	else if ( $TERM =~ "rxvt*" ) then
-		setxhost
-	endif
+	setxhost
 endif
 
 if ( $DISTRO == "void" ) then
 	alias man 'man -O width=`tput cols` '
-	if ( -X void-pkg ) then
-		alias vpk 'void-pkg'
-		alias apt 'void-pkg'
-	endif
 endif
 
 ### information utilities
@@ -457,13 +450,8 @@ else
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
 if ( -X youtube-dl ) then
-	if ( -X youtube-dl2 ) then
-		alias yt-get-ogg  'youtube-dl2 -i -c --extract-audio --audio-format vorbis ''\!*'''
-		alias yt-get-list 'youtube-dl2 -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
-	else
-		alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
-		alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
-	endif
+	alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
+	alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
 endif
 
 ### directory stuff
@@ -492,18 +480,14 @@ endif
 # --- end ---
 
 ### load additional settings if you use my script
-
 set nonomatch
-if ( -d ~/.tcsh ) then
-	set list = ( ~/.tcsh/* )
-	foreach conf ( $list )
-		if ( -r $conf ) source $conf
-	end
-endif
 set list = ( ~/.tcshrc-* )
 foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
+
+# last changes
+set autorehash
 
 #EOF
