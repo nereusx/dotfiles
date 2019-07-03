@@ -3,9 +3,6 @@
 #	~/.tcshrc
 #	Nicholas Christopoulos (nereus@freemail.gr)
 
-# options
-#set use_powerline	# enable `powerline' status line
-
 # (non-)interactive absolute values
 set parseoctal
 set echo_style=both
@@ -388,7 +385,6 @@ alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
 if ( $?REMOTEHOST ) then
 	setxhost
 endif
-
 if ( $DISTRO == "void" ) then
 	alias man 'man -O width=`tput cols` '
 endif
@@ -425,7 +421,7 @@ alias cdwrite	   'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
-	else if ( -X bc ) then
+	else
 		alias calc 'echo \!* | bc -l'
 	endif
 endif
@@ -456,7 +452,7 @@ endif
 
 ### directory stuff
 set dunique
-set cdpath = ( ${HOME} /usr/src )
+#set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
@@ -468,15 +464,6 @@ set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
 
-# 
-if ( $?use_powerline ) then
-	if ( -f `which powerline-daemon` ) then
-		powerline-daemon -q
-		setenv POWERLINE_TCSH_CONTINUATION 1
-		setenv POWERLINE_TCSH_SELECT 1
-		source /usr/share/powerline/bindings/tcsh/powerline.tcsh
-	endif
-endif
 # --- end ---
 
 ### load additional settings if you use my script
