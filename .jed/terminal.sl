@@ -170,6 +170,10 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_Home = "OH";
 		Key_End = "OF";
 		}
+	else if ( getenv("DISTRO") == "void" ) {
+		Key_Home = "OH";
+		Key_End = "OF";
+		}
 	else {
 		if ( getenv("OSTYPE") == "FreeBSD" ) {
 			Key_Home = "OH";

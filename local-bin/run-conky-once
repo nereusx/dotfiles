@@ -1,0 +1,6 @@
+#!/bin/tcsh -f
+if ( ! { pgrep -u $USER -x conky } ) then
+	exec conky
+endif
+
+
