@@ -27,6 +27,7 @@ alsa-firmware
 alsa-lib
 alsa-lib-32bit
 alsa-plugins
+alsa-plugins-ffmpeg
 alsa-plugins-pulseaudio
 alsa-sndio
 alsa-tools
@@ -119,6 +120,8 @@ colordiff
 conky
 coreutils
 cpio
+cpufrequtils
+cpupower
 cups
 cups-devel
 curl
@@ -593,6 +596,8 @@ libcheese
 libchmlib
 libcmis
 libcolord
+libcpufreq
+libcpupower
 libcracklib
 libcroco
 libcrypto45
@@ -1052,6 +1057,7 @@ noto-fonts-ttf
 npth
 nspr
 nss
+nss-mdns
 ntfs-3g
 ntp
 numix-themes
