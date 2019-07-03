@@ -230,11 +230,6 @@ endif
 #
 #	TERMINAL FIXES and KEYBINDs
 #
-if ( $?COLORTERM ) then
-	if ( $COLORTERM == "truecolor" ) then
-		setenv COLORTERM color
-	endif
-endif
 if ( $TERM == "xterm" ) then
 	bindkey "\033[1;3D" backward-word
 	bindkey "\033[1;3C" forward-word
@@ -315,6 +310,8 @@ alias hist 'history 20'
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
 if ( -e /etc/complete.tcsh ) then
 	source /etc/complete.tcsh
+else
+	echo "warning: /etc/complete.tcsh does not exists"
 endif
 uncomplete ln
 uncomplete rm
@@ -410,7 +407,7 @@ foreach e ( $list )
 end
 
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
-alias netlog       'sudo netstat -lptu4'
+alias netlog        'sudo netstat -lptu4'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 # use system time command (time of process execution statistics) instead of tcsh time
