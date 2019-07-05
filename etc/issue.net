@@ -1,3 +1,6 @@
-This is a Linux Server, there are no login for root, admin and other stuff.
-Only a small speficied group of users have access.
-Every attempt to login is recorded.
+==============================================================================
+DESCRIPTION
+Note: Only @sudo users can login to this service.
+
+HOSTNAME Linux Server
+==============================================================================
