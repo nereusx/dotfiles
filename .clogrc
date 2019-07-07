@@ -13,5 +13,8 @@ apache rule / 5[0-9][0-9] / --> bold red match
 
 #
 default rule /[Ee]rror/     --> bold red line
-default rule /[Ff]ailed/     --> bold red line
+default rule /[Ff]ailed/    --> bold red line
 default rule /BOOT_IMAGE/   --> bold green line
+default rule /systemd/      --> cyan line
+default rule /[Ss]ucceeded/ --> bold green match
+
