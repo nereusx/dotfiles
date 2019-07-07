@@ -8,9 +8,7 @@ fi
 ### install files
 if [ ! -d /var/lib/arpwatch ]; then
 	mkdir /var/lib/arpwatch
-	touch /var/lib/arpwatch/arp.dat
-	touch /var/lib/arpwatch/arp.dat-
-	cp etc/arpwatch.conf /etc/arpwatch.conf
+	cp misc/arpwatch/* /var/lib/arpwatch
 fi
 
-grep arpwatch /etc/rc.local > /dev/null || echo "/usr/sbin/arpwatch" >> /etc/rc.local
+grep -w arpwatch /etc/rc.local > /dev/null || echo "(/usr/sbin/arpwatch -d 2>&1 | logger -t ARPWATCH) &" >> /etc/rc.local
