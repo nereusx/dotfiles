@@ -15,5 +15,7 @@ hdparm -S 36 /dev/sdb
 hdparm -S 36 /dev/sdd
 /usr/sbin/arpd
 
-# load my notification daemon
-/usr/bin/dunst &
+# load sound server
+/usr/bin/pulseaudio -D --system=yes
+
+
