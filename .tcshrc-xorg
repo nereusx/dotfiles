@@ -1,0 +1,2 @@
+#if ( $?DISPLAY ) exit
+#exec startx

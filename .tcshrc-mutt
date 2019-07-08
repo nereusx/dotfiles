@@ -1,0 +1,12 @@
+# create mutt commands for every account in ~/.mutt
+# copy it to ${home}
+if ( -d ~/.mutt ) then
+	set nonomatch
+	foreach f ( ~/.mutt/* )
+		if ( -r $f ) then
+			set name = $f:t
+			alias mutt-$name "mutt -F ~/.mutt/$name"
+		endif
+	end
+	unset nonomatch
+endif
