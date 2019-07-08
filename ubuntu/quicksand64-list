@@ -131,6 +131,7 @@ cdparanoia
 cdrdao
 cdrskin
 cervisia
+cgdb
 chafa
 cheese-common
 cheese
@@ -186,6 +187,7 @@ dbus
 dc
 dconf-gsettings-backend
 dconf-service
+ddd
 debconf-i18n
 debconf-kde-data
 debconf-kde-helper
@@ -206,6 +208,7 @@ diffstat
 diffuse
 diffutils
 dirmngr
+discount
 distro-info-data
 dkms
 dmidecode
@@ -220,6 +223,7 @@ docbook-xml
 docbook-xsl
 dolphin-plugins
 dolphin
+dosbox
 dosfstools
 dpkg-dev
 dpkg
@@ -235,6 +239,11 @@ edict
 efibootmgr
 eject
 elementary-xfce-icon-theme
+emacs-bin-common
+emacs-common
+emacs-el
+emacs-gtk
+emacs
 emacsen-common
 enchant
 engrampa-common
@@ -266,6 +275,7 @@ firefox
 flatpak
 flex
 fluid-soundfont-gm
+focuswriter
 fontconfig-config
 fontconfig
 fontforge-common
@@ -468,6 +478,7 @@ gettext-base
 gettext
 ghostscript-x
 ghostscript
+ghostwriter
 gigolo
 gimp-data
 gimp-help-common
@@ -650,6 +661,7 @@ iptraf-ng
 iputils-ping
 iputils-tracepath
 irqbalance
+irssi
 isc-dhcp-client
 isc-dhcp-common
 iso-codes
@@ -2004,6 +2016,7 @@ liblzma-dev
 liblzma5
 liblzma5
 liblzo2-2
+libm17n-0
 libmad0-dev
 libmad0
 libmagic-mgc
@@ -2049,6 +2062,7 @@ libmodplug1
 libmodule-implementation-perl
 libmodule-pluggable-perl
 libmodule-runtime-perl
+libmotif-common
 libmount-dev
 libmount1
 libmount1
@@ -2181,6 +2195,7 @@ libortp13
 libosmesa6
 libosmesa6
 libostree-1-1
+libotf0
 libotr5
 libout123-0
 liboxygenstyle5-5
@@ -2275,6 +2290,7 @@ libpostproc55
 libpotrace0
 libpowerdevilcore2
 libpowerdevilui5
+libpq5
 libprocesscore7
 libprocessui7
 libprocps7
@@ -2324,6 +2340,10 @@ libqmobipocket2
 libqpdf21
 libqqwing2v5
 libqrencode4
+libqscintilla2-qt4-13
+libqscintilla2-qt4-l10n
+libqscintilla2-qt5-13
+libqscintilla2-qt5-l10n
 libqt4-dbus
 libqt4-declarative
 libqt4-designer
@@ -2457,6 +2477,8 @@ libscim8v5
 libsdl-image1.2
 libsdl-mixer1.2-dev
 libsdl-mixer1.2
+libsdl-net1.2
+libsdl-sound1.2
 libsdl1.2-dev
 libsdl1.2debian
 libsdl2-2.0-0
@@ -2854,6 +2876,7 @@ libxkbcommon0
 libxkbcommon0
 libxkbfile1
 libxklavier16
+libxm4
 libxml-atom-perl
 libxml-feed-perl
 libxml-libxml-perl
@@ -2966,6 +2989,7 @@ lshw
 lskat
 lsof
 ltrace
+m17n-db
 m4
 mailutils-common
 mailutils
@@ -3497,6 +3521,7 @@ speech-dispatcher-espeak-ng
 speech-dispatcher
 spice-vdagent
 sqlite3
+sqlitebrowser
 squashfs-tools
 ssh-import-id
 ssh
@@ -3564,6 +3589,7 @@ tipa
 tk8.6
 tk
 tmux
+tora
 traceroute
 translate-toolkit-doc
 translate-toolkit
@@ -3622,7 +3648,9 @@ vcdimager
 vdpau-driver-all
 vdpau-driver-all
 vim-common
+vim-runtime
 vim-tiny
+vim
 vlc-bin
 vlc-data
 vlc-l10n

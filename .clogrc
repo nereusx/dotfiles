@@ -20,6 +20,8 @@ default rule /rsyslogd:/      --> bold black line
 default rule /ntpdate/      --> bold green line
 default rule /systemd/      --> cyan line
 default rule /dbus-daemon/  --> red line
+default rule /PackageKit:/      --> yellow line
+default rule /CRON/      --> yellow line
 
 default rule /[Ee]rror/     --> bold red line
 default rule /[Ff]ailed/    --> bold red line
