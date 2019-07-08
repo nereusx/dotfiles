@@ -1,0 +1,4 @@
+#!/bin/sh
+export GTK_MODULES="canberra-gtk-module"
+xfconf-query -c xsettings -p /Net/SoundThemeName -s ubuntu
+
