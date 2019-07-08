@@ -14,14 +14,20 @@ apache rule / 5[0-9][0-9] / --> bold red match
 #
 default rule /rtkit-daemon/    --> bold red line
 default rule /bluetoothd/    --> bold blue line
+default rule /blueman/    --> bold blue line
 default rule /kernel:/      --> yellow line
 default rule /root:/      --> bold yellow line
 default rule /rsyslogd:/      --> bold black line
 default rule /ntpdate/      --> bold green line
-default rule /systemd/      --> cyan line
+default rule /systemd-timesyncd\[[0-9]+\]:/      --> bold green line
+default rule /systemd\[[0-9]+\]:/      --> bold red match
 default rule /dbus-daemon/  --> red line
 default rule /PackageKit:/      --> yellow line
 default rule /CRON/      --> yellow line
+default rule /dhclient\[[0-9]+\]:/      --> bold red match
+default rule /NetworkManager\[[0-9]+\]:/      --> bold yellow match
+default rule /nm-dispatcher:/      --> bold yellow match
+default rule /whoopsie\[[0-9]+\]:/      --> bold magenta match
 
 default rule /[Ee]rror/     --> bold red line
 default rule /[Ff]ailed/    --> bold red line
