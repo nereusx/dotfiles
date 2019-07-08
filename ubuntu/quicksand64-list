@@ -148,6 +148,9 @@ clisp
 clog
 cmake-data
 cmake
+codeblocks-common
+codeblocks-contrib
+codeblocks
 colord-data
 colord
 command-not-found-data
@@ -272,6 +275,7 @@ finger
 firefox-locale-el
 firefox-locale-en
 firefox
+flashrom
 flatpak
 flex
 fluid-soundfont-gm
@@ -461,6 +465,7 @@ fwupd-signed
 fwupd
 g++-8
 g++
+gamin
 gawk
 gcc-8-base
 gcc-8
@@ -471,6 +476,8 @@ gcr
 gdb
 gdbserver
 gdisk
+geany-common
+geany
 genisoimage
 geoclue-2.0
 geoip-database
@@ -1121,6 +1128,7 @@ libclutter-1.0-common
 libclutter-gst-3.0-0
 libclutter-gtk-1.0-0
 libcmis-0.5-5v5
+libcodeblocks0
 libcodec2-0.8.1
 libcodec2-0.8.1
 libcogl-common
@@ -1273,7 +1281,6 @@ libf2fs5
 libfaad2
 libfakekey0
 libfakeroot
-libfam0
 libfarstream-0.2-5
 libfastjson4
 libfcgi-perl
@@ -1323,12 +1330,14 @@ libfreetype6
 libfribidi-dev
 libfribidi0
 libfribidi0
+libftdi1-2
 libfuse2
 libfuture-perl
 libfwupd2
 libgadu3
 libgail-common
 libgail18
+libgamin0
 libgarcon-1-0
 libgarcon-common
 libgarcon-gtk3-1-0
@@ -1448,6 +1457,7 @@ libgsl23
 libgslcblas0
 libgsm1
 libgsm1
+libgsoap-2.8.75
 libgspell-1-1
 libgspell-1-common
 libgssapi-krb5-2
@@ -2667,6 +2677,7 @@ liburi-fetch-perl
 liburi-perl
 liburi-template-perl
 libusageenvironment3
+libusb-0.1-4
 libusb-1.0-0
 libusb-1.0-0
 libusbmuxd4
@@ -2767,7 +2778,10 @@ libwww-opensearch-perl
 libwww-perl
 libwww-robotrules-perl
 libwxbase3.0-0v5
+libwxbase3.0-dev
 libwxgtk3.0-0v5
+libwxgtk3.0-dev
+libwxsmithlib0
 libx11-6
 libx11-6
 libx11-data
@@ -3651,6 +3665,9 @@ vim-common
 vim-runtime
 vim-tiny
 vim
+virtualbox-dkms
+virtualbox-qt
+virtualbox
 vlc-bin
 vlc-data
 vlc-l10n
@@ -3690,6 +3707,8 @@ wireless-tools
 wodim
 wpasupplicant
 wput
+wx-common
+wx3.0-headers
 x11-apps
 x11-common
 x11-session-utils
@@ -3800,6 +3819,7 @@ xubuntu-wallpapers
 xul-ext-ubufox
 xxd
 xz-utils
+yabasic
 yelp-xsl
 yelp
 youtube-dl
