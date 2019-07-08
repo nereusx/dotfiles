@@ -15,7 +15,7 @@ groupadd sshusers
 usermod -aG sshusers $uname
 
 ./app -e rsyslog
-./app -e alsa acpid sshd pulseaudio sndiod uuidd
+./app -e alsa acpid sshd pulseaudio uuidd
 ./app -e bluetoothd
 ./app -e avahi-daemon avahi-dnsconfd
 
