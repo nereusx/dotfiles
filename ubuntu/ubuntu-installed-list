@@ -1,0 +1,4 @@
+#!/bin/sh
+
+apt list --installed | awk 'BEGIN{FS="/"}{if ( NF > 1 ) print $1;}'
+

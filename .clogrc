@@ -18,11 +18,12 @@ default rule /kernel:/      --> yellow line
 default rule /root:/      --> bold yellow line
 default rule /rsyslogd:/      --> bold black line
 default rule /ntpdate/      --> bold green line
+default rule /systemd/      --> cyan line
+default rule /dbus-daemon/  --> red line
 
 default rule /[Ee]rror/     --> bold red line
 default rule /[Ff]ailed/    --> bold red line
 default rule /BOOT_IMAGE/   --> bold green line
-default rule /systemd/      --> cyan line
 default rule /[Ss]ucceeded/ --> bold green match
 default rule /[0-9.]+Gbps/ --> bold green match
 default rule /[0-9.]+ Gbps/ --> bold green match
