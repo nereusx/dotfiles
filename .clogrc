@@ -27,6 +27,12 @@ default rule /[Ee]rror/     --> bold red line
 default rule /[Ff]ailed/    --> bold red line
 default rule /BOOT_IMAGE/   --> bold green line
 default rule /[Ss]ucceeded/ --> bold green match
+default rule /[Ss]uccess/ --> bold green match
+default rule /[Ss]uccessfully/ --> bold green match
+default rule /[Aa]ctivated/ --> bold green match
+default rule /[Aa]ctivating service name/ --> bold green match
+default rule /'.*'/ --> bold cyan match
+default rule /is enabled/ --> bold green match
 default rule /[0-9.]+Gbps/ --> bold green match
 default rule /[0-9.]+ Gbps/ --> bold green match
 default rule /[Ll]ink is [Uu]p/ --> bold green match
