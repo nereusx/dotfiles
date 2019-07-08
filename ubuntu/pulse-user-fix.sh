@@ -1,7 +1,4 @@
 #!/bin/tcsh
-#
-#	copy it to ~/.config/autostart-scripts
-#
 
 logger -t PAUSER "Check PulseAudio of $USER ($uid)"
 while ( 1 )
@@ -16,5 +13,7 @@ while ( 1 )
 		logger -t PAUSER "The monster is dead"
 		break
 	endif
+	sleep 2
 end
 pactl set-default-sink 0
+logger -t PAUSER "Change the default sound card"
