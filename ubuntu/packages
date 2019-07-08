@@ -42,6 +42,10 @@ bc
 sc
 imagemagick
 sox
+libcanberra
+libcanberra-pulse
+libcanberra-gtk-module
+gnome-session-canberra
 ffmpeg
 mpg321
 ctorrent
@@ -132,3 +136,5 @@ clog
 update-motd
 conky
 kwrite
+xsettingsd
+ubuntu-sounds
