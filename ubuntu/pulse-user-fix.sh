@@ -26,11 +26,12 @@ while ( 1 )
 		logger -t PAUSER "removed?"
 	else
 		logger -t PAUSER "The monster is dead"
-		notify-send -t PAUSER "The monster is dead"
 		break
 	endif
 	sleep 4
 end
 logger -t PAUSER "Change the default sound card"
 pactl set-default-sink 0
+sleep 1
+notify-send "USER's PulseAudio is finally dead"
 echo "* done *"
