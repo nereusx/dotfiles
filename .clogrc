@@ -12,9 +12,20 @@ apache rule / 4[0-9][0-9] / --> red match
 apache rule / 5[0-9][0-9] / --> bold red match
 
 #
+default rule /rtkit-daemon/    --> bold red line
+default rule /bluetoothd/    --> bold blue line
+default rule /kernel:/      --> yellow line
+default rule /root:/      --> bold yellow line
+default rule /rsyslogd:/      --> bold black line
+default rule /ntpdate/      --> bold green line
+
 default rule /[Ee]rror/     --> bold red line
 default rule /[Ff]ailed/    --> bold red line
 default rule /BOOT_IMAGE/   --> bold green line
 default rule /systemd/      --> cyan line
 default rule /[Ss]ucceeded/ --> bold green match
+default rule /[0-9.]+Gbps/ --> bold green match
+default rule /[0-9.]+ Gbps/ --> bold green match
+default rule /[Ll]ink is [Uu]p/ --> bold green match
+default rule /[Ll]ink [Uu]p/ --> bold green match
 
