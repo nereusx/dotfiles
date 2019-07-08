@@ -41,30 +41,13 @@ endif
 #	find distro
 #
 if ( -r /etc/os-release ) then
-	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print $1}'`
+	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print tolower($1)}'`
 	if ( $?OSTYPE == 0 ) then
 		setenv OSTYPE `uname -s`
 	endif
-else if ( -X xbps-install ) then
-	setenv DISTRO void
-	setenv OSTYPE void
-else if ( -X slackpkg ) then
-	setenv DISTRO slackware
+else # ignore it
+	setenv DISTRO unix
 	setenv OSTYPE unix
-else
-	if ( -X apt-get ) then
-		if ( "`uname -a | grep -i ubuntu`" != "" ) then
-			setenv DISTRO Ubuntu
-		else
-			setenv DISTRO debian
-		endif
-		setenv OSTYPE debian
-	else
-		setenv DISTRO `uname -s` 
-		if ( $?OSTYPE == 0 ) then
-			setenv OSTYPE `uname -s`
-		endif
-	endif
 endif
 ########################################
 

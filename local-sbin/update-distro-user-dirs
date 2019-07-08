@@ -1,0 +1,46 @@
+#!/bin/tcsh -f
+#
+#	files or/and directories that changed per distro
+#
+
+set list = ( .ViberPC )
+
+# find distro
+if ( -r /etc/os-release ) then
+	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print tolower($1)}'`
+	if ( $?OSTYPE == 0 ) then
+		setenv OSTYPE `uname -s`
+	endif
+else # ignore it
+	exit 1
+endif
+
+# for each user home
+foreach udir ( /root /home/* )
+	set name = $udir:t
+	unset found
+	id -u $name > /dev/null && set found
+	if ( $?found ) then # a real user!
+		foreach f ( $list )
+			# the original file, will be linked to disto-related
+			set genericf = $udir/$f
+			
+			# the distro file
+			set distrof  = `echo $udir/$f-$DISTRO | awk '{print tolower($0)}'`
+			
+			echo $genericf "->" $distrof 
+
+			if ( -l $genericf ) then
+				rm $genericf
+				ln -s $distrof $genericf			
+			else if ( -e $distrof ) then
+				rm -r $genericf
+				ln -s $distrof $genericf			
+			else if ( -e $genericf ) then # first-time
+				mv $genericf $distrof
+				rm -r $genericf
+				ln -s $distrof $genericf
+			endif
+		end
+	endif
+end
