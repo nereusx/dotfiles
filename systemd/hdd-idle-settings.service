@@ -1,12 +1,12 @@
-# file: /etc/systemd/system/hdparm.service
+# file: /etc/systemd/system/hdd-idle-settings.service
 #
 # Set HDD parameters on boot and after resume...
 #
-# systemctl enable hdparm
+# systemctl enable hdd-idle-settings
 # systemctl daemon-reload
 
 [Unit]
-Description=HDD Parameters
+Description=HDD IDLE Settings
 After=sleep.target
 
 [Service]
