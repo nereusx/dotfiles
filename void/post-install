@@ -4,7 +4,8 @@ uname=nikosc
 if [ ! -d /home/$uname ]; then
 	useradd -m $uname
 fi
-usermod -aG audio,video $uname
+usermod -aG audio,video,pulse,rtkit,pulse-access root
+usermod -aG audio,video,pulse,rtkit,pulse-access $uname
 usermod -aG wireshark $uname
 usermod -aG input $uname
 usermod -aG kvm $uname
@@ -13,8 +14,8 @@ usermod -aG bluetooth $uname
 groupadd sshusers
 usermod -aG sshusers $uname
 
-./app -e metalog
-./app -e alsa acpid sshd sndiod uuidd
+./app -e rsyslog
+./app -e alsa acpid sshd pulseaudio sndiod uuidd
 ./app -e bluetoothd
 ./app -e avahi-daemon avahi-dnsconfd
 
