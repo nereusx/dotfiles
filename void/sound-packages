@@ -2,4 +2,4 @@ alsa-utils
 alsa-tools
 alsa-firmware
 alsa-plugins
-alsa-plugins-pulseaudio
+pulseaudio
