@@ -138,3 +138,9 @@ conky
 kwrite
 xsettingsd
 ubuntu-sounds
+openbsd-inetd
+gwhois
+geoip-bin
+geoip-database
+geoip-database-extra
+geoipupdate
