@@ -39,4 +39,4 @@ is uses) isn't installed even is libslang it is.
 1. all are free under GPL; a few are not mine
 1. in .jed directory there is the 'terminal.sl' file to change escape key codes;
 	yep, in 2019 and still terminals in every distro has incompatibilities
-1. Some C-based utilities are in unix-utils repository
+1. Some C-based utilities are in [unix-utils](https://github.com/nereusx/unix-utils) repository
