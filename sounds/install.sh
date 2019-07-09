@@ -20,3 +20,7 @@ if ( ! -d $dir/generic ) then
 	mkdir $dir/generic
 endif
 cp *.ogg $dir/generic
+
+if ( $dir == "/usr/share/sounds" ) then
+	cp -r sound-themes/* /usr/share/sounds
+endif
