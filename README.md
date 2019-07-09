@@ -21,6 +21,8 @@ There many distro's subdirectories that contains fresh install scripts, and seve
 slackware (main distro), void (main distro) and ubuntu (my backup distro) are the most important.
 The other's are just my tests.
 
+I have serveral ROOT partitions (32-64GB) which are distros installed, one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory. There are many utilities to keep all those in working order.
+
 ## WARNING
 
 * I use BRIEF's text editor keys ***everywhere***, even in tcsh
