@@ -18,6 +18,9 @@ Help files are written for 132x35 terminals
 ## Distro's subdirectories
 There many distro's subdirectories that contains fresh install scripts, and several patches that I had to write...
 
+slackware (main distro), void (main distro) and ubuntu (my backup distro) are the most important.
+The other's are just my tests.
+
 ## WARNING
 
 * I use BRIEF's text editor keys ***everywhere***, even in tcsh
