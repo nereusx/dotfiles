@@ -28,9 +28,10 @@ I have serveral ROOT partitions (32-64GB) which are distros installed, one home 
 
 * I use BRIEF's text editor keys ***everywhere***, even in tcsh
 * with minor exception like joe, where I use WordStar keys
+* My shell is the **tcsh**, so .tcshrc is final version, the other shells are follow...
+  First, install `tcsh` before use anything.
 
 ## Notes
-1. My shell is the **tcsh**, so .tcshrc is final version, the other shells are follow... So, install tcsh first before use anything.
 2. local-bin could be installed at ~/.bin instead of /usr/local/bin
 3. all are free under GPL; a few are not mine
 4. in .jed directory there is the 'terminal.sl' file to change escape key codes;
