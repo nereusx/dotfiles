@@ -2,7 +2,7 @@
 
 Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
 
-These files are for personal use, but many of you needed
+These files are for ***personal use***, but many of you needed
 
 * the ~/.jed directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
 
