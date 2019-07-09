@@ -1,2 +1,5 @@
+#   this script can be used to avoid RH's garbages,
+#   consolekit, elogind, *dm, even parts of systemd.
+
 #if ( $?DISPLAY ) exit
 #exec startx
