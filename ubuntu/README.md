@@ -1,1 +1,4 @@
 # UBUNTU
+
+* fix pulseaudio so you may use it system-wide for several local users includes the root
+* install and configuration of several subsystems like samba, avahi, lastest wine (which solves many problems)
