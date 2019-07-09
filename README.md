@@ -25,7 +25,7 @@ The other's are just my tests.
 I have serveral ROOT partitions (32-64GB) which are distros installed, one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory. There are many utilities to keep all those in working order.
 
 Note: I discover that in a few distros, jed (and my ~/.jed scripts) are not working well because `shsl` (part of libslang that JED
-is uses) isn't installed even is libslang it is.
+is uses) isn't installed even if libslang it is.
 
 ## WARNING
 
