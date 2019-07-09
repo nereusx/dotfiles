@@ -4,16 +4,19 @@ Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
 
 These files are for personal use, but many of you needed the ~/.jed directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
 
-The `~/.jed/terminal.sl` fill free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
-
 ## The most important, the ~/.jed directory
 Just copy to your home directory, and set the JED's environment variables as are in `.tcshrc`
+
+The `~/.jed/terminal.sl` fill free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
 
 ## Shell scripts
 My shell is the **tcsh**, so .tcshrc is final version, the other scripts are follow..
 
 ## Help files (~/.help)
 Help files are written for 132x35 terminals
+
+## Distro's subdirectories
+There many distro's subdirectories that contains fresh install scripts, and several patches that I had to write...
 
 ## WARNING
 
