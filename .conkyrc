@@ -1,6 +1,6 @@
 # Conky settings #
 background yes
-update_interval 1
+update_interval 0.5
 double_buffer yes
 no_buffers yes
 imlib_cache_size 10
@@ -106,17 +106,20 @@ ${color5}Up: ${color2}${upspeed eth0}${color5}${goto 155}Down: ${color2}${downsp
 ${color5}Sent: ${color2}${totalup eth0}${color5}${goto 155}Received: ${color2}${totaldown eth0}${color}
 ${upspeedgraph eth0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph eth0 26,145 FFFFFF FFFFFF}
 
-${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
-Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
-${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
-${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
-${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
-${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
-${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
-#${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
-${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
-${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
-${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
-${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
-${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
-${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
+#${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
+#Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
+#${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
+#${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
+#${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
+#${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
+#${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
+##${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
+#${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
+#${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
+#${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
+#${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
+#${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
+#${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
+#
+#
+#
