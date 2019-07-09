@@ -4,3 +4,4 @@
 * install and configuration of several subsystems like samba, avahi, lastest wine (which solves many problems)
 * install sound-themes for XFCE
 * pidgin with omemo support
+* several fixes for systemd
