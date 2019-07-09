@@ -1,0 +1,16 @@
+#
+#	executes /etc/rc.resume after hibernate
+#
+# systemctl enable rc-resume-hibernate
+# systemctl daemon-reload
+
+[Unit]
+Description=Executes /etc/rc.resume after hibernate
+After=hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.resume
+
+[Install]
+WantedBy=hibernate.target basic.target

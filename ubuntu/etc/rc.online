@@ -1,0 +1,12 @@
+#!/bin/sh -e
+
+logger -t DEBUG "$0 -- begin"
+
+#ping 1.1.1.1 -c 1 -w 1 > /dev/null
+#if [ $? -eq 0 ]; then
+#	logger -t DEBUG "$0: checked"
+#else
+#	logger -t DEBUG "$0: not online"
+#fi
+
+logger -t DEBUG "$0 -- end"

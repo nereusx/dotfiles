@@ -1,0 +1,17 @@
+#
+#	executes /etc/rc.online after online target sets
+#
+# systemctl enable rc-online
+# systemctl daemon-reload
+
+[Unit]
+Description=Executes /etc/rc.online after network gets online
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/rc.online
+
+[Install]
+WantedBy=basic.target
