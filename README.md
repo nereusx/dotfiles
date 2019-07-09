@@ -8,13 +8,10 @@ These files are for personal use, but many of you needed
 
 * several patches for each distro
 
-## The most important, the ~/.jed directory
+## The ~/.jed directory
 Just copy to your home directory, and set the JED's environment variables as are in `.tcshrc`
 
 The `~/.jed/terminal.sl` fill free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
-
-## Shell scripts
-My shell is the **tcsh**, so .tcshrc is final version, the other scripts are follow..
 
 ## Help files (~/.help)
 Help files are written for 132x35 terminals
@@ -33,8 +30,9 @@ I have serveral ROOT partitions (32-64GB) which are distros installed, one home 
 * with minor exception like joe, where I use WordStar keys
 
 ## Notes
-1. local-bin could be installed at ~/.bin instead of /usr/local/bin
-2. all are free under GPL; a few are not mine
-3. in .jed directory there is the 'terminal.sl' file to change escape key codes;
+1. My shell is the **tcsh**, so .tcshrc is final version, the other shells are follow... So, install tcsh first before use anything.
+2. local-bin could be installed at ~/.bin instead of /usr/local/bin
+3. all are free under GPL; a few are not mine
+4. in .jed directory there is the 'terminal.sl' file to change escape key codes;
 	yep, in 2019 and still terminals in every distro has incompatibilities
-4. Some C-based utilities are in unix-utils repository
+5. Some C-based utilities are in unix-utils repository
