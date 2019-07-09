@@ -1,8 +1,14 @@
 # dotfiles
 
-Slackware64 14.2, VoidLinux, Xubuntu64 18.10, FreeBSD
+Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
 
-## Help files
+## The most important, the ~/.jed directory
+Just copy to your home directory, and set the JED's environment variables as are in `.tcshrc`
+
+## Shell scripts
+My shell is the **tcsh**, so .tcshrc is final version, the other scripts are follow..
+
+## Help files (~/.help)
 Help files are written for 132x35 terminals
 
 ## WARNING
