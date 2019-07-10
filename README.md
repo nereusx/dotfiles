@@ -9,9 +9,14 @@ These files are for ***personal use***, but many of you needed
 * several patches for each distro
 
 ## The ~/.jed directory
-Just copy to your home directory, and set the JED's environment variables as are in `.tcshrc`
+Just copy it to your home directory, and set the JED_HOME environment variable
+```
+setenv JED_HOME ${HOME}/.jed
+```
 
 The `~/.jed/terminal.sl` fill free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
+
+Note: I discover that in a few distros, jed (and my ~/.jed scripts) are not working well because `shsl` (part of libslang that JED is uses) isn't installed even if libslang it is.
 
 ## Help files (~/.help)
 Help files are written for 132x35 terminals
@@ -23,9 +28,6 @@ slackware (main distro), void (main distro) and ubuntu (my backup distro) are th
 The other's are just my tests.
 
 I have serveral ROOT partitions (32-64GB) which are distros installed, one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory. There are many utilities to keep all those in working order.
-
-Note: I discover that in a few distros, jed (and my ~/.jed scripts) are not working well because `shsl` (part of libslang that JED
-is uses) isn't installed even if libslang it is.
 
 ## WARNING
 
