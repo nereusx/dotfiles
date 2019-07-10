@@ -1,0 +1,18 @@
+#          
+LABEL=PRISYS           /                          ext4    defaults,noatime               0 1
+LABEL=BOOTC            /boot/efi                  vfat    defaults                       0 2
+LABEL=HOMEC            /mnt/home                  ext4    defaults,noatime               0 2
+/mnt/home/home         /home                      none    bind                           0 0
+LABEL=DATALNX4T        /srv                       ext4    defaults,noatime               0 2
+LABEL=SWC16G           none                       swap    sw                             0 2
+
+# speed optimization
+tmpfs                  /tmp                       tmpfs   defaults,nosuid,nodev,size=1G  0 0
+
+#
+LABEL=SECSYS           /mnt/artix                 ext4    defaults,noatime,noauto        0 0
+LABEL=WIN10SYS         /mnt/winsys                nfts    rw,noauto,umask=0,allow_other  0 0
+LABEL=WINDATA          /mnt/windata               ntfs    rw,noauto,umask=0,allow_other  0 0
+
+# removable devices
+/dev/sr0               /media/cdrom               auto    noauto                         0 0

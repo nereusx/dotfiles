@@ -1,0 +1,4 @@
+https://www.virtualbox.org/wiki/Linux_Downloads
+chmod +x VirtualBox*Linux_amd64.run
+./VirtualBox*Linux_amd64.run
+

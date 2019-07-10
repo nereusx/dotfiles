@@ -1,0 +1,7 @@
+To get sound events to work in both Xubuntu and Arch linux, I had to do the following:
+
+1. Enable "Event Sounds" in Settings Manager -> Appearance -> Settings
+2. Set "xsettings/Net/SoundThemeName" in the Settings Manager (to a sound theme located in /usr/share/sounds).
+3. Export GTK_MODULES="canberra-gtk-module" (In Arch this was done automatically by install the libcanberra package, in Xubuntu I had to manually create the file: see http://ubuntuforums.org/showthread.php? … st12008205)
+4. Install the following packages: Arch (libcanberra libcanberra-pulse) Xubuntu (sox gnome-session-canberra)
+5. Turn up "System Sounds" in pavucontrol (Pulseaudio).

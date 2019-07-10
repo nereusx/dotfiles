@@ -1,23 +1,34 @@
 #!/bin/tcsh -f
 
-set allow = ( GR CY )
-set iprcnt = /proc/net/xt_recent
+# LC = local
+set ALLOWED = ( LC GR CY )
+set IPRCNT  = /proc/net/xt_recent
 
 #
-set list = `cat $iprcnt/CHECKIP | awk '/src=/ { print substr($1,5) }'`
-foreach e ( $list )
-	set geoinfo = `geoiplookup "$e" | head -n 1 | awk -F ": " '{print$2}'`
-	set country = `echo "$geoinfo" | awk -F "," '{ print $1 }'`
-	set found = 0
-	foreach cc ( $allow )
-		if ( $cc == $country ) then
-			set found = 1
+set IPLIST = `cat $IPRCNT/CHECKIP | awk '/src=/ { print substr($1,5) }'`
+foreach IP ( $IPLIST )
+	set geoinfo = `geoiplookup "$IP" | head -n 1 | awk -F ": " '{print$2}'`
+	echo $geoinfo | grep -i "IP Address not found" > /dev/null
+	if ( $status == 0 ) then
+		set COUNTRY = "LC"
+	else
+		set COUNTRY = `echo "$geoinfo" | awk -F "," '{ print $1 }'`
+	endif
+	unset found
+	foreach CC ( $ALLOWED )
+		if ( $CC == $COUNTRY ) then
+			set found
+			break
 		endif
 	end
-	if ( $found != 1 ) then
-		logger -t "BANLIST" "$e $geoinfo"
-		echo "+$e" > $iprcnt/BANLIST
-		echo "-$e" > $iprcnt/CHECKIP
+	if ( $?found ) then
+		unset found
+	else
+		logger -t "BANLIST" "Add $IP $geoinfo"
+		echo "+$IP" > $IPRCNT/BANLIST
+		echo "-$IP" > $IPRCNT/CHECKIP
 	endif
 end
+
+
 

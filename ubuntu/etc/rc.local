@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+logger -t DEBUG "$0 -- begin"
+
+# update directories of home-partition
+/usr/local/sbin/update-distro-user-dirs | logger -t DISTRO
+
+# change the name of ethernet to eth0
+ethname=enp3s0
+ip link set $ethname down
+ip link set dev $ethname name eth0
+ip addr change 192.168.1.100 dev eth0
+ip link set eth0 up
+
+# set power-manager to magnetic disks
+hdparm -S 60 /dev/sdb
+hdparm -S 60 /dev/sdd
+
+# load arpd daemon, use arpd -l to get report
+/usr/sbin/arpd
+
+logger -t DEBUG "$0 -- end"

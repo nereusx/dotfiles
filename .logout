@@ -1,0 +1,3 @@
+if ( $?REMOTEHOST ) then
+    setxtitle "local"
+endif

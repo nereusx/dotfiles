@@ -1,0 +1,13 @@
+mariadb
+mariadb-client
+openssh
+pam_ssh
+fuse-sshfs
+avahi
+avahi-autoipd
+avahi-ui-utils
+avahi-utils
+avahi-discover
+samba
+smbclient
+

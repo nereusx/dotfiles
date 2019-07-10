@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+#	NetBSD packages for Linux
+#		https://www.pkgsrc.org/
+#
+#	The list of the packages by category
+#		http://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/README.html
+#
+
+#
+PKGSRC_ROOT=/usr/src
+cd $PKGSRC_ROOT
+
+#
+PKG_PATH="http://cdn.NetBSD.org/pub/pkgsrc/packages/$(uname -s)/$(uname -m)/$(uname -r|cut -f '1 2' -d.)/All/"
+export PKG_PATH
+
+#
+cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
+cd pkgsrc/bootstrap
+./bootstrap
+
+#
+# that's all
+# now go to package and make it
+#
+#	example:
+#		cd pkgsrc/devel/memcached
+#		make install clean
+#

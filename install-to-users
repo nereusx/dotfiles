@@ -14,9 +14,13 @@ foreach f ( $* )
 	cp -r $src /root
 	foreach dir ( /home/* )
 		set name = $dir:t
-		echo "$name\t$src -> $dir"
-		cp -r $src $dir
-		chown -R ${name}:${name} $dir/$f
+		unset found
+		id -u $name > /dev/null && set found
+		if ( $?found ) then
+			echo "$name\t$src -> $dir"
+			cp -r $src $dir
+			chown -R ${name}:${name} $dir/$f
+		endif
 	end
 end
 

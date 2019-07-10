@@ -1,0 +1,8 @@
+# Add these lines to the end of /etc/default/grub file
+
+#
+#	GRUB Void-Linux theme
+#
+#GRUB_GFXMODE=1920x1200x32
+GRUB_BACKGROUND=/boot/grub/pics/bg.png
+GRUB_FONT=/boot/grub/fonts/241.pf2

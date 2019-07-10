@@ -1,19 +1,26 @@
 #!/bin/sh
 
 uname=nikosc
-
-usermod -aG audio $uname
-usermod -aG socklog $uname
-usermod -aG video $uname
+if [ ! -d /home/$uname ]; then
+	useradd -m $uname
+fi
+usermod -aG audio,video,pulse,rtkit,pulse-access root
+usermod -aG audio,video,pulse,rtkit,pulse-access $uname
 usermod -aG wireshark $uname
 usermod -aG input $uname
 usermod -aG kvm $uname
+usermod -aG bluetooth $uname
 
-#sudoedit /etc/sudoers
-apt -e alsa acpid sshd sndiod smartd uuidd
-apt -e bluetoothd
+groupadd sshusers
+usermod -aG sshusers $uname
 
-#apt -e socklog-unix nanoklogd
+./app -e rsyslog
+./app -e alsa acpid sshd pulseaudio uuidd
+./app -e bluetoothd
+./app -e avahi-daemon avahi-dnsconfd
 
-# edit /etc/ssh/sshd_config
-# remove RootPermit
+echo "add user to sudoers: sudoedit /etc/sudoers"
+
+
+
+

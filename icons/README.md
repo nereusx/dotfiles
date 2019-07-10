@@ -1,3 +1,4 @@
 # icons
 
-Missing icons and themes
+Missing icons and icon-themes.
+The skulls are for xkill command.

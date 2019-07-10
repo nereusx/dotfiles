@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+# set power-manager to magnetic disks
+hdparm -S 36 /dev/sdb
+hdparm -S 36 /dev/sdd

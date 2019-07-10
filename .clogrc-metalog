@@ -1,0 +1,32 @@
+# Standard syslog entries.
+default rule /warn|debug/   --> yellow line
+default rule /error|severe/ --> red line
+default rule /critical/     --> bold red line
+default rule /critical/     --> blank
+default rule /ignore/       --> suppress
+
+# Apache access.log status codes
+apache rule / 2[0-9][0-9] / --> green match
+apache rule / 3[0-9][0-9] / --> yellow match
+apache rule / 4[0-9][0-9] / --> red match
+apache rule / 5[0-9][0-9] / --> bold red match
+
+#
+default rule /\[groupadd\]/ --> bold green match
+default rule /\[useradd\]/ --> bold green match
+default rule /\[passwd\]/ --> bold green match
+default rule /\[ntpdate\]/ --> bold green match
+default rule /\[xbps-install\]/ --> bold black match
+default rule /\[kernel\]/ --> bold cyan match
+default rule /\[bluetoothd\]/ --> bold blue match
+default rule /\[dhcpcd\]/ --> bold red match
+default rule /\[dbus-daemon\]/ --> bold red match
+default rule /\[NetworkManager\]/ --> bold green match
+default rule /\[sudo\]/ --> bold red match
+default rule /\[root\]/ --> bold red match
+default rule /\[su\]/ --> bold red match
+default rule /\[rtkit-daemon\]/ --> bold blue match
+default rule /\[mtp-probe\]/ --> bold yellow match
+default rule /\[nm-dispatcher\]/ --> bold yellow match
+default rule /\[smbd\]/ --> bold red match
+default rule /\[polkitd\]/ --> bold red match

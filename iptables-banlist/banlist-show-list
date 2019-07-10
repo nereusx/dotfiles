@@ -1,9 +1,10 @@
-#!/bin/tcsh -f
-set iprcnt = /proc/net/xt_recent
-set list=`cat $iprcnt/BANLIST | awk '/src=/ { print substr($1,5) }'`
-foreach e ( $list )
-	echo $e
-	geoiplookup $e
+#!/bin/sh
+IPRCNT=/proc/net/xt_recent
+IPLIST=$(cat $IPRCNT/BANLIST | awk '/src=/ { print substr($1,5) }')
+for IP in $IPLIST; do
+	echo $IP
+	geoiplookup $IP
 	echo
-end
+done
+
 

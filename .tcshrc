@@ -3,9 +3,6 @@
 #	~/.tcshrc
 #	Nicholas Christopoulos (nereus@freemail.gr)
 
-# options
-#set use_powerline	# enable `powerline' status line
-
 # (non-)interactive absolute values
 set parseoctal
 set echo_style=both
@@ -40,33 +37,19 @@ if ( ! $?HOSTNAME ) then
 	setenv HOSTNAME `hostname`
 endif
 
-# find distro
+#
+#	find distro
+#
 if ( -r /etc/os-release ) then
-	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print $1}'`
+	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print tolower($1)}'`
 	if ( $?OSTYPE == 0 ) then
 		setenv OSTYPE `uname -s`
 	endif
-else if ( -X xbps-install ) then
-	setenv DISTRO void
-	setenv OSTYPE void
-else if ( -X slackpkg ) then
-	setenv DISTRO slackware
+else # ignore it
+	setenv DISTRO unix
 	setenv OSTYPE unix
-else
-	if ( -X apt-get ) then
-		if ( "`uname -a | grep -i ubuntu`" != "" ) then
-			setenv DISTRO Ubuntu
-		else
-			setenv DISTRO debian
-		endif
-		setenv OSTYPE debian
-	else
-		setenv DISTRO `uname -s` 
-		if ( $?OSTYPE == 0 ) then
-			setenv OSTYPE `uname -s`
-		endif
-	endif
 endif
+########################################
 
 #
 #	setup several local directories
@@ -104,6 +87,7 @@ endif
 #
 #	setup tcsh's environment
 #
+unset autorehash
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -229,11 +213,6 @@ endif
 #
 #	TERMINAL FIXES and KEYBINDs
 #
-if ( $?COLORTERM ) then
-	if ( $COLORTERM == "truecolor" ) then
-		setenv COLORTERM color
-	endif
-endif
 if ( $TERM == "xterm" ) then
 	bindkey "\033[1;3D" backward-word
 	bindkey "\033[1;3C" forward-word
@@ -286,7 +265,7 @@ if ( $DISTRO == "void" || $DISTRO =~ "*BSD" ) then
 	bindkey "\033[3~" delete-char
 endif
 
-# SSH ???
+# SSH
 if ( $?REMOTEHOST ) then
 	bindkey "\033OH" beginning-of-line
 	bindkey "\033OF" end-of-line
@@ -314,6 +293,8 @@ alias hist 'history 20'
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
 if ( -e /etc/complete.tcsh ) then
 	source /etc/complete.tcsh
+else
+	echo "warning: /etc/complete.tcsh does not exists"
 endif
 uncomplete ln
 uncomplete rm
@@ -343,12 +324,14 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 ###	aliases
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
 alias cls          'clear'
+alias ps-all       'ps aux | grep -v "\["'
 alias diogenis     'fortune diogenis'
 alias free-h       'free -h'
 alias df-h         'df -h'
 alias xcopy        'rsync -ah --progress'
 alias xmerge       'xrdb -merge ~/.Xresources'
 alias xmonitor-off 'xset dpms force off'
+#alias xmonitor-on  'xset dpms force on'
 alias warn         'echo "\e[7m\e[5m "\!*" \e[0m"'
 alias ltrim		   "sed 's/^[ \t\n\r]*//'"
 alias rtrim		   "sed 's/[ \t\n\r]*$DS//'"
@@ -376,29 +359,25 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
+# xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
 if ( $?REMOTEHOST ) then
-	if ( $TERM =~ "xterm*" ) then
-		setxhost
-	else if ( $TERM =~ "rxvt*" ) then
-		setxhost
-	endif
+	setxhost
 endif
-
 if ( $DISTRO == "void" ) then
 	alias man 'man -O width=`tput cols` '
-	if ( -X void-pkg ) then
-		alias vpk 'void-pkg'
-		alias apt 'void-pkg'
-	endif
 endif
 
 ### information utilities
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
-		alias log30 "tail -n 30 $e"
+		if ( -X clog ) then
+			alias log30 "tail -n 30 $e | clog"
+		else
+			alias log30 "tail -n 30 $e"
+		endif
 		break
 	endif
 end
@@ -411,7 +390,7 @@ foreach e ( $list )
 end
 
 alias check-journal 'sudo iotop -obtqqq | grep jbd2'
-alias netlog       'sudo netstat -lptu4'
+alias netlog        'sudo netstat -lptu4'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 # use system time command (time of process execution statistics) instead of tcsh time
@@ -422,7 +401,7 @@ alias cdwrite	   'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
-	else if ( -X bc ) then
+	else
 		alias calc 'echo \!* | bc -l'
 	endif
 endif
@@ -446,10 +425,14 @@ if ( -X surfraw ) then
 else
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
+if ( -X youtube-dl ) then
+	alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
+	alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+endif
 
 ### directory stuff
 set dunique
-set cdpath = ( ${HOME} /usr/src )
+#set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
@@ -461,30 +444,17 @@ set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
 
-# 
-if ( $?use_powerline ) then
-	if ( -f `which powerline-daemon` ) then
-		powerline-daemon -q
-		setenv POWERLINE_TCSH_CONTINUATION 1
-		setenv POWERLINE_TCSH_SELECT 1
-		source /usr/share/powerline/bindings/tcsh/powerline.tcsh
-	endif
-endif
 # --- end ---
 
 ### load additional settings if you use my script
-
 set nonomatch
-if ( -d ~/.tcsh ) then
-	set list = ( ~/.tcsh/* )
-	foreach conf ( $list )
-		if ( -r $conf ) source $conf
-	end
-endif
 set list = ( ~/.tcshrc-* )
 foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
+
+# last changes
+set autorehash
 
 #EOF

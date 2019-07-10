@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+logger -t DEBUG "$0 -- begin"
+
+#hdparm -S 60 /dev/sdb
+#hdparm -S 60 /dev/sdd
+
+logger -t DEBUG "$0 -- end"
