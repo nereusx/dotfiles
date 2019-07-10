@@ -1,2 +1,5 @@
 #!/bin/sh
+#
+#	df that shows only real disks
+#
 df -h | grep -v loop | grep -v tmpfs | grep -v udev

@@ -1,5 +1,9 @@
 #!/bin/tcsh -f
 
+#
+#	command that used as TTS
+#
+
 #set voice=el # default voice, the default greek-voice
 set voice="-v greek-mbrola-1 -s 110 -p 40"
 #set voice="-v el+klatt4 -s 128 -p 32"

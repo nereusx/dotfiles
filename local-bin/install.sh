@@ -4,11 +4,11 @@ set dest=/usr/local/bin
 if ( ! -d $dest ) then
 	mkdir -p $dest
 	chown root:root $dest
-	chmod 0755 $dest
+	chmod 0750 $dest
 endif
 if ( "$1" == "-s" ) then
 	foreach f ( * )
-		if ( $f != "install.sh" ) then
+		if ( $f:e == "" ) then
 			if ( -e "$dest/$f" ) then
 				rm "$dest/$f"
 			endif
@@ -17,11 +17,11 @@ if ( "$1" == "-s" ) then
 	end
 else
 	foreach f ( * )
-		if ( $f != "install.sh" ) then
+		if ( $f:e == "" ) then
 			if ( -l "$dest/$f" ) then
 				rm "$dest/$f"
 			endif
-			cp "$PWD/$f" "$dest/$f"
+			cp $f "$dest/$f"
 		endif
 	end
 endif
