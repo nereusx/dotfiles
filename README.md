@@ -33,12 +33,9 @@ I have serveral ROOT partitions (32-64GB) which are distros installed, one home 
 
 * I use BRIEF's text editor keys ***everywhere***, even in tcsh
 * with minor exception like joe, where I use WordStar keys
-* My shell is the **tcsh**, so .tcshrc is final version, the other shells are follow...
-  First, install `tcsh` before use anything.
+* My shell is the **tcsh**, so .tcshrc is last version, the other shells are follow... Also, install `tcsh` before use anything.
 
 ## Notes
 1. local-bin could be installed at ~/.bin instead of /usr/local/bin
 1. all are free under GPL; a few are not mine
-1. in .jed directory there is the 'terminal.sl' file to change escape key codes;
-	yep, in 2019 and still terminals in every distro has incompatibilities
 1. Some C-based utilities are in [unix-utils](https://github.com/nereusx/unix-utils) repository
