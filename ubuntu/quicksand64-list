@@ -515,8 +515,14 @@ freepats
 freerdp2-x11
 freetype2-doc
 friendly-recovery
+fstransform
 ftp
+fuse-zip
+fuse2fs
 fuse
+fusedav
+fusefat
+fuseiso
 fusesmb
 fwupd-signed
 fwupd
@@ -3769,7 +3775,6 @@ rpm
 rsakeyfind
 rsync
 rsyslog
-rtkit
 rtmpdump
 rtorrent
 ruby-did-you-mean
