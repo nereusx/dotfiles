@@ -14,7 +14,15 @@ Just copy it to your home directory, and set the JED_HOME environment variable
 setenv JED_HOME ${HOME}/.jed
 ```
 
-The `~/.jed/terminal.sl` fill free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
+The `~/.jed/terminal.sl` feel free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
+
+You can get my special [here](https://github.com/nereusx/jed). Then go to jed directory and build it:
+```
+mkdir /usr/share/jed
+ln -s /usr/share/jed /usr/jed
+./configure --prefix=/usr
+make && make install
+```
 
 Note: I discover that in a few distros, jed (and my ~/.jed scripts) are not working well because `shsl` (part of libslang that JED is uses) isn't installed even if libslang it is.
 
