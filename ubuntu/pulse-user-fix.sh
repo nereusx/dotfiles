@@ -1,6 +1,7 @@
 #!/bin/tcsh
 #
 #	This script kills the local user's pulseaudio
+#	Use it in X session startup if you use pulseaudio daemon
 #
 
 # play this sound on startup
