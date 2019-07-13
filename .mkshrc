@@ -1,5 +1,8 @@
 # -- mode: sh; tab-size: 4; --
 
+#
+umask 022
+
 # if non-interactive shell, exit
 [[ $- == *i* ]] || return
 
@@ -7,6 +10,14 @@
 #shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
 
 # interactive shell
+if [ -r /etc/os-release ]; then
+	. /etc/os-release
+	export DISTRO=${ID:-$NAME}
+	export OSTYPE=${OSTYPE:-`uname -s`}
+else
+	export DISTRO=unix
+	export OSTYPE=`uname -s`
+fi
 
 #
 if [ $TERM == "rxvt" ]; then
