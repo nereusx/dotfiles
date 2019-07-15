@@ -26,8 +26,7 @@ fi
 
 # setup several local directories
 export backup=${HOME}/.backup
-list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
-for e in $list; do
+for e in $backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc; do
 	if [ ! -d $e ]; then
 		mkdir -p $e
 		chmod 0700 $e
