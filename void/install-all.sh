@@ -31,6 +31,9 @@ cd ..
 #
 ./install-webcam.sh
 
+#
+./install-xfce-sounds.sh
+
 # wine needs 32bit
 xbps-install void-repo-multilib
 xbps-install void-repo-multilib-nonfree
