@@ -19,6 +19,9 @@ else if ( $?intel ) then
 	$ins libva-intel-driver
 endif
 
+# refresh
+xbps-install -Suy
+
 ### wine
 $ins wine-mono
 $ins wine-32bit
