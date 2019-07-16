@@ -2,8 +2,8 @@ ASPELL = aspell
 ASPELL_FLAGS = 
 WORD_LIST_COMPRESS = word-list-compress
 DESTDIR = 
-dictdir = 
-datadir = 
+dictdir = /usr/lib/aspell-0.60
+datadir = /usr/lib/aspell-0.60
 
 # Generated with Aspell Dicts "proc" script version 0.50.2
 
