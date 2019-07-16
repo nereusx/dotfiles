@@ -10,5 +10,7 @@ exec flatpak run com.viber.Viber
 EOF
 chmod +x ~/.bin/viber
 
+# ajust scaling
+# exec env QT_SCALE_FACTOR=0.5 flatpak run com.viber.Viber
 
 
