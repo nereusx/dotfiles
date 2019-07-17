@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/bin/pulseaudio --system --realtime=no --disallow-exit --enable-memfd=yes --high-priority=no &
