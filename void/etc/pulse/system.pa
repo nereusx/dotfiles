@@ -35,8 +35,7 @@ load-module module-detect
 .ifexists module-esound-protocol-unix.so
 load-module module-esound-protocol-unix
 .endif
-load-module module-native-protocol-unix auth-anonymous=1
-load-module module-zeroconf-publish
+load-module module-native-protocol-unix
 
 ### Automatically restore the default sink/source when changed by the user
 ### during runtime
