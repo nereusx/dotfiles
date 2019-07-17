@@ -51,12 +51,12 @@ case view:
 
 case -s:
 case search:
-	xbps-query -R -s $argv[2-]
+	xbps-query -Rs $argv[2-]
 	breaksw
 
 case -rs:
 case regex-search:
-	xbps-query -R -o $argv[2-]
+	xbps-query --regex -Rs "$argv[2-]"
 	breaksw
 
 case -f:
