@@ -20,6 +20,11 @@ export PKG_PATH
 #
 cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
 cd pkgsrc/bootstrap
+
+#
+if [ -d /usr/src/pkgsrc/bootstrap/work ]; then
+	rm -r /usr/src/pkgsrc/bootstrap/work
+fi
 unset PKG_PATH
 unset MAKEFLAGS
 ./bootstrap
