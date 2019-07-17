@@ -8,6 +8,8 @@
 #
 
 #
+SH=/bin/bash
+export SH
 PKGSRC_ROOT=/usr/src
 cd $PKGSRC_ROOT
 
@@ -18,6 +20,8 @@ export PKG_PATH
 #
 cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
 cd pkgsrc/bootstrap
+unset PKG_PATH
+unset MAKEFLAGS
 ./bootstrap
 
 #
