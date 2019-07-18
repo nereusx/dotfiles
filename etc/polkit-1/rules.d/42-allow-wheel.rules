@@ -1,4 +1,4 @@
-// Default rules for polkit
+// allow all users of wheel group
 
 polkit.addRule(function(action, subject) {
 	if ( subject.isInGroup("wheel") )
