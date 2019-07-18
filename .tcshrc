@@ -364,6 +364,18 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
+# some beeps
+if ( -f /usr/share/sounds/generic/tone-440Hz-250ms.ogg ) then
+	alias beep 'paplay /usr/share/sounds/generic/tone-440Hz-250ms.ogg'
+else
+	alias beep 'echo -n '
+endif
+if ( -f /usr/share/sounds/generic/alarm-fire.ogg ) then
+	alias abeep 'paplay /usr/share/sounds/generic/alarm-fire.ogg'
+else
+	alias abeep 'echo -n '
+endif
+
 # xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
