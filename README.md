@@ -2,13 +2,13 @@
 
 Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
 
-These files are for ***personal use***, but many of you needed
+These files are for ***personal use***, but **you may need**
 
-* the ~/.jed directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
+* the **.jed/** directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
 
-* pulseaudio-system, use system-wide pulseaudio for multiple users in local system, and/or in LAN.
+* pulseaudio-system/,  **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
 
-* my tcsh scripts, ~/.tcshrc
+* my tcsh scripts, include **.tcshrc**
 
 * several patches for each distro
 
@@ -20,7 +20,7 @@ setenv JED_HOME ${HOME}/.jed
 
 The `~/.jed/terminal.sl` feel free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
 
-You can get my special [here](https://github.com/nereusx/jed). Then go to jed directory and build it:
+You can get my special jed version [here](https://github.com/nereusx/jed). Then go to jed directory and build it:
 ```
 mkdir /usr/share/jed
 ln -s /usr/share/jed /usr/jed
