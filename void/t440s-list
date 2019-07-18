@@ -1008,7 +1008,6 @@ libuv
 libva
 libva-32bit
 libva-devel
-libva-intel-driver
 libvamp-plugin-sdk
 libvdpau
 libvdpau-32bit
@@ -1079,9 +1078,7 @@ links
 linux
 linux-firmware
 linux-firmware-amd
-linux-firmware-intel
 linux-firmware-network
-linux-firmware-nvidia
 linux-headers
 linux4.19
 linux4.19-headers
@@ -1113,8 +1110,6 @@ mdadm
 mdocml
 meld
 mesa-ati-dri
-mesa-intel-dri
-mesa-nouveau-dri
 mesa-vmwgfx-dri
 metalog
 mime-types
@@ -1499,9 +1494,7 @@ xf86-input-wacom
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
-xf86-video-intel
 xf86-video-mga
-xf86-video-nouveau
 xf86-video-vesa
 xf86-video-vmware
 xfce4

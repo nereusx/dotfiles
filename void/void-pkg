@@ -185,6 +185,13 @@ case --files:
 	xbps-query -f $argv[2-]
 	breaksw
 
+case -a:
+	xbps-query --regex -Rs "$argv[2-]" | grep -v 32bit
+	breaksw
+case -af:
+	xbps-query --regex -Rs "$argv[2-]" | grep -v 32bit | awk '{print $2}'
+	breaksw
+
 help:
 default:
 	cat <<EOF
@@ -198,6 +205,7 @@ Packages:
     -s  | search <pattern>        search for packages by matching package-name
     -v  | show | info | view ...  display information about package[s]
     -f  | file-search ...         search file in packages
+    -a[f] pattern                 find all pacakges, f = formats for xargs
 
 Services:
     -e[s]  | enable[-service] <service>

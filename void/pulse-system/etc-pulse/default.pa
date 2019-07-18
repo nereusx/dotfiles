@@ -68,13 +68,13 @@ load-module module-bluetooth-discover
 .ifexists module-esound-protocol-unix.so
 load-module module-esound-protocol-unix
 .endif
-load-module module-native-protocol-unix
+#load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-server
 
 ### Network access (may be configured with paprefs, so leave this commented
 ### here if you plan to use paprefs)
-#load-module module-esound-protocol-tcp
-#load-module module-native-protocol-tcp
-#load-module module-zeroconf-publish
+load-module module-esound-protocol-tcp
+load-module module-native-protocol-tcp
+load-module module-zeroconf-publish
 
 ### Load the RTP receiver module (also configured via paprefs, see above)
 #load-module module-rtp-recv
