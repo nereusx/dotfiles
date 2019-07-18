@@ -6,6 +6,10 @@ These files are for ***personal use***, but many of you needed
 
 * the ~/.jed directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
 
+* pulseaudio-system, use system-wide pulseaudio for multiple users in local system, and/or in LAN.
+
+* my tcsh scripts, ~/.tcshrc
+
 * several patches for each distro
 
 ## The ~/.jed directory
@@ -32,10 +36,13 @@ Help files are written for 132x35 terminals
 ## Distro's subdirectories
 There many distro's subdirectories that contains fresh install scripts, and several patches that I had to write...
 
-slackware (main distro), void (main distro) and ubuntu (my backup distro) are the most important.
+slackware (my previous main distro),
+void (main distro) and ubuntu (my backup distro) are the most important.
 The other's are just my tests.
 
-I have serveral ROOT partitions (32-64GB) which are distros installed, one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory. There are many utilities to keep all those in working order.
+I have serveral ROOT partitions (32-64GB) which are distros installed,
+one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory.
+There are many utilities to keep all those in working order.
 
 ## WARNING
 
