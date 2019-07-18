@@ -10,6 +10,8 @@ These files are for ***personal use***, but **you may need**
 
 * my tcsh scripts, include **.tcshrc**
 
+* install XFCE system sound theme for void-linux and xubuntu
+
 * several patches for each distro
 
 ## The ~/.jed directory
