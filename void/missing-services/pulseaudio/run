@@ -1,2 +1,0 @@
-#!/bin/sh
-exec pulseaudio --system --realtime=no --high-priority=no --disallow-exit
