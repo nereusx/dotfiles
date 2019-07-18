@@ -19,6 +19,7 @@ Then:
 ```
 bash
 ./install-pkgsrc
+cp etc/profile.d/netbsd-pkgsrc.sh /etc/profile.d/
 ```
 
 The reboot... (just variables in /etc/profile.d/)
