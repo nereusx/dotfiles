@@ -1,5 +1,5 @@
 if ( $DISTRO == "void" ) then
-	alias app 'sudo /usr/src/dotfiles/void/void-pkg'
+	alias app 'sudo /usr/src/dotfiles/void-linux/void-pkg'
 	bindkey "\033[3~" delete-char
 endif
 
