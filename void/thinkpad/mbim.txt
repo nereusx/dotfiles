@@ -1,0 +1,2 @@
+# connect to 3G/4G
+mmcli -m 0 --simple-connect=pin=1234,apn=yourapn
