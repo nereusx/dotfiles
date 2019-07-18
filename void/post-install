@@ -6,20 +6,18 @@ if [ ! -d /home/$uname ]; then
 fi
 usermod -aG audio,video,pulse,rtkit,pulse-access root
 usermod -aG audio,video,pulse,rtkit,pulse-access $uname
-usermod -aG wireshark $uname
+#usermod -aG wireshark $uname
 usermod -aG input $uname
 usermod -aG kvm $uname
 usermod -aG bluetooth $uname
-
-groupadd sshusers
-usermod -aG sshusers $uname
+usermod -aG wheel $uname
 
 ./app -e rsyslog
 ./app -e alsa acpid sshd pulseaudio uuidd
 ./app -e bluetoothd
 ./app -e avahi-daemon avahi-dnsconfd
 
-echo "add user to sudoers: sudoedit /etc/sudoers"
+echo "add user to sudoers: sudoedit /etc/sudoers; @wheel must be enabled"
 
 
 
