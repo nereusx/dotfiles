@@ -1,0 +1,3 @@
+# Set battery capacity
+tpacpi-bat -v -s SP 0 80
+tpacpi-bat -v -s ST 0 40
