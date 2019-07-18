@@ -1,0 +1,28 @@
+#!/bin/tcsh -f
+
+set todo = help
+if ( $#argv > 0 ) then
+	set todo = $1
+endif
+
+switch ( $todo )
+case -k:
+	if ( $#argv > 1 ) then
+		xbacklight -ctrl tpacpi::kbd_backlight -set $2
+	endif
+	xbacklight -ctrl tpacpi::kbd_backlight -get
+	breaksw
+case -m:
+	if ( $#argv > 1 ) then
+		xbacklight -set $2
+	endif
+	xbacklight -get
+	breaksw
+case --help:
+case -h:
+case help:
+cat<<EOT
+	-k [prc]	keyboard
+	-m [prc]	monitor
+EOT
+endsw
