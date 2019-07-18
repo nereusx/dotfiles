@@ -212,6 +212,14 @@ fi
 alias netlog='netstat -lptu4'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 
+alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
+function _git_s {
+	git add .
+	git commit -m "$*"
+	git push
+}
+alias git-s='_git_s'
+
 if [ "$DISTRO" == "void" ]; then
 	_man() { man -O width=$COLUMNS $*; }
 	alias man='_man'

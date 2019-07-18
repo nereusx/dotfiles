@@ -10,3 +10,16 @@ https://www.pkgsrc.org/
 	
 http://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/README.html
 
+## Install
+
+First remove BSD make if you have already installed.
+
+Then:
+
+```
+bash
+./install-pkgsrc
+```
+
+The reboot... (just variables in /etc/profile.d/)
+
