@@ -1,0 +1,14 @@
+#
+#	Use PulseAudio as system-wide daemon
+#
+
+[Unit]
+Description=PulseAudio Daemon
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+PrivateTmp=true
+ExecStart=/usr/bin/pulseaudio --system
