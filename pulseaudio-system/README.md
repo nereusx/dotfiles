@@ -14,3 +14,17 @@ Default it is configured to listen only at unix domain socket.
 For intranet edit the /etc/pulse/system.pa and enable the
 `module_native_protocol_tcp`
 
+Test server 
+```
+pactl -s unix:/tmp/pulse-server info
+```
+
+* If its listen to intranet, it should not need to specify the server.
+
+* If you still have problems with unix socket, just enable intranet with localhost only address.
+
+
+
+
+
+
