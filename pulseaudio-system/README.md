@@ -9,7 +9,8 @@ You dont need to rebuild the pulseaudio.
 1. Enable system daemon (void-pkg -e pulseaudio)
 1. Reboot
 
-Default it is configured to listen only at localhost and unix domain socket.
-See comments at /etc/pulse/daemon.conf
+Default it is configured to listen only at unix domain socket.
 
+For intranet edit the /etc/pulse/system.pa and enable the
+`module_native_protocol_tcp`
 
