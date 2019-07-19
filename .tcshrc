@@ -76,6 +76,9 @@ end
 #	setup and cleanup path
 #
 set path = ( $home/.bin $home/.help $path )
+if ( $uid == 0 ) then
+	set path = ( /sbin /usr/sbin /usr/local/sbin $path )
+endif
 if ( -X 'path++' ) then
 	setenv PATH `/bin/path++`
 endif
