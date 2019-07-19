@@ -9,9 +9,11 @@ umask 022
 #
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
-	export DISTRO="$NAME"
+	export DISTRO=${ID:-$NAME}
+	export OSTYPE=${OSTYPE:-$(uname -s)}
 else
 	export DISTRO="$(uname -o)"
+	export OSTYPE=${OSTYPE:-$(uname -s)}
 fi
 
 # setup several local directories

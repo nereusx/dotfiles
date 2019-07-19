@@ -51,8 +51,10 @@ if ( -r /etc/os-release ) then
 		setenv OSTYPE `uname -s`
 	endif
 else # ignore it
-	setenv DISTRO unix
-	setenv OSTYPE unix
+	setenv DISTRO `uname -s`
+	if ( $?OSTYPE == 0 ) then
+		setenv OSTYPE unix
+	endif
 endif
 ########################################
 

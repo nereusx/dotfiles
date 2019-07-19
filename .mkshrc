@@ -15,7 +15,7 @@ if [ -r /etc/os-release ]; then
 	export DISTRO=${ID:-$NAME}
 	export OSTYPE=${OSTYPE:-$(uname -s)}
 else
-	export DISTRO=unix
+	export DISTRO=$(uname -s)
 	export OSTYPE=$(uname -s)
 fi
 
