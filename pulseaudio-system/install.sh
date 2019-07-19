@@ -18,8 +18,8 @@ if [ -x /usr/bin/runit ]; then
 	ln -svf /etc/sv/pulseaudio /var/service/pulseaudio
 
 # sysv - slackware
-elif [ -f /etc/rc.d/pulseaudio ]; then
-	chmod +x /etc/rc.d/pulseaudio
+elif [ -f /etc/rc.d/rc.pulseaudio ]; then
+	chmod +x /etc/rc.d/rc.pulseaudio
 
 # systemd - ubuntu
 elif [ -x /usr/sbin/systemctl ]; then
