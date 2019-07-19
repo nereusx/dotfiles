@@ -1,0 +1,5 @@
+#!/bin/sh
+OMAKEFLAGS=$MAKEFLAGS
+unset MAKEFLAGS
+$PKGSRC_PREFIX/pkg/bin/bmake install clean
+MAKEFLAGS=$OMAKEFLAGS

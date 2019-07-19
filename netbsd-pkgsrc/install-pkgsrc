@@ -11,27 +11,32 @@
 DIR=$PWD
 SH=/bin/bash
 export SH
-PKGSRC_ROOT=/usr/src
-cd $PKGSRC_ROOT
+if [ -z "$PKGSRC_PREFIX" ]; then
+	PKGSRC_PREFIX=/usr
+fi
+cd $PKGSRC_PREFIX
 
 #
-PKG_PATH="http://cdn.NetBSD.org/pub/pkgsrc/packages/$(uname -s)/$(uname -m)/$(uname -r|cut -f '1 2' -d.)/All/"
-export PKG_PATH
+#PKG_PATH="http://cdn.NetBSD.org/pub/pkgsrc/packages/$(uname -s)/$(uname -m)/$(uname -r|cut -f '1 2' -d.)/All/"
+#export PKG_PATH
 
 # download the repo
 cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
 cd pkgsrc/bootstrap
 
 # run bootstrap
-if [ -d /usr/src/pkgsrc/bootstrap/work ]; then
-	rm -r /usr/src/pkgsrc/bootstrap/work
+if [ -d $PKGSRC_PREFIX/pkgsrc/bootstrap/work ]; then
+	rm -r $PKGSRC_PREFIX/pkgsrc/bootstrap/work
 fi
 unset PKG_PATH
 unset MAKEFLAGS
 ./bootstrap
+cd $PKGSRC_PREFIX/pkgsrc/pkgtools/pkgin
+make install clean
 
 # copy the update script
-cp $DIR/update-pkgsrc /usr/pkg/bin
+cp $DIR/update-pkgsrc $PKGSRC_PREFIX/pkg/sbin
+cp $DIR/pkgsrc-make $PKGSRC_PREFIX/pkg/bin
 
 #
 # that's all
