@@ -19,7 +19,7 @@ Test server
 pactl -s unix:/tmp/pulse-server info
 ```
 
-* If its listen to intranet, it should not need to specify the server.
+* If its protocol_tcp is enabled, it should not need to specify the server.
 
 * If you still have problems with unix socket, just enable intranet with localhost only address.
 
