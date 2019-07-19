@@ -32,7 +32,7 @@ unset PKG_PATH
 unset MAKEFLAGS
 ./bootstrap
 cd $PKGSRC_PREFIX/pkgsrc/pkgtools/pkgin
-make install clean
+$PKGSRC_PREFIX/pkg/bin/bmake install clean
 
 # copy the update script
 cp $DIR/update-pkgsrc $PKGSRC_PREFIX/pkg/sbin
