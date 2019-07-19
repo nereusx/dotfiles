@@ -23,7 +23,7 @@ elif [ -f /etc/rc.d/rc.pulseaudio ]; then
 	/etc/rc.d/rc.pulseaudio restart
 
 # systemd - ubuntu
-elif [ -x /usr/sbin/systemctl ]; then
+elif [ -x /usr/bin/systemctl ]; then
 	cp systemd/pulseaudio-system.service /etc/systemd/system/
 	systemctl enable pulseaudio-system
 
