@@ -48,7 +48,9 @@ load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-serve
 # A semicolon separated list of IP address range to which anonymous access is allowed. Example:
 # auth-ip-acl=10.11.12.13;192.168.50.0/24;127.0.0.0/8
 #
+.ifexists module-native-protocol-tcp.so
 load-module module-native-protocol-tcp auth-ip-acl=127.0.0.0/8
+.endif
 
 ### Automatically restore the default sink/source when changed by the user
 ### during runtime
@@ -72,4 +74,6 @@ load-module module-position-event-sounds
 #
 #	Publish all local sinks/sources using mDNS Zeroconf (avahi)
 #
+.ifexists module-zeroconf-publish.so
 load-module module-zeroconf-publish
+.endif

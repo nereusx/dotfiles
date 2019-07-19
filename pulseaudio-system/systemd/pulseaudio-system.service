@@ -10,5 +10,5 @@ WantedBy=multi-user.target
 
 [Service]
 Type=simple
-PrivateTmp=true
+PrivateTmp=false
 ExecStart=/usr/bin/pulseaudio --system
