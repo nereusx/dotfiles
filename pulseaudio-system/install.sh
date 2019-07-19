@@ -20,6 +20,7 @@ if [ -x /usr/bin/runit ]; then
 # sysv - slackware
 elif [ -f /etc/rc.d/rc.pulseaudio ]; then
 	chmod +x /etc/rc.d/rc.pulseaudio
+	/etc/rc.d/rc.pulseaudio restart
 
 # systemd - ubuntu
 elif [ -x /usr/sbin/systemctl ]; then
