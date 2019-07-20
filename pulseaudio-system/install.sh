@@ -46,4 +46,7 @@ else
 	exit 1
 fi
 
+if [ -e $ETCDIR/asound.conf ]; then
+	echo "WARNING: $ETCDIR/asound.conf file found. If you dont know what it is, delete it."
+fi
 echo "reboot required"
