@@ -2,4 +2,5 @@
 #
 #	df that shows only real disks
 #
-df -h | grep -v loop | grep -v tmpfs | grep -v udev
+echo "Filesystem      Size  Used Avail Use% Mounted on"
+df -h | grep '^/dev/'
