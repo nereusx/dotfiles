@@ -273,8 +273,7 @@ else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "\033[8~" end-of-line
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
-endif
-if ( $DISTRO == "void" || $DISTRO =~ "*BSD" ) then
+else
 	bindkey "\033[3~" delete-char
 endif
 

@@ -1,0 +1,3 @@
+if ( $DISTRO == "slackware" ) then
+	alias app '/root/src/dotfiles/slackware/sl-pkg'
+endif
