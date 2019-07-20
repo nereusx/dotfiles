@@ -23,7 +23,10 @@ pactl -s unix:/tmp/pulse-server info
 
 * If you still have problems with unix socket, just enable intranet with localhost only address.
 
-
+Tested:
+voidlinux - 20/07/2019
+slackware64 current - 20/07/2019
+xubuntu 19.04 - 20/07/2019
 
 
 
