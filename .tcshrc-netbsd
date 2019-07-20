@@ -3,7 +3,7 @@ if ( $DISTRO == "NetBSD" ) then
 	alias ll 'ls -lha'
 
 # binary
-#	setenv PKG_PATH "https://ftp.fr.netbsd.org/pub/pkgsrc/packages/NetBSD/8.1/All/"
+#	setenv PKG_PATH "http://ftp.fr.netbsd.org/pub/pkgsrc/packages/NetBSD/8.1/All/"
 
 
 # sources
