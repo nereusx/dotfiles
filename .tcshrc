@@ -352,9 +352,11 @@ set colorcat
 #
 alias ls	       'ls    --color'
 alias ll	       'ls    --color -lha'
-alias grep	       'grep  --color=auto'
-alias egrep	       'egrep --color=auto'
-alias dmesg	       'dmesg --color=always'
+if ( $DISTRO != "FreeBSD" ) then
+	alias grep	       'grep  --color=auto'
+	alias egrep	       'egrep --color=auto'
+	alias dmesg	       'dmesg --color=always'
+endif
 alias diff	       'diff  --color=auto'
 
 if ( $USER != 'root' ) then
