@@ -11,11 +11,11 @@
 DIR=$PWD
 SH=/bin/bash
 export SH
-if [ ! -z $MAKEFLAGS ]; then
+if [ ! -z "$MAKEFLAGS" ]; then
 	OMAKEFLAGS="$MAKEFLAGS"
 fi
-if [ -z $PKGSRC_PREFIX ]; then
-	PKGSRC_PREFIX=/usr
+if [ -z "$PKGSRC_PREFIX" ]; then
+	export PKGSRC_PREFIX=/usr
 fi
 
 #
@@ -29,7 +29,7 @@ if [ -d $PKGSRC_PREFIX/pkgsrc ]; then
 else
 	cd $PKGSRC_PREFIX
 	cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
-endif
+fi
 cd $PKGSRC_PREFIX/pkgsrc/bootstrap
 
 # run bootstrap
@@ -57,7 +57,7 @@ cp $DIR/pkgsrc-make $PKGSRC_PREFIX/pkg/bin
 #		cd pkgsrc/devel/memcached
 #		make install clean
 #
-if [ ! -z $OMAKEFLAGS ]; then
-	MAKEFLAGS="$OMAKEFLAGS"
+if [ ! -z "$OMAKEFLAGS" ]; then
+	export MAKEFLAGS="$OMAKEFLAGS"
 fi
 echo "install-pkgsrc: * done *"
