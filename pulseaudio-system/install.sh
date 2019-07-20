@@ -3,9 +3,13 @@
 #	installs system-wide pulseaudio daemon
 #
 
-# copy configuration files
-cp etc-profile/* /etc/profile.d/
-cp etc-pulse/*   /etc/pulse/
+# copy configuration 
+ETCDIR=/etc
+if [ "$DISTRO" = "FreeBSD" ]; then
+	ETCDIR=/usr/local/etc
+fi	
+cp etc-profile/* $ETCDIR/profile.d/
+cp etc-pulse/*   $ETCDIR/pulse/
 
 # enable service
 
