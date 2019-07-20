@@ -38,6 +38,10 @@ case view:
 case show:
 	slackpkg info $argv[2-]
 	breaksw
+case -s:
+case search:
+	slackpkg search "$argv[2-]"
+	breaksw
 case -f:
 case file-search:
 case search-file:
