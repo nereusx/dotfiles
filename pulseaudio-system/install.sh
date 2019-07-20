@@ -11,6 +11,10 @@ fi
 cp etc-profile/* $ETCDIR/profile.d/
 cp etc-pulse/*   $ETCDIR/pulse/
 
+# build pulse's home directory
+mkdir /var/run/pulse
+chown pulse:pulse /var/run/pulse
+
 # enable service
 
 # runit - void
@@ -33,8 +37,7 @@ elif [ -x /usr/bin/systemctl ]; then
 
 elif [ "$DISTRO" = "FreeBSD" ]; then
 	echo "=== FreeBSD:"
-	echo "I dont know where to add the 'pulseaudio --system -D' command"
-	echo "just add it to 'rc.local' to run it once (after sndio) at boot time"
+	echo "run 'pulseaudio --system -D' command and make it work"
 	echo
 	
 # error
