@@ -55,6 +55,11 @@ load-module module-jackdbus-detect channels=2
 .fail
 .endif
 
+### FreeBSD use sndio
+.ifexists module-sndio.so
+load-module module-sndio device=snd/0
+.endif
+
 ### Automatically load driver modules for Bluetooth hardware
 .ifexists module-bluetooth-policy.so
 load-module module-bluetooth-policy

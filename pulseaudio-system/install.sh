@@ -31,6 +31,12 @@ elif [ -x /usr/bin/systemctl ]; then
 	cp systemd/pulseaudio-system.service /etc/systemd/system/
 	systemctl enable pulseaudio-system
 
+elif [ "$DISTRO" = "FreeBSD" ]; then
+	echo "=== FreeBSD:"
+	echo "I dont know where to add the 'pulseaudio --system -D' command"
+	echo "just add it to 'rc.local' to run it once (after sndio) at boot time"
+	echo
+	
 # error
 else
 	echo "unknown service manager"
