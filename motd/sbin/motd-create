@@ -19,4 +19,5 @@ for f in $MDIR/*; do
 	fi
 done
 
+# display the result
 cat $FILE
