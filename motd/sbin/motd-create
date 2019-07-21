@@ -1,47 +1,22 @@
 #!/bin/sh
+#
+#	Message-Of-The-Day update system
+#
 
+# final file
 FILE="/etc/motd"
 
-rm $FILE
+# directory of MOTD scripts
+MDIR="/etc/motd.d"
 
-# header
-if [ -f /etc/motd-head ]; then
-	cat motd-head  >> $FILE
-else
-	echo >> $FILE
-	echo -n "\033[1m\033[32m" >> $FILE
-	echo -n "Message Of The Day " >> $FILE
-	echo "\033[0m" >> $FILE
-	echo >> $FILE
-	echo >> $FILE
+# create motd
+if [ -f $FILE ]; then
+	rm $FILE
 fi
-
-# quote
-if [ -f /etc/motd-quote ]; then
-	cat motd-quote >> $FILE
-else
-	echo -n "\033[36m" >> $FILE
-	if [ -r /usr/share/fortunes/diogenis.dat ]; then
-		fortune diogenis >> $FILE
-	else
-		fortune >> $FILE
+for f in $MDIR/*; do
+	if [ -x $f ]; then
+		$f >> $FILE
 	fi
-	echo "\033[0m" >> $FILE
-fi
+done
 
-# admin's message queue
-if [ -f /etc/motd-queue ]; then
-	cat motd-quote >> $FILE
-else
-	uname -a >> $FILE
-	date >> $FILE
-fi
-
-# footer
-if [ -f /etc/motd-tail ]; then
-	cat motd-tail >> $FILE
-else
-	echo "\033[0m" >> $FILE
-fi
-
-
+cat $FILE
