@@ -1,3 +1,0 @@
-if ( $DISTRO == "ubuntu" ) then
-	alias app 'sudo /usr/src/dotfiles/ubuntu/ubuntu-pkg'
-endif
