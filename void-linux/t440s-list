@@ -5,6 +5,7 @@ FAudio-32bit
 ImageMagick6
 LibreCAD
 MesaLib-devel
+ModemManager
 NetworkManager
 PopCorn
 SDL
@@ -23,14 +24,21 @@ SDL2_ttf
 SDL2_ttf-devel
 SDL_image
 SDL_mixer
+SDL_net
+SDL_sound
 Thunar
 Vulkan-Headers
+a2ps
 aalib
+aalib-devel
+aalib-utils
+abook
 accountsservice
 acl
 acpi
 acpi_call-dkms
 acpid
+acpilight
 adwaita-icon-theme
 aisleriot
 aisleriot-data
@@ -52,6 +60,7 @@ arc-icon-theme
 arc-theme
 archlabs-themes
 aspell
+aspell-en
 astyle
 at-spi2-atk
 at-spi2-atk-devel
@@ -85,6 +94,7 @@ base-system
 bash
 bc
 bdftopcf
+beard
 binutils
 binutils-doc
 bison
@@ -116,6 +126,7 @@ cec-client
 celt
 celt-32bit
 cgmanager
+cgo
 chafa
 cheese
 chromaprint
@@ -169,11 +180,14 @@ dict
 dictd
 diffutils
 discount
+djview
+djvulibre
 dkms
 dmraid
 dnssec-anchors
 docbook-xml
 docbook-xsl
+dosbox
 dosfstools
 double-conversion
 dracut
@@ -218,6 +232,7 @@ filezilla
 findutils
 firefox
 firefox-i18n-el
+firefox-i18n-en-US
 five-or-more
 flatpak
 flex
@@ -409,6 +424,7 @@ harfbuzz-devel
 hd-idle
 hdparm
 hex
+hexchat
 hicolor-icon-theme
 hidapi
 hitori
@@ -416,6 +432,7 @@ htop
 http-parser
 hub
 hunspell
+hunspell-en_US
 hwids
 hyphen
 i2c-tools
@@ -477,6 +494,7 @@ kauth
 kbd
 kbd-data
 kbookmarks
+kcmutils
 kcodecs
 kcompletion
 kconfig
@@ -606,6 +624,7 @@ libXxf86misc
 libXxf86vm
 libXxf86vm-32bit
 libXxf86vm-devel
+liba2ps
 liba52
 libaio
 libao
@@ -665,6 +684,7 @@ libcheese
 libchmlib
 libcmis
 libcolord
+libcppunit
 libcpufreq
 libcpuid
 libcpupower
@@ -815,6 +835,8 @@ libmagick
 libmagick6
 libmanette
 libmatroska
+libmbim
+libmbim-devel
 libmicrohttpd
 libmikmod
 libmm-glib
@@ -857,6 +879,7 @@ libogg
 libogg-32bit
 libogg-devel
 libokular
+libokular-devel
 libopenal
 libopenal-32bit
 libopenexr
@@ -895,6 +918,7 @@ libpulseaudio-32bit
 libpurple
 libqalculate
 libqalculate-data
+libqmi
 libqmobipocket
 libqrencode
 libqxp
@@ -987,6 +1011,7 @@ libtheora-32bit
 libtls19
 libtommath
 libtool
+libtorrent
 libtracker
 libunique1
 libunistring
@@ -1008,6 +1033,7 @@ libuv
 libva
 libva-32bit
 libva-devel
+libva-intel-driver
 libvamp-plugin-sdk
 libvdpau
 libvdpau-32bit
@@ -1020,7 +1046,6 @@ libvoikko
 libvorbis
 libvorbis-32bit
 libvorbis-devel
-libvpx
 libvpx5
 libvpx5-devel
 libvpx6
@@ -1078,7 +1103,9 @@ links
 linux
 linux-firmware
 linux-firmware-amd
+linux-firmware-intel
 linux-firmware-network
+linux-firmware-nvidia
 linux-headers
 linux4.19
 linux4.19-headers
@@ -1110,6 +1137,8 @@ mdadm
 mdocml
 meld
 mesa-ati-dri
+mesa-intel-dri
+mesa-nouveau-dri
 mesa-vmwgfx-dri
 metalog
 mime-types
@@ -1150,6 +1179,7 @@ network-manager-applet
 newsboat
 newt
 nghttp2
+nmap
 nodejs
 noto-fonts-ttf
 npth
@@ -1162,6 +1192,9 @@ numix-themes
 nvi
 ocl-icd
 ocl-icd-32bit
+octoxbps
+ofono
+okteta
 okular
 oniguruma
 opencolorio
@@ -1245,11 +1278,13 @@ portaudio
 portaudio-devel
 portmidi
 postgresql-libs
+ppp
 procmail
 procps-ng
 profont
 psftools
 psmisc
+psutils
 pugixml
 pulseaudio
 pulseaudio-devel
@@ -1270,6 +1305,7 @@ python-setuptools
 python-six
 python-xdg
 python3
+python3-Unidecode
 python3-cairo
 python3-gobject
 python3-setuptools
@@ -1322,9 +1358,11 @@ rlwrap
 rsync
 rsyslog
 rtkit
+rtorrent
 run-parts
 runit
 runit-void
+sacc
 samba
 sane
 sbc
@@ -1389,6 +1427,7 @@ threadweaver
 thunar-volman
 thunderbird
 thunderbird-i18n-el
+thunderbird-i18n-en-US
 tiff
 tiff-32bit
 tiff-devel
@@ -1399,6 +1438,8 @@ totem-pl-parser
 tp_smapi-dkms
 tpacpi-bat
 traceroute
+transmission
+transmission-gtk
 tre
 tree
 tslib
@@ -1460,6 +1501,7 @@ wine-gecko
 wine-mono
 winetricks
 wireless_tools
+words-en
 words-web2
 wpa_supplicant
 wxWidgets-common
@@ -1494,7 +1536,9 @@ xf86-input-wacom
 xf86-video-amdgpu
 xf86-video-ati
 xf86-video-dummy
+xf86-video-intel
 xf86-video-mga
+xf86-video-nouveau
 xf86-video-vesa
 xf86-video-vmware
 xfce4
@@ -1553,6 +1597,7 @@ xkill
 xlsfonts
 xmessage
 xmlcatmgr
+xmlrpc-c
 xorg-fonts
 xorg-input-drivers
 xorg-minimal
@@ -1571,6 +1616,7 @@ xxd
 xz
 yabasic
 zd1211-firmware
+zenmap
 zip
 zlib
 zlib-32bit

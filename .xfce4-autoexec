@@ -1,0 +1,22 @@
+#!/bin/tcsh -f
+
+### no-network applications
+
+conky &
+
+### wait for network
+#while ( 1 )
+#	ping -n -q -w 1 1.1.1.1 >& /dev/null
+#	if ( $? == 0 ) then
+#		break
+#	endif
+#	sleep 1
+#end
+
+### run network-required programs
+# pidgin &
+# claws-mail &
+# ~/.bin/viber &
+
+### play welcome sound
+paplay /usr/share/sounds/ubuntu/stereo/desktop-login.ogg &
