@@ -37,10 +37,3 @@ To disable a script just remove the executable attribute, `chmod -x /etc/motd.d/
 ./install.sh
 ```
 
-## rc.local
-
-```
-# MOTD
-script=/usr/local/sbin/motd-create
-[ -x $script ] && $script
-```
