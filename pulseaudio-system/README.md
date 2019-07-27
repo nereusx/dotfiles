@@ -2,9 +2,7 @@
 
 System-wide [and/or intranet] Settings
 
-1. Copy etc-pulse/ files to /etc/pulse/
-1. Copy etc-profile/ files to /etc/profile.d/
-1. Enable system daemon (void-pkg -e pulseaudio)
+1. `./install.sh`
 1. Reboot
 
 Default it is configured to listen only at unix domain socket.
