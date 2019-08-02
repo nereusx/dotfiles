@@ -1,0 +1,13 @@
+if ( $DISTRO == "NetBSD" ) then
+	unalias ls
+	alias ll 'ls -lha'
+
+# binary
+#	setenv PKG_PATH "http://ftp.fr.netbsd.org/pub/pkgsrc/packages/NetBSD/8.1/All/"
+
+
+# sources
+	unsetenv MAKEFLAGS
+	unsetenv PKG_PATH
+endif
+

@@ -9,17 +9,19 @@ endif
 if ( "$1" == "-s" ) then
 	foreach f ( * )
 		if ( $f:e == "" ) then
-			if ( -x $f ) then
-				ln -svf "$PWD/$f" "$dest/$f"
+			if ( -e "$dest/$f" ) then
+				rm "$dest/$f"
 			endif
+			ln -svf "$PWD/$f" "$dest/$f"
 		endif
 	end
 else
 	foreach f ( * )
 		if ( $f:e == "" ) then
-			if ( -x $f ) then
-				cp $f $dest/$f
+			if ( -l "$dest/$f" ) then
+				rm "$dest/$f"
 			endif
+			cp $f "$dest/$f"
 		endif
 	end
 endif

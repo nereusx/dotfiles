@@ -161,6 +161,7 @@ cheese-common
 cheese
 chkrootkit
 chromium-codecs-ffmpeg-extra
+chrpath
 cifs-utils
 claws-mail-bogofilter
 claws-mail-i18n
@@ -208,6 +209,7 @@ cups-pk-helper
 cups-ppdc
 cups-server-common
 cups
+curl
 cvs
 cvsservice
 dash
@@ -231,6 +233,7 @@ debianutils
 debugedit
 default-jre-headless
 default-jre
+desktop-base
 desktop-file-utils
 dh-autoreconf
 dh-strip-nondeterminism
@@ -512,8 +515,14 @@ freepats
 freerdp2-x11
 freetype2-doc
 friendly-recovery
+fstransform
 ftp
+fuse-zip
+fuse2fs
 fuse
+fusedav
+fusefat
+fuseiso
 fusesmb
 fwupd-signed
 fwupd
@@ -535,7 +544,10 @@ geany-common
 geany
 genisoimage
 geoclue-2.0
+geoip-bin
+geoip-database-extra
 geoip-database
+geoipupdate
 gettext-base
 gettext
 ghostscript-x
@@ -657,7 +669,9 @@ gstreamer1.0-x
 gtk-update-icon-cache
 gtk2-engines-murrine
 gtk2-engines-pixbuf
+gtk2-engines-xfce
 gtk2-engines
+gtk3-engines-xfce
 gucharmap
 guile-2.2-libs
 guvcview
@@ -668,6 +682,7 @@ gvfs-fuse
 gvfs-libs
 gvfs
 gwenview
+gwhois
 gzip
 hashcat-data
 hashcat
@@ -677,6 +692,7 @@ hashrat
 haveged
 hddtemp
 hdparm
+hevea
 hexcurse
 hibernate
 hicolor-icon-theme
@@ -734,6 +750,7 @@ iptraf-ng
 iputils-ping
 iputils-tracepath
 irqbalance
+irssi-scripts
 irssi
 isc-dhcp-client
 isc-dhcp-common
@@ -742,7 +759,6 @@ iucode-tool
 iw
 jackd2-firewire
 jackd2
-jackd
 java-common
 javascript-common
 joe
@@ -1004,9 +1020,6 @@ libapr1
 libaprutil1-dbd-sqlite3
 libaprutil1-ldap
 libaprutil1
-libapt-inst2.0
-libapt-pkg-perl
-libapt-pkg5.0
 libarchive-cpio-perl
 libarchive-zip-perl
 libarchive13
@@ -1285,7 +1298,6 @@ libdistorm3-3
 libdjvulibre-text
 libdjvulibre21
 libdlrestrictions1
-libdmtx0a
 libdns-export1104
 libdns1104
 libdolphinvcs5
@@ -1534,6 +1546,7 @@ libgphoto2-6
 libgphoto2-l10n
 libgphoto2-port12
 libgphoto2-port12
+libgpm-dev
 libgpm2
 libgpm2
 libgps23
@@ -1561,7 +1574,6 @@ libgssapi-krb5-2
 libgssapi-krb5-2
 libgssapi3-heimdal
 libgssapi3-heimdal
-libgssdp-1.0-3
 libgstreamer-gl1.0-0
 libgstreamer-plugins-bad1.0-0
 libgstreamer-plugins-base1.0-0
@@ -1588,8 +1600,6 @@ libgts-0.7-5
 libgts-bin
 libgucharmap-2-90-7
 libgudev-1.0-0
-libgupnp-1.0-4
-libgupnp-igd-1.0-4
 libgusb2
 libgutenprint-common
 libgutenprint9
@@ -1635,7 +1645,6 @@ libhx509-5-heimdal
 libhx509-5-heimdal
 libhyphen0
 libibverbs1
-libical2
 libical3
 libice-dev
 libice6
@@ -1680,7 +1689,6 @@ libisc-export1100
 libisc1100
 libisccc161
 libisccfg163
-libisl19
 libiso9660-11
 libisoburn1
 libisofs6
@@ -1710,7 +1718,6 @@ libjs-mathjax
 libjs-mootools
 libjs-sphinxdoc
 libjs-underscore
-libjson-c3
 libjson-glib-1.0-0
 libjson-glib-1.0-0
 libjson-glib-1.0-common
@@ -1735,6 +1742,7 @@ libkdeui5
 libkeduvocdocument-data
 libkeduvocdocument5abi1
 libkeybinder-3.0-0
+libkeybinder0
 libkeyutils1
 libkeyutils1
 libkf5activities5
@@ -2377,7 +2385,6 @@ libpolkit-gobject-1-0
 libpolkit-qt5-1-1
 libpoppler-glib8
 libpoppler-qt5-1
-libpoppler85
 libpopt0
 libportaudio2
 libportmidi0
@@ -2987,6 +2994,7 @@ libxfce4util-bin
 libxfce4util-common
 libxfce4util7
 libxfconf-0-3
+libxfdashboard0
 libxfixes-dev
 libxfixes3
 libxfixes3
@@ -3091,18 +3099,13 @@ lintian
 linux-base
 linux-firmware
 linux-generic
-linux-headers-5.0.0-13-generic
-linux-headers-5.0.0-13
 linux-headers-5.0.0-20-generic
 linux-headers-5.0.0-20
 linux-headers-generic
-linux-image-5.0.0-13-generic
 linux-image-5.0.0-20-generic
 linux-image-generic
 linux-libc-dev
-linux-modules-5.0.0-13-generic
 linux-modules-5.0.0-20-generic
-linux-modules-extra-5.0.0-13-generic
 linux-modules-extra-5.0.0-20-generic
 linux-signed-generic
 linux-sound-base
@@ -3122,6 +3125,8 @@ lshw
 lskat
 lsof
 ltrace
+lynx-common
+lynx
 m17n-db
 m4
 mac-robber
@@ -3150,6 +3155,10 @@ mbrola-us3
 mbrola
 mc-data
 mc
+mcollective-client
+mcollective-common
+mcollective-plugins-iptables
+mcollective
 mdk3
 mdk4
 media-player-info
@@ -3235,17 +3244,11 @@ nodejs
 notify-osd-icons
 notify-osd
 ntfs-3g
+ntpdate
 numix-gtk-theme
 numlockx
-nvidia-compute-utils-418
-nvidia-dkms-418
-nvidia-driver-418
-nvidia-kernel-common-418
-nvidia-kernel-source-418
-nvidia-prime
-nvidia-settings
-nvidia-utils-418
 o-saft
+ocaml-base-nox
 ocl-icd-libopencl1
 okteta
 okular-extra-backends
@@ -3253,6 +3256,7 @@ okular
 onboard-common
 onboard-data
 onboard
+openbsd-inetd
 openjdk-11-jre-headless
 openjdk-11-jre
 openprinting-ppds
@@ -3669,7 +3673,6 @@ qapt-batch
 qdbus-qt5
 qdbus
 qhull-bin
-qjackctl
 qml-module-org-kde-activities
 qml-module-org-kde-analitza
 qml-module-org-kde-charts
@@ -3748,10 +3751,10 @@ rpm
 rsakeyfind
 rsync
 rsyslog
-rtkit
 rtmpdump
 rtorrent
 ruby-did-you-mean
+ruby-json
 ruby-mime-types-data
 ruby-mime-types
 ruby-mime
@@ -3764,6 +3767,8 @@ ruby-paint
 ruby-pkg-config
 ruby-power-assert
 ruby-spider
+ruby-stomp
+ruby-systemu
 ruby-test-unit
 ruby-trollop
 ruby-xmlrpc
@@ -3811,8 +3816,6 @@ smbc
 smbclient
 smbmap
 smbnetfs
-sndio-tools
-sndiod
 socat
 software-properties-common
 software-properties-gtk
@@ -3857,9 +3860,11 @@ systemd
 sysvinit-utils
 t1utils
 tableau-parm
+tango-icon-theme
 tar
 tcl8.6
 tcl
+tcpd
 tcpdump
 tcpick
 tcsh
@@ -4062,8 +4067,12 @@ xfburn
 xfce4-appfinder
 xfce4-cpugraph-plugin
 xfce4-dict
+xfce4-fsguard-plugin
+xfce4-genmon-plugin
 xfce4-indicator-plugin
 xfce4-mailwatch-plugin
+xfce4-mount-plugin
+xfce4-mpc-plugin
 xfce4-netload-plugin
 xfce4-notes-plugin
 xfce4-notes
@@ -4074,18 +4083,27 @@ xfce4-power-manager-data
 xfce4-power-manager-plugins
 xfce4-power-manager
 xfce4-pulseaudio-plugin
+xfce4-screensaver
 xfce4-screenshooter
 xfce4-session
 xfce4-settings
+xfce4-sntray-plugin-common
+xfce4-sntray-plugin
 xfce4-statusnotifier-plugin
 xfce4-systemload-plugin
 xfce4-taskmanager
 xfce4-terminal
+xfce4-time-out-plugin
+xfce4-timer-plugin
 xfce4-verve-plugin
+xfce4-volumed
 xfce4-weather-plugin
 xfce4-whiskermenu-plugin
 xfce4-xkb-plugin
+xfce4
 xfconf
+xfdashboard-plugins
+xfdashboard
 xfdesktop4-data
 xfdesktop4
 xfonts-100dpi
@@ -4095,6 +4113,7 @@ xfonts-scalable
 xfonts-terminus
 xfonts-utils
 xfpanel-switch
+xfwm4-theme-breeze
 xfwm4
 xindy-rules
 xindy
@@ -4137,6 +4156,7 @@ xubuntu-core
 xubuntu-default-settings
 xubuntu-desktop
 xubuntu-docs
+xubuntu-icon-theme
 xubuntu-wallpapers
 xul-ext-ubufox
 xwatch

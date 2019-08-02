@@ -27,7 +27,8 @@ umask 022
 limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
 
-if ( $?prompt == 0 ) then # we are shell script
+### if its a shell script, exit
+if ( $?prompt == 0 ) then
 	exit
 endif
 
@@ -41,13 +42,20 @@ endif
 #	find distro
 #
 if ( -r /etc/os-release ) then
-	setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print tolower($1)}'`
+	setenv DISTRO_ID `cat /etc/os-release | awk '/^ID=/{print substr($0,4)}' | xargs echo | awk '{print tolower($1)}'`
+	if ( $DISTRO_ID != "" ) then
+		setenv DISTRO "$DISTRO_ID"
+	else
+		setenv DISTRO `cat /etc/os-release | awk '/^NAME=/{print substr($0,6)}' | xargs echo | awk '{print tolower($1)}'`
+	endif
 	if ( $?OSTYPE == 0 ) then
 		setenv OSTYPE `uname -s`
 	endif
 else # ignore it
-	setenv DISTRO unix
-	setenv OSTYPE unix
+	setenv DISTRO `uname -s`
+	if ( $?OSTYPE == 0 ) then
+		setenv OSTYPE unix
+	endif
 endif
 ########################################
 
@@ -55,7 +63,6 @@ endif
 #	setup several local directories
 #
 setenv backup $home/.backup
-if ( ! -d $backup ) mkdir $backup
 # setup several local directories
 set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
 foreach e ( $list )
@@ -69,6 +76,14 @@ end
 #	setup and cleanup path
 #
 set path = ( $home/.bin $home/.help $path )
+if ( $USER == "root" ) then
+	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
+	foreach e ( $list )
+		if ( -d $e && ! -l $e ) then
+			set path = ( $e $path )
+		endif
+	end
+endif
 if ( -X 'path++' ) then
 	setenv PATH `/bin/path++`
 endif
@@ -78,7 +93,7 @@ endif
 #
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
-		# code for TTY, (i.e. setterm --blank ... etc)
+# code for TTY, (i.e. setterm --blank ... etc)
 		# enable keypad
 		echo -n '\033='
 	endif
@@ -112,14 +127,14 @@ setenv JED_HOME		${HOME}/.jed
 alias jed-prep     'xjed -batch -n -l preparse'
 
 # settings for GRIEF
-setenv GRPATH			${HOME}/.grief-local/:/usr/share/grief/macros:/usr/local/share/grief/macros
+setenv GRPATH			${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 setenv GRFLAGS			"-m grief-rc"
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
 
 # select default editor
-set list = ( jed gr nano joe vim vi emacs ed )
+set list = ( jed nano joe vim vi emacs ed )
 foreach e ( $list )
 	if ( -X $e ) then
 		setenv EDITOR $e
@@ -130,7 +145,7 @@ setenv VISUAL "$EDITOR"
 alias edit "$EDITOR"
 
 # select default hex editor
-set list = ( hte ht mcedit dhex )
+set list = ( hte ht dhex mcedit )
 setenv HEXEDITOR "/usr/bin/od -t x1 "
 foreach e ( $list )
 	if ( -X $e ) then
@@ -179,8 +194,6 @@ setenv MOST_SWITCHES	'-w'
 setenv MOST_EDITOR		'jed %s -g %d'
 setenv PAGER less
 #setenv PAGER most
-
-### other settings
 
 # select graphics browser
 set list = ( firefox falkon yandex-browser surf midori dillo chromium chrome )
@@ -260,8 +273,7 @@ else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "\033[8~" end-of-line
 else if ( $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
-endif
-if ( $DISTRO == "void" || $DISTRO =~ "*BSD" ) then
+else
 	bindkey "\033[3~" delete-char
 endif
 
@@ -278,8 +290,6 @@ endif
 unset ampm
 set ellipsis
 set prompt = "%B%{\033[35m%}%T %{\033[32m%}%n@%m%b %C4 %# "
-
-### other settings 
 
 ###	history
 set histlit
@@ -319,9 +329,8 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 #	complete   tmux     "p/1/(${tmux_cmds})/"
 #endif
 
-# --- end ---
-
 ###	aliases
+
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
 alias cls          'clear'
 alias ps-all       'ps aux | grep -v "\["'
@@ -339,11 +348,14 @@ alias trim		   "sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 # colorize
 set color
 set colorcat
+#
 alias ls	       'ls    --color'
 alias ll	       'ls    --color -lha'
-alias grep	       'grep  --color=auto'
-alias egrep	       'egrep --color=auto'
-alias dmesg	       'dmesg --color=always'
+if ( $DISTRO != "FreeBSD" ) then
+	alias grep	       'grep  --color=auto'
+	alias egrep	       'egrep --color=auto'
+	alias dmesg	       'dmesg --color=always'
+endif
 alias diff	       'diff  --color=auto'
 
 if ( $USER != 'root' ) then
@@ -359,12 +371,28 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 
+# some nice beeps
+# simple beep
+if ( -f /usr/share/sounds/generic/tone-440Hz-250ms.ogg ) then
+	alias beep 'paplay /usr/share/sounds/generic/tone-440Hz-250ms.ogg'
+else
+	alias beep 'echo -n '
+endif
+# alarm
+if ( -f /usr/share/sounds/generic/alarm-fire.ogg ) then
+	alias abeep 'paplay /usr/share/sounds/generic/alarm-fire.ogg'
+else
+	alias abeep 'echo -n '
+endif
+
 # xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
 if ( $?REMOTEHOST ) then
 	setxhost
 endif
+
+#
 if ( $DISTRO == "void" ) then
 	alias man 'man -O width=`tput cols` '
 endif
@@ -443,8 +471,6 @@ endif
 set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
-
-# --- end ---
 
 ### load additional settings if you use my script
 set nonomatch

@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+#	NetBSD packages for Linux
+#		https://www.pkgsrc.org/
+#
+#	The list of the packages by category
+#		http://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/README.html
+#
+
+#
+DIR=$PWD
+SH=/bin/bash
+export SH
+if [ ! -z "$MAKEFLAGS" ]; then
+	OMAKEFLAGS="$MAKEFLAGS"
+fi
+if [ -z "$PKGSRC_PREFIX" ]; then
+	export PKGSRC_PREFIX=/usr
+fi
+
+#
+#PKG_PATH="http://cdn.NetBSD.org/pub/pkgsrc/packages/$(uname -s)/$(uname -m)/$(uname -r|cut -f '1 2' -d.)/All/"
+#export PKG_PATH
+
+# download the repo
+if [ -d $PKGSRC_PREFIX/pkgsrc ]; then
+	cd $PKGSRC_PREFIX/pkgsrc
+	cvs update -dP
+else
+	cd $PKGSRC_PREFIX
+	cvs -danoncvs@anoncvs.netbsd.org:/cvsroot checkout pkgsrc
+fi
+cd $PKGSRC_PREFIX/pkgsrc/bootstrap
+
+# run bootstrap
+if [ -d $PKGSRC_PREFIX/pkgsrc/bootstrap/work ]; then
+	rm -r $PKGSRC_PREFIX/pkgsrc/bootstrap/work
+fi
+unset PKG_PATH
+unset MAKEFLAGS
+./bootstrap
+for p in pkgtools/pkgin pkgtools/pkgfind; do
+	cd $PKGSRC_PREFIX/pkgsrc/$p
+	$PKGSRC_PREFIX/pkg/bin/bmake install clean
+done
+
+# copy the update script
+echo "... copy scripts ..."
+cp $DIR/update-pkgsrc $PKGSRC_PREFIX/pkg/sbin
+cp $DIR/pkgsrc-make $PKGSRC_PREFIX/pkg/bin
+
+#
+# that's all
+# now go to package and make it
+#
+#	example:
+#		cd pkgsrc/devel/memcached
+#		make install clean
+#
+if [ ! -z "$OMAKEFLAGS" ]; then
+	export MAKEFLAGS="$OMAKEFLAGS"
+fi
+echo "install-pkgsrc: * done *"

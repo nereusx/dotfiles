@@ -13,4 +13,5 @@ Type=oneshot
 ExecStart=/etc/rc.resume
 
 [Install]
-WantedBy=hibernate.target basic.target
+WantedBy=hibernate.target
+

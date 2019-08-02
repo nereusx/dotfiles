@@ -6,11 +6,12 @@
 
 [Unit]
 Description=Executes /etc/rc.resume after sleep
-After=sleep.target
+After=suspend.target
 
 [Service]
 Type=oneshot
 ExecStart=/etc/rc.resume
 
 [Install]
-WantedBy=sleep.target basic.target
+WantedBy=suspend.target
+

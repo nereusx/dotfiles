@@ -1,8 +1,10 @@
 #!/bin/tcsh -f
 #
-#	files or/and directories that changed per distro
+#	Run multiple distros with the same home partition
+#	update files/directories that are different for each distro
 #
 
+#	files or/and directories that changed per distro
 set list = ( .ViberPC )
 
 # find distro

@@ -1,6 +1,6 @@
 ### DNS Watch
-nameserver 84.200.69.80
-nameserver 84.200.70.40
+#nameserver 84.200.69.80
+#nameserver 84.200.70.40
 
 ### UncensoredDNS
 #nameserver 91.239.100.100
@@ -16,10 +16,7 @@ nameserver 84.200.70.40
 
 ### Cloudflare
 ### this is fasted
-#nameserver 1.1.1.1
-#nameserver 1.0.0.1
+nameserver 1.1.1.1
+nameserver 1.0.0.1
 
-### Google Public DNS
-#nameserver 8.8.8.8
-#nameserver 8.8.4.4
 

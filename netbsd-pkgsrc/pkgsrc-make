@@ -1,0 +1,16 @@
+#!/bin/sh
+if [ ! -z "$MAKEFLAGS" ]; then
+	OMAKEFLAGS="$MAKEFLAGS"
+fi
+if [ ! -z "$PKG_PATH" ]; then
+	OPKG_PATH="$PKG_PATH"
+fi
+unset MAKEFLAGS
+unset PKG_PATH
+$PKGSRC_PREFIX/pkg/bin/bmake install clean
+if [ ! -z "$OMAKEFLAGS" ]; then
+	export MAKEFLAGS="$OMAKEFLAGS"
+fi
+if [ ! -z "$OPKG_PATH" ]; then
+	export PKG_PATH=$OPKG_PATH
+fi

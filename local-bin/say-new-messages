@@ -1,5 +1,10 @@
 #!/bin/tcsh -f
 
+#
+#	notification for mailer
+#	it says "you have n new messages"
+#
+
 set text=""
 if ( "$1" != "0" ) then
 	if ( "$1" == "" ) then

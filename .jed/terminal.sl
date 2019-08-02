@@ -122,6 +122,11 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 		Key_Alt_BS = "";
 		Key_Ctrl_BS = "";
 		}
+	if ( getenv("DISTRO") == "FreeBSD" ) {
+		Key_BS = "";
+		Key_Alt_BS = "";
+		Key_Ctrl_BS = "";
+		}
 	Key_Shift_Tab = "[Z";
 	Key_Ctrl_Left = "[1;5D";
 	Key_Ctrl_Right = "[1;5C";

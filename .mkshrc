@@ -1,5 +1,8 @@
 # -- mode: sh; tab-size: 4; --
 
+#
+umask 022
+
 # if non-interactive shell, exit
 [[ $- == *i* ]] || return
 
@@ -7,11 +10,34 @@
 #shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
 
 # interactive shell
+if [ -r /etc/os-release ]; then
+	. /etc/os-release
+	export DISTRO=${ID:-$NAME}
+	export OSTYPE=${OSTYPE:-$(uname -s)}
+else
+	export DISTRO=$(uname -s)
+	export OSTYPE=$(uname -s)
+fi
 
 #
 if [ $TERM == "rxvt" ]; then
 	export TERM=rxvt-unicode
 fi
+
+# setup several local directories
+export backup=${HOME}/.backup
+for e in $backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc; do
+	if [ ! -d $e ]; then
+		mkdir -p $e
+		chmod 0700 $e
+	fi
+done
+
+PATH=${HOME}/.bin:${HOME}/.help:$PATH
+if [ -x "/bin/path++" ]; then
+	PATH=$(/bin/path++)
+fi
+export PATH
 
 # PROMPT
 # smul/rmul = underline, sitm/ritm = italics
@@ -24,7 +50,9 @@ export PS1
 # --- EDITORS ---
 export GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 export GRFLAGS="-m grief-rc"
+export GRUTF8_FORCE=1
 export JED_HOME=$HOME/.jed
+alias jed-prep='xjed -batch -n -l preparse'
 # customise your favourite editor here; the first one found is used
 for EDITOR in jed gr joe nano emacs vi; do
 	EDITOR=$(\\builtin whence -p "$EDITOR") && break
@@ -78,10 +106,13 @@ alias ls='ls --color=auto'
 
 alias cls='clear'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-list=(/var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
-for e in $list; do
-	if [ -f $e ]; then
-		alias log30="tail -n 30 $e"
+for e in /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg; do
+	if [ -r $e ]; then
+		if [ -x "$(command -v clog)" ]; then
+			alias log30="tail -n 30 $e | clog"
+		else
+			alias log30="tail -n 30 $e"
+		fi
 		break
 	fi
 done
@@ -111,6 +142,9 @@ function _git_s {
 	git push
 }
 alias git-s='_git_s'
+if [[ $DISTRO == "void" ]]; then
+	alias man='man -O width=$(tput cols) '
+fi
 
 # load local mkshrc files
 for e in ~/.mkshrc-*; do

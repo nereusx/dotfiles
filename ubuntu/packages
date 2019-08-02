@@ -42,7 +42,6 @@ bc
 sc
 imagemagick
 sox
-libcanberra
 libcanberra-pulse
 libcanberra-gtk-module
 gnome-session-canberra

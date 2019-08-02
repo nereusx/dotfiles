@@ -1,0 +1,2 @@
+#!/bin/bash
+cd $PKGSRC_PREFIX/pkgsrc && cvs update -dP

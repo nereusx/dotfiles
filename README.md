@@ -2,9 +2,17 @@
 
 Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
 
-These files are for ***personal use***, but many of you needed
+These files are for ***personal use***, but **you may need**
 
-* the ~/.jed directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
+* the **.jed/** directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
+
+* pulseaudio-system/,  **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
+
+* my tcsh scripts, include **.tcshrc**
+
+* install XFCE system sound theme for void-linux and xubuntu
+
+* ban ip addresses through iptables, there is a filter based on country of the IP, but you can add more easily.
 
 * several patches for each distro
 
@@ -16,7 +24,7 @@ setenv JED_HOME ${HOME}/.jed
 
 The `~/.jed/terminal.sl` feel free to change as you like, it is exists only to fix keyboard escape codes in several terminal emulators in serveral distros.
 
-You can get my special [here](https://github.com/nereusx/jed). Then go to jed directory and build it:
+You can get my special jed version [here](https://github.com/nereusx/jed). Then go to jed directory and build it:
 ```
 mkdir /usr/share/jed
 ln -s /usr/share/jed /usr/jed
@@ -32,10 +40,13 @@ Help files are written for 132x35 terminals
 ## Distro's subdirectories
 There many distro's subdirectories that contains fresh install scripts, and several patches that I had to write...
 
-slackware (main distro), void (main distro) and ubuntu (my backup distro) are the most important.
+slackware (my previous main distro),
+void (main distro) and ubuntu (my backup distro) are the most important.
 The other's are just my tests.
 
-I have serveral ROOT partitions (32-64GB) which are distros installed, one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory. There are many utilities to keep all those in working order.
+I have serveral ROOT partitions (32-64GB) which are distros installed,
+one home partition witch is common for all distros and a huge magnetic disk which is my /srv directory.
+There are many utilities to keep all those in working order.
 
 ## WARNING
 

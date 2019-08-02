@@ -20,7 +20,7 @@ endif
 # install configuration files
 ./install-nano-syntax-files
 ./install-to-users .tcshrc .login .bashrc .mkshrc .bin .help \
-	.jed .nanorc .grief-local .grinit \
+	.jed .nanorc .grief-local .grinit .joerc \
 	.newsboat .clogrc \
 	.gitconfig .config .xres \
 	.dof .conkyrc .bc .tmux.conf .vimrc .a2ps .abook

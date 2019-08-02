@@ -1,2 +1,0 @@
-#!/bin/tcsh -f
-setenv LSCOLORS 'Exfxcxdxbxegedabagacad'
