@@ -6,7 +6,11 @@ flatpak update
 flatpak install com.viber.Viber
 cat << EOF > ~/.bin/viber
 #!/bin/sh
-exec flatpak run com.viber.Viber
+if [ -x /opt/viber/Viber ]; then
+	exec /opt/viber/Viber
+else
+	exec flatpak run com.viber.Viber
+fi
 EOF
 chmod +x ~/.bin/viber
 
