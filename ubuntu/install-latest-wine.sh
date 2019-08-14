@@ -1,6 +1,9 @@
 #!/bin/sh
 apt-get upgrade
 apt-get update
+# faudio
+add-apt-repository 'ppa:cybermax-dexter/sdl2-backport'
+# wine-hq
 apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ disco main'
 wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key
 apt-get update
