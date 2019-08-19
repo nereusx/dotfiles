@@ -1,2 +1,5 @@
 #!/bin/bash
+if [ -z $PKGSRC_PREFIX ]; then
+	export PKGSRC_PREFIX='/usr'
+fi
 cd $PKGSRC_PREFIX/pkgsrc && cvs update -dP
