@@ -14,5 +14,23 @@ fi
 EOF
 chmod +x ~/.bin/viber
 
+# ajust scaling
+# exec env QT_SCALE_FACTOR=0.5 flatpak run com.viber.Viber
+
+# === without flatpak ===
+#
+### install openssl-1.0
+#
+# dpkg -i missing-packages/*
+#
+### install viber
+#
+# wget https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb
+# dpkg -i viber.deb
+#
+### run it
+#
+# /opt/viber/Viber &
+#
 
 
