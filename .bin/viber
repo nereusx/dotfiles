@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ -x /opt/viber/Viber ]; then
+	exec env QT_SCALE_FACTOR=0.6 /opt/viber/Viber
+else
+	exec env QT_SCALE_FACTOR=0.6 flatpak run com.viber.Viber
+fi
+		
