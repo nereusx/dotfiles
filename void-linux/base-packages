@@ -3,7 +3,8 @@ base-files
 dcron
 metalog
 logrotate
-procmail
+mailx
+postfix
 base-devel
 net-tools
 inetutils
