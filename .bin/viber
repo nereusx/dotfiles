@@ -1,7 +1,23 @@
 #!/bin/sh
+DISTRO=$( grep '^ID=' /etc/os-release | awk 'BEGIN{FS="=";}{print $2}' | sed s/\"//g )
+USEFPK=0
 if [ -x /opt/viber/Viber ]; then
-	exec env QT_SCALE_FACTOR=0.6 /opt/viber/Viber
-else
-	exec env QT_SCALE_FACTOR=0.6 flatpak run com.viber.Viber
+	USEFPK=0
 fi
-		
+if [ "$DISTRO" = "void" ]; then
+	USEFPK=1
+fi
+if [ "$1" = "-f" ]; then
+	USEFPK=1
+fi
+if [ "$1" = "-d" ]; then
+	USEFPK=0
+fi
+if [ $USEFPK -eq 0 ]; then
+	echo "run /opt/viber/"
+	exec env QT_SCALE_FACTOR=1.0 /opt/viber/Viber
+else
+	echo "run flatpak viber"
+	exec env QT_SCALE_FACTOR=1.0 flatpak run com.viber.Viber
+fi
+
