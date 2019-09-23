@@ -28,13 +28,14 @@ SDL_sound
 Thunar
 Vulkan-Headers
 Vulkan-Tools
-a2jmidid
 aalib
+abook
 accountsservice
 acl
 acpi
 acpi_call-dkms
 acpid
+acpilight
 adapta-kde
 adwaita-icon-theme
 adwaita-qt
@@ -146,13 +147,11 @@ cadaver
 cairo
 cairo-devel
 cairomm
-calf
 cantarell-fonts
 cblas
 celt
 celt-32bit
 cgdb
-cgmanager
 chafa
 cheese
 chromaprint
@@ -174,6 +173,8 @@ cogl
 colord-devel
 colordiff
 composer
+compton
+compton-conf
 confuse
 conky
 coreutils
@@ -282,7 +283,6 @@ flashrom
 flatpak
 flex
 flite
-flowcanvas
 fltk
 fmt
 font-3270
@@ -338,6 +338,7 @@ fuse-sshfs
 fuse-usmb
 fuse-zip
 fuse3
+fvwm
 fwupd
 fwupdate
 gajim
@@ -417,6 +418,8 @@ gnuchess
 gnucobol
 gnucobol-libs
 gnupg2
+gnuplot
+gnuplot-common
 gnutls
 gnutls-32bit
 gparted
@@ -428,7 +431,6 @@ grantleetheme
 graphene
 graphite
 graphite-devel
-graphviz-libs
 grep
 greybird-themes
 grilo
@@ -535,7 +537,6 @@ ipw2100-firmware
 ipw2200-firmware
 iso-codes
 iw
-jack
 jansson
 jbigkit-libs
 joe
@@ -654,8 +655,6 @@ kwin
 kwindowsystem
 kworkspace
 kxmlgui
-ladish
-ladspa-sdk
 lame
 lame-32bit
 lapack
@@ -667,12 +666,10 @@ lensfun
 less
 lesstif
 libICE
-libICE-32bit
 libICE-devel
 libOSMesa
 libOSMesa-32bit
 libSM
-libSM-32bit
 libSM-devel
 libX11
 libX11-32bit
@@ -732,7 +729,6 @@ libXres-devel
 libXt
 libXt-devel
 libXtst
-libXtst-32bit
 libXtst-devel
 libXv
 libXv-devel
@@ -751,7 +747,6 @@ libaom
 libarchive
 libargon2
 libart
-libasr
 libass
 libassuan
 libasyncns
@@ -792,7 +787,6 @@ libcanberra-gtk
 libcanberra-gtk3
 libcanberra-utils
 libcap
-libcap-32bit
 libcap-devel
 libcap-ng
 libcap-ng-devel
@@ -803,13 +797,13 @@ libcdio-paranoia
 libcdparanoia
 libcdr
 libcec
-libcgmanager
 libcheese
 libchmlib
 libcloudproviders
 libcloudproviders-devel
 libcmis
 libcolord
+libconfig
 libcpufreq
 libcpuid
 libcpupower
@@ -1021,7 +1015,6 @@ libnfnetlink
 libnfs
 libnftnl
 libnice
-libnih
 libnl3
 libnl3-32bit
 libnl3-devel
@@ -1234,6 +1227,7 @@ libxbps
 libxcb
 libxcb-32bit
 libxcb-devel
+libxdg-basedir
 libxfce4ui
 libxfce4ui-devel
 libxfce4util
@@ -1279,7 +1273,6 @@ lldb
 lm_sensors
 lmdb
 lnav
-logrotate
 lolcat-c
 lrzsz
 lshw
@@ -1288,13 +1281,13 @@ lua
 lua51
 lua52
 lurch
-lv2
 lzip
 lzo
 lzo-devel
 m17n-db
 m17n-lib
 m4
+mailx
 make
 man-pages
 man-pages-devel
@@ -1311,6 +1304,7 @@ mesa-ati-dri
 mesa-intel-dri
 mesa-nouveau-dri
 mesa-vmwgfx-dri
+metalog
 milou
 mime-types
 minizip
@@ -1390,7 +1384,6 @@ oomox
 openldap
 openldap-tools
 openresolv
-opensmtpd
 openssh
 optipng
 opus
@@ -1582,11 +1575,11 @@ poppler-qt5
 poppler-utils
 popt
 portaudio
+postfix
 postgresql-libs
 powerdevil
 print-manager
 prison
-procmail
 procps-ng
 psmisc
 pugixml
@@ -1651,7 +1644,6 @@ python3-keyring
 python3-lxml
 python3-minidb
 python3-nbxmpp
-python3-numpy
 python3-openssl
 python3-ply
 python3-precis-i18n
@@ -1660,7 +1652,6 @@ python3-pyasn1
 python3-pycparser
 python3-pysdl2
 python3-requests
-python3-scipy
 python3-setuptools
 python3-sip-PyQt5
 python3-six
@@ -1669,6 +1660,7 @@ python3-urllib3
 python3-xdg
 python3-yaml
 qalculate
+qalculate-gtk
 qca-qt5
 qdirstat
 qemu
@@ -1725,7 +1717,6 @@ rhash
 ripgrep
 ristretto
 rsync
-rsyslog
 rtkit
 ruby
 run-parts
@@ -1762,7 +1753,6 @@ smpeg2
 smpeg2-devel
 smproxy
 snappy
-sndio
 sndio-devel
 snooze
 sonnet
@@ -1901,7 +1891,6 @@ x86info
 xapps
 xapps-devel
 xauth
-xbacklight
 xbps
 xbps-triggers
 xcalc

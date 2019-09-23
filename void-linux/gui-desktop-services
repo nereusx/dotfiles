@@ -21,7 +21,6 @@ lightdm
 polkitd
 popcorn
 pulseaudio
-rsyslogd
 smbd
 sshd
 udevd

@@ -2,9 +2,8 @@ base-system
 base-files
 dcron
 metalog
-logrotate
-mailx
 postfix
+mailx
 base-devel
 net-tools
 inetutils
