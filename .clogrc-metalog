@@ -18,6 +18,8 @@ default rule /\[passwd\]/ --> bold green match
 default rule /\[ntpdate\]/ --> bold green match
 default rule /\[xbps-install\]/ --> bold black match
 default rule /\[kernel\]/ --> bold cyan match
+default rule /\[kernel\] \[[0-9.]+\] scsi [0-9]+\:[0-9]+\:[0-9]+\:[0-9]+\: / --> bold green line
+default rule /\[kernel\] \[[0-9.]+\][ \t]+sd[a-z]+\:/ --> bold white on red line
 default rule /\[bluetoothd\]/ --> bold blue match
 default rule /\[dhcpcd\]/ --> bold red match
 default rule /\[dbus-daemon\]/ --> bold red match

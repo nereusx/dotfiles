@@ -4,9 +4,9 @@ USEFPK=0
 if [ -x /opt/viber/Viber ]; then
 	USEFPK=0
 fi
-if [ "$DISTRO" = "void" ]; then
-	USEFPK=1
-fi
+#if [ "$DISTRO" = "void" ]; then
+#	USEFPK=1
+#fi
 if [ "$1" = "-f" ]; then
 	USEFPK=1
 fi
