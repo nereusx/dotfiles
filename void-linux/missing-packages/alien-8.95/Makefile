@@ -581,7 +581,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '   },' >> META_new.json
 	$(NOECHO) $(ECHO) '   "release_status" : "stable",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "version" : "",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "x_serialization_backend" : "JSON::PP version 2.97001"' >> META_new.json
+	$(NOECHO) $(ECHO) '   "x_serialization_backend" : "JSON::PP version 4.02"' >> META_new.json
 	$(NOECHO) $(ECHO) '}' >> META_new.json
 	-$(NOECHO) $(MV) META_new.json $(DISTVNAME)/META.json
 
@@ -888,7 +888,7 @@ ppd :
 	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> Alien.ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> Alien.ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> Alien.ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-5.28" />' >> Alien.ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-5.30" />' >> Alien.ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> Alien.ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> Alien.ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> Alien.ppd
