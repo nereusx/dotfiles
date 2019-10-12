@@ -1,5 +1,7 @@
 Adapta
 CPU-X
+EmulationStation
+FAudio
 FAudio-32bit
 ImageMagick6
 LibreCAD
@@ -10,6 +12,7 @@ PAmix
 Platinum9-theme
 PopCorn
 SDL
+SDL-devel
 SDL2
 SDL2-32bit
 SDL2-devel
@@ -23,12 +26,23 @@ SDL2_net
 SDL2_net-devel
 SDL2_ttf
 SDL2_ttf-devel
+SDL_gfx
+SDL_gfx-devel
+SDL_image
+SDL_image-devel
+SDL_mixer
+SDL_mixer-devel
 SDL_net
+SDL_net-devel
 SDL_sound
+SDL_sound-devel
+SDL_ttf
+SDL_ttf-devel
 Thunar
 Vulkan-Headers
 Vulkan-Tools
 aalib
+aalib-devel
 abook
 accountsservice
 acl
@@ -62,13 +76,13 @@ amtk
 android-tools
 ansi
 appmenu-registrar
-appstream-glib
 apulse
 arc-icon-theme
 arc-theme
 archlabs-themes
 ark
 arp-scan
+arpack-ng
 arpwatch
 aspell
 aspell-en
@@ -280,7 +294,6 @@ firefox
 firefox-i18n-el
 five-or-more
 flashrom
-flatpak
 flex
 flite
 fltk
@@ -326,12 +339,14 @@ frameworkintegration
 freeciv
 freeciv-sdl
 freefont-ttf
+freeimage
 freetds
 freetype
 freetype-32bit
 freetype-devel
 fribidi
 fribidi-devel
+fs-uae
 fuse
 fuse-exfat
 fuse-sshfs
@@ -376,6 +391,7 @@ gimp
 gir-freedesktop
 gist
 git
+gl2ps
 glade3-devel
 glew
 glew-devel
@@ -388,6 +404,7 @@ glibc-32bit
 glibc-devel
 glibc-locales
 glibmm
+glpk
 glslang
 glu
 glu-devel
@@ -480,7 +497,9 @@ gwenview
 gzip
 harfbuzz
 harfbuzz-devel
+hatari
 hd-idle
+hdf5
 hdparm
 hex
 hexchat
@@ -536,6 +555,7 @@ iputils
 ipw2100-firmware
 ipw2200-firmware
 iso-codes
+iucode-tool
 iw
 jansson
 jbigkit-libs
@@ -611,6 +631,7 @@ kio-extras
 kirigami2
 kitemmodels
 kitemviews
+kitty-terminfo
 kjobwidgets
 kjs
 kjsembed
@@ -636,6 +657,7 @@ kplotting
 kpmcore
 kpty
 krename
+krita
 kross
 krunner
 krusader
@@ -748,6 +770,7 @@ libarchive
 libargon2
 libart
 libass
+libassimp
 libassuan
 libasyncns
 libasyncns-32bit
@@ -774,6 +797,7 @@ libboost_filesystem1.69
 libboost_iostreams1.69
 libboost_locale1.69
 libboost_program_options1.69
+libboost_regex1.69
 libboost_serialization1.69
 libboost_system1.69
 libboost_thread1.69
@@ -855,7 +879,6 @@ libepoxy
 libepoxy-devel
 liberation-fonts-ttf
 libespeak
-libestr
 libetpan
 libev
 libevdev
@@ -863,7 +886,6 @@ libevent
 libexif
 libexif-32bit
 libexttextcat
-libfastjson
 libfbclient3
 libfdisk
 libffi
@@ -915,6 +937,7 @@ libgphoto2
 libgphoto2-32bit
 libgphoto2-udev-rules
 libgpm
+libgraphicsmagick
 libgs
 libgsf
 libgsm
@@ -925,6 +948,7 @@ libguile
 libgusb
 libhandy
 libharfbuzz
+libheif
 libhistory8
 libhunspell1.7
 libical
@@ -967,8 +991,8 @@ libldap-32bit
 libldns
 liblightdm-gobject
 liblilv
-libllvm8
-libllvm8-32bit
+libllvm9
+libllvm9-32bit
 liblrdf
 libltdl
 libltdl-32bit
@@ -986,6 +1010,7 @@ libmanette
 libmatroska
 libmaxminddb
 libmcpp
+libmicrodns
 libmicrohttpd
 libmikmod
 libmm-glib
@@ -1037,7 +1062,6 @@ libopenjpeg2
 libopenraw
 libopts
 liborcus
-libostree
 libotf
 libpagemaker
 libpaper
@@ -1062,6 +1086,7 @@ libpodofo
 libpoppler89
 libpostproc
 libpotrace
+libprotobuf-lite18
 libproxy
 libpsl
 libpulseaudio
@@ -1070,6 +1095,7 @@ libpurple
 libpwquality
 libqalculate
 libqalculate-data
+libqhull
 libqmobipocket
 libqpdf
 libqrencode
@@ -1185,6 +1211,7 @@ libusb-compat-devel
 libusb-devel
 libusbmuxd
 libutempter
+libutf8proc
 libuuid
 libuuid-32bit
 libuuid-devel
@@ -1289,6 +1316,7 @@ m17n-lib
 m4
 mailx
 make
+mame
 man-pages
 man-pages-devel
 man-pages-posix
@@ -1375,12 +1403,17 @@ nvidia-libs-32bit
 ocl-icd
 ocl-icd-32bit
 oclock
+octave
 octoxbps
 okteta
 okteta5
 okular
 oniguruma
 oomox
+openblas
+opencolorio
+openjdk
+openjdk-jre
 openldap
 openldap-tools
 openresolv
@@ -1553,6 +1586,8 @@ php-sqlite
 pidgin
 pimcommon
 pinentry
+pioneer
+pioneer-data
 pixman
 pixman-devel
 pkg-config
@@ -1575,6 +1610,7 @@ poppler-qt5
 poppler-utils
 popt
 portaudio
+portmidi
 postfix
 postgresql-libs
 powerdevil
@@ -1616,7 +1652,22 @@ python-xdg
 python3
 python3-Pillow
 python3-PyQt5
+python3-PyQt5-connectivity
 python3-PyQt5-dbus
+python3-PyQt5-devel-tools
+python3-PyQt5-multimedia
+python3-PyQt5-opengl
+python3-PyQt5-quick
+python3-PyQt5-serialport
+python3-PyQt5-sql
+python3-PyQt5-svg
+python3-PyQt5-tools
+python3-PyQt5-webchannel
+python3-PyQt5-webengine
+python3-PyQt5-webkit
+python3-PyQt5-websockets
+python3-PyQt5-x11extras
+python3-PyQt5-xmlpatterns
 python3-Pygments
 python3-SecretStorage
 python3-Unidecode
@@ -1667,7 +1718,9 @@ qemu
 qownnotes
 qqc2-desktop-style
 qqwing
+qscintilla-qt5
 qt5
+qt5-connectivity
 qt5-declarative
 qt5-declarative-devel
 qt5-devel
@@ -1692,6 +1745,7 @@ qt5-svg
 qt5-tools
 qt5-tools-devel
 qt5-translations
+qt5-wayland
 qt5-webchannel
 qt5-webengine
 qt5-webkit
@@ -1712,6 +1766,7 @@ readline-devel
 recode
 rest
 retro-gtk
+retroarch
 rex
 rhash
 ripgrep
@@ -1724,6 +1779,7 @@ runit
 runit-void
 rxvt-unicode
 rxvt-unicode-terminfo
+ryzen-stabilizator
 samba
 samba-cups
 sane
@@ -1742,6 +1798,7 @@ shaderc
 shadow
 shared-mime-info
 sigrok-firmware-fx2lafw
+simh
 sip
 slang
 slang-devel
@@ -1749,6 +1806,7 @@ slmenu
 smartmontools
 smbclient
 smbnetfs
+smpeg
 smpeg2
 smpeg2-devel
 smproxy
