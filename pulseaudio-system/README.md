@@ -31,7 +31,7 @@ rm /usr/share/dbus-1/system-services/org.freedesktop.RealtimeKit1.service
 
 1. All users in pulse-access group could use the sound server.
 
-1. You can use sounds/speech in scripts, notification, warnings, etc.
+1. You can use sounds/speech in scripts (running as root or user), notification, warnings, etc.
 
 ## What is wrong with system mode?
 
