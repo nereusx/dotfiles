@@ -59,7 +59,7 @@ is shared between users. **[DONT CARE]**
 on the pulse user. **[pulse-access users or not?]**
 
 1. Security: all users that have access to the server can sniff into each others audio streams,
-listen to their mikes, and so on. **[DONT CARE, they need group access or not?]**
+listen to their mikes, and so on. **[pulse-access users only?]**
 
 1. When in system mode you also lose a lot of further functionality, like the bridging to jack, to rygel (upnp),
 to X11, to ckit, and so on And, most importantly: it is explicitly not designed for it, you are on your own if you use it.
