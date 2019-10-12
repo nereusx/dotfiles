@@ -29,7 +29,15 @@ cp etc-pulse/*   $ETCDIR/pulse/
 #	echo "User [$username] doesn't exist"
 #	useradd pulse -g pulse
 #fi
+
+# When PulseAudio starts in the system mode, it will change its user and group from root to pulse
+# in order to not have too many privileges. The pulse user needs to be in the audio and bluetooth
+# groups in order to be able to use ALSA and bluetooth devices.
 usermod -aG audio pulse
+usermod -aG bluetooth pulse
+
+# All users that need access to PulseAudio have to be in the pulse-access group, even root. 
+usermod -aG pulse-access root
 
 # build pulse's home directory
 mkdir /var/run/pulse
