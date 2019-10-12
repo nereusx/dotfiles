@@ -2,6 +2,10 @@
 #
 #	installs system-wide pulseaudio daemon
 #
+#	1. there will be one sound server for the whole system, yeah!
+#	2. all users in pulse-access group could use the sound server
+#	3. you can use sounds/speech in scripts, notification, warnings etc
+#
 
 # find distro
 if [ -f /etc/os-release ]; then
