@@ -7,3 +7,5 @@ apk add alpine
 apk add man
 apk add man-pages
 apk add gparted
+apk add gobject-introspection-dev
+apk add libxcb-dev
