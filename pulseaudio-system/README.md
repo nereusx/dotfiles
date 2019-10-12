@@ -50,7 +50,7 @@ Anyone who has access can load and unload modules. Module loading can be disable
 and alsa hotplug functionality doesn't work. **[GOOD, that is what I want]**
 
 1. When in system mode, shared memory data transport is disabled for security reasons, which means: much higher memory usage
-and CPU load in system mode. **[DONT CARE]**
+and CPU load in system mode. **[There is no need so much "security"]**
 
 1. The module-xxx-restore modules maintain state that is inheritely user specific, but when run in system mode
 is shared between users. **[DONT CARE]**
