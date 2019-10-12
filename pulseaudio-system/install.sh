@@ -1,7 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 #
 #	installs system-wide pulseaudio daemon
 #
+
+# find distro
+if [ -f /etc/os-release ]; then
+	. /etc/os-release
+	DISTRO=${ID:-$NAME}
+	OSTYPE=${OSTYPE:-$(uname -s)}
+else
+	DISTRO="$(uname -o)"
+	OSTYPE=${OSTYPE:-$(uname -s)}
+fi
 
 # copy configuration 
 ETCDIR=/etc
@@ -10,6 +20,16 @@ if [ "$DISTRO" = "FreeBSD" ]; then
 fi	
 cp etc-profile/* $ETCDIR/profile.d/
 cp etc-pulse/*   $ETCDIR/pulse/
+
+# pulse user
+#username="pulse"
+#if [ `sed -n "/^$username/p" /etc/passwd` ]; then
+#	echo "User [$username] already exists"
+#else
+#	echo "User [$username] doesn't exist"
+#	useradd pulse -g pulse
+#fi
+usermod -aG audio pulse
 
 # build pulse's home directory
 mkdir /var/run/pulse
