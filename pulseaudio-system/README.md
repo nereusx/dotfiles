@@ -50,7 +50,7 @@ and CPU load in system mode. **[DONT CARE]**
 is shared between users. **[DONT CARE]**
 
 1. Security: there are no size limits on state data, which enables users to flood /var unless you employ quotas
-on the pulse user.
+on the pulse user. **[pulse-access users or not?]**
 
 1. Security: all users that have access to the server can sniff into each others audio streams,
 listen to their mikes, and so on. **[DONT CARE, they need group access or not?]**
