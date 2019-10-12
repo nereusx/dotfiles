@@ -19,6 +19,12 @@ pactl -s unix:/tmp/pulse-server info
 
 * If you still have problems with unix socket, just enable intranet with localhost only address.
 
+* I suggest to remove RTKIT except you are audio professional:
+
+```
+rm /usr/share/dbus-1/system-services/org.freedesktop.RealtimeKit1.service
+```
+
 ## What is good with system mode for typical desktop use
 
 1. There will be one sound server for the whole system, yeah!
