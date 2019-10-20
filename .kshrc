@@ -1,46 +1,62 @@
 # -- mode: sh; tab-size: 4; --
 # AT&T's ksh93 startup
 
-#
-umask 022
-
 # if non-interactive shell, exit
 [[ $- == *i* ]] || return
+
+set -o allexport
+set -o emacs
+#set -o errexit
+
+umask 022
+
+SHELL=$0
+USER_UID=$(id -u)
+[[ -z "$TTY" ]]  && TTY=$(tty|cut -f3-4 -d/)
+[[ -z "$MAIL" ]] && MAIL="/var/mail/$USER"
+MAILCHECK=600
+HOSTNAME=$(hostname)
 
 # login shell
 #shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
 
 # interactive shell
-if [ -r /etc/os-release ]; then
+if [[ -r /etc/os-release ]]; then
 	. /etc/os-release
-	export DISTRO=${ID:-$NAME}
-	export OSTYPE=${OSTYPE:-$(uname -s)}
+	DISTRO=${ID:-$NAME}
+	OSTYPE=${OSTYPE:-$(uname -s)}
 else
-	export DISTRO=$(uname -s)
-	export OSTYPE=$(uname -s)
-fi
-
-#
-if [ $TERM == "rxvt" ]; then
-	export TERM=rxvt-unicode
+	DISTRO=$(uname -s)
+	OSTYPE=$(uname -s)
 fi
 
 # setup several local directories
-export backup=${HOME}/.backup
-for e in $backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc; do
-	if [ ! -d $e ]; then
+backup=${HOME}/.backup
+list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
+for e in $list; do
+	if [[ ! -d $e ]]; then
 		mkdir -p $e
 		chmod 0700 $e
 	fi
 done
 
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
-if [ -x "/bin/path++" ]; then
-	PATH=$(/bin/path++)
-fi
-export PATH
+[[ -x "/bin/path++" ]] && PATH=$(/bin/path++)
+
+### Terminal & Keys
+[[ $TERM == "rxvt" ]] && TERM=rxvt-unicode
+function keyboard_trap {
+case ${.sh.edchar} in
+$'\e'[[O]F)   .sh.edchar=$'\cE';; # [END] = end-of-line
+$'\e'[[\[]3~) .sh.edchar=$'\cD';; # [DEL] = delete-character
+esac
+}
+trap keyboard_trap KEYBD
 
 # PROMPT
+#PS1='
+#${LOGNAME}@${HOSTNAME} on ${TTY}
+#[${PWD}] '
 # smul/rmul = underline, sitm/ritm = italics
 # bold, setaf (forground), setab (background), op (reset)
 PS1='$(tput bold)$(tput setaf 2)${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}$(tput op)"
@@ -50,20 +66,19 @@ if [[ $USER == root ]]; then
 else
 	PS1+="\$ "
 fi
-export PS1
 
 # --- EDITORS ---
-export GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
-export GRFLAGS="-m grief-rc"
-export GRUTF8_FORCE=1
-export JED_HOME=$HOME/.jed
+GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
+GRFLAGS="-m grief-rc"
+GRUTF8_FORCE=1
+JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
 # customise your favourite editor here; the first one found is used
-for EDITOR in jed gr joe nano emacs vi; do
+list=(jed gr joe nano emacs vi)
+for EDITOR in $list; do
 	EDITOR=$(whence -p "$EDITOR") && break
 done
-export EDITOR
-export VISUAL="$EDITOR"
+VISUAL="$EDITOR"
 alias b="$EDITOR"
 for HEXEDITOR in hte mcedit dhex; do
 	HEXEDITOR=$(whence -p "$HEXEDITOR") && break
@@ -71,36 +86,36 @@ done
 alias hexedit="$HEXEDITOR"
 
 # --- PAGER ---
-export LS_OPTIONS='--color=auto'
-export LESS='-R'
-export GROFF_ENCODING='utf8'
-export LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
-export LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
-export LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
-export LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
-export LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
-export LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
-export LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
-#export LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
-export MOST_SWITCHES='-w'
-export MOST_EDITOR='jed %s -g %d'
-export PAGER=less
-#export PAGER=most
+LS_OPTIONS='--color=auto'
+LESS='-R'
+GROFF_ENCODING='utf8'
+LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
+LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
+LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
+LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
+LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
+LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
+LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
+LESS_TERMCAP_mr=$(tput rev)
+LESS_TERMCAP_mh=$(tput dim)
+LESS_TERMCAP_ZN=$(tput ssubm)
+LESS_TERMCAP_ZV=$(tput rsubm)
+LESS_TERMCAP_ZO=$(tput ssupm)
+LESS_TERMCAP_ZW=$(tput rsupm)
+#LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
+MOST_SWITCHES='-w'
+MOST_EDITOR='jed %s -g %d'
+PAGER=less
+#PAGER=most
 # --- end ---
 
 # other settings
-export LS_OPTIONS="--color=auto"
-export BROWSER=firefox
+LS_OPTIONS="--color=auto"
+BROWSER=firefox
 cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
 cpus=$(($cpus + 1))
-export MAKEFLAGS="-j$cpus"
-export __GL_YIELD='USLEEP'
+MAKEFLAGS="-j$cpus"
+__GL_YIELD='USLEEP'
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -111,9 +126,10 @@ alias ls='ls --color=auto'
 
 alias cls='clear'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-for e in /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg; do
-	if [ -r $e ]; then
-		if [ -x "$(command -v clog)" ]; then
+list=(/var/log/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
+for e in $list; do
+	if [[ -r $e ]]; then
+		if [[ -x "$(command -v clog)" ]]; then
 			alias log30="tail -n 30 $e | clog"
 		else
 			alias log30="tail -n 30 $e"
@@ -121,9 +137,9 @@ for e in /var/log/socklog/messages/current /var/log/messages /var/log/syslog /va
 		break
 	fi
 done
-if [ -f /var/log/apache2/error.log ]; then
+if [[ -f /var/log/apache2/error.log ]]; then
 	alias phplog='tail /var/log/apache2/error.log'
-elif [ -f /var/log/httpd/error.log ]; then
+elif [[ -f /var/log/httpd/error.log ]]; then
 	alias phplog='tail /var/log/httpd/error.log'
 fi
 alias netlog='netstat -lptu4'
@@ -133,8 +149,8 @@ alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 function _bc {
 	echo "$*" | bc -l
 }
-if [ ! -x "$(command -v calc)" ]; then
-	if [ -x "$(command -v wcalc)" ]; then
+if [[ ! -x "$(command -v calc)" ]]; then
+	if [[ -x "$(command -v wcalc)" ]]; then
 		alias calc='wcalc'
 	else
 		alias calc='_bc'
@@ -152,8 +168,10 @@ if [[ $DISTRO == "void" ]]; then
 fi
 
 # load local mkshrc files
-for e in ~/.mkshrc-*; do
-	if [ -f $e ]; then
+for e in ~/.kshrc-*; do
+	if [[ -f $e ]]; then
 		. $e
 	fi
 done
+
+unset e list cpus
