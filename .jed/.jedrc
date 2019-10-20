@@ -64,7 +64,10 @@ add_mode_for_extension("CSH", ".login");
 add_mode_for_extension("CSH", ".logout");
 
 autoload("sh_mode", "shmode");
+add_mode_for_extension("SH", ".profile");
 add_mode_for_extension("SH", ".bashrc");
+add_mode_for_extension("SH", ".kshrc");
+add_mode_for_extension("SH", ".mkshrc");
 add_mode_for_extension("SH", ".sh");
 
 %% sql
@@ -120,7 +123,7 @@ private define set_modes_hook(base, ext)
 		return 1;
 		}
 	else if (
-			 	   ext == ".sh"   || base == ".bashrc"
+			 	   ext == ".sh"   || base == ".bashrc" || base == ".kshrc" || base == ".mkshrc"
 			  	|| base == ".profile"  || base == ".mkshrc"
 			) {
 		sh_mode();
