@@ -11,10 +11,9 @@
            file descriptor; the letter 'p', indicating the file descriptor associated with the output of the current co-process;
            or the character '-', indicating standard input is to be closed.
 >&fd    :  same as <&, except the operation is done on standard output.
-&>file  :  same as >file 2>&1. This is a deprecated (legacy) GNU bash extension supported by mksh which also supports the
-           preceding explicit fd digit, for example, 3&>file is the same as 3>file
 &>|file, &>>file, &>&fd
         :  same as >|file, >>file or >&fd, followed by 2>&1, as above.
+2>&1 >file : stdout + stderr
 -- mksh modifiers -----------------------------------------------------------------------------------------------------------------
 ${name:-word} : if name is set and not empty, it is substituted; otherwise, word is substituted.
 ${name:+word} : if name is set and not empty, word is substituted; otherwise, nothing is substituted.
@@ -22,6 +21,7 @@ ${name:=word} : if name is set and not empty, it is substituted; otherwise, it i
 ${name:?word} : if name is set and not empty, it is substituted; otherwise, word is printed on standard error (preceded by name:)
              and an error occurs (normally causing termination of a shell script, function, or a script sourced using the "."
              built-in). If word is omitted, the string "parameter null or not set" is used instead
+[[ -z $var ]] && var is zero length and/or unset || var is set and non-zero length
 -- mksh variables -----------------------------------------------------------------------------------------------------------------
 ${#name}     :  the length (in characters) of the string value of parameter name
 ${#name[*]} or ${#name[@]}  :  the number of elements in the array name.
@@ -62,9 +62,9 @@ $@  :  same as $*, unless it is used inside double quotes, in which case a separ
        parameter. If there are no positional parameters, no word is generated.
 $RANDOM : a different number every time you access it
 -- commands -----------------------------------------------------------------------------------------------------------------------
-( ... )   :  execute cmds in a subshell. There is no implicit way to pass environment changes from a subshell back to its parent
+( ... )   :  execute cmds in a subshell +++ on variable assignment it is a list.
 { ...; }  :  compound construct; cmds are executed, but not in a subshell
-for var in list; do ...; done                                | for var in {0..N}; do ...; done
+for var in list; do ...; done                                | for var in {0..N}; do ...; done   | note: for v in ${list[@]};
 if expr; then ...; [ elif expr; then ...; ] [ else ...; ] fi
 while expr; do ...; done                                     | until expr; do ...; done
 case $var in; wc-expr) ... [1] ; ...; *) [1] ; esac
