@@ -4,8 +4,8 @@
 # if non-interactive shell, exit
 [[ $- == *i* ]] || return
 
-set -o allexport
 set -o emacs
+set -o allexport
 #set -o errexit
 
 umask 022
