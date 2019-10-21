@@ -38,8 +38,6 @@ PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [[ -x "/bin/path++" ]] && PATH=$(/bin/path++)
 
 ### Terminal & Keys
-[[ $TERM == "rxvt" ]] && TERM=rxvt-unicode
-
 ###   for AT&T's ksh93
 #function keyboard_trap {
 #case ${.sh.edchar} in
@@ -141,7 +139,7 @@ function _bc {
 	echo "$*" | bc -l
 }
 if [[ ! -x "$(command -v calc)" ]]; then
-	if [[ -x "$(command -v wcalc)" ]]; then
+	if [[ -x "$(command -vp wcalc)" ]]; then
 		alias calc='wcalc'
 	else
 		alias calc='_bc'
@@ -154,15 +152,27 @@ function _git_s {
 	git push
 }
 alias git-s='_git_s'
-if [[ $DISTRO == "void" ]]; then
-	alias man='man -O width=$(tput cols) '
-fi
+[[ $DISTRO == "void" ]] && alias man='man -O width=$(tput cols) '
 
 # load local mkshrc files
 for e in ~/.kshrc-*; do
-	if [[ -f $e ]]; then
-		. $e
-	fi
+	[[ -f $e ]] && . $e
 done
+
+#
+#	welcome screen
+#
+function _welcome {
+	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
+	echo "Welcome to Korn Shell ($1) $KSH_VERSION"
+	set -A list neofetch screenfetch diogenis fortunes
+	for f in ${list[@]}; do
+		if [[ -x $(command -vp $f) ]]; then
+			$f;
+			break
+		fi
+	done
+}
+[[ -o login ]] && _welcome $0
 
 unset e list cpus
