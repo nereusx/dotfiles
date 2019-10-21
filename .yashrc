@@ -62,7 +62,7 @@ fi
 # directory, last exit status (only if non-zero), and $SHLVL (only if
 # non-one).
 YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
-'${${${PWD:/~/\~}##*/}:-$PWD} ${{?:/0/}:+\\fr.$?\\fd. }${{SHLVL-0}:/1}\$ '
+'${${${PWD:/~/\~}##*/}:-$PWD} ${{?:/0/}:+\\fr.$?\\fd. }\$ '
 YASH_PS1R='\fc.${_vcs_info}'
 YASH_PS1S='\fo.'
 YASH_PS2=$_2c'> '
@@ -294,4 +294,4 @@ function _welcome {
 [ -o login ] && _welcome
 							
 # clean-up
-unset e list cpus
+unset e f list cpus
