@@ -4,14 +4,14 @@
 umask 022
 
 # if non-interactive shell, exit
-[[ -o interactive ]] || return
+[ -o interactive ] || return
 
 # login shell
-#[[ -o login ]] && echo 'Login shell' || echo 'Not login shell'
+#[ -o login ] && echo 'Login shell' || echo 'Not login shell'
 
 set -o emacs
 set -o allexport
-[[ $TERM == "rxvt" ]] && TERM="rxvt-unicode"
+[ $TERM == "rxvt" ] && TERM="rxvt-unicode"
 USER=${USER:-$(id -un)}
 HOME=${HOME:-"/home/$USER"}
 USERID=${USERID:-$(id -u)}
@@ -19,8 +19,8 @@ HOSTNAME=${HOSTNAME:-$(hostname)}
 TTY=${TTY:-$(tty | cut -f3-4 -d/)}
 MAIL=${MAIL:-"/var/mail/$USER"}
 MAILCHECK=${MAILCHECK:-600}
-if [[ -z "$DISTRO" ]]; then
-	[[ -r /etc/os-release ]] && DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
+if [ -z "$DISTRO" ]; then
+	[ -r /etc/os-release ] && DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
 fi
 DISTRO=${DISTRO:-$(uname -s)}
 OSTYPE=${OSTYPE:-$(uname -s)}
@@ -29,14 +29,14 @@ OSTYPE=${OSTYPE:-$(uname -s)}
 backup=${HOME}/.backup
 list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
 for e in ${list[@]}; do
-	if [[ ! -d $e ]]; then
+	if [ ! -d $e ]; then
 		mkdir -p $e
 		chmod 0700 $e
 	fi
 done
 
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
-[[ -x "/bin/path++" ]] && PATH=$(/bin/path++)
+[ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
 #
 #	PROMPT
@@ -231,8 +231,8 @@ list=(\
 	/var/log/dmesg\
 	)
 for e in ${list[@]}; do
-	if [[ -r $e ]]; then
-		if [[ -x "$(command -v clog)" ]]; then
+	if [ -r $e ]; then
+		if [ -x "$(command -vp clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
 		else
 			alias log30="tail -n 30 $e"
@@ -240,9 +240,9 @@ for e in ${list[@]}; do
 		break
 	fi
 done
-if [[ -f /var/log/apache2/error.log ]]; then
+if [ -f /var/log/apache2/error.log ]; then
 	alias phplog='tail /var/log/apache2/error.log'
-elif [[ -f /var/log/httpd/error.log ]]; then
+elif [ -f /var/log/httpd/error.log ]; then
 	alias phplog='tail /var/log/httpd/error.log'
 fi
 alias netlog='netstat -lptu4'
@@ -252,8 +252,8 @@ alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 function _bc {
 	echo "$*" | bc -l
 }
-if [[ ! -x "$(command -v calc)" ]]; then
-	if [[ -x "$(command -v wcalc)" ]]; then
+if [ ! -x "$(command -v calc)" ]; then
+	if [ -x "$(command -vp wcalc)" ]; then
 		alias calc='wcalc'
 	else
 		alias calc='_bc'
@@ -266,7 +266,7 @@ function _git_s {
 	git push
 }
 alias git-s='_git_s'
-if [[ $DISTRO == "void" ]]; then
+if [ $DISTRO == "void" ]; then
 	alias man='man -O width=$(tput cols) '
 fi
 
@@ -274,24 +274,24 @@ fi
 #	load local yashrc files
 #
 for e in ~/.yashrc-*; do
-	[[ -f $e ]] && . $e
+	[ -f $e ] && . $e
 done
 
 #
 #	welcome screen
 #
 function _welcome {
-	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
+	[ $TTY == tty* ] && /bin/echo -ne '\033='
 	echo "Welcome to \e[1m\e[32mYaSH\e[0m \e[4mPOSIX-compliant\e[0m command line shell"
 	list=(neofetch screenfetch diogenis fortunes)
 	for f in ${list[@]}; do
-		if [[ $(command -pv $f) ]]; then
+		if [ $(command -pv $f) ]; then
 			$f;
 			break
 		fi
 	done
 }
-[[ -o login ]] && _welcome
+[ -o login ] && _welcome
 							
 # clean-up
 unset e list cpus
