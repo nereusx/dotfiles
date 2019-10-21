@@ -281,7 +281,7 @@ done
 #	welcome screen
 #
 function _welcome {
-	[ $TTY == tty* ] && /bin/echo -ne '\033='
+	[ $TTY =~ tty* ] && /bin/echo -ne '\033='
 	echo "Welcome to \e[1m\e[32mYaSH\e[0m \e[4mPOSIX-compliant\e[0m command line shell"
 	list=(neofetch screenfetch diogenis fortunes)
 	for f in ${list[@]}; do
