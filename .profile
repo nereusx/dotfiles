@@ -18,10 +18,7 @@ fi
 
 # if running loksh
 if [ -n "$KSH_VERSION" ]; then
-    # include .kshrc if it exists
-    if [ -f "$HOME/.kshrc" ]; then
-	. "$HOME/.kshrc"
-    fi
+	export ENV=$HOME/.kshrc
 fi
 
 # set PATH so it includes user's private bin if it exists
