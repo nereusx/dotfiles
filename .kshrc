@@ -175,4 +175,4 @@ function _welcome {
 }
 [[ -o login ]] && _welcome $0
 
-unset e list cpus
+unset e f list cpus
