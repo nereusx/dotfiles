@@ -1,8 +1,8 @@
 # -- mode: sh; tab-size: 4; --
-# AT&T's ksh93 startup
+# pdksh startup
 
 # if non-interactive shell, exit
-[[ $- == *i* ]] || return
+[[ -o interactive ]] || return
 
 set -o emacs
 set -o allexport
@@ -10,29 +10,24 @@ set -o allexport
 
 umask 022
 
-USER_UID=$(id -u)
-[[ -z "$TTY" ]]  && TTY=$(tty|cut -f3-4 -d/)
-[[ -z "$MAIL" ]] && MAIL="/var/mail/$USER"
-MAILCHECK=600
-HOSTNAME=$(hostname)
-
-# login shell
-#shopt -q login_shell && echo 'Login shell' || echo 'Not login shell'
-
-# interactive shell
-if [[ -r /etc/os-release ]]; then
-	. /etc/os-release
-	DISTRO=${ID:-$NAME}
-	OSTYPE=${OSTYPE:-$(uname -s)}
-else
-	DISTRO=$(uname -s)
-	OSTYPE=$(uname -s)
+[[ $TERM == "rxvt" ]] && TERM="rxvt-unicode"
+USER=${USER:-$(id -un)}
+HOME=${HOME:-"/home/$USER"}
+USER_ID=${USER_ID:-$(id -u)}
+HOSTNAME=${HOSTNAME:-$(hostname)}
+TTY=${TTY:-$(tty | cut -f3-4 -d/)}
+MAIL=${MAIL:-"/var/mail/$USER"}
+MAILCHECK=${MAILCHECK:-600}
+if [[ -z "$DISTRO" ]]; then
+	[[ -r /etc/os-release ]] && DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
 fi
+DISTRO=${DISTRO:-$(uname -s)}
+OSTYPE=${OSTYPE:-$(uname -s)}
 
 # setup several local directories
 backup=${HOME}/.backup
-list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
-for e in $list; do
+set -A list $backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc
+for e in ${list[@]}; do
 	if [[ ! -d $e ]]; then
 		mkdir -p $e
 		chmod 0700 $e
@@ -44,13 +39,15 @@ PATH=${HOME}/.bin:${HOME}/.help:$PATH
 
 ### Terminal & Keys
 [[ $TERM == "rxvt" ]] && TERM=rxvt-unicode
-function keyboard_trap {
-case ${.sh.edchar} in
-$'\e'[[O]F)   .sh.edchar=$'\cE';; # [END] = end-of-line
-$'\e'[[\[]3~) .sh.edchar=$'\cD';; # [DEL] = delete-character
-esac
-}
-trap keyboard_trap KEYBD
+
+###   for AT&T's ksh93
+#function keyboard_trap {
+#case ${.sh.edchar} in
+#$'\e'[[O]F)   .sh.edchar=$'\cE';; # [END] = end-of-line
+#$'\e'[[\[]3~) .sh.edchar=$'\cD';; # [DEL] = delete-character
+#esac
+#}
+#trap keyboard_trap KEYBD
 
 # PROMPT
 #PS1='
@@ -58,13 +55,8 @@ trap keyboard_trap KEYBD
 #[${PWD}] '
 # smul/rmul = underline, sitm/ritm = italics
 # bold, setaf (forground), setab (background), op (reset)
-PS1='$(tput bold)$(tput setaf 2)${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}$(tput op)"
-PS1=$PS1' $PWD '
-if [[ $USER == root ]]; then
-	PS1+="\# "
-else
-	PS1+="\$ "
-fi
+PS1='\[$(tput bold)$(tput setaf 5)\]\A\[$(tput op)\] \[$(tput bold)$(tput setaf 2)\]\u'"@${HOSTNAME}\[$(tput op)\]"
+PS1=$PS1' \w \$ '
 
 # --- EDITORS ---
 GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
@@ -73,8 +65,8 @@ GRUTF8_FORCE=1
 JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
 # customise your favourite editor here; the first one found is used
-list=(jed gr joe nano emacs vi)
-for EDITOR in $list; do
+set -A list jed gr joe nano emacs vi
+for EDITOR in ${list[@]}; do
 	EDITOR=$(whence -p "$EDITOR") && break
 done
 VISUAL="$EDITOR"
@@ -125,8 +117,8 @@ alias ls='ls --color=auto'
 
 alias cls='clear'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-list=(/var/log/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
-for e in $list; do
+set -A list /var/log/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg
+for e in ${list[@]}; do
 	if [[ -r $e ]]; then
 		if [[ -x "$(command -v clog)" ]]; then
 			alias log30="tail -n 30 $e | clog"
