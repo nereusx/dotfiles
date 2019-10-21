@@ -38,13 +38,132 @@ done
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [[ -x "/bin/path++" ]] && PATH=$(/bin/path++)
 
-# PROMPT
-# smul/rmul = underline, sitm/ritm = italics
-# bold, setaf (forground), setab (background), op (reset)
-PS1='$(tput bold)$(tput setaf 2)${USER}'"@${HOSTNAME}$(tput op)"
-PS1=$PS1' $PWD \$ '
+#
+#	PROMPT
+#
+# initialize event handlers
+COMMAND_NOT_FOUND_HANDLER=()
+PROMPT_COMMAND=()
+YASH_AFTER_CD=()
 
-# --- EDITORS ---
+if [ -n "${SSH_CONNECTION-}" ]; then
+  _hc='\fy\fo.'     # yellow hostname for SSH remote
+else
+  _hc='\fg\fo.'     # green hostname for local
+fi
+if [ "$(id -u)" -eq 0 ]; then
+  _uc='\fr\fo.'     # red username for root
+  _2c='\fr\fo.'     # red PS2 for root
+else
+  _uc=$_hc _hc=  # same username color as hostname for non-root user
+  _2c=           # PS2 in normal color for non-root user
+fi
+# The main prompt ($YASH_PS1) contains the username, hostname, working
+# directory, last exit status (only if non-zero), and $SHLVL (only if
+# non-one).
+YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
+'${${${PWD:/~/\~}##*/}:-$PWD} ${{?:/0/}:+\\fr.$?\\fd. }${{SHLVL-0}:/1}\$ '
+YASH_PS1R='\fc.${_vcs_info}'
+YASH_PS1S='\fo.'
+YASH_PS2=$_2c'> '
+#YASH_PS2R=
+YASH_PS2S=$YASH_PS1S
+YASH_PS4='\fm.+ '
+YASH_PS4S='\fmo.'
+unset _hc _uc _2c
+
+# No escape sequences allowed in the POSIXly-correct mode.
+PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
+
+# find escape sequence to change terminal window title
+case "$TERM" in
+  (xterm|xterm[+-]*|gnome|gnome[+-]*|putty|putty[+-]*|cygwin)
+    _tsl='\033];' _fsl='\a' ;;
+  (*)
+    _tsl=$( (tput tsl 0; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g')
+    _fsl=$( (tput fsl  ; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g') ;;
+esac
+
+# if terminal window title can be changed...
+if [ "$_tsl" ] && [ "$_fsl" ]; then
+
+	# set terminal window title on each prompt
+	_set_term_title() {
+	if [ -t 2 ]; then
+    	printf "$_tsl"'%s@%s:%s'"$_fsl" "${LOGNAME}" "${HOSTNAME%%.*}" \
+	      "${${PWD:/$HOME/\~}/#$HOME\//\~\/}" >&2
+	fi 
+	}
+	PROMPT_COMMAND=("$PROMPT_COMMAND" '_set_term_title')
+
+	# reset window title when changing host or user
+	ssh() {
+		if [ -t 2 ]; then printf "$_tsl"'ssh %s'"$_fsl" "$*" >&2; fi
+		command ssh "$@"
+		}
+	su() {
+		if [ -t 2 ]; then printf "$_tsl"'su %s'"$_fsl" "$*" >&2; fi
+		command su "$@"
+		}
+	sudo() {
+		if [ -t 2 ]; then printf "$_tsl"'sudo %s'"$_fsl" "$*" >&2; fi
+		command sudo "$@"
+		}
+fi
+
+# define function that updates $_vcs_info and $_vcs_root
+_update_vcs_info() {
+  typeset type branch
+  {
+    read --raw-mode type
+    read --raw-mode _vcs_root
+    read --raw-mode branch
+  } <(
+    exec 2>/dev/null
+    typeset COMMAND_NOT_FOUND_HANDLER=
+    while true; do
+      if [ -e .git ] || [ . -ef "${GIT_WORK_TREE-}" ]; then
+        printf 'git\n%s\n' "${GIT_WORK_TREE:-$PWD}"
+        git branch --no-color | sed -n '/^\*/s/^..//p'
+        exit
+      elif [ -d .hg ]; then
+        printf 'hg\n%s\n' "$PWD"
+        exec cat .hg/branch
+      elif [ -d .svn ]; then
+        printf 'svn\n'
+        _vcs_root=$(svn info --show-item=wc-root)
+        printf '%s\n' "$_vcs_root"
+        path=$(svn info --show-item=relative-url)
+        case $path in
+          (*/branches/*)
+            printf '%s\n' "${${path#*/branches/}%%/*}"
+        esac
+        exit
+      fi
+      if [ / -ef . ] || [ . -ef .. ]; then
+        exit
+      fi
+      cd -P ..
+    done
+  )
+  case "$type#$branch" in
+    (hg#default) _vcs_info='hg';;
+    (git#master) _vcs_info='git';;
+    (*#        ) _vcs_info="$type";;
+    (*         ) _vcs_info="$type@$branch";;
+  esac
+}
+# update $_vcs_info on each prompt
+PROMPT_COMMAND=("$PROMPT_COMMAND" '_update_vcs_info')
+
+# these aliases choose a version controlling program for the current directory
+alias _vcs='${${_vcs_info:?not in a version-controlled directory}%%@*}'
+
+#
+#	--- EDITORS ---
+#
 GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 GRFLAGS="-m grief-rc"
 GRUTF8_FORCE=1
