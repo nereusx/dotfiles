@@ -63,6 +63,7 @@ PATH=${HOME}/.bin:${HOME}/.help:$PATH
 #
 #	PROMPT
 #
+PROMPT_COMMAND=()
 x=$(print \\001)
 red="$x$(tput setaf 1)$x"
 green="$x$(tput setaf 2)$x"
@@ -79,11 +80,13 @@ else
 	PS1+=$green'@$HOSTNAME'
 fi
 PS1+=$blue' $PWD '$rst
-PS1+="$(if ((USERID)); then print '$';else print '#';fi) "
+if [ $USERID -eq 0 ]; then PS1+='# '; else PS1+='$ '; fi
 
 unset x red green yellow blue rst
 
-# --- EDITORS ---
+#
+#	EDITORS
+#
 GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 GRFLAGS="-m grief-rc"
 GRUTF8_FORCE=1

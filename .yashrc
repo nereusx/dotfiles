@@ -6,9 +6,6 @@ umask 022
 # if non-interactive shell, exit
 [ -o interactive ] || return
 
-# login shell
-#[ -o login ] && echo 'Login shell' || echo 'Not login shell'
-
 #
 #	yash settings
 #
@@ -59,13 +56,9 @@ YASH_AFTER_CD=()
 #	basic settings
 #
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
-USER=${USER:-$(id -un)}
-HOME=${HOME:-"/home/$USER"}
-USERID=${USERID:-$(id -u)}
-HOSTNAME=${HOSTNAME:-$(hostname)}
-TTY=${TTY:-$(tty | cut -f3-4 -d/)}
-MAIL=${MAIL:-"/var/mail/$USER"}
-MAILCHECK=${MAILCHECK:-0}
+: ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
+: ${USER:=$(id -un)} ${HOME:="/home/$USER"} ${USERID:=$(id -u)}
+: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
 _get_distro() {
 	if [ -r /etc/os-release ]; then
 		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
@@ -73,8 +66,7 @@ _get_distro() {
 		echo $(uname -s)
 	fi;
 	}
-: ${DISTRO:=$(_get_distro)}
-: ${OSTYPE:=$(uname -s)}
+: ${DISTRO:=$(_get_distro)} ${OSTYPE:=$(uname -s)}
 
 # setup several local directories
 backup=${HOME}/.backup
@@ -109,8 +101,11 @@ fi
 # The main prompt ($YASH_PS1) contains the username, hostname, working
 # directory, last exit status (only if non-zero), and $SHLVL (only if
 # non-one).
-YASH_PS1=$_uc'${LOGNAME}'$_hc'@${HOSTNAME%%.*}\fd. '\
-'${${${PWD:/~/\~}##*/}:-$PWD} ${{?:/0/}:+\\fr.$?\\fd. }\$ '
+YASH_PS1=\
+$_uc'${LOGNAME}'\
+$_hc'@${HOSTNAME%%.*}\fd. '\
+'\fb.${${${PWD:/~/\~}##*/}:-$PWD}\fd. '\
+'${{?:/0/}:+\\fr.$?\\fd. }\$ '
 YASH_PS1R='\fc.${_vcs_info}'
 YASH_PS1S='\fo.'
 YASH_PS2=$_2c'> '
