@@ -24,8 +24,12 @@ set +o le-predict
 set +o err-exit
 
 # keybinds
+bindkey --emacs '\^N' beginning-search-forward
+bindkey --emacs '\^O' clear-candidates
+bindkey --emacs '\^P' beginning-search-backward
 bindkey --emacs '\N'   complete-next-column
 bindkey --emacs '\P'   complete-prev-column
+#
 bindkey --emacs '\^[k' forward-delete-line
 bindkey --emacs '\^K'  backward-delete-line
 bindkey --emacs '\^[d' delete-line
@@ -38,9 +42,7 @@ bindkey --emacs '\^[q' expect-verbatim
 #bindkey --emacs '\^[-' em-kill-region
 #bindkey --emacs '\I'   put
 bindkey --emacs '\^[l' emacs-downcase-word
-
 # tcsh's famous alt+p
-#bindkey --emacs '\^[p' beginning-search-backward
 bindkey --emacs '\^[p' emacs-search-backward
 bindkey --emacs '\^F'  emacs-search-backward
 bindkey --emacs '\^[f' emacs-search-forward
@@ -50,6 +52,9 @@ COMMAND_NOT_FOUND_HANDLER=()
 PROMPT_COMMAND=()
 YASH_AFTER_CD=()
 
+# ensure job control works as expected
+[ -o monitor ] && trap - TSTP TTIN TTOU
+  
 #
 #	basic settings
 #
@@ -60,7 +65,7 @@ USERID=${USERID:-$(id -u)}
 HOSTNAME=${HOSTNAME:-$(hostname)}
 TTY=${TTY:-$(tty | cut -f3-4 -d/)}
 MAIL=${MAIL:-"/var/mail/$USER"}
-MAILCHECK=${MAILCHECK:-600}
+MAILCHECK=${MAILCHECK:-60}
 if [ -z "$DISTRO" ]; then
 	[ -r /etc/os-release ] && DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
 fi
@@ -200,6 +205,14 @@ PROMPT_COMMAND=("$PROMPT_COMMAND" '_update_vcs_info')
 # these aliases choose a version controlling program for the current directory
 alias _vcs='${${_vcs_info:?not in a version-controlled directory}%%@*}'
 
+# print file type when executing non-executable files
+_file_type() {
+	if [ -e "$1" ] && ! [ -d "$1" ]; then
+		file -- "$1"
+	fi
+}
+COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
+
 #
 #	--- EDITORS ---
 #
@@ -214,6 +227,7 @@ for EDITOR in $list; do
 	EDITOR=$(command -pv "$EDITOR") && break
 done
 VISUAL="$EDITOR"
+FCEDIT="$EDITOR"
 alias b="$EDITOR"
 for HEXEDITOR in hte mcedit dhex; do
 	HEXEDITOR=$(command -pv "$HEXEDITOR") && break
@@ -232,10 +246,10 @@ LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
 LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
 LESS_TERMCAP_mr=$(tput rev)
 LESS_TERMCAP_mh=$(tput dim)
-LESS_TERMCAP_ZN=$(tput ssubm)
-LESS_TERMCAP_ZV=$(tput rsubm)
-LESS_TERMCAP_ZO=$(tput ssupm)
-LESS_TERMCAP_ZW=$(tput rsupm)
+#LESS_TERMCAP_ZN=$(tput ssubm)
+#LESS_TERMCAP_ZV=$(tput rsubm)
+#LESS_TERMCAP_ZO=$(tput ssupm)
+#LESS_TERMCAP_ZW=$(tput rsupm)
 #LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
 MOST_SWITCHES='-w'
 MOST_EDITOR='jed %s -g %d'
@@ -287,9 +301,9 @@ alias netlog='netstat -lptu4'
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
 alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
-function _bc {
+_bc() {
 	echo "$*" | bc -l
-}
+	}
 if [ ! -x "$(command -vp calc)" ]; then
 	if [ -x "$(command -vp wcalc)" ]; then
 		alias calc='wcalc'
@@ -298,23 +312,12 @@ if [ ! -x "$(command -vp calc)" ]; then
 	fi
 fi
 alias source='. '
-alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
-function _git_s {
-	git add .
-	git commit -m "$*"
-	git push
-}
+_git_q() { _vcs add . && git commit -m "quick and dirty fix" && git push; }
+alias git-q='_git_q'
+_git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
 alias git-s='_git_s'
-if [ $DISTRO == "void" ]; then
-	alias man='man -O width=$(tput cols) '
-fi
-
-#
-#	load local yashrc files
-#
-for e in ~/.yashrc-*; do
-	[ -f $e ] && . $e
-done
+alias git-co='_vcs checkout'
+man() { command man -O width=$(tput cols) "$@"; }
 
 #
 #	welcome screen
@@ -333,5 +336,10 @@ function _welcome {
 }
 [ -o login ] && _welcome
 							
+#	load local yashrc files
+for e in ~/.yashrc-*; do
+	[ -f $e ] && . $e
+done
+
 # clean-up
 unset e f list cpus
