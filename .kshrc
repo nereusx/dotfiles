@@ -169,6 +169,7 @@ done
 function _welcome {
 	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
 	echo "Welcome to Korn Shell ($1) $KSH_VERSION"
+	echo
 	set -A list neofetch screenfetch diogenis fortunes
 	for f in ${list[@]}; do
 		if [[ -x $(command -vp $f) ]]; then

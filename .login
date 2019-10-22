@@ -17,6 +17,7 @@ endif
 
 #
 echo 'Welcome to tenex c-shell'
+echo
 set list = ( neofetch screenfetch diogenis fortunes )
 foreach f ( $list )
 	if ( -X $f ) then

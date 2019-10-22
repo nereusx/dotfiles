@@ -182,6 +182,7 @@ done
 function _welcome {
 	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
 	echo 'Welcome to MirBSD Korn Shell'
+	echo
 	list=(neofetch screenfetch diogenis fortunes)
 	for f in ${list[@]}; do
 		if [[ $(whence $f) ]]; then
