@@ -1,0 +1,7 @@
+#!/bin/sh
+if [ -r /etc/os-release ]; then
+	echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
+else
+	echo $(uname -s)
+fi
+
