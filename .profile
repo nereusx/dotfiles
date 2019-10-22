@@ -10,7 +10,7 @@
 
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+		. "$HOME/.bashrc"
     fi
 elif [ -n "$KSH_VERSION" ]; then
 	case $KSH_VERSION in
@@ -46,9 +46,9 @@ else
 	ash)
 		export ENV=$HOME/.ashrc
 		;;
-	*)
+#	*)
 #		export ENV=$HOME/.shrc
-		;;
+#		;;
 	esac
 	unset tsh
 fi
