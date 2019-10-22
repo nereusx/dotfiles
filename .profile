@@ -37,6 +37,7 @@ elif [ -n "$KSH_VERSION" ]; then
 	esac
 elif [ -n "$YASH_VERSION" ]; then
 #	export ENV=$HOME/.yashrc
+	:
 else
 	tsh=$(ps -hp $$|awk '{print $5}')
 	case $tsh in
