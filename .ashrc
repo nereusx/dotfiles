@@ -1,20 +1,27 @@
-# busybox ash
+# busybox ash or dash
 
-case $i in
-*i*) opt_interactive=1;;
-*l*) opt_login=1;;
+case $- in
+*i*)
+	optinteractive=1
+	;;
+*l*)
+	optlogin=1
+	;;
 esac
 
-[ -z $opt_interactive ] || return
+[ -z $optinteractive ] && return
 
-opt_color=1
+optcolor=1
+if [ "$0" = "dash" ]; then
+	optcolor=-1
+fi
 
 set -o allexport
 #set -o emacs
 
 umask 022
 
-[[ $TERM == "rxvt" ]] && TERM="rxvt-unicode"
+[ $TERM = "rxvt" ] && TERM="rxvt-unicode"
 USER=${USER:-$(id -un)}
 HOME=${HOME:-"/home/$USER"}
 USER_ID=${USER_ID:-$(id -u)}
@@ -22,8 +29,10 @@ HOSTNAME=${HOSTNAME:-$(hostname)}
 TTY=${TTY:-$(tty | cut -f3-4 -d/)}
 MAIL=${MAIL:-"/var/mail/$USER"}
 MAILCHECK=${MAILCHECK:-600}
-if [[ -z "$DISTRO" ]]; then
-	[[ -r /etc/os-release ]] && DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
+if [ -z "$DISTRO" ]; then
+	if [ -r /etc/os-release ]; then
+		DISTRO=$(cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo)
+	fi
 fi
 DISTRO=${DISTRO:-$(uname -s)}
 OSTYPE=${OSTYPE:-$(uname -s)}
@@ -42,10 +51,17 @@ PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
 # PROMPT
-if [ $opt_color -eq 1 ]; then
+if [ $optcolor -eq 1 ]; then
 	PS1='\033[1m'
 	[ $USER_ID -eq 0 ] && PS1=$PS1'\033[31m\u' || PS1=$PS1'\033[36m\u'
 	PS1=$PS1'\033[32m@\h\033[0m \w \$ '
+elif [ $optcolor -eq -1 ]; then
+	PS1="$USER@$HOSTNAME"
+	if [ $USER_ID -eq 0 ]; then
+		PS1=$PS1' # '
+	else
+		PS1=$PS1' $ '
+	fi
 else
 	PS1='\u@\h \w \$ '
 fi
@@ -80,10 +96,10 @@ LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
 LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
 LESS_TERMCAP_mr=$(tput rev)
 LESS_TERMCAP_mh=$(tput dim)
-LESS_TERMCAP_ZN=$(tput ssubm)
-LESS_TERMCAP_ZV=$(tput rsubm)
-LESS_TERMCAP_ZO=$(tput ssupm)
-LESS_TERMCAP_ZW=$(tput rsupm)
+LESS_TERMCAP_ZN=''
+LESS_TERMCAP_ZV=''
+LESS_TERMCAP_ZO=''
+LESS_TERMCAP_ZW=''
 #LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
 MOST_SWITCHES='-w'
 MOST_EDITOR='jed %s -g %d'
@@ -92,14 +108,13 @@ PAGER=less
 # --- end ---
 
 # other settings
-LS_OPTIONS="--color=auto"
 BROWSER=firefox
 cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
 cpus=$(($cpus + 1))
 MAKEFLAGS="-j$cpus"
 __GL_YIELD='USLEEP'
 
-if [ $opt_color -eq 1 ]; then
+if [ $optcolor -eq 1 ]; then
 	LS_OPTIONS='--color=auto'
 	alias ls='ls --color=auto'
 	alias grep='grep --color=auto'
@@ -130,7 +145,7 @@ alias netlog='netstat -lptu4'
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
 alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
-function _bc {
+_bc () {
 	echo "$*" | bc -l
 }
 if [ ! -x "$(command -v calc)" ]; then
@@ -141,13 +156,16 @@ if [ ! -x "$(command -v calc)" ]; then
 	fi
 fi
 alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
-function _git_s {
+_git_s () {
 	git add .
 	git commit -m "$*"
 	git push
 }
 alias git-s='_git_s'
-[ $DISTRO == "void" ] && alias man='man -O width=$(tput cols) '
+if [ $DISTRO = "void" ]; then
+	alias man='man -O width=$(tput cols) '
+fi
+alias source='.'
 
 # load local ashrc files
 for e in ~/.ashrc-*; do
@@ -157,7 +175,7 @@ done
 #
 #	welcome screen
 #
-function _welcome {
+_welcome () {
 	echo "Welcome to Unix Shell ($1)"
 	echo
 	list="neofetch screenfetch diogenis fortunes"
@@ -168,6 +186,7 @@ function _welcome {
 		fi
 	done
 }
-[ -n opt_login ] && _welcome $0
+[ -n $optlogin ] && _welcome $0
 
-unset e f list cpus
+unset e f list cpus optinteractive optlogin
+

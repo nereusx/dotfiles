@@ -9,16 +9,46 @@ umask 022
 # login shell
 #[ -o login ] && echo 'Login shell' || echo 'Not login shell'
 
-# yash settings
+#
+#	yash settings
+#
 set -o emacs
 set -o allexport
-set --extended-glob
-set --brace-expand
-set --no-clobber
-set --no-unset
-set --notify-le
-set --le-no-conv-meta
-#set --le-predict
+set -o extended-glob
+set -o brace-expand
+set -o no-clobber
+set -o no-unset
+set -o notify-le
+set -o le-no-conv-meta
+set +o le-predict
+set +o err-exit
+
+# keybinds
+bindkey --emacs '\N'   complete-next-column
+bindkey --emacs '\P'   complete-prev-column
+bindkey --emacs '\^[k' forward-delete-line
+bindkey --emacs '\^K'  backward-delete-line
+bindkey --emacs '\^[d' delete-line
+bindkey --emacs '\^[u' undo
+bindkey --emacs '\^U'  redo
+bindkey --emacs '\^[q' expect-verbatim
+#bindkey --emacs '\^[i' em-toggle-overwrite
+#bindkey --emacs '\^[m' em-set-mark
+#bindkey --emacs '\^[+' em-copy-region
+#bindkey --emacs '\^[-' em-kill-region
+#bindkey --emacs '\I'   put
+bindkey --emacs '\^[l' emacs-downcase-word
+
+# tcsh's famous alt+p
+#bindkey --emacs '\^[p' beginning-search-backward
+bindkey --emacs '\^[p' emacs-search-backward
+bindkey --emacs '\^F'  emacs-search-backward
+bindkey --emacs '\^[f' emacs-search-forward
+
+# initialize event handlers
+COMMAND_NOT_FOUND_HANDLER=()
+PROMPT_COMMAND=()
+YASH_AFTER_CD=()
 
 #
 #	basic settings
@@ -40,7 +70,7 @@ OSTYPE=${OSTYPE:-$(uname -s)}
 # setup several local directories
 backup=${HOME}/.backup
 list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
-for e in ${list[@]}; do
+for e in $list; do
 	if [ ! -d $e ]; then
 		mkdir -p $e
 		chmod 0700 $e
@@ -54,10 +84,6 @@ PATH=${HOME}/.bin:${HOME}/.help:$PATH
 #
 #	PROMPT
 #
-# initialize event handlers
-COMMAND_NOT_FOUND_HANDLER=()
-PROMPT_COMMAND=()
-YASH_AFTER_CD=()
 
 if [ -n "${SSH_CONNECTION-}" ]; then
   _hc='\fy\fo.'     # yellow hostname for SSH remote
@@ -184,7 +210,7 @@ JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
 # customise your favourite editor here; the first one found is used
 list=(jed gr nano joe vim vi)
-for EDITOR in ${list[@]}; do
+for EDITOR in $list; do
 	EDITOR=$(command -pv "$EDITOR") && break
 done
 VISUAL="$EDITOR"
@@ -195,7 +221,6 @@ done
 alias hexedit="$HEXEDITOR"
 
 # --- PAGER ---
-LS_OPTIONS='--color=auto'
 LESS='-R'
 GROFF_ENCODING='utf8'
 LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
@@ -219,7 +244,7 @@ PAGER=less
 # --- end ---
 
 # other settings
-LS_OPTIONS="--color=auto"
+LS_OPTIONS='--color=auto'
 BROWSER=firefox
 cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
 cpus=$(($cpus + 1))
@@ -243,7 +268,7 @@ list=(\
 	/var/log/dmesg.log\
 	/var/log/dmesg\
 	)
-for e in ${list[@]}; do
+for e in list; do
 	if [ -r $e ]; then
 		if [ -x "$(command -vp clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
@@ -265,13 +290,14 @@ alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 function _bc {
 	echo "$*" | bc -l
 }
-if [ ! -x "$(command -v calc)" ]; then
+if [ ! -x "$(command -vp calc)" ]; then
 	if [ -x "$(command -vp wcalc)" ]; then
 		alias calc='wcalc'
 	else
 		alias calc='_bc'
 	fi
 fi
+alias source='. '
 alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
 function _git_s {
 	git add .
@@ -296,8 +322,9 @@ done
 function _welcome {
 	[ $TTY =~ tty* ] && /bin/echo -ne '\033='
 	echo "Welcome to \e[1m\e[32mYaSH\e[0m \e[4mPOSIX-compliant\e[0m command line shell"
+	echo
 	list=(neofetch screenfetch diogenis fortunes)
-	for f in ${list[@]}; do
+	for f in $list; do
 		if [ $(command -pv $f) ]; then
 			$f;
 			break
