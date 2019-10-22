@@ -41,12 +41,14 @@ endif
 #
 #	find distro
 #
-if ( -r /etc/os-release ) then
-	setenv DISTRO `cat /etc/os-release | awk '/^ID=/{print tolower(substr($0,4))}' | xargs echo`
-	if ( $?OSTYPE == 0 ) setenv OSTYPE `uname -s`
-else # ignore it
-	setenv DISTRO `uname -s`
-	if ( $?OSTYPE == 0 ) setenv OSTYPE unix
+if ( $?DISTRO == 0 ) then
+	if ( -r /etc/os-release ) then
+		setenv DISTRO `awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release`
+		if ( $?OSTYPE == 0 ) setenv OSTYPE `uname -s`
+	else # ignore it
+		setenv DISTRO `uname -s`
+		if ( $?OSTYPE == 0 ) setenv OSTYPE unix
+	endif
 endif
 ########################################
 
