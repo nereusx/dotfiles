@@ -38,7 +38,18 @@ elif [ -n "$KSH_VERSION" ]; then
 elif [ -n "$YASH_VERSION" ]; then
 	export ENV=$HOME/.yashrc
 else
-	export ENV=$HOME/.shrc
+	tsh=$(ps -hp $$|awk '{print $5}')
+	case $tsh in
+	dash)
+		;;
+	ash)
+		export ENV=$HOME/.ashrc
+		;;
+	*)
+		export ENV=$HOME/.shrc
+		;;
+	esac
+	unset tsh
 fi
 
 # set PATH so it includes user's private bin if it exists
