@@ -17,6 +17,20 @@ elif [ -n "$KSH_VERSION" ]; then
 	*MIRBSD*)
 		export ENV=$HOME/.mkshrc
 		;;
+	*PD KSH*)
+		if [ -f $HOME/.ksh88rc ]; then
+			export ENV=$HOME/.ksh88rc
+		else
+			export ENV=$HOME/.kshrc
+		fi
+		;;
+	*93*)
+		if [ -f $HOME/.ksh93rc ]; then
+			export ENV=$HOME/.ksh93rc
+		else
+			export ENV=$HOME/.kshrc
+		fi
+		;;
 	*)
 		export ENV=$HOME/.kshrc
 		;;
@@ -24,7 +38,7 @@ elif [ -n "$KSH_VERSION" ]; then
 elif [ -n "$YASH_VERSION" ]; then
 	export ENV=$HOME/.yashrc
 else
-	export ENV=$HOME/.ashrc
+	export ENV=$HOME/.shrc
 fi
 
 # set PATH so it includes user's private bin if it exists
