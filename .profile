@@ -13,7 +13,14 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 elif [ -n "$KSH_VERSION" ]; then
-	export ENV=$HOME/.kshrc
+	case $KSH_VERSION in
+	*MIRBSD*)
+		export ENV=$HOME/.mkshrc
+		;;
+	*)
+		export ENV=$HOME/.kshrc
+		;;
+	esac
 elif [ -n "$YASH_VERSION" ]; then
 	export ENV=$HOME/.yashrc
 else
