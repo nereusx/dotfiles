@@ -50,6 +50,11 @@ cp $DIR/update-pkgsrc $PKGSRC_PREFIX/pkg/sbin
 cp $DIR/pkgsrc-make $PKGSRC_PREFIX/pkg/bin
 
 #
+if [ -d /etc/profile.d ]; then
+	cp $DIR/etc/profile.d/* /etc/profile.d
+fi
+
+#
 # that's all
 # now go to package and make it
 #

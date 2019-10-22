@@ -10,15 +10,15 @@
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
     fi
-fi
-
-# if running loksh
-if [ -n "$KSH_VERSION" ]; then
+elif [ -n "$KSH_VERSION" ]; then
 	export ENV=$HOME/.kshrc
+elif [ -n "$YASH_VERSION" ]; then
+	export ENV=$HOME/.yashrc
+else
+	export ENV=$HOME/.ashrc
 fi
 
 # set PATH so it includes user's private bin if it exists
