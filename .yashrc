@@ -265,6 +265,12 @@ cpus=$(($cpus + 1))
 MAKEFLAGS="-j$cpus"
 __GL_YIELD='USLEEP'
 
+#
+#	aliases
+#
+man() { command man -O width=$(tput cols) "$@"; }
+alias source='. '
+
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --color=always'
@@ -311,13 +317,15 @@ if [ ! -x "$(command -vp calc)" ]; then
 		alias calc='_bc'
 	fi
 fi
-alias source='. '
+
+# git
 _git_q() { _vcs add . && git commit -m "quick and dirty fix" && git push; }
 alias git-q='_git_q'
 _git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
 alias git-s='_git_s'
-alias git-co='_vcs checkout'
-man() { command man -O width=$(tput cols) "$@"; }
+alias git-c='_vcs checkout'
+alias git-d='_vcs diff'
+alias git-l='_vcs log'
 
 #
 #	welcome screen
