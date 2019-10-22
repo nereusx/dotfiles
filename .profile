@@ -46,7 +46,7 @@ else
 		export ENV=$HOME/.ashrc
 		;;
 	*)
-		export ENV=$HOME/.shrc
+#		export ENV=$HOME/.shrc
 		;;
 	esac
 	unset tsh
