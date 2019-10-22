@@ -288,7 +288,7 @@ list=(\
 	/var/log/dmesg.log\
 	/var/log/dmesg\
 	)
-for e in list; do
+for e in ${list[@]}; do
 	if [ -r $e ]; then
 		if [ -x "$(command -vp clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
@@ -331,6 +331,10 @@ alias git-g='_vcs pull'
 alias git-p='_vcs pull'
 alias git-d='_vcs diff'
 alias git-l='_vcs log'
+
+# tmux
+alias tmux-reload='tmux source-file ~/.tmux.conf'
+alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
 
 #
 #	welcome screen
