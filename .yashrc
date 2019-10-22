@@ -9,8 +9,20 @@ umask 022
 # login shell
 #[ -o login ] && echo 'Login shell' || echo 'Not login shell'
 
+# yash settings
 set -o emacs
 set -o allexport
+set --extended-glob
+set --brace-expand
+set --no-clobber
+set --no-unset
+set --notify-le
+set --le-no-conv-meta
+#set --le-predict
+
+#
+#	basic settings
+#
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
 USER=${USER:-$(id -un)}
 HOME=${HOME:-"/home/$USER"}
@@ -35,6 +47,7 @@ for e in ${list[@]}; do
 	fi
 done
 
+# path
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
