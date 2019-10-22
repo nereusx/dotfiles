@@ -5,41 +5,59 @@
 umask 022
 #limit coredumpsize 0
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# if !interactive, exit
+[[ $- =~ i ]] || exit
 
 #
-DS='$'
-if [ -z "$HOSTNAME" ]; then
-	export HOSTNAME=$(hostname)
-fi
+#	BASH settings
+#
+set -o emacs
+set -o allexport
+set -o braceexpand
+set -o noclobber
+set -o notify
+set +o errexit
 
-### find distro
-if [ -f /etc/os-release ]; then
-	. /etc/os-release
-	export DISTRO=${ID:-$NAME}
-	export OSTYPE=${OSTYPE:-$(uname -s)}
-else
-	export DISTRO="$(uname -o)"
-	export OSTYPE=${OSTYPE:-$(uname -s)}
-fi
+PROMPT_COMMAND=()
+
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
+#
+#	basic settings
+#
+DS='$'
+[ $TERM == "rxvt" ] && TERM="rxvt-unicode"
+USER=${USER:-$(id -un)}
+HOME=${HOME:-"/home/$USER"}
+USERID=${USERID:-$(id -u)}
+HOSTNAME=${HOSTNAME:-$(hostname)}
+TTY=${TTY:-$(tty | cut -f3-4 -d/)}
+MAIL=${MAIL:-"/var/mail/$USER"}
+MAILCHECK=${MAILCHECK:-0}
+_get_distro() {
+	if [ -r /etc/os-release ]; then
+		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
+	else
+		echo $(uname -s)
+	fi;
+	}
+: ${DISTRO:=$(_get_distro)}
+: ${OSTYPE:=$(uname -s)}
 
 # setup several local directories
-backup=$HOME/.backup
-for e in $backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc; do
+backup=${HOME}/.backup
+list="$backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc"
+for e in $list; do
 	if [ ! -d $e ]; then
 		mkdir -p $e
 		chmod 0700 $e
 	fi
 done
 
-# setup and cleanup path
-if [[ :$PATH: != *:"${HOME}/.bin":* ]] ; then
-	export PATH="$HOME/.bin:$HOME/.help:$PATH"
-fi
-if [ -x '/bin/path++' ]; then
-	export PATH=$(/bin/path++)
-fi
+# path
+PATH=${HOME}/.bin:${HOME}/.help:$PATH
+[ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -59,121 +77,101 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '
 #PS1='\u@\h \w \$ '
+#PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '
+if [ $USERID -eq 0 ]; then
+	PS1='\[\033[1;31m\]\u\[\033[0m\]'
+else
+	PS1='\[\033[1;32m\]\u\[\033[0m\]'
+fi
+if [ -n "${SSH_CONNECTION-}" ]; then
+	PS1=$PS1'\[\033[1;31m\]@\h\[\033[00m\] '
+else
+	PS1=$PS1'\[\033[1;32m\]@\h\[\033[00m\] '
+fi
+PS1=$PS1'\[\033[1;34m\]\w\[\033[0m\] \$ '
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# settings for JED
-export JED_HOME="${HOME}/.jed"
+#
+#	--- EDITORS ---
+#
+GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
+GRFLAGS="-m grief-rc"
+GRUTF8_FORCE=1
+JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
-
-# settings for GRIEF
-export GRPATH="${HOME}/.grief-local/:/usr/share/grief/macros:/usr/local/share/grief/macros"
-export GRFLAGS="-m grief-rc"
-export GRUTF8_FORCE=1
-export GRDICTIONARIES="en,el"
-export GRDICTIONARY="/usr/share/aspell"
-
-# select default editor
-for e in jed nano vim vi emacs ed; do
-	if [ -x /usr/bin/$e ]; then
-		export EDITOR=$e
-		break
-	fi
+# customise your favourite editor here; the first one found is used
+list="jed gr nano joe vim vi"
+for EDITOR in $list; do
+	EDITOR=$(command -pv "$EDITOR") && break
 done
-export VISUAL="$EDITOR"
-alias edit="$EDITOR"
-
-# select default hex editor
-export HEXEDITOR="/usr/bin/od -t x1 "
-for e in hte ht dhex mcedit; do
-	if [ -x /usr/bin/$e ]; then
-		export HEXEDITOR=$e
-		break
-	fi
+VISUAL="$EDITOR"
+FCEDIT="$EDITOR"
+alias b="$EDITOR"
+for HEXEDITOR in hte mcedit dhex; do
+	HEXEDITOR=$(command -pv "$HEXEDITOR") && break
 done
 alias hexedit="$HEXEDITOR"
-if [ ! -x /usr/bin/hex ]; then
-	if [ -x /usr/bin/hexdump ]; then
-		alias hex='hexdump -C'
-	else
-		alias hex='od -t x1'
-	fi
-fi
 
-# select BRIEF editor
-alias b="$EDITOR"
-for e in jed gr emacs nano; do
-	if [ -x /usr/bin/$e ]; then
-		alias b="$e"
-		break
-	fi
-done
+# --- PAGER ---
+LESS='-R'
+GROFF_ENCODING='utf8'
+LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
+LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
+LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
+LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
+LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
+LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
+LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
+LESS_TERMCAP_mr=$(tput rev)
+LESS_TERMCAP_mh=$(tput dim)
+#LESS_TERMCAP_ZN=$(tput ssubm)
+#LESS_TERMCAP_ZV=$(tput rsubm)
+#LESS_TERMCAP_ZO=$(tput ssupm)
+#LESS_TERMCAP_ZW=$(tput rsupm)
+#LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
+MOST_SWITCHES='-w'
+MOST_EDITOR='jed %s -g %d'
+PAGER=less
+#PAGER=most
+# --- end ---
 
-### PAGER ###
-export LS_OPTIONS='--color=auto'
-export LESS='-R'
-export GROFF_ENCODING='utf8'
-export LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
-export LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
-export LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
-export LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
-export LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
-export LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
-export LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
-#export LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
-export MOST_SWITCHES='-w'
-export MOST_EDITOR='jed %s -g %d'
-export PAGER=less
-#export PAGER=most
+# other settings
+LS_OPTIONS='--color=auto'
+BROWSER=firefox
+cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
+cpus=$(($cpus + 1))
+MAKEFLAGS="-j$cpus"
+__GL_YIELD='USLEEP'
 
-# use make in so many threads as your processors
-if [ -f /proc/cpuinfo ]; then
-	cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
-	let "cpus = $cpus + 1"
-	export MAKEFLAGS="-j$cpus"
-fi
+#
+#	aliases
+#
+man() { command man -O width=$(tput cols) "$@"; }
+alias source='. '
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias dmesg='dmesg --color=always'
 
-# some more ls aliases
-alias ll='ls -lha'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls --color=auto -lha'
+alias ls='ls --color=auto'
+
 alias cls='clear'
-alias ps-all='ps aux|grep -v "\["'
-alias xcopy='rsync -ah --progress'
-alias xmerge='xrdb -merge ~/.Xresources'
-alias xmonitor-off='xset dpms force off'
-alias ltrim="sed 's/^[ \t\n\r]*//'"
-alias rtrim="sed 's/[ \t\n\r]*$DS//'"
-alias trim="sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
+alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
+list="/var/log/messages\
+	/var/log/socklog/messages/current\
+	/var/log/current\
+	/var/log/syslog\
+	/var/log/dmesg.log\
+	/var/log/dmesg"
 
-list=(/var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg)
-for e in $list; do
-	if [ -f $e ]; then
-		alias log30="tail -n 30 $e"
+for e in list; do
+	if [ -r $e ]; then
+		if [ -x "$(command -vp clog)" ]; then
+			alias log30="tail -n 30 $e | clog"
+		else
+			alias log30="tail -n 30 $e"
+		fi
 		break
 	fi
 done
@@ -183,42 +181,53 @@ elif [ -f /var/log/httpd/error.log ]; then
 	alias phplog='tail /var/log/httpd/error.log'
 fi
 alias netlog='netstat -lptu4'
-alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-
-alias git-q='git add .; git commit -m "quick and dirty fix"; git push'
-function _git_s {
-	git add .
-	git commit -m "$*"
-	git push
-}
-alias git-s='_git_s'
-
-if [ "$DISTRO" == "void" ]; then
-	_man() { man -O width=$COLUMNS $*; }
-	alias man='_man'
-fi
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
-
-# load local bashrc files
-for e in ~/.bashrc-*; do
-	if [ -f $e ]; then
-		. $e
+alias xmerge='xrdb -merge ~/.Xresources'
+alias xmonitor-off='xset dpms force off'
+alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
+_bc() {
+	echo "$*" | bc -l
+	}
+if [ ! -x "$(command -vp calc)" ]; then
+	if [ -x "$(command -vp wcalc)" ]; then
+		alias calc='wcalc'
+	else
+		alias calc='_bc'
 	fi
+fi
+
+# git
+_git_q() { _vcs add . && git commit -m "quick and dirty fix" && git push; }
+alias git-q='_git_q'
+_git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
+alias git-s='_git_s'
+alias git-c='_vcs checkout'
+alias git-d='_vcs diff'
+alias git-l='_vcs log'
+
+#
+#	welcome screen
+#
+function _welcome {
+	[[ $TTY =~ tty* ]] && /bin/echo -ne '\033='
+	echo "Welcome to BaSH $BASH_VERSION"
+	echo
+	list="neofetch screenfetch diogenis fortunes"
+	for f in $list; do
+		if [ $(command -pv $f) ]; then
+			$f;
+			break
+		fi
+	done
+}
+#[ -o login_shell ] && _welcome
+[[ $- =~ l ]] && _welcome
+							
+#	load local bashrc files
+for e in ~/.bashrc-*; do
+	[ -f $e ] && . $e
 done
+
+# clean-up
+unset e f list cpus
 
 # EOF
