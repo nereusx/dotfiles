@@ -113,7 +113,7 @@ alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 list="/var/log/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log /var/log/dmesg"
 for e in $list; do
 	if [ -r $e ]; then
-		if [[ -x "$(command -v clog)" ]]; then
+		if [ -x "$(command -v clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
 		else
 			alias log30="tail -n 30 $e"
@@ -162,7 +162,7 @@ function _welcome {
 	echo
 	list="neofetch screenfetch diogenis fortunes"
 	for f in $list; do
-		if [[ -x $(command -vp $f) ]]; then
+		if [ -x $(command -vp $f) ]; then
 			$f;
 			break
 		fi
