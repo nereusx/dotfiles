@@ -107,10 +107,10 @@ if [ "$_tsl" ] && [ "$_fsl" ]; then
 
 	# set terminal window title on each prompt
 	_set_term_title() {
-	if [ -t 2 ]; then
+#	if [ -t 2 ]; then
     	printf "$_tsl"'%s@%s:%s'"$_fsl" "${LOGNAME}" "${HOSTNAME%%.*}" \
 	      "${${PWD:/$HOME/\~}/#$HOME\//\~\/}" >&2
-	fi 
+#	fi 
 	}
 	PROMPT_COMMAND=("$PROMPT_COMMAND" '_set_term_title')
 
