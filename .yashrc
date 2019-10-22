@@ -269,6 +269,7 @@ __GL_YIELD='USLEEP'
 #
 man() { command man -O width=$(tput cols) "$@"; }
 alias source='. '
+alias reload='. $HOME/.yashrc'
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
