@@ -91,6 +91,52 @@ else
 fi
 PS1=$PS1'\[\033[1;34m\]\w\[\033[0m\] \$ '
 
+# find escape sequence to change terminal window title
+case "$TERM" in
+  (xterm|xterm[+-]*|gnome|gnome[+-]*|putty|putty[+-]*|cygwin)
+    _tsl='\033];' _fsl='\a' ;;
+  (*)
+    _tsl=$( (tput tsl 0; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g')
+    _fsl=$( (tput fsl  ; echo) 2>/dev/null |
+    sed -e 's;\\;\\\\;g' -e 's;;\\033;g' -e 's;;\\a;g' -e 's;%;%%;g') ;;
+esac
+
+# if terminal window title can be changed...
+if [ "$_tsl" ] && [ "$_fsl" ]; then
+
+	# set terminal window title on each prompt
+	_set_term_title() {
+	if [ -t 2 ]; then
+    	printf "$_tsl"'%s@%s:%s'"$_fsl" "${LOGNAME}" "${HOSTNAME%%.*}" \
+	      "${${PWD:/$HOME/\~}/#$HOME\//\~\/}" >&2
+	fi 
+	}
+	PROMPT_COMMAND=("$PROMPT_COMMAND" '_set_term_title')
+
+	# reset window title when changing host or user
+	ssh() {
+		if [ -t 2 ]; then printf "$_tsl"'ssh %s'"$_fsl" "$*" >&2; fi
+		command ssh "$@"
+		}
+	su() {
+		if [ -t 2 ]; then printf "$_tsl"'su %s'"$_fsl" "$*" >&2; fi
+		command su "$@"
+		}
+	sudo() {
+		if [ -t 2 ]; then printf "$_tsl"'sudo %s'"$_fsl" "$*" >&2; fi
+		command sudo "$@"
+		}
+fi
+
+# print file type when executing non-executable files
+_file_type() {
+	if [ -e "$1" ] && ! [ -d "$1" ]; then
+		file -- "$1"
+	fi
+}
+COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
+
 #
 #	--- EDITORS ---
 #
@@ -196,13 +242,13 @@ if [ ! -x "$(command -vp calc)" ]; then
 fi
 
 # git
-_git_q() { _vcs add . && git commit -m "quick and dirty fix" && git push; }
+_git_q() { git add . && git commit -m "quick and dirty fix" && git push; }
 alias git-q='_git_q'
-_git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
+_git_s() { git add . && git commit -m \""$*"\" && git push; }
 alias git-s='_git_s'
-alias git-c='_vcs checkout'
-alias git-d='_vcs diff'
-alias git-l='_vcs log'
+alias git-c='git checkout'
+alias git-d='git diff'
+alias git-l='git log'
 
 #
 #	welcome screen
