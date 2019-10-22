@@ -319,7 +319,11 @@ if [ ! -x "$(command -vp calc)" ]; then
 fi
 
 # git
-_git_q() { _vcs add . && git commit -m "quick and dirty fix" && git push; }
+_git_q() {
+	local msg
+	[ $# -gt 0 ] && msg="$*" ||	msg="quick and dirty fix"
+	_vcs add . && git commit -m "$msg" && git push; 
+}
 _git_qq() { if [ $# > 0 ]; then echo $#; fi; _vcs add . && git commit -m "quick and dirty fix" && git push; }
 alias git-q='_git_q'
 _git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
