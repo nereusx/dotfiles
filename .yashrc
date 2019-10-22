@@ -325,8 +325,7 @@ _git_q() {
 	_vcs add . && git commit -m "$msg" && git push; 
 }
 alias git-q='_git_q'
-_git_s() { _vcs add . && git commit -m \""$*"\" && git push; }
-alias git-s='_git_s'
+alias git-s='_git_q'
 alias git-c='_vcs checkout'
 alias git-g='_vcs pull'
 alias git-p='_vcs pull'
