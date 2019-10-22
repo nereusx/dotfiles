@@ -17,7 +17,7 @@ elif [ -n "$KSH_VERSION" ]; then
 	*MIRBSD*)
 		export ENV=$HOME/.mkshrc
 		;;
-	*PD KSH*)
+	*PD*KSH*)
 		if [ -f $HOME/.ksh88rc ]; then
 			export ENV=$HOME/.ksh88rc
 		else
