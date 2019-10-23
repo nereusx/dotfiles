@@ -7,8 +7,9 @@ if [ ! -d $dest ]; then
 	chmod 0755 $dest
 fi
 for f in *; do
-	fb="${f%%.*}"
-	if [ -x "$fb" ]; then
+	bas=${f%.*}
+	ext=${f#"$bas"}
+	if [ -z "$ext" ]; then
 		echo $f
 		cp $f "$dest/$f"
 	fi
