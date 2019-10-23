@@ -1,0 +1,9 @@
+#!/bin/sh
+SERVER="urxvtd -q -f -o"
+CLIENT="urxvtc $*"
+if pgrep -x urxvtd -U $(id -u) > /dev/null; then
+	exec $CLIENT
+else
+	$SERVER
+	exec $CLIENT
+fi

@@ -25,6 +25,8 @@ urxvt.secondaryScroll:  true
 !urxvt.boldItalicFont: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
 
 urxvt.font: \
+	xft:XSG Fixed 189:pixelsize=18,\
+	xft:XSG Fixed 188:pixelsize=18,\
 	xft:XSG Fixed 178:pixelsize=17,\
 	xft:XSG Fixed 167:pixelsize=16,\
 	7x14B,7x14, \
@@ -123,7 +125,8 @@ urxvt*color15: #FFFFFF
 
 !! shift+down = newtab, shift+left/right = go to prev/next tab, ctrl+left/right=move tab
 !! ctrl+d = close tab
-urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
+!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
+urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command
 
 URxvt.url-launcher: firefox
 URxvt.matcher.button:  1
