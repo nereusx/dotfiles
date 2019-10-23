@@ -22,7 +22,8 @@ endif
 ./install-to-users .tcshrc .login .bashrc .mkshrc .bin .help \
 	.jed .nanorc .grief-local .grinit .joerc \
 	.newsboat .clogrc \
-	.gitconfig .config .xres \
+	.gitconfig .config \
+	.urxvt .xres \
 	.dof .conkyrc .bc .tmux.conf .vimrc .a2ps .abook
 
 # rsync

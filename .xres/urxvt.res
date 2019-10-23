@@ -48,10 +48,6 @@ urxvt.scrollBar:false
 ! scroll back to the bottom on keypress
 !urxvt.scrollTtyKeypress: true
 
-! clipboard
-urxvt.clipboard.copycmd: xsel -ib
-urxvt.clipboard.pastecmd: xsel -cb
-
 ! URL selection
 !urxvt.url-select.launcher: /usr/bin/xdg-open
 !urxvt.url-select.underline: true
@@ -126,10 +122,20 @@ urxvt*color15: #FFFFFF
 !! ctrl+d = close tab
 
 ! with tabs
-!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard,tabbed
+!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,clipboard,tabbed
 
 ! without tabs, for use with tmux
-urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard
+urxvt.perl-ext-common: default,-searchable-scrollback,bell-command,selection-to-clipboard,pasta,matcher,keyboard-select,clipboard
+
+! clipboard
+!urxvt.clipboard.copycmd: xsel -ib
+!urxvt.clipboard.pastecmd: xsel -cb
+urxvt.keysym.Control-Shift-C: perl:clipboard:copy
+urxvt.keysym.Control-Shift-V: perl:clipboard:paste
+urxvt.clipboard.autocopy: true
+! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
+!URxvt.keysym.C-M-c:    builtin-string:
+!URxvt.keysym.C-M-v:    builtin-string:
 
 !
 URxvt.url-launcher: firefox
@@ -152,11 +158,4 @@ URxvt.tabbed.reopen-on-close: yes
 
 !URxvt.bell-command: play -v 0.5 -q /usr/share/sounds/A220Hz-150ms.wav
 
-! Disable Ctrl-Alt-c & Ctrl-Alt-v bindings (optional)
-!URxvt.keysym.C-M-c:    builtin-string:
-!URxvt.keysym.C-M-v:    builtin-string:
-
-! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
-URxvt.keysym.C-S-c: eval:selection_to_clipboard
-URxvt.keysym.C-S-v: eval:paste_clipboard
 
