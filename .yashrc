@@ -39,7 +39,7 @@ bindkey --emacs '\^[q' expect-verbatim
 #bindkey --emacs '\^[-' em-kill-region
 #bindkey --emacs '\I'   put
 bindkey --emacs '\^[l' emacs-downcase-word
-# tcsh's famous alt+p
+# to be... tcsh's famous alt+p
 bindkey --emacs '\^[p' emacs-search-backward
 bindkey --emacs '\^F'  emacs-search-backward
 bindkey --emacs '\^[f' emacs-search-forward
@@ -48,6 +48,13 @@ bindkey --emacs '\^[f' emacs-search-forward
 COMMAND_NOT_FOUND_HANDLER=()
 PROMPT_COMMAND=()
 YASH_AFTER_CD=()
+
+# run commands with redirection of stdout/err to /dev/null
+mute() {
+	local buf
+	[ $# -gt 0 ] && buf="$*" ||	return 1
+	$($buf 2>&1 > /dev/null)
+	}
 
 # ensure job control works as expected
 [ -o monitor ] && trap - TSTP TTIN TTOU
