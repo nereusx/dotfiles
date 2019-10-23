@@ -9,7 +9,7 @@ fi
 for f in *; do
 	bas=${f%.*}
 	ext=${f#"$bas"}
-	if [ -z "$ext" ]; then
+	if [ -z "$ext" -a -x "$bas" ]; then
 		echo $f
 		cp $f "$dest/$f"
 	fi
