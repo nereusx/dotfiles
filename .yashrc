@@ -316,6 +316,35 @@ alias netlog='netstat -lptu4'
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
 alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
+
+# utils
+getfilename() {
+	echo ${1##*/}
+	}
+getdirname() {
+	local f, fn
+	fn=${1##*/}
+	echo ${1%"$fn"}
+	}
+getbasename() {
+	local fn
+	fn=${1##*/}
+	echo ${fn%.*}
+	}
+getfileext() {
+	local fn, bn
+	fn=${1##*/}
+	bn=${fn%.*}
+	echo ${fn#"$bn"};
+	}
+
+FullPath=/path/to/name4afile-00809.ext   # result:   #   /path/to/name4afile-00809.ext
+Filename=${FullPath##*/}                             #   name4afile-00809.ext
+PathPref=${FullPath%"$Filename"}                     #   /path/to/
+FileStub=${Filename%.*}                              #   name4afile-00809
+FileExt=${Filename#"$FileStub"}                      #   .ext
+
+# calc
 _bc() {
 	echo "$*" | bc -l
 	}
