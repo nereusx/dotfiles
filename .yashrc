@@ -13,7 +13,7 @@ set -o emacs
 set -o allexport
 set -o extended-glob
 set -o brace-expand
-set -o noclobber
+set +o noclobber
 set -o no-unset
 set -o notify-le
 set -o le-no-conv-meta
