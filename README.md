@@ -10,6 +10,8 @@ These files are for ***personal use***, but **you may need**
 
 * my tcsh scripts, include **.tcshrc**
 
+* my yash scripts, include **.yashrc**
+
 * install XFCE system sound theme for void-linux and xubuntu
 
 * ban ip addresses through iptables, there is a filter based on country of the IP, but you can add more easily.
