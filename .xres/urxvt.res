@@ -61,9 +61,8 @@ urxvt.reverseVideo: false
 
 ! blackish with transparency
 urxvt.depth: 32
-urxvt.background: rgba:0000/0000/0000/dddd
-!urxvt.background: rgba:0000/0000/0000/cccc
-!urxvt.foreground: white
+!urxvt.background: rgba:0000/0000/0000/dddd
+urxvt.background: rgba:0000/0000/0000/eeee
 
 ! VGA Colors
 !urxvt.color0:   #000000
@@ -125,9 +124,14 @@ urxvt*color15: #FFFFFF
 
 !! shift+down = newtab, shift+left/right = go to prev/next tab, ctrl+left/right=move tab
 !! ctrl+d = close tab
+
+! with tabs
 !urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
+
+! without tabs, for use with tmux
 urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command
 
+!
 URxvt.url-launcher: firefox
 URxvt.matcher.button:  1
 URxvt.colorUL: #4682B4

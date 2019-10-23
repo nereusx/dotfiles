@@ -65,7 +65,9 @@ mute() {
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
 : ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
 : ${USER:=$(id -un)} ${HOME:="/home/$USER"} ${USERID:=$(id -u)}
-: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
+#: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
+MAIL="/var/mail/$USER"
+MAILCHECK='0'
 _get_distro() {
 	if [ -r /etc/os-release ]; then
 		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
