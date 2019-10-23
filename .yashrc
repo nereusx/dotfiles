@@ -340,6 +340,16 @@ alias git-d='_vcs diff'
 alias git-l='_vcs log'
 
 # tmux
+function completion/tmux {
+	typeset words option desc i IFS=' 	
+'
+	while read -A words; do
+		desc=${words[2,-1]}
+		for option in "${words[1,1]%,}"; do
+			complete -D "$desc" -- "${option}"
+		done
+	done <("${WORDS[1]}" list-commands 2>&1)
+}
 alias tmux-reload='tmux source-file ~/.tmux.conf'
 alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
 
