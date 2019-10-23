@@ -4,6 +4,8 @@
 
 #
 dunst &
+xfce4-clipman &
+#urxvtd -q -f -o
 xfce4-screensaver &
 
 ### network required
