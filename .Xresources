@@ -1,11 +1,11 @@
+!  === /home/nikosc/.xres/urxvt.res: 
 !!	URXVT
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
-!urxvt.iconFile: /usr/share/icons/hicolor/scalable/apps/xterm-color.svg
-urxvt.iconFile: /home/nikosc/.icons/urxvt-icon.png
+urxvt.iconFile: /usr/share/icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
-urxvt.saveLines: 1024
+urxvt.saveLines: 4096
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
@@ -26,6 +26,8 @@ urxvt.secondaryScroll:  true
 !urxvt.boldItalicFont: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
 
 urxvt.font: \
+	xft:XSG Fixed 189:pixelsize=18,\
+	xft:XSG Fixed 188:pixelsize=18,\
 	xft:XSG Fixed 178:pixelsize=17,\
 	xft:XSG Fixed 167:pixelsize=16,\
 	7x14B,7x14, \
@@ -60,9 +62,8 @@ urxvt.reverseVideo: false
 
 ! blackish with transparency
 urxvt.depth: 32
-urxvt.background: rgba:0000/0000/0000/dddd
-!urxvt.background: rgba:0000/0000/0000/cccc
-!urxvt.foreground: white
+!urxvt.background: rgba:0000/0000/0000/dddd
+urxvt.background: rgba:0000/0000/0000/eeee
 
 ! VGA Colors
 !urxvt.color0:   #000000
@@ -124,8 +125,14 @@ urxvt*color15: #FFFFFF
 
 !! shift+down = newtab, shift+left/right = go to prev/next tab, ctrl+left/right=move tab
 !! ctrl+d = close tab
-urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
 
+! with tabs
+!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard,tabbed
+
+! without tabs, for use with tmux
+urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard
+
+!
 URxvt.url-launcher: firefox
 URxvt.matcher.button:  1
 URxvt.colorUL: #4682B4
@@ -151,10 +158,10 @@ URxvt.tabbed.reopen-on-close: yes
 !URxvt.keysym.C-M-v:    builtin-string:
 
 ! Bind Ctrl-Shift-c & Ctrl-Shift-v to copy and paste
-! I dont know why, but I needed to use hex keysym values to get it to work
-URxvt.keysym.C-S-0x43: eval:selection_to_clipboard
-URxvt.keysym.C-S-0x56: eval:paste_clipboard
+URxvt.keysym.C-S-c: eval:selection_to_clipboard
+URxvt.keysym.C-S-v: eval:paste_clipboard
 
+!  === /home/nikosc/.xres/xft.res: 
 !Xft.dpi: 126
 !Xft.dpi: 96
 Xft.antialias: 1
@@ -164,6 +171,7 @@ Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 Xft.autohint: 1
 
+!  === /home/nikosc/.xres/xjed.res: 
 !!	XJED
 
 !xjed*Geometry: 132x30+100+100
@@ -180,6 +188,7 @@ xjed*Geometry: 160x40+100+100
 
 ! XSG 7x16B
 xjed*font: -xsg-xsg fixed 167-*-*-*-*-*-*-*-*-*-*-iso10646-1
+!  === /home/nikosc/.xres/xterm.res: 
 !!	XTERM
 
 XTerm*metaSendsEscape: true

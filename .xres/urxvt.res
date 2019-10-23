@@ -1,7 +1,7 @@
 !!	URXVT
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
-urxvt.iconFile: /home/nikosc/.icons/urxvt-icon.png
+urxvt.iconFile: /usr/share/icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
 urxvt.saveLines: 4096
@@ -126,10 +126,10 @@ urxvt*color15: #FFFFFF
 !! ctrl+d = close tab
 
 ! with tabs
-!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,tabbed
+!urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard,tabbed
 
 ! without tabs, for use with tmux
-urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command
+urxvt.perl-ext-common: default,matcher,-searchable-scrollback,bell-command,selection-to-clipboard
 
 !
 URxvt.url-launcher: firefox
