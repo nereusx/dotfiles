@@ -122,6 +122,8 @@ base-files
 base-system
 bash
 bash-completion
+bash-preexec
+bashlibs
 bc
 bc-gh
 bdf2psf
@@ -151,6 +153,7 @@ bsd-games
 bsdbuild
 btrfs-progs
 bubblewrap
+busybox-static
 bzip2
 bzip2-32bit
 bzip2-devel
@@ -180,6 +183,7 @@ clutter-gst
 clutter-gst3
 clutter-gtk
 cmake
+cmatrix
 codeblocks
 codeblocks-devel
 codelite
@@ -219,6 +223,8 @@ dconf
 dcron
 ddd
 dde-qt-dbus-factory
+deepin-draw
+deepin-picker
 dejavu-fonts-ttf
 desktop-file-utils
 devhelp
@@ -228,6 +234,7 @@ dhcpcd
 dhex
 dia
 dialog
+dialogbox
 dict
 dictd
 diffutils
@@ -247,6 +254,7 @@ double-conversion
 dracut
 dtkcore
 dtkwidget
+dtkwm
 dunst
 e2fsprogs
 e2fsprogs-libs
@@ -263,6 +271,7 @@ enchant
 enchant2
 encodings
 enscript
+es
 espeak
 ethtool
 eudev
@@ -388,6 +397,7 @@ giblib
 giflib
 giflib-devel
 gimp
+gimp-python
 gir-freedesktop
 gist
 git
@@ -409,6 +419,8 @@ glslang
 glu
 glu-devel
 glxinfo
+gmic
+gmic-gimp
 gmp
 gmp-32bit
 gmp-devel
@@ -443,6 +455,7 @@ gparted
 gpgme
 gpgmepp
 gpgmeqt
+grafx2
 grantlee5
 grantleetheme
 graphene
@@ -514,6 +527,10 @@ hunspell
 hunspell-en_US
 hwids
 hyphen
+hyx
+i3-gaps
+i3blocks
+i3lock
 iagno
 iana-etc
 ibus
@@ -634,7 +651,6 @@ kitemviews
 kitty-terminfo
 kjobwidgets
 kjs
-kjsembed
 kldap
 kmediaplayer
 kmenuedit
@@ -663,6 +679,7 @@ krunner
 krusader
 kscreenlocker
 kservice
+ksh
 ksolid
 ksysguard
 ksystemlog
@@ -1057,7 +1074,9 @@ libogg-devel
 libokular
 libopenal
 libopenal-32bit
+libopencv
 libopenexr
+libopenjpeg
 libopenjpeg2
 libopenraw
 libopts
@@ -1255,6 +1274,7 @@ libxcb
 libxcb-32bit
 libxcb-devel
 libxdg-basedir
+libxfce4panel
 libxfce4ui
 libxfce4ui-devel
 libxfce4util
@@ -1297,9 +1317,11 @@ linux5.2
 linux5.2-headers
 live555
 lldb
+llhttp
 lm_sensors
 lmdb
 lnav
+loksh
 lolcat-c
 lrzsz
 lshw
@@ -1332,6 +1354,7 @@ mesa-ati-dri
 mesa-intel-dri
 mesa-nouveau-dri
 mesa-vmwgfx-dri
+meson
 metalog
 milou
 mime-types
@@ -1354,10 +1377,12 @@ ms-sys
 msmtp
 mtdev
 mtdev-devel
+mtpaint
 mtpfs
 muparser
 mutt
 mxml
+mypaint
 mypaint-brushes1
 mythes
 nano
@@ -1382,8 +1407,10 @@ newsboat
 newt
 nghttp2
 ngspice
+ninja
 nm-tray
 nmap
+nodejs
 notify-osd
 noto-fonts-ttf
 npth
@@ -1458,11 +1485,15 @@ pcre-devel
 pdmenu
 perl
 perl-Algorithm-Diff
+perl-AnyEvent
+perl-AnyEvent-I3
 perl-Authen-SASL
 perl-CGI
 perl-Canary-Stability
+perl-Clipboard
 perl-Convert-BinHex
 perl-Curses
+perl-Data-Dump
 perl-Data-OptList
 perl-Devel-Caller
 perl-Devel-CheckLib
@@ -1495,6 +1526,7 @@ perl-IO-Socket-Socks
 perl-IO-Tty
 perl-IO-stringy
 perl-Importer
+perl-JSON
 perl-JSON-MaybeXS
 perl-JSON-XS
 perl-LWP
@@ -1761,10 +1793,12 @@ qtcurve
 quadrapassel
 quazip
 rawtherapee
+rc
 rclone
 readline-devel
 recode
 rest
+resynthesizer
 retro-gtk
 retroarch
 rex
@@ -1806,6 +1840,7 @@ slmenu
 smartmontools
 smbclient
 smbnetfs
+smenu
 smpeg
 smpeg2
 smpeg2-devel
@@ -1835,6 +1870,7 @@ startup-notification
 startup-notification-devel
 stfl
 strace
+stremio-shell
 sudo
 surfraw
 sv-helper
@@ -1856,6 +1892,8 @@ texlive-bin
 texlive2019-bin
 texstudio
 threadweaver
+thunar-archive-plugin
+thunar-media-tags-plugin
 thunar-volman
 thunderbird
 thunderbird-i18n-el
@@ -1923,6 +1961,7 @@ wcalc
 webkit2gtk
 webrtc-audio-processing
 weechat
+weechat-aspell
 wendy
 wget
 which
@@ -1946,6 +1985,7 @@ x264-32bit
 x265
 x265-32bit
 x86info
+xaos
 xapps
 xapps-devel
 xauth
@@ -1964,6 +2004,7 @@ xcb-util-renderutil
 xcb-util-renderutil-devel
 xcb-util-wm
 xcb-util-wm-devel
+xcb-util-xrm
 xclip
 xclipboard
 xclock
@@ -2072,6 +2113,7 @@ xprop
 xrandr
 xrdb
 xrefresh
+xsel
 xset
 xsetroot
 xsettingsd
@@ -2089,7 +2131,10 @@ xxd
 xz
 yabasic
 yajl
+yank
+yash
 youtube-dl
+youtube-viewer
 zd1211-firmware
 zenity
 zenmap
@@ -2099,6 +2144,5 @@ zlib
 zlib-32bit
 zlib-devel
 zmap
-zsh
 zutils
 zziplib
