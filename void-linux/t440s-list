@@ -54,6 +54,7 @@ attica
 attr
 audacious
 audacity
+auto-auto-complete
 autoconf
 automake
 avahi
@@ -70,6 +71,7 @@ base-devel
 base-files
 base-system
 bash
+bash-completion
 bc
 bdftopcf
 binutils
@@ -81,6 +83,7 @@ bogofilter
 brotli
 btrfs-progs
 bubblewrap
+busybox-static
 bzip2
 bzip2-32bit
 bzip2-devel
@@ -103,6 +106,7 @@ clutter
 clutter-gst
 clutter-gst3
 clutter-gtk
+cmatrix
 cogl
 composer
 conky
@@ -110,6 +114,7 @@ coreutils
 cpio
 cryptsetup
 curl
+cvs
 cyrus-sasl
 cyrus-sasl-modules
 dash
@@ -150,6 +155,7 @@ emacs
 emacs-common
 enchant
 enchant2
+es
 espeak
 ethtool
 eudev
@@ -176,6 +182,7 @@ filezilla
 findutils
 firefox
 firefox-i18n-el
+fish-shell
 five-or-more
 flatpak
 flex
@@ -323,6 +330,7 @@ gzip
 harfbuzz
 hd-idle
 hdparm
+heirloom-sh
 hex
 hexchat
 hicolor-icon-theme
@@ -422,6 +430,7 @@ kparts
 kpty
 krita
 kservice
+ksh
 ktexteditor
 ktextwidgets
 kwallet
@@ -700,6 +709,7 @@ libmagick
 libmagick6
 libmanette
 libmatroska
+libmcpp
 libmicrodns
 libmicrohttpd
 libmikmod
@@ -853,6 +863,7 @@ libusbmuxd
 libuuid
 libuuid-32bit
 libuuid-devel
+libuv
 libva
 libva-32bit
 libva-intel-driver
@@ -890,6 +901,7 @@ libxcb
 libxcb-32bit
 libxcb-devel
 libxdg-basedir
+libxfce4panel
 libxfce4ui
 libxfce4util
 libxkbcommon
@@ -927,8 +939,10 @@ linux-headers
 linux5.2
 linux5.2-headers
 live555
+llhttp
 lm_sensors
 lnav
+loksh
 lrzsz
 lua
 lua52
@@ -946,6 +960,7 @@ man-pages-posix
 mariadb
 mariadb-client
 mc
+mcpp
 mdadm
 mdocml
 meld
@@ -969,6 +984,7 @@ mplayer
 mpv
 msmtp
 mtdev
+munge-libs
 musescore
 mutt
 mxml
@@ -991,6 +1007,7 @@ newsboat
 newt
 nghttp2
 ngspice
+nodejs
 noto-fonts-ttf
 npth
 nspr
@@ -1138,6 +1155,7 @@ qt5-plugin-pgsql
 qt5-plugin-sqlite
 qt5-plugin-tds
 qt5-quickcontrols
+qt5-quickcontrols2
 qt5-script
 qt5-serialport
 qt5-speech
@@ -1154,6 +1172,7 @@ qtchooser
 quadrapassel
 quazip
 rawtherapee
+rc
 rclone
 recode
 rest
@@ -1164,6 +1183,8 @@ rtkit
 run-parts
 runit
 runit-void
+rxvt-unicode
+rxvt-unicode-terminfo
 samba
 sbc
 sc
@@ -1172,6 +1193,7 @@ setxkbmap
 shaderc
 shadow
 shared-mime-info
+sharutils
 slang
 slang-devel
 smartmontools
@@ -1194,10 +1216,12 @@ sratom
 startup-notification
 stfl
 strace
+stremio-shell
 sudo
 sv-helper
 swell-foop
 syntax-highlighting
+tab
 taglib
 tali
 talloc
@@ -1272,6 +1296,7 @@ wcalc
 webkit2gtk
 webrtc-audio-processing
 weechat
+weechat-aspell
 wget
 which
 wifi-firmware
@@ -1303,6 +1328,7 @@ xcb-util-renderutil
 xcb-util-renderutil-devel
 xcb-util-wm
 xcb-util-wm-devel
+xclip
 xdg-dbus-proxy
 xdg-user-dirs
 xdg-user-dirs-gtk
@@ -1376,6 +1402,8 @@ xorg-server
 xorg-server-devel
 xorg-video-drivers
 xorgproto
+xrdb
+xsel
 xsettingsd
 xtools
 xtrans
@@ -1384,6 +1412,7 @@ xvidcore-32bit
 xxd
 xz
 yabasic
+yash
 zd1211-firmware
 zip
 zlib
