@@ -322,7 +322,14 @@ getfilename() {	echo ${1##*/}; }
 getdirname()  { local fn; fn=${1##*/}; echo ${1%"$fn"}; }
 getbasename() {	local fn; fn=${1##*/}; echo ${fn%.*}; }
 getfileext()  { local fn, bn; fn=${1##*/}; bn=${fn%.*}; echo ${fn#"$bn"}; }
-urxvtchangefont() {	printf '\33]50;%s\007' "xft:$1,9x15bold"; }
+_urxvtchangefont() {	printf '\33]50;%s\007' "xft:$1,9x15bold"; }
+alias urxvt-setfont='_urxvtchangefont'
+amionline()   {
+	local offline
+	offline=1
+	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
+	return $offline;
+}
 
 # calc
 _bc() {
