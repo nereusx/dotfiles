@@ -95,7 +95,8 @@ endif
 #
 #	setup tcsh's environment
 #
-unset autorehash
+#unset autorehash
+set autorehash
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -481,8 +482,5 @@ foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
-
-# last changes
-set autorehash
 
 #EOF
