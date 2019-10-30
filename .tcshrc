@@ -95,7 +95,7 @@ endif
 #
 #	setup tcsh's environment
 #
-unset autorehash
+set autorehash
 set autolist
 set highlight
 set mail = ( /var/mail/$user )
@@ -291,7 +291,11 @@ endif
 #
 unset ampm
 set ellipsis
-set prompt = "%B%{\033[35m%}%T %{\033[32m%}%n@%m%b %C4 %# "
+set uc=32; if ( $USER == "root" ) set uc=31
+set hc=32; if ( $?SSH_CONNECTION ) set hc=35
+
+#set prompt = "%{\033[1;35m%}%T "
+set prompt = "%{\033[1;${uc}m%}%n%{\033[0m%}@%{\033[1;${hc}m%}%m%{\033[0m%} %{\033[1;34m%}%C4%{\033[0m%} %# "
 
 ###	history
 set histlit
@@ -456,8 +460,8 @@ else
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
 if ( -X youtube-dl ) then
-	alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
-	alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+	alias yt-get-audio 'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
+	alias yt-get-plist 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
 endif
 
 ### directory stuff
@@ -483,6 +487,6 @@ end
 unset nonomatch
 
 # last changes
-set autorehash
+#set autorehash
 
 #EOF
