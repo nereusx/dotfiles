@@ -40,6 +40,7 @@ for o in $*; do
 	if [ "$o" = "--version" ]; then todo="vers"; shift; break; fi
 done
 
+# get options
 while getopts "edLEDprhvrsl" arg; do
 	case $arg in
 	e) todo="enable";;
