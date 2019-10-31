@@ -1,0 +1,4 @@
+#!/bin/sh
+TAG=`basename $0`
+fstrim -v / | logger -t $TAG
+fstrim -v /mnt/home | logger -t $TAG
