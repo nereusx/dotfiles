@@ -5,6 +5,7 @@ FAudio
 FAudio-32bit
 ImageMagick6
 LibreCAD
+LuaJIT
 MesaLib-devel
 ModemManager-devel
 NetworkManager
@@ -124,13 +125,13 @@ bash
 bash-completion
 bash-preexec
 bashlibs
+bat
 bc
 bc-gh
 bdf2psf
 bdftopcf
 beard
 beep
-biew
 binutils
 binutils-doc
 bison
@@ -153,6 +154,7 @@ bsd-games
 bsdbuild
 btrfs-progs
 bubblewrap
+bullet
 busybox-static
 bzip2
 bzip2-32bit
@@ -237,6 +239,7 @@ dialog
 dialogbox
 dict
 dictd
+diction
 diffutils
 discount
 dkms
@@ -263,6 +266,7 @@ ed
 efibootmgr
 efitools
 efivar
+efl
 elfutils-devel
 elinks
 emacs-common
@@ -270,6 +274,7 @@ emacs-gtk3
 enchant
 enchant2
 encodings
+enlightenment
 enscript
 es
 espeak
@@ -327,6 +332,7 @@ font-cursor-misc
 font-daewoo-misc
 font-dec-misc
 font-fantasque-sans-ttf
+font-firacode
 font-hack-ttf
 font-ibm-type1
 font-isas-misc
@@ -464,6 +470,7 @@ graphite-devel
 grep
 greybird-themes
 grilo
+grml-zsh-config
 groff
 grub
 grub-x86_64-efi
@@ -519,7 +526,9 @@ hexchat
 hicolor-icon-theme
 hidapi
 hidapi-devel
+highlight
 hitori
+ht
 htop
 http-parser
 hub
@@ -859,8 +868,8 @@ libcurl
 libdaemon
 libdatrie
 libdatrie-devel
-libdav1d1
-libdav1d1-32bit
+libdav1d3
+libdav1d3-32bit
 libdaxctl
 libdb
 libdbus-c++
@@ -1184,6 +1193,7 @@ libsndio-32bit
 libsord
 libsoup
 libsoup-gnome
+libsource-highlight
 libsoxr
 libsoxr-32bit
 libspectre
@@ -1315,6 +1325,8 @@ linux-firmware-nvidia
 linux-headers
 linux5.2
 linux5.2-headers
+linux5.3
+linux5.3-headers
 live555
 lldb
 llhttp
@@ -1618,6 +1630,7 @@ php-sqlite
 pidgin
 pimcommon
 pinentry
+pinfo
 pioneer
 pioneer-data
 pixman
@@ -1805,6 +1818,7 @@ rex
 rhash
 ripgrep
 ristretto
+rlottie
 rsync
 rtkit
 ruby
@@ -1851,6 +1865,7 @@ snooze
 sonnet
 sound-theme-freedesktop
 soundtouch
+source-highlight
 sox
 spandsp
 spectacle
@@ -1877,6 +1892,7 @@ sv-helper
 swell-foop
 swh-plugins
 syntax-highlighting
+sysstat
 system-config-printer
 systemsettings
 taglib
@@ -1887,6 +1903,8 @@ tar
 tcpdump
 tcsh
 terminus-font
+texi2html
+texi2mdoc
 texinfo
 texlive-bin
 texlive2019-bin
@@ -1902,6 +1920,7 @@ tiff-32bit
 tiff-devel
 tinyxml
 tmux
+tmux-mem-cpu-load
 totem-pl-parser
 traceroute
 transmission
@@ -2005,6 +2024,7 @@ xcb-util-renderutil-devel
 xcb-util-wm
 xcb-util-wm-devel
 xcb-util-xrm
+xchm
 xclip
 xclipboard
 xclock
@@ -2105,6 +2125,7 @@ xorg-fonts
 xorg-input-drivers
 xorg-server
 xorg-server-devel
+xorg-server-xwayland
 xorg-video-drivers
 xorgproto
 xorriso
@@ -2144,5 +2165,8 @@ zlib
 zlib-32bit
 zlib-devel
 zmap
+zsh
+zsh-completions
+zsh-syntax-highlighting
 zutils
 zziplib
