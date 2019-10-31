@@ -337,6 +337,7 @@ _amionline()   {
 	return $offline;
 }
 alias amionline='[ _amionline ] && echo "\033[1;32mOnline\033[0m" || echo "\033[1;31mOffline\033[0m"'
+alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
 
 # calc
 _bc() {
