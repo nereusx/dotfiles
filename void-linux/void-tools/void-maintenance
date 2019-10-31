@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-#	Package and service manager for Void Linux
-#
 #	Copyright (C) 2019, Nicholas Christopoulos <nereus@freemail.gr>
 #
 #	This program is free software; you can redistribute it and/or modify it
@@ -10,13 +8,8 @@
 #	any later version.
 #
 
-msghelp="
-Package and service manager for Void Linux\n\
-\n\
-\t-u | upgrade\t\tupdate package list and upgrade all installed packages\n\
-\t-o | autoremove\t\tremove obsolete packages\n\
-\t-rc | reconfigure ...\n\
-\t-k\t\t\tremove old kernels\n\
+msghelp="\
+System maintenance for Void Linux\n\
 "
 
 msgvers="\
@@ -27,36 +20,30 @@ This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law."
 
 ###
-todo=help
-if [ $# -gt 0 ]; then todo="$1"; shift; fi
+title="\033[1;32m"
+rst="\033[0m"
 
-case $todo in
--u|update|upgrade)
-	xbps-install -Su
-	echo "update xlocate database"
-	xlocate -S
-	;;
+for o in $*; do
+	if [ $o = "-h" -o $o = "--help" ]; then echo $msghelp; exit 1; fi
+	if [ $o = "-v" -o $o = "--version" ]; then echo $msgvers; exit 1; fi
+done
 
--o|autoremove)
-	xbps-remove -Oo
-	;;
-
--rc|reconfigure)
-	xbps-reconfigure -f $*
-	;;
-
--k|-rok)
-	vkpurge rm all
-	;;
-
--v|--version)	
-	echo $msgvers
-	exit 1
-	;;
-
--h|--help|help|*)
-	echo $msghelp
-	exit 1
-	;;
-
-esac
+###
+echo "${title}VOID LINUX, SYSTEM MAINTENANCE"
+echo 
+echo "${title}1. Upgrade packages${rst}"
+xbps-install -Suy
+echo 
+echo "${title}2. Update xlocate database${rst}"
+xlocate -S
+echo 
+echo "${title}3. Remove obsolete packages${rst}"
+xbps-remove -Oo
+echo 
+echo "${title}4. Remove old kernels${rst}"
+vkpurge rm all
+echo 
+echo "${title}5. Update locate's db${rst}"
+updatedb
+echo 
+echo "${title}* done *${rst}"
