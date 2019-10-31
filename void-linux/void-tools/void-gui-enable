@@ -24,4 +24,13 @@ _vers() { echo $msgvers; exit 1; }
 if [ "$1" = "-h" -o "$1" = "--help" ]; then _help; fi
 if [ "$1" = "-v" -o "$1" = "--version" ]; then _vers; fi
 
-void-service -e dbus cgmanager polkitd lightdm
+dmlst="lightdm sddm gdm xdm nodm cdm"
+curdm="lightdm"
+for x in $dmlst; do
+	if [ -e /usr/bin/$x ]; then
+		curdm="$x"
+		break
+	fi
+done
+
+void-service -e dbus cgmanager polkitd $curdm
