@@ -33,13 +33,25 @@ cnt=0
 echo "${title}VOID LINUX, SYSTEM MAINTENANCE"
 echo 
 
-cnt=$((cnt+1))
-echo "${title}${cnt}. Upgrade packages${rst}"
-xbps-install -Suy
+echo -n "Network: "
+online=0
+if ping -w 1 -c 1 1.1.1.1 2>&1 > /dev/null; then
+	online=1
+	echo "online"
+else
+	echo "offline"
+fi
+echo
 
-cnt=$((cnt+1))
-echo "${title}${cnt}. Update xlocate database${rst}"
-xlocate -S
+if [ $online -eq 1 ]; then
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. Upgrade packages${rst}"
+	xbps-install -Suy
+
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. Update xlocate database${rst}"
+	xlocate -S
+fi
 
 cnt=$((cnt+1))
 echo "${title}${cnt}. Remove obsolete packages${rst}"
@@ -54,12 +66,20 @@ echo "${title}${cnt}. Update locate's db${rst}"
 updatedb
 
 cnt=$((cnt+1))
-echo "${title}${cnt}. Update MAN db${rst}"
+echo "${title}${cnt}. Update MAN's db${rst}"
 makewhatis -a -Tutf8
 
 cnt=$((cnt+1))
 echo "${title}${cnt}. Trim SSD${rst}"
-fstrim -v /
+fstrim -v -a
+
+if [ $online -eq 1 ]; then
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. Update clock${rst}"
+	server=3.gr.pool.ntp.org
+	ntpdate -s $server
+fi
+hwclock --systohc
 
 echo "${title}* done *${rst}"
 
