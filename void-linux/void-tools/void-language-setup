@@ -17,7 +17,7 @@ There is NO WARRANTY, to the extent permitted by law."
 #	exit 1
 #fi
 
-langcode="el_GR.UTF-8"
+langcode="$LANG"
 force=0
 for o in $*; do
 	if [ $o = "-f" -o $o = "--force" ]; then
