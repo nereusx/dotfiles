@@ -1,13 +1,17 @@
 #!/bin/sh
 
 msghelp="\
-Usage: void-service [-p] [-e|-d|-l] [service ...]\n\n\
+Usage: void-service [-p] [-l|-E|-D] [-e|-d|-r [service ...]]\n\n\
+\t-h\tPrint this screen\n\
+\t-v\tPrint version information\n\n\
 \t-e\tEnable service\n\
 \t-d\tDisable service\n\
-\t-l\tPrint list of services\n\
+\t-r\tRestart service\n\
+\t-L\tPrint list of services\n\
 \t-E\tPrint enabled services only\n\
 \t-D\tPrint disabled services only\n\
 \t-p\tUse plain text only\n\
+\t-s\tStatus of service\n\
 \n\
 Void Linux services managment (runit)."
 
@@ -25,17 +29,20 @@ gre="\033[1;32m"
 yel="\033[1;33m"
 rst="\033[0m"
 
-list_enabled=0
+list_enabled=1
 list_disabled=0
 plain=0
 todo="list"
-while getopts "edlEDphv" arg; do
+while getopts "edLEDprhvrsl" arg; do
 	case $arg in
 	e) todo="enable";;
 	d) todo="disable";;
-	E) todo="list"; list_enabled=1;;
-	D) todo="list"; list_disabled=1;;
-	l) todo="list";;
+	r) todo="restart";;
+	l) todo="reload";;
+	s) todo="status";;
+	E) todo="list"; list_disabled=0; list_enabled=1 ;;
+	D) todo="list"; list_disabled=1; list_enabled=0 ;;
+	L) todo="list"; list_disabled=0; list_enabled=0 ;;
 	p) plain=1;;
 	h) todo="help";;
 	v) todo="vers";;
@@ -55,7 +62,8 @@ list)
 					echo "$s"
 				else
 					echo -n "+ ${gre}enabled  ${yel}$s${rst}"
-					echo "\t\033[50G(PID "$(pgrep -f "runsv $s")")"
+#					echo "\t\033[50G(PID "$(pgrep -f "runsv $s")")"
+					echo "\t\033[50G("$(sv status $s)")"
 				fi
 			fi
 		else
@@ -127,6 +135,24 @@ disable)
 				exit 1
 			fi
 		fi
+	done
+	;;
+
+status)
+	for s in $*; do
+		sv status $s
+	done
+	;;
+	
+restart)
+	for s in $*; do
+		sv restart $s
+	done
+	;;
+
+reload)
+	for s in $*; do
+		sv reload $s
 	done
 	;;
 
