@@ -95,7 +95,6 @@ endif
 #
 #	setup tcsh's environment
 #
-#unset autorehash
 set autorehash
 set autolist
 set highlight
@@ -390,10 +389,13 @@ endif
 
 # xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
-alias setxhost		"echo -n '''\033]0;※$HOSTNAME:au\007'''"
-if ( $?REMOTEHOST ) then
-	setxhost
-endif
+alias setxhost		"echo -n '''\033]0;$LOGNAME@$HOSTNAME:au\007'''"
+#if ( $?REMOTEHOST ) then
+#	setxhost
+#endif
+#if ( $?SSH_CONNECTION ) then
+#	alias postcmd setxhost
+#endif
 
 #
 if ( $DISTRO == "void" ) then
@@ -467,7 +469,7 @@ set dunique
 set pushdsilent
 alias pd 'pushd'
 alias pd. 'pushd $PWD'
-if ( -e /usr/bin/devtodo ) then
+if ( -X devtodo ) then
 	alias cwdcmd devtodo --timeout --summary
 endif
 # use always pushd instead of cd
@@ -482,5 +484,8 @@ foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
+
+# last changes
+#set autorehash
 
 #EOF

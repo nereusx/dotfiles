@@ -378,6 +378,16 @@ function completion/tmux {
 alias tmux-reload='tmux source-file ~/.tmux.conf'
 alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
 
+# youtube-dl
+alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
+alias yt-get-plist='youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" "$*"'
+
+# devtodo
+_show_todo() { devtodo --timeout --summary; }
+if [ -x /usr/bin/devtodo -o -x /usr/local/bin/devtodo ]; then
+	YASH_AFTER_CD=("$YASH_AFTER_CD" '_show_todo')
+fi
+
 #
 #	welcome screen
 #
