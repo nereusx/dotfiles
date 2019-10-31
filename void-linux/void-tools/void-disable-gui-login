@@ -1,0 +1,2 @@
+#!/bin/sh
+void-disable-service dbus cgmanager polkitd lightdm
