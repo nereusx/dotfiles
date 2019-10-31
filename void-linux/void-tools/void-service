@@ -33,6 +33,13 @@ list_enabled=1
 list_disabled=0
 plain=0
 todo="list"
+
+# special case long-format
+for o in $*; do
+	if [ "$o" = "--help" ]; then todo="help"; shift; break;	fi
+	if [ "$o" = "--version" ]; then todo="vers"; shift; break; fi
+done
+
 while getopts "edLEDprhvrsl" arg; do
 	case $arg in
 	e) todo="enable";;
