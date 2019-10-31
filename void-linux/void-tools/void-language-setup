@@ -1,0 +1,57 @@
+#!/bin/sh
+
+msghelp="\
+Usage: void-language-setup lang\n\n\
+Setups language. The <lang> must be \"en_US.UTF-8\" for American English with UTF8."
+
+#
+msgvers="\
+void-linux-utils version 1.0\n\n\
+Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law."
+
+#if [ $# -eq 0 ]; then
+#	echo $msghelp
+#	exit 1
+#fi
+
+langcode="el_GR.UTF-8"
+force=0
+for o in $*; do
+	if [ $o = "-f" -o $o = "--force" ]; then
+		force=1
+	elif [ $o = "-h" -o $o = "--help" ]; then
+		echo $msghelp
+		exit 1
+	elif [ $o = "-v" -o $o = "--version" ]; then
+		echo $msgvers
+		exit 1
+	else
+		langcode=$o
+	fi
+done
+
+if [ grep $langcode /etc/environment ]; then
+	echo "language is installed"
+	if [ $force -eq 0 ]; then
+		echo "use -f to force update"
+		exit 0
+	fi
+else
+	if [ grep '^LANG=' /etc/environment ]; then
+		sed -i 's/^LANG=.*/LANG=$langcode/g' /etc/environment
+	else
+		echo "LANG=$langcode" >> /etc/environment
+	fi
+fi
+
+echo "LANG=$langcode" > /etc/locale.conf
+echo "LC_COLLATE=C" >> /etc/locale.conf
+
+sed -i 's/\#$langcode/$langcode/g' /etc/default/libc-locales
+sed -i 's/\#en_US.UTF-8/en_US.UTF-8/g' /etc/default/libc-locales
+
+xbps-reconfigure -f glibc-locales
+
