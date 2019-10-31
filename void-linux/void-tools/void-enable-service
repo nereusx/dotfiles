@@ -1,0 +1,43 @@
+#!/bin/sh
+
+msghelp="\
+Usage: void-enable-service service ...\n\n\
+This command enables a service (runit's service).\n\
+Use \`void-list-services' to get the list of available services."
+
+#
+msgvers="\
+void-linux-utils version 1.0\n\n\
+Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law."
+
+#
+red="\033[1;31m"
+gre="\033[1;32m"
+yel="\033[1;33m"
+rst="\033[0m"
+
+_help() { echo $msghelp; exit 1; }
+_vers() { echo $msgvers; exit 1; }
+if [ $# -eq 0 ]; then _help; fi
+if [ "$1" = "-h" -o "$1" = "--help" ]; then _help; fi
+if [ "$1" = "-v" -o "$1" = "--version" ]; then _vers; fi
+
+#
+for s in $*; do
+	if [ -d /etc/sv/$s ]; then
+		if [ -e /var/service/$s ]; then
+			echo "+++ ${gre}service ${yel}\`$s' ${gre}is already enabled${rst}"
+		else
+			ln -svf /etc/sv/$s /var/service/$s
+			echo "+++ ${gre}service ${yel}\`$s' ${gre}enabled${rst}"
+		fi
+	else
+		echo "--- ${red}service ${yel}\`$s' ${red}does not exist${rst}"
+		echo "\tMore: ([/etc/sv/$s] not a directory)"
+		exit 1
+	fi
+done
+
