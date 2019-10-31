@@ -31,7 +31,7 @@ for s in $*; do
 		if [ -e /var/service/$s ]; then
 			echo "+++ ${gre}service ${yel}\`$s' ${gre}is already enabled${rst}"
 		else
-			ln -svf /etc/sv/$s /var/service/$s
+			ln -svf /etc/sv/$s /var/service/$s 2>&1 > /dev/null
 			echo "+++ ${gre}service ${yel}\`$s' ${gre}enabled${rst}"
 		fi
 	else

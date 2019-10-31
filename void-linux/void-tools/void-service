@@ -1,0 +1,142 @@
+#!/bin/sh
+
+msghelp="\
+Usage: void-service [-p] [-e|-d|-l] [service ...]\n\n\
+\t-e\tEnable service\n\
+\t-d\tDisable service\n\
+\t-l\tPrint list of services\n\
+\t-E\tPrint enabled services only\n\
+\t-D\tPrint disabled services only\n\
+\t-p\tUse plain text only\n\
+\n\
+Void Linux services managment (runit)."
+
+#
+msgvers="\
+void-libux-utils version 1.0\n\n\
+Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law."
+
+#
+red="\033[1;31m"
+gre="\033[1;32m"
+yel="\033[1;33m"
+rst="\033[0m"
+
+list_enabled=0
+list_disabled=0
+plain=0
+todo="list"
+while getopts "edlEDphv" arg; do
+	case $arg in
+	e) todo="enable";;
+	d) todo="disable";;
+	E) todo="list"; list_enabled=1;;
+	D) todo="list"; list_disabled=1;;
+	l) todo="list";;
+	p) plain=1;;
+	h) todo="help";;
+	v) todo="vers";;
+	?) exit 1;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+case $todo in
+list)
+	# list of services
+	for f in /etc/sv/*; do
+		s=${f##*/}
+		if [ -e /var/service/$s ]; then
+			if [ $list_disabled -eq 0 ]; then
+				if [ $plain -eq 1 ]; then
+					echo "$s"
+				else
+					echo -n "+ ${gre}enabled  ${yel}$s${rst}"
+					echo "\t\033[50G(PID "$(pgrep -f "runsv $s")")"
+				fi
+			fi
+		else
+			if [ $list_enabled -eq 0 ]; then
+				if [ $plain -eq 1 ]; then
+					echo "$s"
+				else
+					echo "- ${red}disabled ${yel}$s${rst}"
+				fi
+			fi
+		fi
+	done
+	;;
+
+enable)
+	# enable services
+	for s in $*; do
+		if [ -d /etc/sv/$s ]; then
+			if [ -e /var/service/$s ]; then
+				if [ $plain -eq 1 ]; then
+					echo "$s is already enabled"
+				else
+					echo "+++ ${gre}service ${yel}\`$s' ${gre}is already enabled${rst}"
+				fi
+			else
+				ln -svf /etc/sv/$s /var/service/$s 2>&1 > /dev/null
+				if [ $plain -eq 1 ]; then
+					echo "$s enabled"
+				else
+					echo "+++ ${gre}service ${yel}\`$s' ${gre}enabled${rst}"
+				fi
+			fi
+		else
+			if [ $plain -eq 1 ]; then
+				echo "$s does not exist"
+			else
+				echo "--- ${red}service ${yel}\`$s' ${red}does not exist${rst}"
+				echo "\tMore: ([/etc/sv/$s] not a directory)"
+			fi
+			exit 1
+		fi
+	done
+	;;
+
+disable)
+	# disable services
+	for s in $*; do
+		if [ -e /var/service/$s ]; then
+			rm /var/service/$s
+			if [ $plain -eq 1 ]; then
+				echo "$s disabled"
+			else
+				echo "+++ ${gre}service ${yel}\`$s' ${gre}disabled${rst}"
+			fi
+		else
+			if [ -d /etc/sv/$s ]; then
+				if [ $plain -eq 1 ]; then
+					echo "$s its already disabled"
+				else
+					echo "+++ ${gre}service ${yel}\`$s' ${gre}its already disabled${rst}"
+				fi
+			else
+				if [ $plain -eq 1 ]; then
+					echo "$s does not exist"
+				else
+					echo "--- ${red}service ${yel}\`$s' ${red}does not exist${rst}"
+					echo "\tMore: ([/var/service/$s] not a directory)"
+				fi
+				exit 1
+			fi
+		fi
+	done
+	;;
+
+help)
+	echo $msghelp
+	exit 1
+	;;
+
+vers)
+	echo $msgvers
+	exit 1
+	;;
+esac
