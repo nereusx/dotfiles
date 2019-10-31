@@ -69,9 +69,12 @@ list)
 				if [ $plain -eq 1 ]; then
 					echo "$s"
 				else
-					echo -n "+ ${gre}enabled  ${yel}$s${rst}"
-#					echo "\t\033[50G(PID "$(pgrep -f "runsv $s")")"
-					echo "\t\033[50G("$(sv status $s)")"
+					msg=$(sv status $s)
+					if [ -n "${msg%down*}" ]; then
+						echo "+ ${gre}enabled  ${yel}$s${rst}\t\033[40G$msg"
+					else
+						echo "~ ${yel}enabled  ${red}$s\t\033[40G$msg$rst"
+					fi
 				fi
 			fi
 		else
