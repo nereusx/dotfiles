@@ -19,7 +19,7 @@ Packages:\n\
 \t-u  | update ...\t\tupdate package list and upgrade all installed packages\n\
 \treinstall ...\t\treinstall package[s]\n\
 \t-s  | search <pattern>\tsearch for packages by matching package-name\n\
-\t-v  | show | info | view ...\tdisplay information about package[s]\n\
+\t-w  | show | info | view ...\tdisplay information about package[s]\n\
 \t-f  | file-search ...\tsearch file in packages\n\
 \t-a[f|i] pattern\t\tfind all pacakges [f] = and format for xargs, [i] = and install\n\
 \n\
@@ -68,7 +68,7 @@ reinstall)
 #
 #	advanced package utilities
 #
--v|info|show|view)	xbps-query -R -S $*	;;
+-w|info|show|view)	xbps-query -R -S $*	;;
 -s|search)			xbps-query -Rs "$*"	;;
 -rs|regex-search)	xbps-query --regex -Rs "$*";;
 -f|-fs|file-search)
