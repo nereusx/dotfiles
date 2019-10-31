@@ -1,8 +1,8 @@
 #!/bin/sh
 
 msghelp="\
-Usage: void-enable-gui-login\n\n\
-Enabled GUI login kit; otherwise it starts from console."
+Usage: void-gui-disable\n\n\
+Disables GUI login kit, next time it will starts from console."
 
 #
 msgvers="\
@@ -24,4 +24,4 @@ _vers() { echo $msgvers; exit 1; }
 if [ "$1" = "-h" -o "$1" = "--help" ]; then _help; fi
 if [ "$1" = "-v" -o "$1" = "--version" ]; then _vers; fi
 
-void-enable-service dbus cgmanager polkitd lightdm
+void-service -d dbus cgmanager polkitd lightdm

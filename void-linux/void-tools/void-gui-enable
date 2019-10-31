@@ -1,12 +1,12 @@
 #!/bin/sh
 
 msghelp="\
-Usage: void-list-running-services\n\n\
-Prints all services which runs now."
+Usage: void-gui-enable\n\n\
+Enabled GUI login kit; otherwise it starts from console."
 
 #
 msgvers="\
-void-libux-utils version 1.0\n\n\
+void-linux-utils version 1.0\n\n\
 Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
 This is free software: you are free to change and redistribute it.\n\
@@ -21,12 +21,7 @@ rst="\033[0m"
 _help() { echo $msghelp; exit 1; }
 _vers() { echo $msgvers; exit 1; }
 #if [ $# -eq 0 ]; then _help; fi
+if [ "$1" = "-h" -o "$1" = "--help" ]; then _help; fi
+if [ "$1" = "-v" -o "$1" = "--version" ]; then _vers; fi
 
-for o in $*; do
-	if [ "$o" = "-h" -o "$o" = "--help" ]; then _help; fi
-	if [ "$o" = "-v" -o "$o" = "--version" ]; then _vers; fi
-done
-
-#
-#pgrep -a runsv
-ps aux | grep runsv | grep -v grep
+void-service -e dbus cgmanager polkitd lightdm
