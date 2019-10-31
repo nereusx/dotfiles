@@ -22,6 +22,7 @@ There is NO WARRANTY, to the extent permitted by law."
 ###
 title="\033[1;32m"
 rst="\033[0m"
+iptest=1.1.1.1
 
 for o in $*; do
 	if [ $o = "-h" -o $o = "--help" ]; then echo $msghelp; exit 1; fi
@@ -35,7 +36,7 @@ echo
 
 echo -n "Network: "
 online=0
-if ping -w 1 -c 1 1.1.1.1 2>&1 > /dev/null; then
+if ping -w 1 -c 1 $iptest 2>&1 > /dev/null; then
 	online=1
 	echo "online"
 else
@@ -43,6 +44,7 @@ else
 fi
 echo
 
+# update system
 if [ $online -eq 1 ]; then
 	cnt=$((cnt+1))
 	echo "${title}${cnt}. Upgrade packages${rst}"
@@ -53,26 +55,32 @@ if [ $online -eq 1 ]; then
 	xlocate -S
 fi
 
+# remove old packages
 cnt=$((cnt+1))
 echo "${title}${cnt}. Remove obsolete packages${rst}"
-xbps-remove -Oo
+xbps-remove -Oo -y
 
+# remove old kernels
 cnt=$((cnt+1))
 echo "${title}${cnt}. Remove old kernels${rst}"
 vkpurge rm all
 
+# locate
 cnt=$((cnt+1))
 echo "${title}${cnt}. Update locate's db${rst}"
 updatedb
 
+# man
 cnt=$((cnt+1))
 echo "${title}${cnt}. Update MAN's db${rst}"
 makewhatis -a -Tutf8
 
+# SSD trim
 cnt=$((cnt+1))
-echo "${title}${cnt}. Trim SSD${rst}"
+echo "${title}${cnt}. FS-trim SSD${rst}"
 fstrim -v -a
 
+# date
 if [ $online -eq 1 ]; then
 	cnt=$((cnt+1))
 	echo "${title}${cnt}. Update clock${rst}"
@@ -81,5 +89,17 @@ if [ $online -eq 1 ]; then
 fi
 hwclock --systohc
 
+# custom scripts
+if [ -d /etc/void-maint.d ]; then
+	for f in /etc/void-maint.d/*; do
+		if [ -x $f ]; then
+			cnt=$((cnt+1))
+			echo "${title}${cnt}. Custom script %f${rst}"
+			$f
+		fi	
+	done
+fi
+
+# done
 echo "${title}* done *${rst}"
 
