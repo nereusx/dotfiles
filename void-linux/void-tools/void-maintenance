@@ -29,21 +29,37 @@ for o in $*; do
 done
 
 ###
+cnt=0
 echo "${title}VOID LINUX, SYSTEM MAINTENANCE"
 echo 
-echo "${title}1. Upgrade packages${rst}"
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Upgrade packages${rst}"
 xbps-install -Suy
-echo 
-echo "${title}2. Update xlocate database${rst}"
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Update xlocate database${rst}"
 xlocate -S
-echo 
-echo "${title}3. Remove obsolete packages${rst}"
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Remove obsolete packages${rst}"
 xbps-remove -Oo
-echo 
-echo "${title}4. Remove old kernels${rst}"
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Remove old kernels${rst}"
 vkpurge rm all
-echo 
-echo "${title}5. Update locate's db${rst}"
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Update locate's db${rst}"
 updatedb
-echo 
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Update MAN db${rst}"
+makewhatis -a -Tutf8
+
+cnt=$((cnt+1))
+echo "${title}${cnt}. Trim SSD${rst}"
+fstrim -v /
+
 echo "${title}* done *${rst}"
+
