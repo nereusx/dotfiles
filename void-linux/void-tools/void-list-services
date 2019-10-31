@@ -46,7 +46,8 @@ for f in /etc/sv/*; do
 			if [ $plain -eq 1 ]; then
 				echo "$s"
 			else
-				echo "+ ${gre}enabled  ${yel}$s${rst}"
+				echo -n "+ ${gre}enabled  ${yel}$s${rst}"
+				echo "\t\033[50G(PID "$(pgrep -f "runsv $s")")"
 			fi
 		fi
 	else
