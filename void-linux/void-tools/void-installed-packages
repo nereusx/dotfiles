@@ -1,0 +1,42 @@
+#!/bin/sh
+
+msghelp="\
+Usage: void-installed-packages [-p]\n\n\
+\t-h\tPrint this screen\n\
+\t-v\tPrint version information\n\n\
+\t-p, --plain\tPrints as plain text package names\n\
+\t-s, --string\tPrints as plain text package names separated with space\n\
+\n\
+Prints the installed packages."
+
+msgvers="\
+void-linux-utils version 1.0\n\n\
+Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law."
+
+plain=0
+stext=0
+for o in $*; do
+	if [ $o = "-s" -o $o = "--string" ]; then
+		stext=1
+	elif [ $o = "-p" -o $o = "--plain" ]; then
+		plain=1
+	elif [ $o = "-h" -o $o = "--help" ]; then
+		echo $msghelp
+		exit 1
+	elif [ $o = "-v" -o $o = "--version" ]; then
+		echo $msgvers
+		exit 1
+	fi
+done
+
+if [ $stext -eq 1 ]; then
+	xbps-query -l | awk '{ print $2 }' | xargs -n1 xbps-uhelper getpkgname | tr '\n' ' '
+	echo
+elif [ $plain -eq 1 ]; then
+	xbps-query -l | awk '{ print $2 }' | xargs -n1 xbps-uhelper getpkgname
+else
+	xbps-query -l
+fi
