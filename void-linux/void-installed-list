@@ -1,2 +1,0 @@
-#!/bin/sh
-xbps-query -l | awk '{ print $2 }' | xargs -n1 xbps-uhelper getpkgname
