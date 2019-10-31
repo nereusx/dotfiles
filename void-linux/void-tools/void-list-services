@@ -5,9 +5,9 @@ Usage: void-list-services [-e|-d] [-n]\n\n\
 \t-e, --enabled\tPrints enabled services only\n\
 \t-d, --disabled\tPrints disabled services only\n\
 \t-p, --plain\tPrints service names only\n\
-\n\n\
+\n\
 Prints all services and their status.
-Use -e to get list of enabled or -d for disabled only."
+Use -e to get list of enabled or -d of disabled services only."
 
 #
 msgvers="\
