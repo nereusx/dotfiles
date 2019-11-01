@@ -1,0 +1,127 @@
+#!/bin/sh
+#
+#	Create RUNIT service
+#
+#	Copyright (C) 2019, Nicholas Christopoulos <nereus@freemail.gr>
+#
+#	This program is free software; you can redistribute it and/or modify it
+#	under the terms of the GNU General Public License as published by the Free
+#	Software Foundation; either version 3 of the License, or (at your option)
+#	any later version.
+#
+
+msghelp="\
+Usage: void-runit-create-service\n\n\
+\t-h\tPrint this screen\n\
+\t-v\tPrint version information\n\n\
+\n\
+Interactive utility to create services for runit."
+
+msgvers="\
+void-libux-utils version $(void-utils-version)\n\n\
+Copyright (C) 2019 Nicholas Christopoulos <mailto:nereus@freemail.gr>.\n\
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+This is free software: you are free to change and redistribute it.\n\
+There is NO WARRANTY, to the extent permitted by law."
+
+# special case long-format
+for o in $*; do
+	if [ "$o" = "--help" ]; then echo $msghelp; exit 1;	fi
+	if [ "$o" = "--version" ]; then echo $msgvers; exit 1; fi
+done
+
+# 
+yn=Y
+cmd2='pause'
+deps=""
+
+echo
+echo "\033[1;32mCreate RUNIT service\033[0m"
+echo
+echo "Press Ctr+C to stop the process"
+echo "Press ENTER for the default values"
+echo
+echo "1. normal"
+echo "2. one shot [default]"
+read -p 'Select type of service (1,2)       : ' styp
+echo
+read -p 'Name of service: ' name
+read -p 'Enter your command line of startup : ' cmd1
+read -p 'Enter your command line of finish  : ' cmd2
+read -p 'Enter dependencies space separated : ' deps
+echo
+
+: ${name:="test"}
+: ${styp:=2}
+: ${cmd1:="echo service $name startup"}
+
+echo "Service name is   : $name"
+case $styp in
+1)	echo "Service type is   : normal";;
+2)	echo "Service type is   : one-shot";;
+*)	echo "Wrong type; aborting"; exit 1
+esac
+echo "At start running  : $cmd1"
+echo "At finish running : $cmd2"
+echo
+read -p 'Proceed (y/N)? ' yn
+
+case $yn in
+y|Y|yes|Yes|1)
+	;;
+*)
+	echo
+	echo "Canceled"
+	exit 1
+	;;
+esac
+
+#
+#	create the service
+#
+mkdir "/etc/sv/$name"
+runfile="/etc/sv/$name/run"
+finfile="/etc/sv/$name/finish"
+echo '#!/bin/sh'                            > $runfile
+echo "# data directory /etc/sv/$name/"     >> $runfile
+echo "# configuration  /etc/sv/$name/conf" >> $runfile
+if [ -n "$deps" ]; then
+	for e in $deps; do
+		echo "sv start $e"                 >> $runfile
+	done
+fi
+echo '[ -r conf ] && . ./conf'             >> $runfile
+if [ $styp -eq 2 ]; then
+	echo "$cmd1"                           >> $runfile
+	echo "exec pause"                      >> $runfile
+else
+	echo "exec $cmd1"                      >> $runfile
+fi
+chmod 755 $runfile
+
+# do I need finish file ?
+if [ -n "$cmd2" ]; then
+	# create finish file
+	echo '#!/bin/sh'                            > $finfile
+	echo "# data directory /etc/sv/$name/"     >> $finfile
+	echo "# configuration  /etc/sv/$name/conf" >> $finfile
+	echo "$cmd2"                               >> $finfile
+	chmod 755 $finfile
+fi
+
+#
+ln -svf /run/runit/supervise.$name /etc/sv/$name/supervise
+ln -svf /etv/sv/$name /etc/runit/runsvdir/default/$name
+
+#
+echo "Finished, you can copy data files or edit your files at"
+echo
+echo "data directory:     /etc/sv/$name/"
+echo "startup file:       $runfile"
+echo "configuration fule: /etc/sv/$name/conf"
+if [ -n "$cmd2" ]; then
+echo "shutdown file:      $finfile"
+fi
+echo 
+
+# EOF
