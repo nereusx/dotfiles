@@ -16,12 +16,12 @@ Usage: void-service [-p] [-l|-E|-D] [-e|-d|-r [service ...]]\n\n\
 \t-v\tPrint version information\n\n\
 \t-e\tEnable service\n\
 \t-d\tDisable service\n\
-\t-r\tRestart service\n\
+\t-r\tRestart service (-l reload, -u up, -w down)\n\
+\t-s\tStatus of service\n\
 \t-L\tPrint list of services\n\
 \t-E\tPrint enabled services only\n\
 \t-D\tPrint disabled services only\n\
 \t-p\tUse plain text only\n\
-\t-s\tStatus of service\n\
 \n\
 Void Linux services managment (runit)."
 
@@ -51,13 +51,15 @@ for o in $*; do
 done
 
 # get options
-while getopts "edLEDprhvrsl" arg; do
+while getopts "edLEDprhvrsluw" arg; do
 	case $arg in
 	e) todo="enable";;
 	d) todo="disable";;
 	r) todo="restart";;
 	l) todo="reload";;
 	s) todo="status";;
+	u) todo="up";;
+	w) todo="down";;
 	E) todo="list"; list_disabled=0; list_enabled=1 ;;
 	D) todo="list"; list_disabled=1; list_enabled=0 ;;
 	L) todo="list"; list_disabled=0; list_enabled=0 ;;
@@ -159,24 +161,12 @@ disable)
 	done
 	;;
 
-status)
+status|restart|reload|up|down)
 	for s in $*; do
-		sv status $s
+		sv $todo $s
 	done
 	;;
 	
-restart)
-	for s in $*; do
-		sv restart $s
-	done
-	;;
-
-reload)
-	for s in $*; do
-		sv reload $s
-	done
-	;;
-
 help)
 	echo $msghelp
 	exit 1
