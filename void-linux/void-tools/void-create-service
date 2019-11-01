@@ -14,7 +14,7 @@ msghelp="\
 Usage: void-create-service [{-s|-o} cmd]\n\n\
 \t-h\tPrint this screen\n\
 \t-v\tPrint version information\n\n\
-\t-i\tCreate service, interactivelly (default).\n\
+\t-i\tCreate service, interactively (default).\n\
 \t-s\tCreate normal service, the name of the daemon must defined.\n\
 \t-o\tCreate oneshot service, the name of the command must defined.\n\
 \n\
