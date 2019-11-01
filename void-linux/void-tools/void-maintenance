@@ -74,11 +74,16 @@ cnt=$((cnt+1))
 echo "${title}${cnt}. Remove old kernels${rst}"
 vkpurge rm all
 
-# locate
-if [ -e /usr/bin/updatedb ]; then
-	cnt=$((cnt+1))
-	echo "${title}${cnt}. Update locate's db${rst}"
-	updatedb
+# latex
+if [ $online -eq 1 ]; then
+	if [ -e /usr/bin/which ]; then
+		if which tlmgr 2>&1 > /dev/null; then
+			cnt=$((cnt+1))
+			echo "${title}${cnt}. Texlive subsystem${rst}"
+			tlmgr update -self
+			tlmgr update -all
+		fi
+	fi
 fi
 
 # man
@@ -86,14 +91,6 @@ if [ -e /usr/bin/makewhatis ]; then
 	cnt=$((cnt+1))
 	echo "${title}${cnt}. Update MAN's db${rst}"
 	makewhatis -a -Tutf8
-fi
-
-# SSD trim
-if [ -e /usr/bin/fstrim ]; then
-	cnt=$((cnt+1))
-	echo "${title}${cnt}. FS-trim SSD${rst}"
-	fstrim -v -a
-	sync
 fi
 
 # date
@@ -107,6 +104,19 @@ if [ $online -eq 1 ]; then
 fi
 hwclock --systohc
 
+# custom scripts
+cnt=$((cnt+1))
+echo "${title}${cnt}. Custom scripts (/etc/void-maint.d/)${rst}"
+if [ -d /etc/void-maint.d ]; then
+	for f in /etc/void-maint.d/*; do
+		if [ -x $f ]; then
+			cnt=$((cnt+1))
+			echo "${title}${cnt}. %f${rst}"
+			$f
+		fi	
+	done
+fi
+
 # fonts-cache
 if [ -e /usr/bin/fc-cache ]; then
 	cnt=$((cnt+1))
@@ -114,27 +124,19 @@ if [ -e /usr/bin/fc-cache ]; then
 	fc-cache -r
 fi
 
-# latex
-if [ $online -eq 1 ]; then
-	if [ -e /usr/bin/which ]; then
-		if which tlmgr 2>&1 > /dev/null; then
-			cnt=$((cnt+1))
-			echo "${title}${cnt}. Texlive subsystem${rst}"
-			tlmgr update -self
-			tlmgr update -all
-		fi
-	fi
+# locate
+if [ -e /usr/bin/updatedb ]; then
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. Update locate's db${rst}"
+	updatedb
 fi
 
-# custom scripts
-if [ -d /etc/void-maint.d ]; then
-	for f in /etc/void-maint.d/*; do
-		if [ -x $f ]; then
-			cnt=$((cnt+1))
-			echo "${title}${cnt}. Custom script %f${rst}"
-			$f
-		fi	
-	done
+# SSD trim
+if [ -e /usr/bin/fstrim ]; then
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. FS-trim SSD${rst}"
+	fstrim -v -a
+	sync
 fi
 
 # done
