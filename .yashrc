@@ -6,6 +6,21 @@ umask 022
 # if non-interactive shell, exit
 [ -o interactive ] || return
 
+export USERID=${USERID:-$(id -u)}
+export USER=${USER:-$(id -un)}
+export HOME=${HOME:-"/home/$USER"}
+
+#
+#	PATH
+#
+if [ $USERID -eq 0 ]; then
+	PATH=/sbin:/usr/sbin:/usr/local/sbin:$PATH
+fi
+PATH=/bin:/usr/bin:/usr/local/bin:$PATH
+PATH=${HOME}/.bin:${HOME}/.help:$PATH
+[ -x "/bin/path++" ] && PATH=$(/bin/path++)
+export PATH
+
 #
 #	yash settings
 #
@@ -64,7 +79,6 @@ mute() {
 #
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
 : ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
-: ${USER:=$(id -un)} ${HOME:="/home/$USER"} ${USERID:=$(id -u)}
 #: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
 MAIL="/var/mail/$USER"
 MAILCHECK='0'
@@ -86,10 +100,6 @@ for e in $list; do
 		chmod 0700 $e
 	fi
 done
-
-# path
-PATH=${HOME}/.bin:${HOME}/.help:$PATH
-[ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
 #
 #	PROMPT
