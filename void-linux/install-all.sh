@@ -64,4 +64,7 @@ fi
 cp usr-share-icons/* /usr/share/icons
 
 #
+ln -svf /usr/local/share/man /usr/local/man
+
+#
 echo "see post-install for next steps"

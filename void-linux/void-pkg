@@ -11,13 +11,12 @@
 #
 
 msghelp="
-Central Void Linux Utility\n\
+Central Void Linux Maintenance Application\n\
 \n\
 Packages (void-package):\n\
 \t-u  | update/upgrade\tupdate package list and upgrade all installed packages\n\
 \t-i  | install ...\tinstall package[s]\n\
 \t-r  | remove ...\t\tremove package[s]\n\
-\treinstall ...\t\treinstall package[s]\n\
 \t-s  | search <pattern>\tsearch for packages by matching package-name\n\
 \t-w  | show | info | view ...\tdisplay information about package[s]\n\
 \t-f  | file-search ...\tsearch file in packages\n\
@@ -52,20 +51,23 @@ todo=help
 if [ $# -gt 0 ]; then todo="$1"; shift; fi
 
 case $todo in
--u|update|upgrade)
-	void-package -u
-	;;
-	
+# void-package
+-u|update|upgrade)	void-package -u;;
 -i|install|-r|remove|reinstall|-w|info|show|view|-s|search|-rs|regex-search|-f|-fs|file-search)
 	void-package $todo $*
 	;;
-
--e|enable|-d|disable|start|stop|status|restart|reload|-E|-D|-L)
-	void-service $todo $*
-	;;
-
 -o|-rc|-k|-rok|--files|-a|-af|-ia|-ai)
 	void-package $todo $*
+	;;
+
+# void-service
+-e|enable)	void-service -e $*;;
+-d|disable)	void-service -d $*;;
+-E|enabled) void-service -E;;
+-D|disabled) void-service -D;;
+-L|list)	void-service -L;;
+start|stop|status|restart|reload)
+	void-service $todo $*
 	;;
 
 -m|maintenance)
@@ -81,4 +83,5 @@ case $todo in
 	echo $msghelp
 	exit 1
 	;;
+
 esac

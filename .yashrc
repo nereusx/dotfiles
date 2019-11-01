@@ -237,7 +237,8 @@ done
 VISUAL="$EDITOR"
 FCEDIT="$EDITOR"
 alias b="$EDITOR"
-for HEXEDITOR in hte mcedit dhex; do
+list="ht hte dhex mcedit"
+for HEXEDITOR in $list; do
 	HEXEDITOR=$(command -pv "$HEXEDITOR") && break
 done
 alias hexedit="$HEXEDITOR"
