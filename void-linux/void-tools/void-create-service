@@ -14,6 +14,7 @@ msghelp="\
 Usage: void-create-service [{-s|-o} cmd]\n\n\
 \t-h\tPrint this screen\n\
 \t-v\tPrint version information\n\n\
+\t-i\tCreate service, interactivelly (default).\n\
 \t-s\tCreate normal service, the name of the daemon must defined.\n\
 \t-o\tCreate oneshot service, the name of the command must defined.\n\
 \n\
@@ -42,6 +43,7 @@ for o in $*; do
 	elif [ "$o" = "-v" -o "$o" = "--version" ]; then echo $msgvers; exit 1;
 	elif [ "$o" = "-s" -o "$o" = "--service" ]; then sauto=1;
 	elif [ "$o" = "-o" -o "$o" = "--oneshot" ]; then onest=1;
+	elif [ "$o" = "-i" -o "$o" = "--interactive" ]; then onest=0; sauto=0;
 	else
 		opt="$o"
 	fi
