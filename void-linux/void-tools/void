@@ -35,6 +35,9 @@ Services (void-service):\n\
 \t-D | disabled\t\tdisplay all disabled services\n\
 \tstart | stop | restart | reload | status ...\n\
 \t\t\t\tsv <action> <service>\n\
+\n\
+More (void-*):\n\
+\t-m\t\t\tsystem maintenance\n\
 "
 
 msgvers="\
@@ -63,6 +66,10 @@ case $todo in
 
 -o|-rc|-k|-rok|--files|-a|-af|-ia|-ai)
 	void-package $todo $*
+	;;
+
+-m|maintenance)
+	void-maintenance
 	;;
 
 -v|--version)	
