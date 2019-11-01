@@ -6,6 +6,7 @@ umask 022
 # if non-interactive shell, exit
 [ -o interactive ] || return
 
+#
 export USERID=${USERID:-$(id -u)}
 export USER=${USER:-$(id -un)}
 export HOME=${HOME:-"/home/$USER"}
@@ -20,6 +21,13 @@ PATH=/bin:/usr/bin:/usr/local/bin:$PATH
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
 export PATH
+
+#
+#	Start TMUX automagically
+#
+if [ -z "$TMUX" -a -z "$SUDO_USER" ]; then
+	exec tmux
+fi
 
 #
 #	yash settings
