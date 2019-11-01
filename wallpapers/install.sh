@@ -1,12 +1,12 @@
-#!/bin/tcsh
+#!/bin/sh
 
-set list = ( /usr/share/wallpapers /usr/share/backdrops /usr/share/backgrounds /usr/local/share/backgrounds )
-foreach e ( $list )
-	if ( -d $e ) then
+list=(/usr/share/wallpapers /usr/share/backdrops /usr/share/backgrounds /usr/local/share/backgrounds)
+for e in ${list[@]}; do
+	if [ -d $e ]; then
 		cp *.png $e
 		exit 0
-	endif
-end
-set e=/usr/local/share/backgrounds
+	fi
+done
+e=/usr/local/share/backgrounds
 mkdir -p $e
 cp *.png $e
