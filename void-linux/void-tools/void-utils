@@ -19,12 +19,12 @@ Packages (void-package):\n\
 \t-r  | remove ...\t\tremove package[s]\n\
 \t-s  | search <pattern>\tsearch for packages by matching package-name\n\
 \t-w  | show | info | view ...\tdisplay information about package[s]\n\
-\t-f  | file-search ...\tsearch file in packages\n\
+\t-fs | file-search ...\tsearch file in packages\n\
 \n\
 \t-o\t\t\tremove obsolete packages\n\
 \t-rc | reconfigure ...\n\
 \t-k\t\t\tremove old kernels\n\
-\t--files <package>\tshows the files of the package\n\
+\t-f | --files <package>\tshows the files of the package\n\
 \n\
 Services (void-service):\n\
 \t-e | enable ...\t\tenable service[s]\n\
