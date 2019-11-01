@@ -11,20 +11,30 @@
 #
 
 msghelp="
-Package managment for Void Linux\n\
+Central Void Linux Utility\n\
 \n\
+Packages (void-package):\n\
+\t-u  | update/upgrade\tupdate package list and upgrade all installed packages\n\
 \t-i  | install ...\tinstall package[s]\n\
 \t-r  | remove ...\t\tremove package[s]\n\
-\t-u  | update ...\t\tupdate package list and upgrade all installed packages\n\
 \treinstall ...\t\treinstall package[s]\n\
 \t-s  | search <pattern>\tsearch for packages by matching package-name\n\
 \t-w  | show | info | view ...\tdisplay information about package[s]\n\
 \t-f  | file-search ...\tsearch file in packages\n\
 \t-a[f|i] pattern\t\tfind all pacakges [f] = and format for xargs, [i] = and install\n\
+\n\
 \t-o\t\t\tremove obsolete packages\n\
-\t-rc  | reconfigure ...\n\
+\t-rc | reconfigure ...\n\
 \t-k\t\t\tremove old kernels\n\
 \t--files <package>\tshows the files of the package\n\
+\n\
+Services (void-service):\n\
+\t-e | enable ...\t\tenable service[s]\n\
+\t-d | disable ...\tdisable service[s]\n\
+\t-E | enabled\t\tdisplay all enabled services\n\
+\t-D | disabled\t\tdisplay all disabled services\n\
+\tstart | stop | restart | reload | status ...\n\
+\t\t\t\tsv <action> <service>\n\
 "
 
 msgvers="\
@@ -39,78 +49,27 @@ todo=help
 if [ $# -gt 0 ]; then todo="$1"; shift; fi
 
 case $todo in
-#
-#	basic package utilities
-#
--i|install)
-	xbps-install $*
-	;;
-
--r|remove)
-	xbps-remove $*
-	;;
-
-reinstall)
-	xbps-remove $*
-	xbps-install -y $*
-	;;
-
 -u|update|upgrade)
-	xbps-install -Su
-	echo "update xlocate database"
-	xlocate -S
-	;;
-
-#
-#	advanced package utilities
-#
--w|info|show|view)
-	xbps-query -R -S $*
-	;;
-
--s|search)
-	xbps-query -Rs "$*"
-	;;
-
--rs|regex-search)
-	xbps-query --regex -Rs "$*"
-	;;
-
--f|-fs|file-search)
-	xbps-query --regex -Ro "$*"
-	xlocate "$*"
-	;;
-
--o)
-	xbps-remove -Oo
-	;;
-
--rc|reconfigure)
-	xbps-reconfigure -f $*
-	;;
-
--k|-rok)
-	vkpurge rm all
+	void-package -u
 	;;
 	
---files)
-	xbps-query -f $*
+-i|install|-r|remove|reinstall|-w|info|show|view|-s|search|-rs|regex-search|-f|-fs|file-search)
+	void-package $todo $*
 	;;
 
--a)
-	xbps-query --regex -Rs "$argv[2-]" | grep -v 32bit
+-e|enable|-d|disable|start|stop|status|restart|reload|-E|-D|-L)
+	void-service $todo $*
 	;;
--af)
-	xbps-query --regex -Rs "$argv[2-]" | grep -v 32bit | awk '{print $2}'
-	;;
--ia|-ai)
-	xbps-query --regex -Rs "$argv[2-]" | grep -v 32bit | awk '{print $2}' | xargs xbps-install -y
+
+-o|-rc|-k|-rok|--files|-a|-af|-ia|-ai)
+	void-package $todo $*
 	;;
 
 -v|--version)	
 	echo $msgvers
 	exit 1
 	;;
+
 -h|--help|help|*)
 	echo $msghelp
 	exit 1
