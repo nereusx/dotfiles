@@ -54,7 +54,7 @@ if [ $sauto -eq 1 ]; then
 		echo "service name not defined"
 		exit 1
 	fi
-	name="$opt"
+	name="${opt% *}"
 	cmd1="$opt"
 	styp=1
 elif [ $onest -eq 1 ]; then
@@ -62,7 +62,7 @@ elif [ $onest -eq 1 ]; then
 		echo "service name not defined"
 		exit 1
 	fi
-	name="$opt"
+	name="${opt% *}"
 	cmd1="$opt"
 	styp=2
 else
