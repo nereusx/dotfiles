@@ -139,5 +139,12 @@ if [ -e /usr/bin/fstrim ]; then
 	sync
 fi
 
+#
+cnt=$((cnt+1))
+echo "${title}${cnt}. Check for new configs${rst}"
+for f in /etc/*.new*; do
+	echo $f
+done
+
 # done
 echo "${title}* done *${rst}"
