@@ -114,6 +114,18 @@ if [ -e /usr/bin/fc-cache ]; then
 	fc-cache -r
 fi
 
+# latex
+if [ $online -eq 1 ]; then
+	if [ -e /usr/bin/which ]; then
+		if which tlmgr 2>&1 > /dev/null; then
+			cnt=$((cnt+1))
+			echo "${title}${cnt}. Texlive subsystem${rst}"
+			tlmgr update -self
+			tlmgr update -all
+		fi
+	fi
+fi
+
 # custom scripts
 if [ -d /etc/void-maint.d ]; then
 	for f in /etc/void-maint.d/*; do
@@ -127,4 +139,3 @@ fi
 
 # done
 echo "${title}* done *${rst}"
-
