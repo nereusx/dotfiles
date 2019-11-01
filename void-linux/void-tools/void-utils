@@ -20,7 +20,6 @@ Packages (void-package):\n\
 \t-s  | search <pattern>\tsearch for packages by matching package-name\n\
 \t-w  | show | info | view ...\tdisplay information about package[s]\n\
 \t-f  | file-search ...\tsearch file in packages\n\
-\t-a[f|i] pattern\t\tfind all pacakges [f] = and format for xargs, [i] = and install\n\
 \n\
 \t-o\t\t\tremove obsolete packages\n\
 \t-rc | reconfigure ...\n\
