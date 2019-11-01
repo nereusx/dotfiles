@@ -1,23 +1,25 @@
-#!/bin/tcsh -f
-# -*- mode: shell -*-
+#!/bin/sh
 
 # get default parameter ("help" for none)
-set todo = help
+todo=help
 
 # available options
-set opts = `cat /sys/power/state`
+opts=$(cat /sys/power/state)
 
-if ( $#argv > 0 ) then
-	set todo = $argv[1]
+#
+if [ $# -gt 0 ]; then
+	todo="$1"
 
 	# is known?
-	foreach o ( $opts )
-		if ( $todo == $o ) then
+	for o in $opts; do
+		if [ "$todo" = "$o" ]; then
 			# found; execute it
 			exec echo -n $todo > /sys/power/state
-		endif
-	end
-endif
+		fi
+	done
+	echo "unknown state [$todo]; only [$opts] are available"
+	exit 1
+fi
 
 # print help and exit
 echo "usage: $0 [option]"

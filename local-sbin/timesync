@@ -1,4 +1,4 @@
-#!/bin/tcsh -f
+#!/bin/sh
 
 # here you will find more servers
 # https://www.pool.ntp.org/en/
@@ -7,13 +7,14 @@
 
 # europe: 0.europe.pool.ntp.org
 # greece: 3.gr.pool.ntp.org
-set server=3.gr.pool.ntp.org
+server=3.gr.pool.ntp.org
 
-ping 1.1.1.1 -c 1 -w 1 > /dev/null && set online
-if ( $?online ) then
+ping 1.1.1.1 -c 1 -w 1 2>&1 > /dev/null && online=1 || online=0
+if [ $online -eq 1 ]; then
 	# update system clock
 	ntpdate -s $server
 	
 	# update hardware clock from systemclock
 	hwclock --systohc
-endif
+fi
+
