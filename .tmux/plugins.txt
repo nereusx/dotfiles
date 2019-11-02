@@ -1,0 +1,3 @@
+resurrect - saves/restores environment
+	prefix + ctrl+s = save
+	prefix + ctrl+r = restore
