@@ -23,6 +23,8 @@ Usage: void-service [-p] [-l|-E|-D] [-e|-d|-r [service ...]]\n\n\
 \t-D\tPrint disabled services only\n\
 \t-p\tUse plain text only\n\
 \n\
+\t{ restart | reload | start | stop | status } <service>\n\
+\n\
 Void Linux services managment (runit)."
 
 #
