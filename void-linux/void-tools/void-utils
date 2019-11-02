@@ -31,7 +31,7 @@ Services (void-service):\n\
 \t-d | disable ...\tdisable service[s]\n\
 \t-E | enabled\t\tdisplay all enabled services\n\
 \t-D | disabled\t\tdisplay all disabled services\n\
-\tstart | stop | restart | reload | status ...\n\
+\t{ start | stop | restart | reload | status } <service>\n\
 \t\t\t\tsv <action> <service>\n\
 \n\
 More (void-*):\n\
