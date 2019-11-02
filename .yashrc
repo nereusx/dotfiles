@@ -300,7 +300,7 @@ __GL_YIELD='USLEEP'
 #
 #	aliases
 #
-man() { command man -O width=$(tput cols) "$@"; }
+man() { command man -O width=$(($(tput cols)-2)) "$@"; }
 alias source='. '
 alias reload='. $HOME/.yashrc'
 
