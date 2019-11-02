@@ -8,7 +8,7 @@ urxvt.saveLines: 4096
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 
-urxvt.geometry: 133x37
+urxvt.geometry: 132x40
 !urxvt.geometry: 150x40
 
 urxvt.cursorColor: #00ff00
@@ -25,6 +25,8 @@ urxvt.secondaryScroll:  true
 !urxvt.boldItalicFont: -xsg-xsg fixed 167-bold-b-normal--14-140-72-72-c-80-iso10646-1
 
 urxvt.font: \
+	-*-xsg term 189-*-*-*-*-*-130-100-100-p-*-iso10646-1,\
+	-xsg-xsg fixed 210-*-*-*-*-21-*-100-100-p-*-iso10646-1,\
 	xft:XSG Fixed 189:pixelsize=18,\
 	xft:XSG Fixed 188:pixelsize=18,\
 	xft:XSG Fixed 178:pixelsize=17,\
