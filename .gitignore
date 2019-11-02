@@ -2,3 +2,4 @@
 *.cm
 *~
 path++
+.tmux/resurrect/*
