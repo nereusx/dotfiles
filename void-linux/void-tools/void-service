@@ -49,27 +49,33 @@ for o in $*; do
 	if [ "$o" = "--help" ]; then todo="help"; shift; break;	fi
 	if [ "$o" = "--version" ]; then todo="vers"; shift; break; fi
 done
-
-# get options
-while getopts "edLEDprhvrsluw" arg; do
-	case $arg in
-	e) todo="enable";;
-	d) todo="disable";;
-	r) todo="restart";;
-	l) todo="reload";;
-	s) todo="status";;
-	u) todo="up";;
-	w) todo="down";;
-	E) todo="list"; list_disabled=0; list_enabled=1 ;;
-	D) todo="list"; list_disabled=1; list_enabled=0 ;;
-	L) todo="list"; list_disabled=0; list_enabled=0 ;;
-	p) plain=1;;
-	h) todo="help";;
-	v) todo="vers";;
-	?) exit 1;;
-	esac
-done
-shift $(($OPTIND - 1))
+case "$1" in
+restart)	todo="restart";	shift;;
+reload)		todo="reload";	shift;;
+up|start)	todo="up"; shift;;
+down|stop)	todo="stop"; shift;;
+status)		todo="status"; shift;;
+*)	# get options
+	while getopts "edLEDprhvrsluw" arg; do
+		case $arg in
+		e) todo="enable";;
+		d) todo="disable";;
+		r) todo="restart";;
+		l) todo="reload";;
+		s) todo="status";;
+		u) todo="up";;
+		w) todo="down";;
+		E) todo="list"; list_disabled=0; list_enabled=1 ;;
+		D) todo="list"; list_disabled=1; list_enabled=0 ;;
+		L) todo="list"; list_disabled=0; list_enabled=0 ;;
+		p) plain=1;;
+		h) todo="help";;
+		v) todo="vers";;
+		?) exit 1;;
+		esac
+	done
+	shift $(($OPTIND - 1))
+esac
 
 case $todo in
 list)
