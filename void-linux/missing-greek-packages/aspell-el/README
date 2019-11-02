@@ -1,17 +1,19 @@
-GNU Aspell Greek Word List Package
-Version 0.50-3
-2002-09-12
-by Kevin Atkinson (kevina@gnu.org)
-Word List by:
-  Evripidis Papakostas (evris at source gr)
-Copyright Terms: GPL
-see the file Copyright for the exact copyright.
-Source Verson: 0.03
-Source URL: http://ispell.source.gr/index_aspell.html
+GNU Aspell 0.60 Greek (Ελληνικά) Dictionary Package
+Version 0.08-0
+2009-02-28
+Maintained By:
+  Steve Stavropoulos (Σταύρος Σταυρόπουλος) <steve at math upatras gr>>
+Original Word List Also By:
+  Evripidis Papakostas <evris at source gr>
+Copyright Terms: GPLv2 (see the file Copyright for the exact terms)
+Wordlist URL: http://elspell.math.upatras.gr/
+Source Verson: 0.08
+This word list is considered both complete and accurate.
 
-This is the Aspell word list for Greek.
+This is the Greek dictionary for Aspell.  It requires Aspell 
+version 0.60 or better.
 
-If Aspell is installed and aspell and word-list-compress are all
+If Aspell is installed and aspell and prezip-bin are all
 in the path first do a:
 
   ./configure
@@ -29,7 +31,7 @@ and then install it with
   make install
 
 If any of the above mentioned programs are not in your path than the
-variables, ASPELL and/or WORD_LIST_COMPRESS need to be set to the
+variables, ASPELL and/or PREZIP need to be set to the
 commands (with path) to run the utilities.  These variables may be set
 in the environment before configure is run or specified at the command
 line using the following syntax
@@ -42,20 +44,29 @@ To clean up after the build:
 To uninstall the files:
   make uninstall
 
-After the word lists are installed you can use the main one (el) by
+After the dictionaries are installed you can use the main one (el) by
 setting the LANG environmental variable to el or running Aspell
-with --lang=el.  You may also chose the dictionary directly
-with the -d or --master option of Aspell.  You can chose from any of
+with "--lang=el".  You may also chose the dictionary directly
+with the "-d" or "--master" option of Aspell.  You can chose from any of
 the following dictionaries:
-  el (greek)
+  el (gr greek)
 Whereas the names in parentheses are alternate names for the
 dictionary preceding the parentheses.
 
+The individual word lists have an extension of ".cwl" and are
+compressed to save space.  To uncompress a word list use 
+"preunzip BASE.cwl" which will uncompress it and rename the file 
+to "BASE.wl".  To dump a compressed word list to standard output use
+"precat BASE.cwl".  To uncompress all word lists in the current
+directory use "preunzip *.cwl".  For more help on "preunzip" use
+"preunzip --help".
+
 If you have any problem with installing or using the word lists please
-let me (Kevin Atkinson) know.
+let the Aspell maintainer, Kevin Atkinson, know at kevina@gnu.org.
 
 If you have problems with the actual word lists please contact one of
-the Word lists authors as I do not maintain the actual Word Lists.
+the Word lists authors as the Aspell maintainer does not maintain the
+actual Word Lists.
 
 Any additional documentation that came with the original word list can
 be found in the doc/ directory.

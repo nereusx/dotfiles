@@ -1,24 +1,23 @@
-ASPELL = aspell
+ASPELL = /bin/aspell
 ASPELL_FLAGS = 
-WORD_LIST_COMPRESS = word-list-compress
+PREZIP = /bin/prezip-bin
 DESTDIR = 
 dictdir = /usr/lib/aspell-0.60
 datadir = /usr/lib/aspell-0.60
 
-# Generated with Aspell Dicts "proc" script version 0.50.2
+# Generated with Aspell Dicts "proc" script version 0.60.4
 
 lang = el
-version = 0.60
+version = 0.08-0
 
 cwl_files = el.cwl
-data_files = el.dat el_phonet.dat
+data_files = el.dat el_phonet.dat el.kbd
 doc_files = README COPYING Copyright
 extra_files = configure info Makefile.pre
-multi_files = el.multi greek.alias
+multi_files = el.multi gr.alias greek.alias
 rws_files = el.rws
 
-
-distdir=aspell-${lang}-${version}
+distdir=aspell6-${lang}-${version}
 
 all: ${rws_files} ${data_files}
 
@@ -33,21 +32,29 @@ install: all
 clean:
 	rm -f ${rws_files}
 
+distclean: clean
+	rm -f Makefile
+
+maintainer-clean: distclean
+	rm -f ${multi_files} configure Makefile.pre
+
 uninstall:
 	-cd ${DESTDIR}${dictdir}/ && rm ${rws_files} ${multi_files} ${link_files}
 	-cd ${DESTDIR}${datadir}/ && rm ${data_files}
 
-dist:
+dist: ${cwl_files}
 	perl proc
 	./configure
 	@make dist-nogen
 
 dist-nogen:
-	-rm -r ${distdir}
+	-rm -r ${distdir}.tar.bz2 ${distdir}
 	mkdir ${distdir}
 	cp -p ${extra_files} ${cwl_files} ${multi_files} ${doc_files} ${data_files} ${distdir}/
-	-cp -pr doc/ ${distdir}/
-	gtar cfj ${distdir}.tar.bz2 ${distdir}/
+	-test -e doc  && mkdir ${distdir}/doc  && chmod 755 ${distdir}/doc  && cp -pr doc/* ${distdir}/doc/
+	-test -e misc && mkdir ${distdir}/misc && chmod 755 ${distdir}/misc && cp -pr misc/* ${distdir}/misc/
+	tar cf ${distdir}.tar ${distdir}/
+	bzip2 -9 ${distdir}.tar
 	rm -r ${distdir}/
 
 distcheck:
@@ -61,8 +68,14 @@ rel:
 el.rws: el.cwl
 
 
-.SUFFIXES: .cwl .rws
+.SUFFIXES: .cwl .rws .wl
 
 .cwl.rws:
-	${WORD_LIST_COMPRESS} d < $< | ${ASPELL} ${ASPELL_FLAGS} --lang=el create master ./$@
+	${PREZIP} -d < $< | ${ASPELL} ${ASPELL_FLAGS} --lang=el create master ./$@
+
+.wl.cwl:
+	cat $< | LC_COLLATE=C sort -u | ${PREZIP} -z > $@
+
+.pz:
+	${PREZIP} -d < $< > $@
 

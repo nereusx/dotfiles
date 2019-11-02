@@ -41,10 +41,12 @@ do
       fi	
       # Taken from autoconf 2.50
       envvar=`expr "x$option" : 'x\([^=]*\)='`
+      optarg=`expr "x$option" : 'x[^=]*=\(.*\)'`
       # Reject names that are not valid shell variable names.
       expr "x$envvar" : ".*[^_$cr_alnum]" >/dev/null &&
         { echo "$as_me: error: invalid variable name: $envvar" >&2
       { (exit 1); exit 1; }; }
+      #echo $envvar $optarg
       optarg=`echo "$optarg" | sed "s/'/'\\\\\\\\''/g"`
       eval "$envvar='$optarg'"
       export $envvar
@@ -52,7 +54,7 @@ do
     --help)
       echo "Usage: ./configure [--help | --vars VAR1=VAL1 ...]"
       echo "  Note: Variables may also be set in the environment brefore running config"
-      echo "  Useful vars: ASPELL ASPELL_PARMS WORD_LIST_COMPRESS DESTDIR"
+      echo "  Useful vars: ASPELL ASPELL_PARMS PREZIP DESTDIR"
       exit 0
       ;;
     *)
@@ -62,10 +64,12 @@ do
   esac
 done
 
+#echo $ASPELL
 if test x = "x$ASPELL"
   then ASPELL=aspell; fi
-if test x = "x$WORD_LIST_COMPRESS"
-  then WORD_LIST_COMPRESS=word-list-compress; fi
+if test x = "x$PREZIP"
+  then PREZIP=prezip-bin; fi
+#echo $ASPELL
 
 echo $ECHO_N "Finding Dictionary file location ... $ECHO_C"
 dictdir=`$ASPELL dump config dict-dir`
@@ -75,9 +79,9 @@ echo $ECHO_N "Finding Data file location ... $ECHO_C"
 datadir=`$ASPELL dump config data-dir`
 echo $datadir
 
-echo "ASPELL = $ASPELL" > Makefile
+echo "ASPELL = `which $ASPELL`" > Makefile
 echo "ASPELL_FLAGS = $ASPELL_FLAGS" >> Makefile
-echo "WORD_LIST_COMPRESS = $WORD_LIST_COMPRESS" >> Makefile
+echo "PREZIP = `which $PREZIP`" >> Makefile
 echo "DESTDIR = $DESTDIR" >> Makefile
 echo "dictdir = $dictdir" >> Makefile
 echo "datadir = $datadir" >> Makefile
