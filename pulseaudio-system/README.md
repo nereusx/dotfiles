@@ -35,10 +35,12 @@ rm /usr/share/dbus-1/system-services/org.freedesktop.RealtimeKit1.service
 
 ## What is wrong with system mode?
 
+Copy/paste from the developer:
+
 In most desktop use cases, system mode likely is not the right choice.
 There are use cases where system mode does make sense, and these are listed further down.
 
-Note: The developer use the dekstop and means server of something.
+Note: The developer uses the word 'dekstop' and means server of something.
 
 Here are a couple of reasons why running PA in system mode can be problematic in desktop use cases.
 
