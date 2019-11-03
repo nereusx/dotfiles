@@ -36,7 +36,8 @@ Services (void-service):\n\
 \n\
 More (void-*):\n\
 \t-m\t\t\tsystem maintenance\n\
-\t-ax\t\t\talternatives\n\
+\t-al\t\t\talternatives list\n\
+\t-as\t\t\talternatives set\n\
 "
 
 msgvers="\
@@ -74,8 +75,12 @@ start|stop|status|restart|reload)
 	void-maintenance
 	;;
 
--ax)
-	xbps-alternatives $*
+-al)
+	xbps-alternatives -l $*
+	;;
+
+-as)
+	xbps-alternatives -s $*
 	;;
 
 -v|--version)	
