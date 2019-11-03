@@ -29,7 +29,8 @@ export PATH
 #
 AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
 if [ $AUTOLOAD_TMUX -eq 1 ]; then
-	if [ -z "$TMUX" -a -z "$SUDO_USER" ]; then
+	SU=${SUDO_USER:-""}
+	if [ -z "$TMUX" -a -z "$SU" ]; then
 		exec tmux
 	fi
 fi
