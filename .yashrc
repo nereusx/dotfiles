@@ -29,8 +29,7 @@ export PATH
 #
 AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
 if [ $AUTOLOAD_TMUX -eq 1 ]; then
-	SU=${SUDO_USER:-""}
-	if [ -z "$TMUX" -a -z "$SU" ]; then
+	if [ -z "$TMUX" -a -z "$SUDO_USER" ]; then
 		exec tmux
 	fi
 fi
@@ -92,9 +91,6 @@ mute() {
 #	basic settings
 #
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
-if [ -e /usr/bin/inetutils-hostname ]; then
-	alias hostname='inetutils-hostname'
-fi
 : ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
 #: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
 MAIL="/var/mail/$USER"
