@@ -92,6 +92,9 @@ mute() {
 #	basic settings
 #
 [ $TERM == "rxvt" ] && TERM="rxvt-unicode"
+if [ -e /usr/bin/inetutils-hostname ]; then
+	alias hostname='inetutils-hostname'
+fi
 : ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
 #: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
 MAIL="/var/mail/$USER"
