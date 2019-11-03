@@ -1,5 +1,7 @@
 Adapta
 CPU-X
+Cataclysm-DDA
+Cataclysm-DDA-data
 EmulationStation
 FAudio
 FAudio-32bit
@@ -100,10 +102,10 @@ attr
 aucatctl
 audacious
 audacity
-audiofile
 autoconf
 autogen
 automake
+autox
 avahi
 avahi-autoipd
 avahi-discover
@@ -149,6 +151,7 @@ boost
 boost-python1.69
 breeze
 breeze-icons
+brig
 brotli
 bsd-games
 bsdbuild
@@ -171,6 +174,7 @@ cblas
 celt
 celt-32bit
 cgdb
+cgrps
 chafa
 cheese
 chromaprint
@@ -203,6 +207,7 @@ cpio
 cpufrequtils
 cpupower
 cpuset
+crossguid
 ctpl
 cups
 cups-devel
@@ -292,6 +297,7 @@ expat-devel
 f2fs-tools
 faac
 faad2
+faenza-icon-theme
 farstream
 fdk-aac
 ffmpeg
@@ -361,6 +367,7 @@ freetype-32bit
 freetype-devel
 fribidi
 fribidi-devel
+fs-repo-migrations
 fs-uae
 fuse
 fuse-exfat
@@ -457,6 +464,7 @@ gnuplot
 gnuplot-common
 gnutls
 gnutls-32bit
+go-ipfs
 gparted
 gpgme
 gpgmepp
@@ -495,6 +503,7 @@ gtk-doc
 gtk-engine-murrine
 gtk-theme-config
 gtk-update-icon-cache
+gtk-xfce-engine
 gtk2-engines
 gtklp
 gtkmm
@@ -514,6 +523,7 @@ gvfs-mtp
 gvfs-smb
 gvim
 gwenview
+gx
 gzip
 harfbuzz
 harfbuzz-devel
@@ -552,28 +562,12 @@ icu-libs-32bit
 ilmbase
 imlib2
 indent
-inetutils
-inetutils-dnsdomainname
 inetutils-ftp
-inetutils-hostname
-inetutils-ifconfig
-inetutils-inetd
-inetutils-ping
-inetutils-rcp
-inetutils-rexec
-inetutils-rlogin
-inetutils-rsh
-inetutils-syslog
-inetutils-talk
-inetutils-telnet
-inetutils-tftp
-inetutils-traceroute
-inetutils-uucpd
-inetutils-whois
 inkscape
 intltool
 inxi
 iotop
+ipfs-cluster
 iproute2
 iptables
 iptraf-ng
@@ -590,6 +584,7 @@ json-c
 json-c++
 json-c-devel
 json-glib
+jsoncpp
 kactivities5
 kactivities5-stats
 kactivitymanagerd
@@ -610,6 +605,7 @@ kconfig
 kconfigwidgets
 kcontacts
 kcoreaddons
+kcoreaddons-devel
 kcrash
 kcron
 kdbusaddons
@@ -638,6 +634,7 @@ kholidays
 khotkeys
 khtml
 ki18n
+ki18n-devel
 kicad
 kicad-footprints
 kicad-i18n
@@ -681,6 +678,7 @@ kpimtextedit
 kplotting
 kpmcore
 kpty
+kpty-devel
 krename
 krita
 kross
@@ -907,6 +905,7 @@ liberation-fonts-ttf
 libespeak
 libetpan
 libev
+libev-devel
 libevdev
 libevent
 libexif
@@ -1240,6 +1239,7 @@ libusb-compat-devel
 libusb-devel
 libusbmuxd
 libutempter
+libutempter-devel
 libutf8proc
 libuuid
 libuuid-32bit
@@ -1375,11 +1375,11 @@ mit-krb5-libs
 mkfontscale
 mksh
 mlocate
+moc
 modemmanager-qt5
 modemmanager-qt5-devel
 mousepad
 mozjs60
-mpd
 mpfr
 mpg123
 mpg123-pulseaudio
@@ -1556,7 +1556,6 @@ perl-Net-DNS-Resolver-Mock
 perl-Net-HTTP
 perl-Net-IMAP-Client
 perl-Net-IMAP-Simple
-perl-Net-MPD
 perl-Net-OpenSSH
 perl-Net-SFTP-Foreign
 perl-Net-SMTP-SSL
@@ -1643,9 +1642,11 @@ plasma-integration
 plasma-pa
 plasma-workspace
 pm-utils
+pod2mdoc
 polkit
 polkit-kde-agent
 polkit-qt5
+polybar
 ponymix
 poppler
 poppler-cpp
@@ -1782,6 +1783,7 @@ qt5-qmake
 qt5-quickcontrols
 qt5-quickcontrols2
 qt5-script
+qt5-script-devel
 qt5-sensors
 qt5-serialport
 qt5-speech
@@ -1803,6 +1805,8 @@ qt5integration
 qt5pas
 qtchooser
 qtcurve
+qterminal
+qtermwidget
 quadrapassel
 quazip
 rawtherapee
@@ -1822,6 +1826,7 @@ rlottie
 rsync
 rtkit
 ruby
+ruby-manpages
 run-parts
 runit
 runit-void
@@ -1836,6 +1841,7 @@ sbc
 sbc-devel
 sbsigntool
 sc
+scdoc
 screen
 screenkey
 scrot
@@ -1920,7 +1926,6 @@ tiff-32bit
 tiff-devel
 tinyxml
 tmux
-tmux-mem-cpu-load
 totem-pl-parser
 traceroute
 transmission
@@ -1984,6 +1989,7 @@ weechat-aspell
 wendy
 wget
 which
+whois
 wifi-firmware
 wine-32bit
 wine-gecko
@@ -2115,6 +2121,7 @@ xload
 xlogo
 xlsatoms
 xlsclients
+xman
 xmessage
 xmlcatmgr
 xmlsec1

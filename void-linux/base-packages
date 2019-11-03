@@ -6,7 +6,6 @@ postfix
 mailx
 base-devel
 net-tools
-inetutils
 void-updates
 void-repo-nonfree
 vpsm
