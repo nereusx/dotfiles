@@ -1,5 +1,6 @@
 #!/bin/sh
 xbps-alternatives -s net-tools
+xbps-alternatives -s iputils
 #xbps-alternatives -s gwhois
 #xbps-alternatives -s inetutils-hostname
 #xbps-alternatives -s inetutils-ifconfig
