@@ -1,4 +1,5 @@
 #!/bin/sh
+void -i net-tools inetutils iputils
 xbps-alternatives -s net-tools
 xbps-alternatives -s iputils
 #xbps-alternatives -s gwhois
