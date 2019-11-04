@@ -249,6 +249,7 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 #
 GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 GRFLAGS="-m grief-rc"
+GRTERM=linux
 GRUTF8_FORCE=1
 JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
