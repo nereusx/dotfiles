@@ -393,6 +393,8 @@ if ( $USER != 'root' ) then
 	if ( -X apt )     alias apt     'sudo apt'
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
+alias tmux-reload 'tmux source-file ~/.tmux.conf'
+alias amionline   'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
 
 # some nice beeps
 # simple beep
