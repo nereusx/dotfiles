@@ -80,7 +80,7 @@ end
 #
 #	setup and cleanup path
 #
-set path = ( $home/.bin $home/.help $path )
+set path = ( $home/.bin $home/.help /usr/local/bin $path )
 if ( $USER == "root" ) then
 	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
 	foreach e ( $list )
@@ -132,10 +132,11 @@ setenv JED_HOME		${HOME}/.jed
 alias jed-prep     'xjed -batch -n -l preparse'
 
 # settings for GRIEF
-setenv GRPATH			${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
+setenv GRLIB			/usr/local/share/grief
+setenv GRPATH			${HOME}/.grief-local:${GRLIB}/macros
 setenv GRFLAGS			"-m grief-rc"
 setenv GRTERM			"linux"
-setenv GRHELP			/usr/local/share/grief/help
+setenv GRHELP			${GRLIB}/help
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
@@ -305,7 +306,12 @@ endif
 #
 unset ampm
 set ellipsis
-set prompt = "%B%{\033[35m%}%T %{\033[32m%}%n@%m%b %C4 %# "
+if ( $USERID == 0 ) then
+	set ucolor="%{\033[31m%}"
+else
+	set ucolor="%{\033[32m%}"
+endif
+set prompt = "%B%{\033[35m%}%T ${ucolor}%n%{\033[32m%}@%m%b %C4 %# "
 
 ###	history
 set histlit
