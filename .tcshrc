@@ -333,6 +333,7 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 
 ###	aliases
 
+alias reload		'source ~/.tcshrc'
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
 alias cls          'clear'
 alias ps-all       'ps aux | grep -v "\["'
@@ -441,8 +442,7 @@ endif
 if ( -r /var/lib/dpkg/status ) then
 	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
 endif
-alias git-q 'git add .; git commit -m "quick and dirty fix"; git push'
-alias git-s 'git add .; git commit -m ''\!*''; git push'
+alias git-q 'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
 ## paps support UTF8, a2ps don't
 #if ( -X paps ) alias a2ps 'paps'
 ## zssh is ssh with ZModem support
