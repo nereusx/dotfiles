@@ -34,8 +34,20 @@ endif
 
 ### this is an interactive shell ###
 set DS = \$
-if ( ! $?HOSTNAME ) then
-	setenv HOSTNAME `hostname`
+if ( ! $?USERID )   setenv USERID   `id -u`
+if ( ! $?HOSTNAME ) setenv HOSTNAME `hostname`
+
+#
+#	Start TMUX automagically
+#
+#	echo 'AUTOLOAD_TMUX=1' >> /etc/environment
+#
+if ( $?AUTOLOAD_TMUX ) then
+	if ( $AUTOLOAD_TMUX == 1 ) then
+		if ( ( ! $?TMUX ) && ( ! $?SUDO_USER ) ) then
+			exec tmux
+		endif
+	endif
 endif
 
 #
@@ -122,6 +134,8 @@ alias jed-prep     'xjed -batch -n -l preparse'
 # settings for GRIEF
 setenv GRPATH			${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
 setenv GRFLAGS			"-m grief-rc"
+setenv GRTERM			"linux"
+setenv GRHELP			/usr/local/share/grief/help
 setenv GRUTF8_FORCE
 setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
@@ -443,6 +457,8 @@ if ( -r /var/lib/dpkg/status ) then
 	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
 endif
 alias git-q 'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
+alias git-c 'git checkout'
+alias git-p 'git pull'
 ## paps support UTF8, a2ps don't
 #if ( -X paps ) alias a2ps 'paps'
 ## zssh is ssh with ZModem support
