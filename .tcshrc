@@ -39,7 +39,7 @@ set DS = \$
 if ( ! $?USERID )   setenv USERID   `id -u`
 if ( ! $?USER )     setenv USER     `id -un`
 if ( ! $?HOME ) then
-	if ( $USERID == 0 )
+	if ( $USERID == 0 ) then
 		setenv HOME "/root"
 	else
 		setenv HOME "/home/$USER"
@@ -318,8 +318,9 @@ set hostcolor="%{\033[1;32m%}"
 set timecolor="%{\033[1;35m%}"
 set dirxcolor="%{\033[1;34m%}"
 set rsetcolor="%{\033[0m%}"
-if ( $USERID == 0 )     set usercolor="%{\033[31m%}"
-if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
+if ( $USERID == 0 )      set usercolor="%{\033[31m%}"
+#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
+if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
 set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
 unset usercolor hostcolor dirxcolor timecolor rsetcolor
 
