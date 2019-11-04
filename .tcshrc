@@ -1,4 +1,4 @@
-# -*- tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
+# -*- mode: tcsh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
 #
 #	~/.tcshrc
 #	Nicholas Christopoulos (nereus@freemail.gr)
@@ -38,7 +38,13 @@ if ( ! $?prompt ) exit
 set DS = \$
 if ( ! $?USERID )   setenv USERID   `id -u`
 if ( ! $?USER )     setenv USER     `id -un`
-if ( ! $?HOME )     setenv HOME     "/home/$USER"
+if ( ! $?HOME ) then
+	if ( $USERID == 0 )
+		setenv HOME "/root"
+	else
+		setenv HOME "/home/$USER"
+	endif
+endif
 if ( ! $?HOSTNAME ) setenv HOSTNAME `hostname`
 
 # find distro
