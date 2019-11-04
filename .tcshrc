@@ -422,7 +422,7 @@ alias setxhost		"echo -n '''\033]0;$LOGNAME@$HOSTNAME:au\007'''"
 
 #
 if ( $DISTRO == "void" ) then
-	alias man 'man -O width=`tput cols` '
+	alias man 'set x=`tput cols`; @ x = $x - 2; /usr/bin/man -O width=$x '
 endif
 
 ### information utilities
