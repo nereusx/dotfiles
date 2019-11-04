@@ -28,31 +28,20 @@ limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
 
 ### if its a shell script, exit
-if ( $?prompt == 0 ) then
-	exit
-endif
+if ( ! $?prompt ) exit
 
 ### this is an interactive shell ###
+
+#
+#	BASIC VARIABLES (for any environment)
+#
 set DS = \$
 if ( ! $?USERID )   setenv USERID   `id -u`
+if ( ! $?USER )     setenv USER     `id -un`
+if ( ! $?HOME )     setenv HOME     "/home/$USER"
 if ( ! $?HOSTNAME ) setenv HOSTNAME `hostname`
 
-#
-#	Start TMUX automagically
-#
-#	echo 'AUTOLOAD_TMUX=1' >> /etc/environment
-#
-if ( $?AUTOLOAD_TMUX ) then
-	if ( $AUTOLOAD_TMUX == 1 ) then
-		if ( ( ! $?TMUX ) && ( ! $?SUDO_USER ) ) then
-			exec tmux
-		endif
-	endif
-endif
-
-#
-#	find distro
-#
+# find distro
 if ( $?DISTRO == 0 ) then
 	if ( -r /etc/os-release ) then
 		setenv DISTRO `awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release`
@@ -62,7 +51,16 @@ if ( $?DISTRO == 0 ) then
 		if ( $?OSTYPE == 0 ) setenv OSTYPE unix
 	endif
 endif
-########################################
+
+#	Start TMUX automagically
+#	echo 'AUTOLOAD_TMUX=1' >> /etc/environment
+if ( $?AUTOLOAD_TMUX ) then
+	if ( $AUTOLOAD_TMUX == 1 ) then
+		if ( ( ! $?TMUX ) && ( ! $?SUDO_USER ) ) then
+			exec tmux
+		endif
+	endif
+endif
 
 #
 #	setup several local directories
@@ -80,8 +78,8 @@ end
 #
 #	setup and cleanup path
 #
-set path = ( $home/.bin $home/.help /usr/local/bin $path )
-if ( $USER == "root" ) then
+set path = ( $home/.bin $home/.help /bin /usr/bin /usr/local/bin /usr/pkg/bin $path )
+if ( $USERID == 0 ) then
 	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
 	foreach e ( $list )
 		if ( -d $e && ! -l $e ) then
@@ -89,16 +87,15 @@ if ( $USER == "root" ) then
 		endif
 	end
 endif
-if ( -X 'path++' ) then
-	setenv PATH `/bin/path++`
-endif
+# you path++ at https://github.com/nereusx/unix-utils
+if ( -X 'path++' ) setenv PATH `/bin/path++`
 
 #
 #	login shell
 #
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
-# code for TTY, (i.e. setterm --blank ... etc)
+		# code for TTY, (i.e. setterm --blank ... etc)
 		# enable keypad
 		echo -n '\033='
 	endif
@@ -110,22 +107,25 @@ endif
 set autorehash
 set autolist
 set highlight
+unset autologout
 set mail = ( /var/mail/$user )
 unset noglob
-#alias beepcmd 'play -q ~/.sounds/shell-beep.mp3'
 unalias beepcmd
+if ( -e ~/.sounds/shell-beep.mp3 ) alias beepcmd 'play -q ~/.sounds/shell-beep.mp3'
 set padhour
-#alias helpcommand '\!:1 --help'
 alias helpcommand 'man \!:1'
 # Runs every tperiod minutes.
 # This provides a convenient means for checking on common but infrequent changes such as new mail.
 # For example, if one does
 #set tperiod = 30
 #alias periodic checknews
+unalias periodic
 
 #
 #	Default Applications
 #
+
+### EDITORS ###
 
 # settings for JED
 setenv JED_HOME		${HOME}/.jed
@@ -181,6 +181,7 @@ foreach e ( $list )
 end
 
 ### PAGER ###
+
 setenv LS_OPTIONS		'--color=auto'
 setenv LESS 			'-R'
 setenv GROFF_ENCODING	'utf8'
@@ -306,12 +307,19 @@ endif
 #
 unset ampm
 set ellipsis
-if ( $USERID == 0 ) then
-	set ucolor="%{\033[31m%}"
-else
-	set ucolor="%{\033[32m%}"
-endif
-set prompt = "%B%{\033[35m%}%T ${ucolor}%n%{\033[32m%}@%m%b %C4 %# "
+set usercolor="%{\033[1;32m%}"
+set hostcolor="%{\033[1;32m%}"
+set timecolor="%{\033[1;35m%}"
+set dirxcolor="%{\033[1;34m%}"
+set rsetcolor="%{\033[0m%}"
+if ( $USERID == 0 )     set usercolor="%{\033[31m%}"
+if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
+set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
+unset usercolor hostcolor dirxcolor timecolor rsetcolor
+
+#
+#	other settings
+#
 
 ###	history
 set histlit
@@ -344,30 +352,32 @@ complete pdflatex	'n/*/f:*.{tex,ltx}/'
 complete xelatex	'n/*/f:*.{tex,ltx}/'
 complete adb		'n/push/f:*.{apk}/'
 complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
-#if ( -X tmux ) then
-#	# create completion for tmux
-#	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
-#	uncomplete tmux
-#	complete   tmux     "p/1/(${tmux_cmds})/"
-#endif
+if ( $?TMUX ) then
+	# create completion for tmux
+	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
+	uncomplete tmux
+	complete   tmux     "p/1/(${tmux_cmds})/"
+endif
 
-###	aliases
-
+#
+#	Aliases
+#
 alias reload		'source ~/.tcshrc'
 #alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
-alias cls          'clear'
-alias ps-all       'ps aux | grep -v "\["'
-alias diogenis     'fortune diogenis'
-alias free-h       'free -h'
-alias df-h         'df -h'
-alias xcopy        'rsync -ah --progress'
-alias xmerge       'xrdb -merge ~/.Xresources'
-alias xmonitor-off 'xset dpms force off'
-#alias xmonitor-on  'xset dpms force on'
-alias warn         'echo "\e[7m\e[5m "\!*" \e[0m"'
-alias ltrim		   "sed 's/^[ \t\n\r]*//'"
-alias rtrim		   "sed 's/[ \t\n\r]*$DS//'"
-alias trim		   "sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
+alias cls			'clear'
+alias ps-all		'ps aux | grep -v "\["'
+alias diogenis		'fortune diogenis'
+alias free-h		'free -h'
+alias df-h			'df -h'
+alias xcopy			'rsync -ah --progress'
+alias xmerge		'xrdb -merge ~/.Xresources'
+alias xmonitor-off	'xset dpms force off'
+#alias xmonitor-on	'xset dpms force on'
+alias warn			'echo "\e[7m\e[5m "\!*" \e[0m"'
+alias ltrim			"sed 's/^[ \t\n\r]*//'"
+alias rtrim			"sed 's/[ \t\n\r]*$DS//'"
+alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
+
 # colorize
 set color
 set colorcat
@@ -381,6 +391,7 @@ if ( $DISTRO != "FreeBSD" ) then
 endif
 alias diff	       'diff  --color=auto'
 
+# sudo
 if ( $USER != 'root' ) then
 	# sudo
 	alias htop     'sudo htop'
@@ -458,33 +469,34 @@ if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
 	else
-		alias calc 'echo \!* | bc -l'
+		alias calc 'echo "\!*" | bc -l'
 	endif
 endif
 if ( -r /var/lib/dpkg/status ) then
 	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
 endif
-alias git-q 'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
-alias git-c 'git checkout'
-alias git-p 'git pull'
+alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
+alias git-co 	'git checkout'
+alias git-pull	'git pull'
+
 ## paps support UTF8, a2ps don't
 #if ( -X paps ) alias a2ps 'paps'
+
 ## zssh is ssh with ZModem support
 #if ( -X zssh ) alias ssh  'zssh'
-## mutt or neomutt ?
-#if ( -X neomutt && ( ! -X mutt ) ) alias mutt 'neomutt'
+
 # command line web search
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser	"$BROWSER"
 	setenv SURFRAW_text_browser			"$TEXTBROWSER"
 	setenv SURFRAW_graphical			no
 	alias ddg 'surfraw duckduckgo'
-else
+else if ( ! -X ddg ) then
 	alias ddg 'w3m https://duckduckgo.com/lite'
 endif
 if ( -X youtube-dl ) then
-	alias yt-get-ogg  'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
-	alias yt-get-list 'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+	alias yt-get-audio	'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
+	alias yt-get-plist	'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
 endif
 
 ### directory stuff
@@ -508,8 +520,5 @@ foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
-
-# last changes
-#set autorehash
 
 #EOF
