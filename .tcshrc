@@ -78,12 +78,7 @@ end
 #
 set path = ( $home/.bin $home/.help /bin /usr/bin /usr/local/bin /usr/pkg/bin $path )
 if ( $USERID == 0 ) then
-	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
-	foreach e ( $list )
-		if ( -d $e && ! -l $e ) then
-			set path = ( $e $path )
-		endif
-	end
+	set path =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
 endif
 # you path++ at https://github.com/nereusx/unix-utils
 if ( -X 'path++' ) setenv PATH `/bin/path++`
