@@ -179,13 +179,6 @@ endif
 #
 #	tcsh's terminal fixes and keys
 #
-if ( $TERM == "xterm" ) then
-	bindkey "\033[1;3D" backward-word
-	bindkey "\033[1;3C" forward-word
-else
-	bindkey "\033\033[D" backward-word
-	bindkey "\033\033[C" forward-word
-endif
 bindkey '' list-choices-raw
 bindkey "\033[Z" complete-word-back
 bindkey "\033s" i-search-fwd
