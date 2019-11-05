@@ -107,7 +107,7 @@ else
 	end
 	unset path_dir dir src
 endif
-unset path_dir dir local_dirs user_dirs root_dirs src
+unset path_dir dir local_dirs user_dirs root_dirs
 
 #
 #	SETUP TCSH's ENVIRONMENT
