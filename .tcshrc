@@ -1,7 +1,7 @@
 # -*- mode: tcsh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
 #
 #	~/.tcshrc
-#	Nicholas Christopoulos (nereus@freemail.gr)
+#	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 
 # (non-)interactive absolute values
 set parseoctal
@@ -27,13 +27,15 @@ umask 022
 limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
 
-### if its a shell script, exit
+# if its a shell script, exit
 if ( ! $?prompt ) exit
 
-### this is an interactive shell ###
+#
+#	INTERACTIVE MODE
+#
 
 #
-#	BASIC VARIABLES (for any environment)
+#	BASIC SYSTEM VARIABLES (for any environment)
 #
 set DS = \$
 if ( ! $?USERID )   setenv USERID   `id -u`
@@ -97,7 +99,7 @@ endif
 if ( -X 'path++' ) setenv PATH `/bin/path++`
 
 #
-#	setup tcsh's environment
+#	SETUP TCSH's ENVIRONMENT
 #
 set autorehash
 set autolist
@@ -115,6 +117,136 @@ alias helpcommand 'man \!:1'
 #set tperiod = 30
 #alias periodic checknews
 unalias periodic
+
+#
+#	tcsh's prompt
+#
+unset ampm
+set ellipsis
+set usercolor="%{\033[1;32m%}"
+set hostcolor="%{\033[1;32m%}"
+set timecolor="%{\033[1;35m%}"
+set dirxcolor="%{\033[1;34m%}"
+set rsetcolor="%{\033[0m%}"
+if ( $USERID == 0 ) then
+	set usercolor="%{\033[1;31m%}"
+	set dirxcolor="%{\033[1;31m%}"
+endif
+#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
+if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
+set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
+unset usercolor hostcolor dirxcolor timecolor rsetcolor
+
+#
+#	tcsh' history
+#
+set histlit
+set history=128
+#set histdup=all
+set histdup
+set nohistclop
+alias hist 'history 20'
+
+#
+#	tcsh's directory stuff
+#
+set dunique
+#set cdpath = ( ${HOME} /usr/src )
+set pushdsilent
+set pushdtohome
+alias cd 'pushd'
+alias dirs 'dirs -v'
+if ( -X devtodo ) then
+	alias cwdcmd devtodo --timeout --summary
+endif
+
+#
+#	tcsh's completion
+#
+#	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
+if ( -e /etc/complete.tcsh ) then
+	source /etc/complete.tcsh
+else
+	echo "warning: /etc/complete.tcsh does not exists"
+endif
+uncomplete ln
+uncomplete rm
+uncomplete cp
+uncomplete mv
+uncomplete mount
+complete set		'p/1/s/'
+complete unset		'p/1/s/'
+complete setenv		'p/1/e/'
+complete unsetenv	'p/1/e/'
+complete env		'c/*=/f/' 'p/1/e/=/' 'p/2/c/'
+complete xdvi		'n/*/f:*.dvi/'
+complete latex		'n/*/f:*.{tex,ltx}/'
+complete pdflatex	'n/*/f:*.{tex,ltx}/'
+complete xelatex	'n/*/f:*.{tex,ltx}/'
+complete adb		'n/push/f:*.{apk}/'
+complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
+if ( $?TMUX ) then
+	# create completion for tmux
+	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
+	uncomplete tmux
+	complete   tmux     "p/1/(${tmux_cmds})/"
+endif
+
+#
+#	tcsh's terminal fixes and keys
+#
+if ( $TERM == "xterm" ) then
+	bindkey "\033[1;3D" backward-word
+	bindkey "\033[1;3C" forward-word
+else
+	bindkey "\033\033[D" backward-word
+	bindkey "\033\033[C" forward-word
+endif
+bindkey '' list-choices-raw
+bindkey "\033[Z" complete-word-back
+bindkey "\033s" i-search-fwd
+bindkey '' i-search-back
+bindkey "\033q" quoted-insert
+bindkey '' redisplay
+bindkey "\033m" set-mark-command
+bindkey "\033j" exchange-point-and-mark
+bindkey "\033k" kill-line
+bindkey '' backward-kill-line
+bindkey "\033d" kill-whole-line
+bindkey '' kill-region
+bindkey '' yank
+bindkey '' copy-prev-word
+bindkey "\033-" insert-last-word
+
+# shift+f5; alt+p (tcsh's default)
+bindkey "\033[15;2~" history-search-backward
+bindkey "\033p" history-search-backward
+# f5; alt+n (tcsh's default)
+bindkey "\033[15~" history-search-forward
+bindkey "\033n" history-search-forward
+
+# keypad
+bindkey "\033Om" kill-region
+bindkey "\033Ok" copy-region-as-kill
+bindkey "\033Op" yank
+
+if ( $TERM == "rxvt" ) then
+	setenv TERM rxvt-unicode
+	bindkey "\033[8~" end-of-line
+else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
+	bindkey "\033[8~" end-of-line
+else if ( $TERM == "st-256color" ) then
+	bindkey "\033[P" delete-char
+else
+	bindkey "\033[3~" delete-char
+endif
+
+# SSH
+if ( $?REMOTEHOST ) then
+	bindkey "\033OH" beginning-of-line
+	bindkey "\033OF" end-of-line
+	bindkey "\033[3~" delete-char
+endif
 
 #
 #	Default Applications
@@ -237,128 +369,6 @@ endif
 #	I didn't found it yet, but, you can disable it at `kdebugdialog' app.
 
 #
-#	TERMINAL FIXES and KEYBINDs
-#
-if ( $TERM == "xterm" ) then
-	bindkey "\033[1;3D" backward-word
-	bindkey "\033[1;3C" forward-word
-else
-	bindkey "\033\033[D" backward-word
-	bindkey "\033\033[C" forward-word
-endif
-#bindkey "" list-glob
-bindkey '' list-choices-raw
-#bindkey "" complete-word-fwd
-bindkey "\033[Z" complete-word-back
-bindkey "\033s" i-search-fwd
-bindkey '' i-search-back
-bindkey "\033q" quoted-insert
-bindkey '' redisplay
-bindkey "\033m" set-mark-command
-bindkey "\033j" exchange-point-and-mark
-bindkey "\033k" kill-line
-bindkey '' backward-kill-line
-bindkey "\033d" kill-whole-line
-#bindkey '' copy-region-as-kill
-bindkey '' kill-region
-bindkey '' yank
-bindkey '' copy-prev-word
-bindkey "\033-" insert-last-word
-
-# shift+f5; alt+p (tcsh's default)
-bindkey "\033[15;2~" history-search-backward
-bindkey "\033p" history-search-backward
-# f5; alt+n (tcsh's default)
-bindkey "\033[15~" history-search-forward
-bindkey "\033n" history-search-forward
-
-# pad--
-bindkey "\033Om" kill-region
-# pad-+
-bindkey "\033Ok" copy-region-as-kill
-# pad ins
-bindkey "\033Op" yank
-
-if ( $TERM == "rxvt" ) then
-	setenv TERM rxvt-unicode
-	bindkey "\033[8~" end-of-line
-else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
-	bindkey "\033[8~" end-of-line
-else if ( $TERM == "st-256color" ) then
-	bindkey "\033[P" delete-char
-else
-	bindkey "\033[3~" delete-char
-endif
-
-# SSH
-if ( $?REMOTEHOST ) then
-	bindkey "\033OH" beginning-of-line
-	bindkey "\033OF" end-of-line
-	bindkey "\033[3~" delete-char
-endif
-
-#
-#	prompt
-#
-unset ampm
-set ellipsis
-set usercolor="%{\033[1;32m%}"
-set hostcolor="%{\033[1;32m%}"
-set timecolor="%{\033[1;35m%}"
-set dirxcolor="%{\033[1;34m%}"
-set rsetcolor="%{\033[0m%}"
-if ( $USERID == 0 ) then
-	set usercolor="%{\033[1;31m%}"
-	set dirxcolor="%{\033[1;31m%}"
-endif
-#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
-if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
-set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
-unset usercolor hostcolor dirxcolor timecolor rsetcolor
-
-#
-#	other settings
-#
-
-###	history
-set histlit
-set history=128
-#set histdup=all
-set histdup
-set nohistclop
-alias hist 'history 20'
-
-###	completion
-#	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
-if ( -e /etc/complete.tcsh ) then
-	source /etc/complete.tcsh
-else
-	echo "warning: /etc/complete.tcsh does not exists"
-endif
-uncomplete ln
-uncomplete rm
-uncomplete cp
-uncomplete mv
-uncomplete mount
-complete set		'p/1/s/'
-complete unset		'p/1/s/'
-complete setenv		'p/1/e/'
-complete unsetenv	'p/1/e/'
-complete env		'c/*=/f/' 'p/1/e/=/' 'p/2/c/'
-complete xdvi		'n/*/f:*.dvi/'
-complete latex		'n/*/f:*.{tex,ltx}/'
-complete pdflatex	'n/*/f:*.{tex,ltx}/'
-complete xelatex	'n/*/f:*.{tex,ltx}/'
-complete adb		'n/push/f:*.{apk}/'
-complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
-if ( $?TMUX ) then
-	# create completion for tmux
-	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
-	uncomplete tmux
-	complete   tmux     "p/1/(${tmux_cmds})/"
-endif
-
-#
 #	Aliases
 #
 alias reload		'source ~/.tcshrc'
@@ -422,13 +432,6 @@ endif
 
 # xwindows title
 alias setxtitle		"echo -n '''\033]0;\!*\007'''"
-alias setxhost		"echo -n '''\033]0;$LOGNAME@$HOSTNAME:au\007'''"
-#if ( $?REMOTEHOST ) then
-#	setxhost
-#endif
-#if ( $?SSH_CONNECTION ) then
-#	alias postcmd setxhost
-#endif
 
 #
 if ( $DISTRO == "void" ) then
@@ -498,26 +501,16 @@ if ( -X youtube-dl ) then
 	alias yt-get-plist	'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
 endif
 
-### directory stuff
-set dunique
-#set cdpath = ( ${HOME} /usr/src )
-set pushdsilent
-alias pd 'pushd'
-alias pd. 'pushd $PWD'
-if ( -X devtodo ) then
-	alias cwdcmd devtodo --timeout --summary
-endif
-# use always pushd instead of cd
-set pushdtohome
-alias cd 'pushd'
-alias dirs 'dirs -v'
-
 #
 #	login shell, display welcome screen
 #
 if ( $?loginsh ) then # we are login shell..
 	if ( $tty =~ "tty[123456]" ) then
-		# code for TTY, (i.e. setterm --blank ... etc)
+		# set terminal blank mode in minutes
+		setterm --blank=5
+		# set terminal poweroff in minutes
+		setterm --powerdown=5
+		setterm --powersave powerdown
 		# enable keypad
 		echo -n '\033='
 	endif
