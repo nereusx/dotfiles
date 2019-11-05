@@ -97,17 +97,6 @@ endif
 if ( -X 'path++' ) setenv PATH `/bin/path++`
 
 #
-#	login shell
-#
-if ( $?loginsh ) then # we are login shell..
-	if ( $tty =~ "tty[123456]" ) then
-		# code for TTY, (i.e. setterm --blank ... etc)
-		# enable keypad
-		echo -n '\033='
-	endif
-endif
-
-#
 #	setup tcsh's environment
 #
 set autorehash
@@ -523,7 +512,30 @@ set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
 
-### load additional settings if you use my script
+#
+#	login shell, display welcome screen
+#
+if ( $?loginsh ) then # we are login shell..
+	if ( $tty =~ "tty[123456]" ) then
+		# code for TTY, (i.e. setterm --blank ... etc)
+		# enable keypad
+		echo -n '\033='
+	endif
+
+	echo 'Welcome to tenex c-shell'
+	echo
+	set list = ( neofetch screenfetch diogenis fortunes )
+	foreach f ( $list )
+		if ( -X $f ) then
+			$f
+			break
+		endif
+	end
+endif
+
+#
+#	load additional settings if you use my script
+#
 set nonomatch
 set list = ( ~/.tcshrc-* )
 foreach conf ( $list )
@@ -531,4 +543,4 @@ foreach conf ( $list )
 end
 unset nonomatch
 
-#EOF
+# EOF
