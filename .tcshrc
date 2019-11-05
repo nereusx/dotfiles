@@ -261,10 +261,9 @@ alias jed-prep     'xjed -batch -n -l preparse'
 # settings for GRIEF
 setenv GRLIB			/usr/local/share/grief
 setenv GRPATH			${HOME}/.grief-local:${GRLIB}/macros
-setenv GRFLAGS			"-m grief-rc"
+setenv GRFLAGS			"--utf8=yes -m grief-rc"
 setenv GRTERM			"linux"
 setenv GRHELP			${GRLIB}/help
-setenv GRUTF8_FORCE
 setenv GRDICTIONARIES	en,el
 setenv GRDICTIONARY		/usr/share/aspell
 
