@@ -132,7 +132,6 @@ if ( $USERID == 0 ) then
 	set usercolor="%{\033[1;31m%}"
 	set dirxcolor="%{\033[1;31m%}"
 endif
-#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
 if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
 set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
 unset usercolor hostcolor dirxcolor timecolor rsetcolor
