@@ -25,10 +25,6 @@ alias termbin 'nc termbin.com 9999'
 if ( ! $?prompt ) exit
 
 #
-#	INTERACTIVE MODE
-#
-
-#
 #	BASIC SYSTEM VARIABLES (for any environment)
 #
 set DS = \$
