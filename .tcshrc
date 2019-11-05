@@ -83,25 +83,30 @@ else
 	set root_dirs = ( )
 endif
 set local_dirs = ( $home/.bin $home/.help )
-set src = ( $local_dirs $root_dirs $user_dirs $path )
-# now rebuild it
-set path=''
-foreach dir ( $src )
-	if ( -d $dir ) then
-		unset found
-		foreach path_dir ( $path )
-			if ( $path_dir == $dir ) then
-				set found
-				break
-			endif
-		end
-		if ( ! $?found ) then
-			set path = ( $dir $path )
-		endif
-	endif
-end
 # you can download path++ at https://github.com/nereusx/unix-utils
-#if ( -X 'path++' ) setenv PATH `/bin/path++`
+if ( -X 'path++' ) then
+	set path = ( $local_dirs $root_dirs $user_dirs $path )
+	setenv PATH `path++`
+else
+	set src = ( $local_dirs $root_dirs $user_dirs $path )
+	# now rebuild it
+	set path=''
+	foreach dir ( $src )
+		if ( -d $dir ) then
+			unset found
+			foreach path_dir ( $path )
+				if ( $path_dir == $dir ) then
+					set found
+					break
+				endif
+			end
+			if ( ! $?found ) then
+				set path = ( $dir $path )
+			endif
+		endif
+	end
+	unset path_dir dir src
+endif
 unset path_dir dir local_dirs user_dirs root_dirs src
 
 #
