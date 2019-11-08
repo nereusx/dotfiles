@@ -1,0 +1,20 @@
+#!/bin/sh
+
+todo="help"
+if [[ $# > 0 ]]; then
+	todo="$1"
+	shift
+fi
+
+case $todo in
+-u|update|upgrade)	apt-get update && apt-get upgrade ;;
+-i|install)			apt-get install $*;;
+-r|remove)			apt-get remove $*;;
+-s|search)			apt-cache search $*;;
+-w|info|view|show)	apt-cache showpkg $*;;
+-f|--files)			apt-cache files $*;;
+-fs|--filesearch)	apt-cache searchfile $*;;
+-v|--version)		echo "0.1"; exit 1;;
+-h|--help|help)		echo "next version"; exit 1;;
+esac
+
