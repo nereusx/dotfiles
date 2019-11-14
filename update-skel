@@ -2,7 +2,7 @@
 if [ -d /etc/skel ]; then
 	cp -r .xfce4-autoexec .bin .help\
 		.tcshrc .bashrc .login .logout\
-		.kshrc .mkshrc .yashrc\
+		.kshrc .mkshrc .yashrc .strc\
 		.tmux .tmux.conf .urxvt .xres .Xresources\
 		.jed .newsboat .bc .clogrc .a2ps\
 		/etc/skel/
