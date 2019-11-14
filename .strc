@@ -1,0 +1,6 @@
+# ~/.strc, nicholas version of suckless terminal
+font=XSG Term 189:pixelsize=18:antialias=true:autohint=true
+#font=XSG S240:pixelsize=24:antialias=true:autohint=true
+cols=140
+rows=40
+border=0
