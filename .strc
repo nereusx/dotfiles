@@ -1,6 +1,10 @@
 # ~/.strc, nicholas version of suckless terminal
+? test "$HOSTNAME" = "quicksand64"
 font=XSG Term 189:pixelsize=18:antialias=true:autohint=true
-#font=XSG S240:pixelsize=24:antialias=true:autohint=true
+? test "$HOSTNAME" = "t440s"
+font=XSG S240:pixelsize=24:antialias=true:autohint=true
+-
 cols=140
 rows=40
 border=0
+
