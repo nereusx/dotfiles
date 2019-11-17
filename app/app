@@ -37,7 +37,7 @@ esac
 SVM=sysv
 case $DISTRO in
 debian|ubuntu)		SVM=systemd ;;
-slackware|sysv|mx)	SVM=sysv    ;;
+slackware)			SVM=sysv    ;;
 *BSD)				SVM=sysv    ;;
 void)				SVM=runit   ;;
 arch|manjaro)		SVM=systemd ;;
@@ -152,6 +152,8 @@ _svdisable() {
 	done
 	}
 
+###
+###	Main
 ###
 
 todo="help"
