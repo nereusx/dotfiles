@@ -52,13 +52,13 @@ if ( ! $?HOSTNAME ) then
 endif
 
 # find distro
-if ( $?DISTRO == 0 ) then
+if ( ! $?DISTRO ) then
 	if ( -r /etc/os-release ) then
 		setenv DISTRO `awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release`
-		if ( $?OSTYPE == 0 ) setenv OSTYPE `uname -s`
+		if ( ! $?OSTYPE ) setenv OSTYPE `uname -s`
 	else # ignore it
 		setenv DISTRO `uname -s`
-		if ( $?OSTYPE == 0 ) setenv OSTYPE unix
+		if ( ! $?OSTYPE ) setenv OSTYPE unix
 	endif
 endif
 
@@ -129,14 +129,15 @@ set usercolor="%{\033[1;32m%}"
 set hostcolor="%{\033[1;32m%}"
 set timecolor="%{\033[1;35m%}"
 set dirxcolor="%{\033[1;34m%}"
-set rsetcolor="%{\033[0m%}"
+set resetmode="%{\033[0m%}"
 if ( $USERID == 0 ) then
 	set usercolor="%{\033[1;31m%}"
 	set dirxcolor="%{\033[1;31m%}"
 endif
-#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
-if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
-set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
+if ( $?REMOTEHOST ) then
+	set hostcolor="%{\033[33m%}"
+endif
+set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${resetmode} %# "
 unset usercolor hostcolor dirxcolor timecolor rsetcolor
 
 #
@@ -187,7 +188,7 @@ complete pdflatex	'n/*/f:*.{tex,ltx}/'
 complete xelatex	'n/*/f:*.{tex,ltx}/'
 complete adb		'n/push/f:*.{apk}/'
 complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
-if ( $?TMUX ) then
+if ( -X tmux ) then
 	# create completion for tmux
 	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
 	uncomplete tmux
@@ -290,6 +291,8 @@ foreach e ( $list )
 	endif
 end
 alias hexedit "$HEXEDITOR"
+
+# default hex dumper
 if ( ! -X hex ) then
 	if ( -X hexdump ) then
 		alias hex 'hexdump -C'
@@ -320,21 +323,8 @@ setenv LESS_TERMCAP_so  '[7m'			# begin reverse video,	ANSI: [7m
 setenv LESS_TERMCAP_se  '[27m'		# reset reverse video,	ANSI: [27m
 setenv LESS_TERMCAP_us  '[4m[1;32m'	# begin underline,		ANSI: [4m
 setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
-if ( $DISTRO == "alpine" ) then
-	setenv LESS_TERMCAP_mr	'[7m'
-	setenv LESS_TERMCAP_mh	'[2m'
-	setenv LESS_TERMCAP_ZN	''
-	setenv LESS_TERMCAP_ZV	''
-	setenv LESS_TERMCAP_ZO	''
-	setenv LESS_TERMCAP_ZW	''
-else
-	setenv LESS_TERMCAP_mr	`tput rev`
-	setenv LESS_TERMCAP_mh	`tput dim`
-	setenv LESS_TERMCAP_ZN	`tput ssubm`
-	setenv LESS_TERMCAP_ZV	`tput rsubm`
-	setenv LESS_TERMCAP_ZO	`tput ssupm`
-	setenv LESS_TERMCAP_ZW	`tput rsupm`
-endif
+setenv LESS_TERMCAP_mr	'[7m'
+setenv LESS_TERMCAP_mh	'[2m'
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
 setenv MOST_SWITCHES	'-w'
 setenv MOST_EDITOR		'jed %s -g %d'
@@ -379,6 +369,7 @@ alias ps-all		'ps aux | grep -v "\["'
 alias diogenis		'fortune diogenis'
 alias free-h		'free -h'
 alias df-h			'df -h'
+alias dff			'echo "Filesystem      Size  Used Avail Use% Mounted on";df -h | grep \'^/dev/\''
 alias xcopy			'rsync -ah --progress'
 alias xmerge		'xrdb -merge ~/.Xresources'
 alias xmonitor-off	'xset dpms force off'

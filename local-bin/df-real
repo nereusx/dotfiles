@@ -1,6 +1,0 @@
-#!/bin/sh
-#
-#	df that shows only real disks
-#
-echo "Filesystem      Size  Used Avail Use% Mounted on"
-df -h | grep '^/dev/'

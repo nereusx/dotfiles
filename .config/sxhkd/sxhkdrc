@@ -1,0 +1,10 @@
+# sys
+mod4 + shift + l
+	xautolock -locknow
+mod4 + l
+	xautolock -locknow
+mod1 + shift + r
+    pkill -USR1 -x sxhkd
+mod1 + ctrl + BackSpace
+    pkill xinit
+
