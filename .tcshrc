@@ -9,15 +9,13 @@ set echo_style=both
 set backslash_quote
 
 # mode   umask
-# 0777 - 0000 -
-# 0775 - 0002 -
-# 0770 - 0007
+# 0777 - 0000 - extremly dangerous
+# 0775 - 0002 - dangerous
+# 0770 - 0007 - not so dangerous
 # 0755 - 0022 - default
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
-#unset ignoreeof
-#umask 027
 umask 022
 
 ##limit stacksize 256k
