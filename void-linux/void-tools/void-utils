@@ -55,10 +55,10 @@ case $todo in
 # void-package
 -u|update|upgrade)	void-package -u;;
 -i|install|-r|remove|reinstall|-w|info|show|view|-s|search|-rs|regex-search|-fs|file-search)
-	void-package $todo $*
+	./void-package $todo $*
 	;;
 -o|-rc|-k|-rok|-f|--files|-a|-af|-ia|-ai)
-	void-package $todo $*
+	./void-package $todo $*
 	;;
 
 # void-service
@@ -68,11 +68,11 @@ case $todo in
 -D|disabled) void-service -D;;
 -L|list)	void-service -L;;
 start|stop|status|restart|reload)
-	void-service $todo $*
+	./void-service $todo $*
 	;;
 
 -m|maintenance)
-	void-maintenance
+	./void-maintenance
 	;;
 
 -al)
