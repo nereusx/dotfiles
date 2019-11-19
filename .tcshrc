@@ -122,6 +122,7 @@ unalias periodic
 
 #
 #	tcsh's prompt
+#	man console_codes
 #
 unset ampm
 set ellipsis
@@ -160,7 +161,7 @@ set pushdtohome
 alias cd 'pushd'
 alias dirs 'dirs -v'
 if ( -X devtodo ) then
-	alias cwdcmd devtodo --timeout --summary
+	alias cwdcmd 'devtodo --timeout --summary'
 endif
 
 #
@@ -384,8 +385,8 @@ alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/de
 set color
 set colorcat
 #
-alias ls	       'ls    --color'
 alias ll	       'ls    --color -lha'
+alias ls	       'ls    --color'
 if ( $DISTRO != "FreeBSD" ) then
 	alias grep	       'grep  --color=auto'
 	alias egrep	       'egrep --color=auto'
