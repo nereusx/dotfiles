@@ -304,7 +304,7 @@ endif
 
 # select BRIEF editor
 alias b "$EDITOR"
-set list = ( jed gr emacs nano )
+set list = ( jed gr nano )
 foreach e ( $list )
 	if ( -X $e ) then
 		alias b "$e"
@@ -364,7 +364,7 @@ endif
 #	Aliases
 #
 alias reload		'source ~/.tcshrc'
-#alias remake 'make clean; make' # 'remake' began gnu project to debug makefiles
+alias remake		'make clean; make' # warning: 'remake' began gnu project to debug makefiles
 alias cls			'clear'
 alias ps-all		'ps aux | grep -v "\["'
 alias diogenis		'fortune diogenis'
@@ -374,7 +374,6 @@ alias dff			'echo "Filesystem      Size  Used Avail Use% Mounted on";df -h | gre
 alias xcopy			'rsync -ah --progress'
 alias xmerge		'xrdb -merge ~/.Xresources'
 alias xmonitor-off	'xset dpms force off'
-#alias xmonitor-on	'xset dpms force on'
 alias warn			'echo "\e[7m\e[5m "\!*" \e[0m"'
 alias ltrim			"sed 's/^[ \t\n\r]*//'"
 alias rtrim			"sed 's/[ \t\n\r]*$DS//'"
