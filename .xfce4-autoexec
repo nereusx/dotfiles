@@ -1,29 +1,48 @@
-#!/bin/tcsh -f
+#!/bin/tcsh
 
 ### no netwrok required
 
-#
-dunst &
+# hotkeys
+sxhkd &
+
+# xautolock & xlock
+xautolock &
+
+# network manager
+#nm-applet &
+
+# notify-osd, dunst
+#dunst &
+
+# clipboard manager
 xfce4-clipman &
-#urxvtd -q -f -o
-xfce4-screensaver &
+
+# bluetooth
+blueman-applet &
+
+# enable screesaver
+#xfce4-screensaver &
+#xscreensaver -no-splash &
 
 ### network required
 # wait for connection
-unset online
-while ( 1 )
-	ping 1.1.1.1 -c 1 -w 1 > /dev/null && set online
-	if ( $?online ) then
-		break
-	endif
-	sleep 1
-end
+#unset online
+#while ( 1 )
+#	ping 1.1.1.1 -c 1 -w 1 > /dev/null && set online
+#	if ( $?online ) then
+#		break
+#	endif
+#	sleep 1
+#end
 
 # run network depended commands
 pidgin &
 claws-mail &
 ~/.bin/viber &
 conky &
+
+### applications
+st &
 
 ### finish
 # play welcome sound
