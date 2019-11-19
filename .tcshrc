@@ -519,6 +519,15 @@ if ( $?loginsh ) then # we are login shell..
 	end
 endif
 
+# common packager for root
+if ( $USERID == 0 ) then
+	if ( -x /usr/src/dotfiles/$DISTRO/$DISTRO ) then
+		alias app "/usr/src/dotfiles/$DISTRO/$DISTRO"
+	else if ( -x /usr/src/dotfiles/$DISTRO/app ) then
+		alias app "/usr/src/dotfiles/$DISTRO/app"
+	endif
+endif
+
 #
 #	load additional settings if you use my script
 #
