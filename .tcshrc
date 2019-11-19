@@ -16,13 +16,23 @@ set backslash_quote
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
+#unset ignoreeof
+#umask 027
 umask 022
 
+##limit stacksize 256k
+## slackpkg (bash script) needs > 256k !!!
+## sbpkg (bash script) needs even more...
+#limit stacksize 4096k
 limit coredumpsize 0
 alias termbin 'nc termbin.com 9999'
 
 # if its a shell script, exit
 if ( ! $?prompt ) exit
+
+#
+#	INTERACTIVE MODE
+#
 
 #
 #	BASIC SYSTEM VARIABLES (for any environment)
@@ -37,7 +47,9 @@ if ( ! $?HOME ) then
 		setenv HOME "/home/$USER"
 	endif
 endif
-if ( ! $?HOSTNAME ) setenv HOSTNAME `hostname`
+if ( ! $?HOSTNAME ) then
+	setenv HOSTNAME `hostname`
+endif
 
 # find distro
 if ( $?DISTRO == 0 ) then
@@ -76,38 +88,17 @@ end
 #
 #	setup and cleanup path
 #
-set user_dirs = ( /bin /usr/bin /usr/local/bin /usr/pkg/bin )
-if ( $USERID == 0 ) then # root's directories
-	set root_dirs = ( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin  )
-else
-	set root_dirs = ( )
-endif
-set local_dirs = ( $home/.bin $home/.help )
-# you can download path++ at https://github.com/nereusx/unix-utils
-if ( -X 'path++' ) then
-	set path = ( $local_dirs $root_dirs $user_dirs $path )
-	setenv PATH `path++`
-else
-	set src = ( $local_dirs $root_dirs $user_dirs $path )
-	# now rebuild it
-	set path=''
-	foreach dir ( $src )
-		if ( -d $dir ) then
-			unset found
-			foreach path_dir ( $path )
-				if ( $path_dir == $dir ) then
-					set found
-					break
-				endif
-			end
-			if ( ! $?found ) then
-				set path = ( $dir $path )
-			endif
+set path = ( $home/.bin $home/.help /bin /usr/bin /usr/local/bin /usr/pkg/bin $path )
+if ( $USERID == 0 ) then
+	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
+	foreach e ( $list )
+		if ( -d $e && ! -l $e ) then
+			set path = ( $e $path )
 		endif
 	end
-	unset path_dir dir src
 endif
-unset path_dir dir local_dirs user_dirs root_dirs
+# you path++ at https://github.com/nereusx/unix-utils
+if ( -X 'path++' ) setenv PATH `/bin/path++`
 
 #
 #	SETUP TCSH's ENVIRONMENT
@@ -143,6 +134,7 @@ if ( $USERID == 0 ) then
 	set usercolor="%{\033[1;31m%}"
 	set dirxcolor="%{\033[1;31m%}"
 endif
+#if ( $?SSH_CONNECTION ) set hostcolor="%{\033[33m%}"
 if ( $?REMOTEHOST )		 set hostcolor="%{\033[33m%}"
 set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${rsetcolor} %# "
 unset usercolor hostcolor dirxcolor timecolor rsetcolor
@@ -205,6 +197,13 @@ endif
 #
 #	tcsh's terminal fixes and keys
 #
+if ( $TERM == "xterm" ) then
+	bindkey "\033[1;3D" backward-word
+	bindkey "\033[1;3C" forward-word
+else
+	bindkey "\033\033[D" backward-word
+	bindkey "\033\033[C" forward-word
+endif
 bindkey '' list-choices-raw
 bindkey "\033[Z" complete-word-back
 bindkey "\033s" i-search-fwd
@@ -321,12 +320,21 @@ setenv LESS_TERMCAP_so  '[7m'			# begin reverse video,	ANSI: [7m
 setenv LESS_TERMCAP_se  '[27m'		# reset reverse video,	ANSI: [27m
 setenv LESS_TERMCAP_us  '[4m[1;32m'	# begin underline,		ANSI: [4m
 setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
-setenv LESS_TERMCAP_mr	'[7m'
-setenv LESS_TERMCAP_mh	'[2m'
-setenv LESS_TERMCAP_ZN	''
-setenv LESS_TERMCAP_ZV	''
-setenv LESS_TERMCAP_ZO	''
-setenv LESS_TERMCAP_ZW	''
+if ( $DISTRO == "alpine" ) then
+	setenv LESS_TERMCAP_mr	'[7m'
+	setenv LESS_TERMCAP_mh	'[2m'
+	setenv LESS_TERMCAP_ZN	''
+	setenv LESS_TERMCAP_ZV	''
+	setenv LESS_TERMCAP_ZO	''
+	setenv LESS_TERMCAP_ZW	''
+else
+	setenv LESS_TERMCAP_mr	`tput rev`
+	setenv LESS_TERMCAP_mh	`tput dim`
+	setenv LESS_TERMCAP_ZN	`tput ssubm`
+	setenv LESS_TERMCAP_ZV	`tput rsubm`
+	setenv LESS_TERMCAP_ZO	`tput ssupm`
+	setenv LESS_TERMCAP_ZW	`tput rsupm`
+endif
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
 setenv MOST_SWITCHES	'-w'
 setenv MOST_EDITOR		'jed %s -g %d'
