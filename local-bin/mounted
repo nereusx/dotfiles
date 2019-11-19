@@ -1,9 +1,0 @@
-#!/bin/sh
-
-#
-#	shows real devices which are mounted
-#
-
-#lsblk -f -o +size | grep -v loop
-
-mount | grep -E '^(tmpfs|/dev)' | grep -Ev 'AppImage|/dev/shm|/dev/fuse'
