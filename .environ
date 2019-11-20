@@ -1,6 +1,7 @@
 #!/bin/sh
-
-# basic settings
+#
+#	POSIX SHELL: Basic settings
+#
 
 # Start TMUX automagically
 # echo 'AUTOLOAD_TMUX=1' >> /etc/environment

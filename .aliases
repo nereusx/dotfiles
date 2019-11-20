@@ -1,5 +1,7 @@
 #!/bin/sh
-# aliases
+#
+#	POSIX SHELL: Aliases
+#
 
 if [ "$DISTRO" = "void" ]; then
 	man() { command man -O width=$(($(tput cols)-2)) "$@"; }
