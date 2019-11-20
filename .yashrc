@@ -196,6 +196,7 @@ getfilename() {	echo ${1##*/}; }
 getdirname()  { local fn; fn=${1##*/}; echo ${1%"$fn"}; }
 getbasename() {	local fn; fn=${1##*/}; echo ${fn%.*}; }
 getfileext()  { local fn, bn; fn=${1##*/}; bn=${fn%.*}; echo ${fn#"$bn"}; }
+alias reload='. ~/.yashrc'
 
 # git
 _git_q() {

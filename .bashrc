@@ -103,8 +103,11 @@ _file_type() {
 }
 COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 
+# more aliases
+alias reload='. ~/.bashrc'
+
 #	welcome screen
-function _welcome {
+if [[ -o login_shell ]]; then
 	[[ $TTY =~ tty* ]] && /bin/echo -ne '\033='
 	echo "Welcome to BaSH $BASH_VERSION"
 	echo
@@ -115,9 +118,7 @@ function _welcome {
 			break
 		fi
 	done
-}
-#[ -o login_shell ] && _welcome
-[[ $- =~ l ]] && _welcome
+fi
 							
 #	load local bashrc files
 for e in ~/.bashrc-*; do
