@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ -d /etc/skel ]; then
 	cp -r .xfce4-autoexec .bin .help\
-		.tcshrc .bashrc \
+		.tcshrc .bashrc .posix-shell\
 		.kshrc .mkshrc .yashrc .strc\
 		.tmux .tmux.conf .urxvt .xres .Xresources\
 		.jed .newsboat .bc .clogrc .a2ps\
