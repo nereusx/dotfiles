@@ -117,7 +117,6 @@ done
 #
 #	PROMPT
 #
-
 if [ -n "${SSH_CONNECTION-}" ]; then
   _hc='\fy\fo.'     # yellow hostname for SSH remote
 else

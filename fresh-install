@@ -19,7 +19,7 @@ endif
 
 # install configuration files
 ./install-nano-syntax-files
-./install-to-users .tcshrc .yashrc .login .bashrc .mkshrc .bin .help \
+./install-to-users .tcshrc .yashrc .bashrc .mkshrc .bin .help \
 	.jed .nanorc .grief-local .grinit .joerc .vimrc \
 	.newsboat .clogrc \
 	.gitconfig .config \
