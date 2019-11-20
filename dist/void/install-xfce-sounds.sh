@@ -1,5 +1,5 @@
 #!/bin/sh
-app=./void-pkg
+app=./void
 # there are no sound-themes
 $app -i libcanberra-gtk xfce4-settings xsettingsd xfconf libcanberra-utils
 

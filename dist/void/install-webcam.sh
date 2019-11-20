@@ -1,3 +1,3 @@
 #!/bin/sh
-app=./void-pkg
+app=./void
 $app -i cheese guvcview
