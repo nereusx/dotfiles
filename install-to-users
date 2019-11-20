@@ -13,13 +13,15 @@ foreach f ( $* )
 	echo "root\t$src -> /root"
 	cp -r $src /root
 	foreach dir ( /home/* )
-		set name = $dir:t
-		unset found
-		id -u $name > /dev/null && set found
-		if ( $?found ) then
-			echo "$name\t$src -> $dir"
-			cp -r $src $dir
-			chown -R ${name}:${name} $dir/$f
+		if ( ! -l $dir ) then
+			set name = $dir:t
+			unset found
+			id -u $name > /dev/null && set found
+			if ( $?found ) then
+				echo "$name\t$src -> $dir"
+				cp -r $src $dir
+				chown -R ${name}:${name} $dir/$f
+			endif
 		endif
 	end
 end
