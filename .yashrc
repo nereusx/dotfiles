@@ -6,37 +6,7 @@ umask 022
 # if non-interactive shell, exit
 [ -o interactive ] || return
 
-#
-export USERID=${USERID:-$(id -u)}
-export USER=${USER:-$(id -un)}
-export HOME=${HOME:-"/home/$USER"}
-
-#
-#	PATH
-#
-if [ $USERID -eq 0 ]; then
-	PATH=/sbin:/usr/sbin:/usr/local/sbin:$PATH
-fi
-PATH=/bin:/usr/bin:/usr/local/bin:$PATH
-PATH=${HOME}/.bin:${HOME}/.help:$PATH
-[ -x "/bin/path++" ] && PATH=$(/bin/path++)
-export PATH
-
-#
-#	Start TMUX automagically
-#
-#	echo 'AUTOLOAD_TMUX=1' >> /etc/environment
-#
-AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
-if [ $AUTOLOAD_TMUX -eq 1 ]; then
-	if [ -z "$TMUX" -a -z "$SUDO_USER" ]; then
-		exec tmux
-	fi
-fi
-
-#
-#	yash settings
-#
+# yash settings
 set -o emacs
 set -o allexport
 set -o extended-glob
@@ -47,11 +17,6 @@ set -o notify-le
 set -o le-no-conv-meta
 set +o le-predict
 set +o err-exit
-
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
 
 # keybinds
 bindkey --emacs '\^N' beginning-search-forward
@@ -91,37 +56,13 @@ mute() {
 
 # ensure job control works as expected
 [ -o monitor ] && trap - TSTP TTIN TTOU
-  
-#
-#	basic settings
-#
-[ $TERM == "rxvt" ] && TERM="rxvt-unicode"
-: ${TTY:=$(tty | cut -f3-4 -d/)} ${HOSTNAME:=$(hostname)}
-#: ${MAIL:="/var/mail/$USER"} ${MAILCHECK:='0'}
-MAIL="/var/mail/$USER"
-MAILCHECK='0'
-_get_distro() {
-	if [ -r /etc/os-release ]; then
-		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
-	else
-		echo $(uname -s)
-	fi;
-	}
-: ${DISTRO:=$(_get_distro)} ${OSTYPE:=$(uname -s)}
 
-# setup several local directories
-backup=${HOME}/.backup
-list=($backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc)
-for e in $list; do
-	if [ ! -d $e ]; then
-		mkdir -p $e
-		chmod 0700 $e
-	fi
+# load ~/.posix-shell/*
+for script in ~/.posix-shell/*.sh; do
+	[ -x $script ] && . $script
 done
 
-#
 #	PROMPT
-#
 if [ -n "${SSH_CONNECTION-}" ]; then
   _hc='\fy\fo.'     # yellow hostname for SSH remote
 else
@@ -288,10 +229,8 @@ if [ -x /usr/bin/devtodo -o -x /usr/local/bin/devtodo ]; then
 	YASH_AFTER_CD=("$YASH_AFTER_CD" '_show_todo')
 fi
 
-#
-#	welcome screen
-#
-function _welcome {
+# welcome screen
+if [ -o login ]; then
 	[ $TTY =~ tty* ] && /bin/echo -ne '\033='
 	echo "Welcome to \e[1m\e[32mYaSH\e[0m $YASH_VERSION command line shell"
 	echo
@@ -302,13 +241,10 @@ function _welcome {
 			break
 		fi
 	done
-}
-[ -o login ] && _welcome
+	unset f list
+fi
 
 #	load local yashrc files
 for e in ~/.yashrc-*; do
 	[ -f $e ] && . $e
 done
-
-# clean-up
-unset e f list cpus

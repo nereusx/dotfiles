@@ -1,6 +1,16 @@
 #!/bin/sh
 # basic settings
 
+# Start TMUX automagically
+# echo 'AUTOLOAD_TMUX=1' >> /etc/environment
+AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
+if [ $AUTOLOAD_TMUX -eq 1 ]; then
+	if [ -z "$TMUX" -a -z "$SUDO_USER" ]; then
+		exec tmux
+	fi
+fi
+
+# Basic settings
 DS='$'
 [ "$TERM" = "rxvt" ] && TERM="rxvt-unicode"
 USER=${USER:-$(id -un)}
@@ -19,3 +29,5 @@ _get_distro() {
 	}
 : ${DISTRO:=$(_get_distro)}
 : ${OSTYPE:=$(uname -s)}
+
+
