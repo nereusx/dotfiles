@@ -48,6 +48,11 @@ set -o le-no-conv-meta
 set +o le-predict
 set +o err-exit
 
+# load ~/.posix-shell/*
+for script in ~/.posix-shell/*.sh; do
+	[ -x $script ] && . $script
+done
+
 # keybinds
 bindkey --emacs '\^N' beginning-search-forward
 bindkey --emacs '\^O' clear-candidates
@@ -244,135 +249,12 @@ _file_type() {
 COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 
 #
-#	--- EDITORS ---
-#
-GRLIB="/usr/local/share/grief"
-GRPATH=${HOME}/.grief-local:${GRLIB}/macros
-GRFLAGS="--utf8=yes -m grief-rc"
-GRTERM=linux
-GRUTF8_FORCE=1
-GRHELP="${GRLIB}/help"
-GRDICTIONARIES="en,el"
-GRDICTIONARY="/usr/share/aspell"
-
-JED_HOME=$HOME/.jed
-alias jed-prep='xjed -batch -n -l preparse'
-
-# customise your favourite editor here; the first one found is used
-list=(jed gr nano joe vim vi)
-for EDITOR in $list; do
-	EDITOR=$(command -pv "$EDITOR") && break
-done
-VISUAL="$EDITOR"
-FCEDIT="$EDITOR"
-alias b="$EDITOR"
-list="ht hte dhex mcedit"
-for HEXEDITOR in $list; do
-	HEXEDITOR=$(command -pv "$HEXEDITOR") && break
-done
-alias hexedit="$HEXEDITOR"
-
-# --- PAGER ---
-LESS='-R'
-GROFF_ENCODING='utf8'
-LESS_TERMCAP_mb='[1;31m'		# begin bold,			ANSI: [1m
-LESS_TERMCAP_md='[1;36m'		# begin blink,			ANSI: [5m
-LESS_TERMCAP_me='[0m'     	# reset bold/blink,		ANSI: [21m[25m
-LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
-LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
-LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
-LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
-LESS_TERMCAP_mr='[7m'
-LESS_TERMCAP_mh='[2m'
-#LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
-MOST_SWITCHES='-w'
-MOST_EDITOR='jed %s -g %d'
-PAGER=less
-#PAGER=most
-# --- end ---
-
-# other settings
-LS_OPTIONS='--color=auto'
-BROWSER=firefox
-cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
-cpus=$(($cpus + 1))
-MAKEFLAGS="-j$cpus"
-__GL_YIELD='USLEEP'
-
-#
 #	aliases
 #
-man() { command man -O width=$(($(tput cols)-2)) "$@"; }
-alias source='. '
-alias reload='. $HOME/.yashrc'
-
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias dmesg='dmesg --color=always'
-
-alias ll='ls --color=auto -lha'
-alias ls='ls --color=auto'
-
-alias cls='clear'
-alias reload='. ~/.yashrc'
-alias remake='make clean; make' # warning: 'remake' began gnu project to debug makefiles
-dff()     { echo "Filesystem      Size  Used Avail Use% Mounted on";df -h | grep '^/dev/'; }
-mounted() {	mount | grep -E '^(tmpfs|/dev)' | grep -Ev 'AppImage|/dev/shm|/dev/fuse'; }
-
-alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
-list=(\
-	/var/log/socklog/messages/current\
-	/var/log/current\
-	/var/log/messages\
-	/var/log/syslog\
-	/var/log/dmesg.log\
-	/var/log/dmesg\
-	)
-for e in ${list[@]}; do
-	if [ -r $e ]; then
-		if [ -x "$(command -vp clog)" ]; then
-			alias log30="tail -n 30 $e | clog"
-		else
-			alias log30="tail -n 30 $e"
-		fi
-		break
-	fi
-done
-if [ -f /var/log/apache2/error.log ]; then
-	alias phplog='tail /var/log/apache2/error.log'
-elif [ -f /var/log/httpd/error.log ]; then
-	alias phplog='tail /var/log/httpd/error.log'
-fi
-alias netlog='netstat -lptu4'
-alias xmerge='xrdb -merge ~/.Xresources'
-alias xmonitor-off='xset dpms force off'
-alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
-
-# utils
 getfilename() {	echo ${1##*/}; }
 getdirname()  { local fn; fn=${1##*/}; echo ${1%"$fn"}; }
 getbasename() {	local fn; fn=${1##*/}; echo ${fn%.*}; }
 getfileext()  { local fn, bn; fn=${1##*/}; bn=${fn%.*}; echo ${fn#"$bn"}; }
-_amionline()   {
-	local offline
-	offline=1
-	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
-	return $offline;
-}
-alias amionline='[ _amionline ] && echo "\033[1;32mOnline\033[0m" || echo "\033[1;31mOffline\033[0m"'
-alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
-
-# calc
-_bc() {
-	echo "$*" | bc -l
-	}
-if [ ! -x "$(command -vp calc)" ]; then
-	if [ -x "$(command -vp wcalc)" ]; then
-		alias calc='wcalc'
-	else
-		alias calc='_bc'
-	fi
-fi
 
 # git
 _git_q() {
@@ -399,12 +281,6 @@ function completion/tmux {
 		done
 	done <("${WORDS[1]}" list-commands 2>&1)
 }
-alias tmux-reload='tmux source-file ~/.tmux.conf'
-alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
-
-# youtube-dl
-alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
-alias yt-get-plist='youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" "$*"'
 
 # devtodo
 _show_todo() { devtodo --timeout --summary; }
@@ -428,15 +304,6 @@ function _welcome {
 	done
 }
 [ -o login ] && _welcome
-
-# common packager for root
-if [ $USERID -eq 0 ]; then
-	if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then
-		alias app="/usr/src/dotfiles/dist/$DISTRO/$DISTRO"
-	elif [ -x /usr/src/dotfiles/dist/$DISTRO/app ]; then
-		alias app="/usr/src/dotfiles/dist/$DISTRO/app"
-	fi
-fi
 
 #	load local yashrc files
 for e in ~/.yashrc-*; do
