@@ -1,0 +1,55 @@
+# busybox ash or dash
+
+umask 022
+
+case $- in
+*i*)	optinteractive=1 ;;
+esac
+case $- in
+*l*)	optlogin=1 ;;
+esac
+
+[ -z $optinteractive ] && return
+
+set -o allexport
+#set -o emacs
+
+[ -r ~/.environ ] && . ~/.environ
+
+# PROMPT
+if [ "$0" = "dash" ]; then
+	optcolor=-1
+else
+	optcolor=1
+fi
+if [ $optcolor -eq 1 ]; then
+	PS1='\033[1m'
+	[ $USERID -eq 0 ] && PS1=$PS1'\033[31m\u' || PS1=$PS1'\033[36m\u'
+	PS1=$PS1'\033[32m@\h\033[0m \w \$ '
+elif [ $optcolor -eq -1 ]; then
+	PS1="$USER@$HOSTNAME"
+	if [ $USERID -eq 0 ]; then
+		PS1=$PS1' # '
+	else
+		PS1=$PS1' $ '
+	fi
+else
+	PS1='\u@\h \w \$ '
+fi
+
+# aliases
+[ -r ~/.aliases ] && . ~/.aliases
+alias reload=". ~/.shrc"
+
+# welcome
+if [ -n $optlogin ]; then
+	echo "Welcome to Unix Shell ($0)"
+	echo
+	list="neofetch screenfetch diogenis fortunes"
+	for f in $list; do
+		if [ -x $(command -vp $f) ]; then
+			$f;
+			break
+		fi
+	done
+fi

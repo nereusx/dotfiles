@@ -57,10 +57,7 @@ mute() {
 # ensure job control works as expected
 [ -o monitor ] && trap - TSTP TTIN TTOU
 
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
+[ -r ~/.environ ] && . ~/.environ
 
 #	PROMPT
 if [ -n "${SSH_CONNECTION-}" ]; then
@@ -192,6 +189,7 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 #
 #	aliases
 #
+[ -r ~/.aliases ] && . ~/.aliases
 getfilename() {	echo ${1##*/}; }
 getdirname()  { local fn; fn=${1##*/}; echo ${1%"$fn"}; }
 getbasename() {	local fn; fn=${1##*/}; echo ${fn%.*}; }

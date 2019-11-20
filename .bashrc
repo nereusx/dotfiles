@@ -20,10 +20,7 @@ PROMPT_COMMAND=()
 bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
+[ -r ~/.environ ] && . ~/.environ
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -103,7 +100,8 @@ _file_type() {
 }
 COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 
-# more aliases
+# aliases
+[ -r ~/.aliases ] && . ~/.aliases
 alias reload='. ~/.bashrc'
 
 #	welcome screen

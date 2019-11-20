@@ -30,10 +30,7 @@ bind '^[l'=downcase-word
 bind '^[m'=set-mark-command
 bind '^[[2~'=yank
 
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
+[ -r ~/.environ ] && . ~/.environ
 
 #
 #	PROMPT
@@ -59,16 +56,10 @@ if [ $USERID -eq 0 ]; then PS1+='# '; else PS1+='$ '; fi
 
 unset x red green yellow blue rst
 
-# more aliases
+# aliases
+[ -r ~/.aliases ] && . ~/.aliases
 alias sleep="$(command -vp sleep)"
 alias reload='. ~/.mkshrc'
-
-# load local mkshrc files
-for e in ~/.mkshrc-*; do
-	if [ -f $e ]; then
-		. $e
-	fi
-done
 
 #	welcome screen
 if [ -o login ]; then
@@ -83,3 +74,11 @@ if [ -o login ]; then
 		fi
 	done
 fi
+
+# load local mkshrc files
+for e in ~/.mkshrc-*; do
+	if [ -f $e ]; then
+		. $e
+	fi
+done
+

@@ -10,22 +10,15 @@ set -o emacs
 set -o allexport
 #set -o errexit
 
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
+[ -r ~/.environ ] && . ~/.environ
 
 # PROMPT
 PS1='\[$(tput bold)$(tput setaf 5)\]\A\[$(tput op)\] \[$(tput bold)$(tput setaf 2)\]\u'"@${HOSTNAME}\[$(tput op)\]"
 PS1=$PS1' \w \$ '
 
-# more aliases
+# aliases
+[ -r ~/.aliases ] && . ~/.aliases
 alias reload='. ~/.kshrc'
-
-# load local mkshrc files
-for e in ~/.kshrc-*; do
-	[[ -f $e ]] && . $e
-done
 
 # welcome screen
 if [[ -o login ]]; then
@@ -40,3 +33,8 @@ if [[ -o login ]]; then
 		fi
 	done
 fi
+
+# load local mkshrc files
+for e in ~/.kshrc-*; do
+	[[ -f $e ]] && . $e
+done

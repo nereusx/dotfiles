@@ -10,6 +10,8 @@ set -o emacs
 set -o allexport
 #set -o errexit
 
+[ -r ~/.environ ] && . ~/.environ
+
 ### Terminal & Keys
 [[ $TERM == "rxvt" ]] && TERM=rxvt-unicode
 function keyboard_trap {
@@ -38,6 +40,8 @@ if [[ $USER == root ]]; then
 else
 	PS1+="\$ "
 fi
+
+[ -r ~/.aliases ] && . ~/.aliases
 
 # load local mkshrc files
 for e in ~/.ksh93rc-*; do
