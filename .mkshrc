@@ -59,8 +59,9 @@ if [ $USERID -eq 0 ]; then PS1+='# '; else PS1+='$ '; fi
 
 unset x red green yellow blue rst
 
-# add minutes support for sleep
+# more aliases
 alias sleep="$(command -vp sleep)"
+alias reload='. ~/.mkshrc'
 
 # load local mkshrc files
 for e in ~/.mkshrc-*; do

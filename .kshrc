@@ -19,6 +19,9 @@ done
 PS1='\[$(tput bold)$(tput setaf 5)\]\A\[$(tput op)\] \[$(tput bold)$(tput setaf 2)\]\u'"@${HOSTNAME}\[$(tput op)\]"
 PS1=$PS1' \w \$ '
 
+# more aliases
+alias reload='. ~/.kshrc'
+
 # load local mkshrc files
 for e in ~/.kshrc-*; do
 	[[ -f $e ]] && . $e
