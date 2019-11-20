@@ -247,12 +247,18 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 #
 #	--- EDITORS ---
 #
-GRPATH=${HOME}/.grief-local:/usr/share/grief/macros:/usr/local/share/grief/macros
-GRFLAGS="-m grief-rc"
+GRLIB="/usr/local/share/grief"
+GRPATH=${HOME}/.grief-local:${GRLIB}/macros
+GRFLAGS="--utf8=yes -m grief-rc"
 GRTERM=linux
 GRUTF8_FORCE=1
+GRHELP="${GRLIB}/help"
+GRDICTIONARIES="en,el"
+GRDICTIONARY="/usr/share/aspell"
+
 JED_HOME=$HOME/.jed
 alias jed-prep='xjed -batch -n -l preparse'
+
 # customise your favourite editor here; the first one found is used
 list=(jed gr nano joe vim vi)
 for EDITOR in $list; do
@@ -277,12 +283,8 @@ LESS_TERMCAP_so='[7m'			# begin reverse video,	ANSI: [7m
 LESS_TERMCAP_se='[27m'		# reset reverse video,	ANSI: [27m
 LESS_TERMCAP_us='[1;32m'		# begin underline,		ANSI: [4m
 LESS_TERMCAP_ue='[0m'			# reset underline,		ANSI: [24m
-LESS_TERMCAP_mr=$(tput rev)
-LESS_TERMCAP_mh=$(tput dim)
-#LESS_TERMCAP_ZN=$(tput ssubm)
-#LESS_TERMCAP_ZV=$(tput rsubm)
-#LESS_TERMCAP_ZO=$(tput ssupm)
-#LESS_TERMCAP_ZW=$(tput rsupm)
+LESS_TERMCAP_mr='[7m'
+LESS_TERMCAP_mh='[2m'
 #LESSOPEN="|/usr/bin/source-highlight-esc.sh %s"
 MOST_SWITCHES='-w'
 MOST_EDITOR='jed %s -g %d'
@@ -313,6 +315,11 @@ alias ll='ls --color=auto -lha'
 alias ls='ls --color=auto'
 
 alias cls='clear'
+alias reload='. ~/.yashrc'
+alias remake='make clean; make' # warning: 'remake' began gnu project to debug makefiles
+dff()     { echo "Filesystem      Size  Used Avail Use% Mounted on";df -h | grep '^/dev/'; }
+mounted() {	mount | grep -E '^(tmpfs|/dev)' | grep -Ev 'AppImage|/dev/shm|/dev/fuse'; }
+
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 list=(\
 	/var/log/socklog/messages/current\
@@ -422,7 +429,16 @@ function _welcome {
 	done
 }
 [ -o login ] && _welcome
-							
+
+# common packager for root
+if [ $USERID -eq 0 ]; then
+	if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then
+		alias app="/usr/src/dotfiles/dist/$DISTRO/$DISTRO"
+	elif [ -x /usr/src/dotfiles/dist/$DISTRO/app ]; then
+		alias app="/usr/src/dotfiles/dist/$DISTRO/app"
+	fi
+fi
+
 #	load local yashrc files
 for e in ~/.yashrc-*; do
 	[ -f $e ] && . $e
