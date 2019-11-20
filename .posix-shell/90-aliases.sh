@@ -28,7 +28,7 @@ list="/var/log/messages\
 
 for e in list; do
 	if [ -r $e ]; then
-		if [ -x "$(command -vp clog)" ]; then
+		if [ "$(command -vp clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
 		else
 			alias log30="tail -n 30 $e"
@@ -53,11 +53,10 @@ alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; d
 alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
 alias yt-get-plist='youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" "$*"'
 
-
 # calc
 _bc() { echo "$*" | bc -l; }
-if [ ! -x "$(command -vp calc)" ]; then
-	if [ -x "$(command -vp wcalc)" ]; then
+if [ ! "$(command -vp calc)" ]; then
+	if [ "$(command -vp wcalc)" ]; then
 		alias calc='wcalc'
 	else
 		alias calc='_bc'
@@ -65,7 +64,7 @@ if [ ! -x "$(command -vp calc)" ]; then
 fi
 
 #
-_amionline()   {
+_amionline() {
 	offline=1
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
 	return $offline;
@@ -74,13 +73,13 @@ alias amionline='[ _amionline ] && echo "\033[1;32mOnline\033[0m" || echo "\033[
 alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
 
 # git
-_git_q() { git add . && git commit -m "quick and dirty fix" && git push; }
+_git_q() { msg="$*"; if [ -z "$msg" ]; then msg="quick and dirty fix"; fi; git add . && git commit -m "$msg" && git push; }
 alias git-q='_git_q'
-_git_s() { git add . && git commit -m \""$*"\" && git push; }
-alias git-s='_git_s'
+alias git-s='_git_q'
 alias git-c='git checkout'
 alias git-d='git diff'
 alias git-l='git log'
+alias git-p='git pull'
 
 # common packager for root
 if [ $USERID -eq 0 ]; then

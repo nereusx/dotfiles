@@ -5,7 +5,7 @@
 # echo 'AUTOLOAD_TMUX=1' >> /etc/environment
 AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
 if [ $AUTOLOAD_TMUX -eq 1 ]; then
-	if [ -z ${TMUX:-} -a -z ${SUDO_USER:-} ]; then
+	if [ -z "${TMUX:-}" -a -z "${SUDO_USER:-}" ]; then
 		exec tmux
 	fi
 fi
