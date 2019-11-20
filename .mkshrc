@@ -18,6 +18,8 @@ set -o utf8-mode
 set -o nounset
 set +o errexit
 
+[ -r ~/.environ ] && . ~/.environ
+
 # keyboard
 bind '^Q'=abort
 bind '^[q'=quote
@@ -29,8 +31,6 @@ bind '^[p'=search-history-up
 bind '^[l'=downcase-word
 bind '^[m'=set-mark-command
 bind '^[[2~'=yank
-
-[ -r ~/.environ ] && . ~/.environ
 
 #
 #	PROMPT
