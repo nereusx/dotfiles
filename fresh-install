@@ -29,7 +29,7 @@ endif
 
 # rsync
 if ( -d /srv/file-server ) then
-	cp fserv-sync /srv/file-server
+	cp misc/fserv-sync /srv/file-server
 endif
 
 # various data files
