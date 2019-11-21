@@ -41,9 +41,25 @@ else
 	PS1+="\$ "
 fi
 
+# aliases
 [ -r ~/.aliases ] && . ~/.aliases
+alias reload='. ~/.ksh93rc'
 
-# load local mkshrc files
+# welcome screen
+if [[ -o login ]]; then
+	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
+	echo "Welcome to Korn Shell $KSH_VERSION"
+	echo
+	set -A list neofetch screenfetch diogenis fortunes
+	for f in ${list[@]}; do
+		if [[ -x $(command -vp $f) ]]; then
+			$f;
+			break
+		fi
+	done
+fi
+
+# load local kshrc files
 for e in ~/.ksh93rc-*; do
 	if [[ -f $e ]]; then
 		. $e

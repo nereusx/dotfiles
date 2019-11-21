@@ -18,12 +18,12 @@ PS1=$PS1' \w \$ '
 
 # aliases
 [ -r ~/.aliases ] && . ~/.aliases
-alias reload='. ~/.kshrc'
+alias reload='. ~/.ksh88rc'
 
 # welcome screen
 if [[ -o login ]]; then
 	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
-	echo "Welcome to Korn Shell ($1) $KSH_VERSION"
+	echo "Welcome to Korn Shell $KSH_VERSION"
 	echo
 	set -A list neofetch screenfetch diogenis fortunes
 	for f in ${list[@]}; do
@@ -34,7 +34,7 @@ if [[ -o login ]]; then
 	done
 fi
 
-# load local mkshrc files
-for e in ~/.kshrc-*; do
+# load local kshrc files
+for e in ~/.ksh88rc-*; do
 	[[ -f $e ]] && . $e
 done

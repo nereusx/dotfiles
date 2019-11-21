@@ -8,11 +8,10 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
 if [ -n "$BASH_VERSION" ]; then
-    if [ -f "$HOME/.bashrc" ]; then
+	if [ -f "$HOME/.bashrc" ]; then
 		. "$HOME/.bashrc"
-    fi
+ 	fi
 elif [ -n "$KSH_VERSION" ]; then
 	case $KSH_VERSION in
 	*MIRBSD*)	rc="$HOME/.mkshrc" ;;
@@ -22,8 +21,8 @@ elif [ -n "$KSH_VERSION" ]; then
 	esac
 	if [ -r $rc ]; then
 		export ENV=$rc
-	elif [ -r ~/.kshrc ]; then
-		export ENV="~/.kshrc"
+	elif [ -r $HOME/.kshrc ]; then
+		export ENV="$HOME/.kshrc"
 	fi
 elif [ -n "$YASH_VERSION" ]; then
 	export ENV="$HOME/.yashrc"
