@@ -44,15 +44,22 @@ blue="$x$(tput setaf 4)$x"
 rst="$x$(tput sgr0)$x"
 
 PS1="$x$(print \\r)$x$(tput bold)$x"
-if [ $USERID -eq 0 ]; then PS1+=$red; else PS1+=$green; fi
+if [ $USERID -eq 0 ];
+	then PS1+=$red;
+else
+	PS1+=$green;
+fi
 PS1+='$USER'
-if [ -n "${SSH_CONNECTION-}" ]; then
+if [ -n "${REMOTEHOST-}" ]; then
 	PS1+=$yellow'@$HOSTNAME'
 else
 	PS1+=$green'@$HOSTNAME'
 fi
-PS1+=$blue' $PWD '$rst
-if [ $USERID -eq 0 ]; then PS1+='# '; else PS1+='$ '; fi
+if [ $USERID -eq 0 ]; then
+	PS1+=$red' $PWD '$rst'# '
+else 
+	PS1+=$blue' $PWD '$rst'$ '
+fi
 
 unset x red green yellow blue rst
 

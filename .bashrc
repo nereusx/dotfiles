@@ -40,9 +40,40 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
+### PROMPT
+
+# colors
+cblack="\033[30m"
+cred="\033[1;31m"
+cgreen="\033[1;32m"
+cbrown="\033[1;33m"
+cblue="\033[1;34m"
+cmagenta="\033[1;35m"
+ccyan="\033[1;36m"
+cwhite="\033[1;37m"
+creset="\033[0m"
+
+# prompt selections
+ctimecolor="$cmagenta"
+cusercolor="$cgreen"
+if [ $USERID -eq 0 ]; then
+	cusercolor="$cred"
+fi
+chostcolor="$cgreen"
+if [ -n "${REMOTEHOST-}" ]; then
+	chostcolor="$cbrown"
+fi
+cdirxcolor="$cblue"
+if [ $USERID -eq 0 ]; then
+	cdirxcolor="$cred"
+fi
+
 #PS1='\u@\h \w \$ '
 PS1="\[$cusercolor\]\u\[$chostcolor\]@\h \[$cdirxcolor\]\w\[$creset\]"
 PS1=$PS1' \$ '
+
+unset cblack cred cgreen cbrown cblue cmagenta ccyan cwhite
+unset cusercolor chostcolor cdirxcolor
 
 # find escape sequence to change terminal window title
 case "$TERM" in
