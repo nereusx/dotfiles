@@ -41,18 +41,8 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 #PS1='\u@\h \w \$ '
-#PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \$ '
-if [ $USERID -eq 0 ]; then
-	PS1='\[\033[1;31m\]\u\[\033[0m\]'
-else
-	PS1='\[\033[1;32m\]\u\[\033[0m\]'
-fi
-if [ -n "${SSH_CONNECTION-}" ]; then
-	PS1=$PS1'\[\033[1;31m\]@\h\[\033[00m\] '
-else
-	PS1=$PS1'\[\033[1;32m\]@\h\[\033[00m\] '
-fi
-PS1=$PS1'\[\033[1;34m\]\w\[\033[0m\] \$ '
+PS1="\[$cusercolor\]\u\[$chostcolor\]@\h \[$cdirxcolor\]\w\[$creset\]"
+PS1=$PS1' \$ '
 
 # find escape sequence to change terminal window title
 case "$TERM" in
@@ -70,10 +60,10 @@ if [ "$_tsl" ] && [ "$_fsl" ]; then
 
 	# set terminal window title on each prompt
 	_set_term_title() {
-#	if [ -t 2 ]; then
+	if [ -t 2 ]; then
     	printf "$_tsl"'%s@%s:%s'"$_fsl" "${LOGNAME}" "${HOSTNAME%%.*}" \
 	      "${${PWD:/$HOME/\~}/#$HOME\//\~\/}" >&2
-#	fi 
+	fi 
 	}
 	PROMPT_COMMAND=("$PROMPT_COMMAND" '_set_term_title')
 
