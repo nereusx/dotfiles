@@ -122,3 +122,6 @@ fi
 for e in ~/.bashrc-*; do
 	[ -f $e ] && . $e
 done
+
+# clean up
+unset _fsl _tsl f e list

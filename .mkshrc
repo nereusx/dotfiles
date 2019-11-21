@@ -82,3 +82,5 @@ for e in ~/.mkshrc-*; do
 	fi
 done
 
+# clean up
+unset e f list

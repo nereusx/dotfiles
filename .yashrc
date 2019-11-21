@@ -18,6 +18,8 @@ set -o le-no-conv-meta
 set +o le-predict
 set +o err-exit
 
+[ -r ~/.environ ] && . ~/.environ
+
 # keybinds
 bindkey --emacs '\^N' beginning-search-forward
 bindkey --emacs '\^O' clear-candidates
@@ -56,8 +58,6 @@ mute() {
 
 # ensure job control works as expected
 [ -o monitor ] && trap - TSTP TTIN TTOU
-
-[ -r ~/.environ ] && . ~/.environ
 
 #	PROMPT
 if [ -n "${SSH_CONNECTION-}" ]; then
@@ -247,3 +247,6 @@ fi
 for e in ~/.yashrc-*; do
 	[ -f $e ] && . $e
 done
+
+# clean up
+unset e f list _fsl _tsl

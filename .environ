@@ -32,7 +32,6 @@ _get_distro() {
 : ${DISTRO:=$(_get_distro)}
 : ${OSTYPE:=$(uname -s)}
 
-
 # setup several local directories
 backup=${HOME}/.backup
 list="$backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc"
@@ -46,8 +45,6 @@ done
 # path
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
-
-#!/bin/sh
 
 # --- PAGER ---
 LESS='-R'
@@ -70,15 +67,6 @@ MOST_SWITCHES='-w'
 MOST_EDITOR='jed %s -g %d'
 PAGER=less
 #PAGER=most
-# --- end ---
-
-# other settings
-LS_OPTIONS='--color=auto'
-BROWSER=firefox
-cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
-cpus=$(($cpus + 1))
-MAKEFLAGS="-j$cpus"
-__GL_YIELD='USLEEP'
 
 # EDITORS
 
@@ -129,3 +117,15 @@ for e in $list; do
 		break
 	fi
 done
+
+### other settings
+
+LS_OPTIONS='--color=auto'
+BROWSER=firefox
+cpus=$(cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g')
+cpus=$(($cpus + 1))
+MAKEFLAGS="-j$cpus"
+__GL_YIELD='USLEEP'
+
+# cleanup
+unset e list cpus

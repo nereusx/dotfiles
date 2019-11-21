@@ -53,3 +53,6 @@ if [ -n $optlogin ]; then
 		fi
 	done
 fi
+
+# clean up
+unset f list

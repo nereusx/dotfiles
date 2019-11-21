@@ -22,11 +22,6 @@ esac
 }
 trap keyboard_trap KEYBD
 
-# load ~/.posix-shell/*
-for script in ~/.posix-shell/*.sh; do
-	[ -x $script ] && . $script
-done
-
 # PROMPT
 #PS1='
 #${LOGNAME}@${HOSTNAME} on ${TTY}
@@ -65,3 +60,6 @@ for e in ~/.ksh93rc-*; do
 		. $e
 	fi
 done
+
+# cleanup
+unset e list

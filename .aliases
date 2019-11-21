@@ -92,3 +92,6 @@ if [ $USERID -eq 0 ]; then
 	fi
 fi
 
+# cleanup
+unset e list
+

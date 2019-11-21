@@ -38,3 +38,6 @@ fi
 for e in ~/.ksh88rc-*; do
 	[[ -f $e ]] && . $e
 done
+
+# clean up
+unset e f list
