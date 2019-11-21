@@ -25,7 +25,7 @@ endif
 	.newsboat .clogrc \
 	.gitconfig .config \
 	.urxvt .xres .conkyrc \
-	.dof .bc .tmux .tmux.conf .a2ps .abook
+	.dof .bc .tmux .tmux.conf .a2ps
 
 # rsync
 if ( -d /srv/file-server ) then
