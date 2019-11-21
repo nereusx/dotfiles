@@ -1,66 +1,71 @@
-# Conky settings #
-background yes
-update_interval 0.5
-double_buffer yes
-no_buffers yes
-imlib_cache_size 10
 
-# Window specifications #
-gap_x 80
-gap_y 80
-minimum_size 300 0
-maximum_width 300
-alignment top_right
-own_window yes
-own_window_type normal
-own_window_transparent yes
-own_window_argb_visual yes
-own_window_argb_value 255
-own_window_hints undecorated,sticky,skip_taskbar,skip_pager,below
-#own_window_type normal
-#own_window_transparent no
-#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
-#own_window_argb_visual yes
-#own_window_argb_value 0
-border_inner_margin 0
-border_outer_margin 0
+conky.config = {
 
-# Graphics settings #
-draw_shades no
-default_shade_color AAAAAA
-draw_outline no
-default_outline_color AAAAAA
-draw_borders no
-draw_graph_borders yes
-default_graph_size 26 80
-show_graph_scale no
-show_graph_range no
+-- Conky settings
+background=true,
+update_interval=0.5,
+double_buffer=true,
+no_buffers=true,
+imlib_cache_size=10,
 
-# Text settings #
-use_xft yes
-xftalpha 0
-xftfont XSG Chicago15:size=11
-text_buffer_size 256
-override_utf8_locale yes
+-- Window specifications 
+gap_x=140,
+gap_y=260,
+-- gap_y=140,
+minimum_height=0,
+maximum_width=300,
+alignment='top_right',
+own_window=true,
+own_window_type='normal',
+own_window_transparent=true,
+own_window_argb_visual=true,
+own_window_argb_value=255,
+own_window_hints='undecorated,sticky,skip_taskbar,skip_pager,below',
+-- own_window_type normal
+-- own_window_transparent no
+-- own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+-- own_window_argb_visual yes
+-- own_window_argb_value 0
+-- border_inner_margin=0,
+-- border_outer_margin=0,
 
-# Useful shortenings #
-short_units yes
-pad_percents  1
-top_name_width 30
+-- Graphics settings
+draw_shades=false,
+default_shade_color='AAAAAA',
+draw_outline=false,
+default_outline_color='AAAAAA',
+draw_borders=false,
+draw_graph_borders=true,
+default_graph_height=26,
+default_graph_width=80,
+show_graph_scale=false,
+show_graph_range=false,
 
-# Color scheme #
-default_color FFFFFF
-color0 ffffff
-color1 FFFFFF
-color2 ffa300
-color3 00ff00
-color4 FFFFFF
-color5 DCDCDC
-color6 FFFFFF
-color7 FFFFFF
-color8 FFFFFF
+-- Text settings
+use_xft = true,
+font='XSG Chicago15:size=11',
+text_buffer_size=256,
+override_utf8_locale=true,
 
-TEXT
+-- Useful shortenings
+short_units=true,
+pad_percents=1,
+top_name_width=30,
+
+-- Color scheme 
+default_color='FFFFFF',
+color0='ffffff',
+color1='FFFFFF',
+color2='ffa300', 
+color3='00ff00',
+color4='FFFFFF',
+color5='DCDCDC',
+color6='FFFFFF',
+color7='FFFFFF',
+color8='FFFFFF',
+}
+
+conky.text = [[
 ${alignc}NDC System
 ${alignc}${time %A} ${color FFA300}${time %d} ${color EAEAEA}${time %B} ${color FFA300}${time %Y}${color}
 Time: ${color 00ff00}${time %H:%M:%S}${color}${alignr}Up: $uptime
@@ -105,21 +110,5 @@ ${alignc}${color3}=== NETWORK ===${color}
 ${color5}Up: ${color2}${upspeed eth0}${color5}${goto 155}Down: ${color2}${downspeed eth0}${color}
 ${color5}Sent: ${color2}${totalup eth0}${color5}${goto 155}Received: ${color2}${totaldown eth0}${color}
 ${upspeedgraph eth0 26,145 FFFFFF FFFFFF}${goto 155}${downspeedgraph eth0 26,145 FFFFFF FFFFFF}
+]]
 
-#${color #0077ff}Port(s)${alignr}#Connections${color ffffff}
-#Inbound: ${tcp_portmon 1 32767 count} / Outbound: ${tcp_portmon 32768 61000 count}
-#${color #0077ff}Inbound Connection ${alignr} Local Service/Port$color
-#${tcp_portmon 1 32767 rhost 0} ${alignr} ${tcp_portmon 1 32767 lservice 0}
-#${tcp_portmon 1 32767 rhost 1} ${alignr} ${tcp_portmon 1 32767 lservice 1}
-#${tcp_portmon 1 32767 rhost 2} ${alignr} ${tcp_portmon 1 32767 lservice 2}
-#${tcp_portmon 1 32767 rhost 3} ${alignr} ${tcp_portmon 1 32767 lservice 3}
-##${tcp_portmon 1 32767 rhost 4} ${alignr} ${tcp_portmon 1 32767 lservice 4}
-#${color #0077ff}Outbound Connection ${alignr} Remote Service/Port$color
-#${tcp_portmon 32768 61000 rhost 0} ${alignr} ${tcp_portmon 32768 61000 rservice 0}
-#${tcp_portmon 32768 61000 rhost 1} ${alignr} ${tcp_portmon 32768 61000 rservice 1}
-#${tcp_portmon 32768 61000 rhost 2} ${alignr} ${tcp_portmon 32768 61000 rservice 2}
-#${tcp_portmon 32768 61000 rhost 3} ${alignr} ${tcp_portmon 32768 61000 rservice 3}
-#${tcp_portmon 32768 61000 rhost 4} ${alignr} ${tcp_portmon 32768 61000 rservice 4}
-#
-#
-#
