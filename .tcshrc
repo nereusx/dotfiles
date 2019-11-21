@@ -96,7 +96,7 @@ if ( $USERID == 0 ) then
 	end
 endif
 # you path++ at https://github.com/nereusx/unix-utils
-if ( -X 'path++' ) setenv PATH `/bin/path++`
+if ( -X 'path++' ) setenv PATH `path++`
 
 #
 #	SETUP TCSH's ENVIRONMENT
