@@ -1,1 +1,11 @@
+# find the correct truetype fonts directory
 sysdir=/usr/share/fonts/TTF/
+list="/usr/share/fonts/TTF\
+	/usr/share/X11/fonts/TTF\
+	/usr/share/fonts/truetype"
+for x in $list; do
+	if [ -d $x ]; then
+		sysdir=$x
+		break
+	fi
+done
