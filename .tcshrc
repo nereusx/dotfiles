@@ -364,7 +364,7 @@ endif
 alias reload		'source ~/.tcshrc'
 alias remake		'make clean; make' # warning: 'remake' began gnu project to debug makefiles
 alias cls			'clear'
-alias ps-all		'ps aux | grep -v "\["'
+alias psa			'ps aux | grep -v "\["'
 alias diogenis		'fortune diogenis'
 alias free-h		'free -h'
 alias df-h			'df -h'
