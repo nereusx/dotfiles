@@ -4,13 +4,13 @@
 #
 
 # rsyncd authorized user
-set user=nikosc
+set user = myself
 
 # root directory of local file-server
 set fserv_root = /srv/file-server
 
 # server name
-set server = srv-x230.local
+set server = host.local
 
 ### end ###
 
