@@ -1,4 +1,7 @@
 #!/bin/tcsh
+#
+#	XFCE4 startup script if you dont use session and/or GUI settings
+#
 
 ### no netwrok required
 
@@ -25,15 +28,6 @@ blueman-applet &
 #xscreensaver -no-splash &
 
 ### network required
-# wait for connection
-#unset online
-#while ( 1 )
-#	ping 1.1.1.1 -c 1 -w 1 > /dev/null && set online
-#	if ( $?online ) then
-#		break
-#	endif
-#	sleep 1
-#end
 
 # run network depended commands
 pidgin &
