@@ -39,7 +39,7 @@ fi
 
 # aliases
 [ -r ~/.aliases ] && . ~/.aliases
-alias reload=". ~/.shrc"
+alias reload=". ~/.ashrc"
 
 # welcome
 if [ -n $optlogin ]; then
