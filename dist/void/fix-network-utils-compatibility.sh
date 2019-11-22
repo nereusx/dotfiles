@@ -11,4 +11,6 @@ xbps-alternatives -s iputils
 #xbps-alternatives -s inetutils-traceroute
 xbps-alternatives -s ksh
 
-
+if [ ! -x /usr/bin/finger ]; then
+	[ -x /usr/bin/pinky ] && ln -s /usr/bin/pinky /usr/bin/finger
+fi
