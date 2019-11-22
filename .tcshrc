@@ -166,6 +166,7 @@ endif
 #	tcsh's completion
 #
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
+set hosts=`cat /etc/hosts | awk '/^[1-9]+/ {if (substr($2,1,5) != "local") print $2}'`
 if ( -e /etc/complete.tcsh ) then
 	source /etc/complete.tcsh
 else
