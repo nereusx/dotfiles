@@ -48,19 +48,20 @@ offline_icon_default() {
 }
 
 online_status() {
-	if is_osx || is_freebsd; then
-		local timeout_flag="-t"
-	else
-		local timeout_flag="-w"
-	fi
-	if is_cygwin; then
-		local number_pings_flag="-n"
-	else
-		local number_pings_flag="-c"
-	fi
-	local ping_timeout="$(get_tmux_option "$ping_timeout_string" "$ping_timeout_default")"
-	local ping_route="$(get_tmux_option "$route_to_ping_string" "$route_to_ping_default")"
-	ping "$number_pings_flag" 1 "$timeout_flag" "$ping_timeout" "$ping_route" >/dev/null 2>&1
+#	if is_osx || is_freebsd; then
+#		local timeout_flag="-t"
+#	else
+#		local timeout_flag="-w"
+#	fi
+#	if is_cygwin; then
+#		local number_pings_flag="-n"
+#	else
+#		local number_pings_flag="-c"
+#	fi
+#	local ping_timeout="$(get_tmux_option "$ping_timeout_string" "$ping_timeout_default")"
+#	local ping_route="$(get_tmux_option "$route_to_ping_string" "$route_to_ping_default")"
+#	ping "$number_pings_flag" 1 "$timeout_flag" "$ping_timeout" "$ping_route" >/dev/null 2>&1
+	/usr/local/bin/isonline -q
 }
 
 print_icon() {
