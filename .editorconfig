@@ -1,4 +1,6 @@
 root=false
+
+[*]
 end_of_line=lf
 insert_final_newline=true
 charset=utf-8
