@@ -147,7 +147,9 @@ set history=4096
 set histdup=prev
 set nohistclop
 alias hist "history `tput lines`"
-if ( -X iselect ) then
+if ( -X pick ) then
+	alias hc 'set x=`history -h | pick -S` && eval $x'
+else if ( -X iselect ) then
 	alias hc '\
 	set y=`history | wc -l`;\
 	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
@@ -169,7 +171,9 @@ alias dirs 'dirs -v'
 if ( -X devtodo ) then
 	alias cwdcmd 'devtodo --timeout --summary'
 endif
-if ( -X iselect ) then
+if ( -X pick ) then
+	alias go 'set x=`dirs | pick -S | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
+else if ( -X iselect ) then
 	alias go 'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
 endif
 
