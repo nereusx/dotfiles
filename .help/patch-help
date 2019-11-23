@@ -1,3 +1,11 @@
 #!/bin/cat
+# create patch
 diff -u OriginalFile UpdatedFile > PatchFile
+# apply patch
 patch -p0 < PatchFile
+# reverse patch (undo)
+patch -R -p0 OriginalFile < PatchFile
+
+# directories
+diff -ruN old/ latest/ > slang.patch
+patch -ruN -d old < slang.patch
