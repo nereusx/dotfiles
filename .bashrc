@@ -125,6 +125,28 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 [ -r ~/.aliases ] && . ~/.aliases
 alias reload='. ~/.bashrc'
 
+# pick
+list="fzy pick"
+pick_method="none"
+for e in $list; do
+	if [ -n "$(command -vp $e)" ]; then
+		pick_method="$e"
+		break
+	fi
+done
+HISTRMDUP=1
+alias hist='history $(tput lines)'
+case $pick_method in
+fzy)
+	alias hc='x=$(history -nr | fzy) && eval $x' 
+#	alias go='x=$(dirs | fzy | awk \'{print $1}\'); [ -n "$x"] && cd =$x'
+	;;
+pick)
+	alias hc='x=$(history -n | pick -S) && eval $x'
+#	alias go='x=$(dirs | pick -S | awk \'{print $1}\'); [ -n "$x" ] && cd =$x'
+	;;
+esac
+
 #	welcome screen
 if [[ -o login_shell ]]; then
 	[[ $TTY =~ tty* ]] && /bin/echo -ne '\033='
