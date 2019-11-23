@@ -1,0 +1,3 @@
+#!/bin/cat
+diff -u OriginalFile UpdatedFile > PatchFile
+patch -p0 < PatchFile
