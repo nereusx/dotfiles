@@ -154,7 +154,7 @@ unset usercolor hostcolor dirxcolor timecolor rsetcolor
 #
 set histlit
 set history=1024
-set histdup=all
+set histdup=prev
 set nohistclop
 alias hist "history `tput lines`"
 switch ( $pick_method )
