@@ -143,8 +143,8 @@ unset usercolor hostcolor dirxcolor timecolor rsetcolor
 #	tcsh' history
 #
 set histlit
-set history=4096
-set histdup=prev
+set history=1024
+set histdup=all
 set nohistclop
 alias hist "history `tput lines`"
 if ( -X pick ) then
