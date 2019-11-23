@@ -152,6 +152,9 @@ alias hist 'history 20'
 #
 #	tcsh's directory stuff
 #
+#	Note: use 'dirs' to show the history of directories;
+#	use 'cd =N' where N the number of the directory as shown by 'dirs'.
+#
 set dunique
 #set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
