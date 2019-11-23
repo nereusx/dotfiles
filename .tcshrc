@@ -378,6 +378,7 @@ alias ltrim			"sed 's/^[ \t\n\r]*//'"
 alias rtrim			"sed 's/[ \t\n\r]*$DS//'"
 alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
+alias myip			'wget -qO- http://ipecho.net/plain ; echo'
 
 # colorize
 set color
