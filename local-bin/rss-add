@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+# https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/rssadd
+
+! echo "$1" | grep "https*://\S\+\.[A-Za-z]\+\S*" >/dev/null &&
+	notify-send "That doesn't look like a full URL." && exit
+RSSFILE="$HOME/.rss-list"
+list="$HOME/.newsboat/urls $HOME/.config/newsboat/urls"
+for e in $list; do
+	if [ -w $e ]; then
+		RSSFILE="$e"
+		break
+	fi
+done
+if awk '{print $1}' "$RSSFILE" | grep "^$1$" >/dev/null; then
+	notify-send "You already have this RSS feed."
+else
+	echo "$1" >> "$RSSFILE" && notify-send "RSS feed added."
+fi
