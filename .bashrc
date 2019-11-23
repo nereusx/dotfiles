@@ -134,7 +134,7 @@ for e in $list; do
 		break
 	fi
 done
-HISTRMDUP=1
+HISTCONTROL=‘ignoredups’
 alias hist='history $(tput lines)'
 #case $pick_method in
 #fzy)
