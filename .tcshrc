@@ -118,6 +118,16 @@ alias helpcommand 'man \!:1'
 #alias periodic checknews
 unalias periodic
 
+# select program to use for ncurses menus
+set list = ( fzy pick iselect )
+set pick_method = none
+foreach e ( $list )
+	if ( -X $e ) then
+		set pick_method = $e
+		break
+	endif
+end
+
 #
 #	tcsh's prompt
 #	man console_codes
@@ -147,14 +157,19 @@ set history=1024
 set histdup=all
 set nohistclop
 alias hist "history `tput lines`"
-if ( -X pick ) then
+switch ( $pick_method )
+case fzy:
+	alias hc 'set x=`history -hr | fzy` && eval $x'
+	breaksw
+case pick:
 	alias hc 'set x=`history -h | pick -S` && eval $x'
-else if ( -X iselect ) then
+	breaksw
+case iselect:
 	alias hc '\
 	set y=`history | wc -l`;\
 	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
 	if ( "$x" != "" && "$x" != "hc" ) eval $x'
-endif
+endsw
 
 #
 #	tcsh's directory stuff
@@ -171,11 +186,16 @@ alias dirs 'dirs -v'
 if ( -X devtodo ) then
 	alias cwdcmd 'devtodo --timeout --summary'
 endif
-if ( -X pick ) then
+switch ( $pick_method )
+case fzy:
+	alias go 'set x=`dirs | fzy | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
+	breaksw
+case pick:
 	alias go 'set x=`dirs | pick -S | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
-else if ( -X iselect ) then
+	breaksw
+case iselect:
 	alias go 'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
-endif
+endsw
 
 #
 #	tcsh's completion

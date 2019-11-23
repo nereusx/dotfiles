@@ -1,10 +1,11 @@
 # dotfiles
 
-Slackware64 14.2, VoidLinux, Xubuntu64 18+, FreeBSD and several other distros
+Slackware64 14.2, Void-Linux, Xubuntu 18+, FreeBSD and several other distros
 
 These files are for ***personal use***, but **you may need**
 
-* the **'.jed/'** directory as I have it (BRIEF v3.1 texteditor, with special configurations for desktops, laptops, and several terminal types).
+* the **'.jed/'** directory as I have it (BRIEF v3.1 texteditor,
+with special configurations for desktops, laptops, and several terminal types).
 
 * pulseaudio-system/,  **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
 
@@ -19,7 +20,8 @@ These files are for ***personal use***, but **you may need**
 * several patches for each distro
 
 **Note**
-* You may need [pick](https://github.com/mptre/pick) or [iselect](http://www.ossp.org/pkg/tool/iselect/)
+* You may need [fzy](https://github.com/jhawthorn/fzy),
+[pick](https://github.com/mptre/pick) or [iselect](http://www.ossp.org/pkg/tool/iselect/)
 for **ncurses menus** of ***tcsh*** (commands go and hc).
  
 ## The ~/.jed directory
