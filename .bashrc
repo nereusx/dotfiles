@@ -136,16 +136,16 @@ for e in $list; do
 done
 HISTRMDUP=1
 alias hist='history $(tput lines)'
-case $pick_method in
-fzy)
-	alias hc='x=$(history -nr | fzy) && eval $x' 
-#	alias go='x=$(dirs | fzy | awk \'{print $1}\'); [ -n "$x"] && cd =$x'
-	;;
-pick)
-	alias hc='x=$(history -n | pick -S) && eval $x'
-#	alias go='x=$(dirs | pick -S | awk \'{print $1}\'); [ -n "$x" ] && cd =$x'
-	;;
-esac
+#case $pick_method in
+#fzy)
+#	alias hc='x=$(history | fzy) && eval $x' 
+#	alias go='x=$(dirs | fzy | awk '"'"'{print $1}'"'"'); [ -n "$x"] && cd =$x'
+#	;;
+#pick)
+#	alias hc='x=$(history | pick -S) && eval $x'
+#	alias go='x=$(dirs | pick -S | awk '"'"'{print $1}'"'"'); [ -n "$x" ] && cd =$x'
+#	;;
+#esac
 
 #	welcome screen
 if [[ -o login_shell ]]; then
