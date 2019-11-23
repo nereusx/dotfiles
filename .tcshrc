@@ -151,7 +151,7 @@ if ( -X iselect ) then
 	alias hc '\
 	set y=`history | wc -l`;\
 	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
-	if ( "$x" != "" ) eval $x'
+	if ( "$x" != "" && "$x" != "hc" ) eval $x'
 endif
 
 #
