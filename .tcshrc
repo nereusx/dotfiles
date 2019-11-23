@@ -1,4 +1,4 @@
-# -*- mode: tcsh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
+# -- mode: tcsh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; --
 #
 #	~/.tcshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
@@ -143,11 +143,16 @@ unset usercolor hostcolor dirxcolor timecolor rsetcolor
 #	tcsh' history
 #
 set histlit
-set history=128
-#set histdup=all
-set histdup
+set history=4096
+set histdup=prev
 set nohistclop
-alias hist 'history 20'
+alias hist "history `tput lines`"
+if ( -X iselect ) then
+	alias hc '\
+	set y=`history | wc -l`;\
+	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
+	if ( "$x" != "" ) eval $x'
+endif
 
 #
 #	tcsh's directory stuff
@@ -163,6 +168,9 @@ alias cd 'pushd'
 alias dirs 'dirs -v'
 if ( -X devtodo ) then
 	alias cwdcmd 'devtodo --timeout --summary'
+endif
+if ( -X iselect ) then
+	alias go 'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
 endif
 
 #
