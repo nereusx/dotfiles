@@ -1,0 +1,78 @@
+--- mc.ext	2019-11-23 21:25:47.375649504 +0200
++++ mc.ext.ndc	2019-11-23 21:25:47.373649504 +0200
+@@ -362,15 +362,21 @@
+ 	Include=video
+ 
+ # Manual page
+-regex/(([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])|\.man)$
+-	Open=/usr/libexec/mc/ext.d/text.sh open man %var{PAGER:more}
+-	View=%view{ascii,nroff} /usr/libexec/mc/ext.d/text.sh view man %var{PAGER:more}
++regex/(\.man|\.bun|\.[0-9n]+)$
++	Open=groff -Tutf8 -man %f | %var{PAGER:more}
++	View=groff -Tutf8 -man %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
+ 
+ # Perl pod page
+ shell/.pod
+ 	Open=/usr/libexec/mc/ext.d/text.sh open pod %var{PAGER:more}
+ 	View=%view{ascii,nroff} /usr/libexec/mc/ext.d/text.sh view pod %var{PAGER:more}
+ 
++shell/.txt
++	Open=%var{PAGER:more} %f
++	View=%var{PAGER:more} %f
++	Edit=%var{EDITOR:vi} %f
++
+ # Troff with me macros.
+ # Exception - "read.me" is not a nroff file.
+ shell/read.me
+@@ -378,13 +384,34 @@
+ 	View=
+ 
+ shell/.me
+-	Open=/usr/libexec/mc/ext.d/text.sh open nroff.me %var{PAGER:more}
+-	View=%view{ascii,nroff} /usr/libexec/mc/ext.d/text.sh view nroff.me %var{PAGER:more}
++	Open=groff -Tutf8 -me %f | %var{PAGER:more}
++	View=groff -Tutf8 -me %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
+ 
+-# Troff with ms macros.
+ shell/.ms
+-	Open=/usr/libexec/mc/ext.d/text.sh open nroff.ms %var{PAGER:more}
+-	View=%view{ascii,nroff} /usr/libexec/mc/ext.d/text.sh view nroff.ms %var{PAGER:more}
++	Open=groff -Tutf8 -ms %f | %var{PAGER:more}
++	View=groff -Tutf8 -ms %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
++
++shell/.mm
++	Open=groff -Tutf8 -mm %f | %var{PAGER:more}
++	View=groff -Tutf8 -mm %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
++
++shell/.mdoc
++	Open=groff -Tutf8 -mdoc %f | %var{PAGER:more}
++	View=groff -Tutf8 -mdoc %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
++
++regex/(\.tdoc|\.t|\.tr)$
++	Open=groff -Tutf8 -m tdoc %f | %var{PAGER:more}
++	View=groff -Tutf8 -m tdoc %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
++
++shell/.mom
++	Open=groff -Tutf8 -mom %f | %var{PAGER:more}
++	View=groff -Tutf8 -mom %f | %var{PAGER:more}
++	Edit=%var{EDITOR:vi} %f
+ 
+ # Manual page - compressed
+ regex/([^0-9]|^[^\.]*)\.([1-9][A-Za-z]*|[ln])\.g?[Zz]$
+@@ -573,8 +600,8 @@
+ 
+ # PDF
+ type/^PDF
+-	Open=/usr/libexec/mc/ext.d/doc.sh open pdf
+-	View=%view{ascii} /usr/libexec/mc/ext.d/doc.sh view pdf
++	Open=okular %f
++	View=okular %f
+ 
+ # html
+ regex/i/\.html?$
