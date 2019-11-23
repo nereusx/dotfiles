@@ -20,7 +20,7 @@ These files are for ***personal use***, but **you may need**
 
 **Note**
 * You may need [pick](https://github.com/mptre/pick) or [iselect](http://www.ossp.org/pkg/tool/iselect/)
-for **ncurses menus** of tcsh (commands go and hc).
+for **ncurses menus** of ***tcsh*** (commands go and hc).
  
 ## The ~/.jed directory
 Just copy it to your home directory, and set the JED_HOME environment variable
