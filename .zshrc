@@ -78,7 +78,10 @@ PS1="%T%B $_usercolor%n%f$_hostcolor@%M%f $_dirxcolor%38<..<%~%f%b %# "
 export PS1
 
 #
-[[ -d ${HOME}/.cache ]] && HISTFILE=${HOME}/.cache/.zsh_history
+[[ -d ${HOME}/.cache ]] && export HISTFILE=${HOME}/.cache/.zsh_history
+[[ -d ${HOME}/.cache ]] && export DIRSTACKFILE=${HOME}/.cache/.zsh_dirs
+[[ -d ${HOME}/.cache ]] && export COMPDUMPFILE=${HOME}/.cache/.zcompdump
+export _comp_dumpfile=$COMPDUMPFILE
 HISTSIZE=2048
 SAVEHIST=${HISTSIZE}
 DIRSTACKSIZE=64
