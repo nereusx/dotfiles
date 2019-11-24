@@ -200,13 +200,16 @@ if ( -X devtodo ) then
 endif
 switch ( $pick_method )
 case fzy:
-	alias go 'set x=`dirs | fzy | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
+	alias go  'set x=`dirs | fzy | cut -f1`; if ( $x != "" ) cd =$x'
+	alias cdd 'set x=`ls -d1 */ --color=never | fzy`; if ( $x != "" ) cd $x'  
 	breaksw
 case pick:
-	alias go 'set x=`dirs | pick -S | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
+	alias go  'set x=`dirs | pick -S | cut -f1`;if ( $x != "" ) cd =$x'
+	alias cdd 'set x=`ls -d1 */ --color=never | pick -S`; if ( $x != "" ) cd $x'  
 	breaksw
 case iselect:
-	alias go 'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | awk \'{print $1}\'`;if ( $x != "" ) cd =$x'
+	alias go  'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( $x != "" ) cd =$x'
+	alias cdd 'set x=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( $x != "" ) cd $x'
 endsw
 
 #
