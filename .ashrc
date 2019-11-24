@@ -11,10 +11,11 @@ esac
 
 [ -z $optinteractive ] && return
 
-set -o allexport
 #set -o emacs
 
+set -o allexport
 [ -r ~/.environ ] && . ~/.environ
+set +o allexport
 
 # PROMPT
 if [ "$0" = "dash" ]; then
