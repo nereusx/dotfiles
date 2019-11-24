@@ -8,3 +8,19 @@ mod1 + shift + r
 mod1 + ctrl + BackSpace
     pkill xinit
 
+# Hibernate
+super + F4
+	prompt 'Hibernate computer?' 'sudo -A zzz -Z'
+
+super + shift + x
+	prompt "Shutdown computer?" "sudo -A shutdown -h now"
+
+super + x
+	sudo power-state mem; xautolock -locknow
+
+super + shift + BackSpace
+	prompt "Reboot computer?" "sudo -A reboot"
+
+super + shift + Escape
+	prompt 'Leave Xorg?' 'killall Xorg'
+			
