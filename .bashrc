@@ -17,9 +17,6 @@ set +o errexit
 
 PROMPT_COMMAND=()
 
-bind 'set show-all-if-ambiguous on'
-bind 'TAB:menu-complete'
-
 [ -r ~/.environ ] && . ~/.environ
 
 # don't put duplicate lines in the history. See bash(1) for more options
