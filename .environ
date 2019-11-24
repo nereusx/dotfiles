@@ -127,5 +127,14 @@ cpus=$(($cpus + 1))
 MAKEFLAGS="-j$cpus"
 __GL_YIELD='USLEEP'
 
+# select BRIEF editor
+list="st urxvtcd urxvt xfce-terminal xterm"
+for e in $list; do
+	if [ "$(command -vp $e)" ]; then
+		TERMINAL="$e"
+		break
+	fi
+done
+
 # cleanup
 unset e list cpus
