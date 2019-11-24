@@ -26,6 +26,8 @@ elif [ -n "$KSH_VERSION" ]; then
 	fi
 elif [ -n "$YASH_VERSION" ]; then
 	export ENV="$HOME/.yashrc"
+elif [ -n "$ZSH_VERSION" ]; then
+	export ENV="$HOME/.zshrc"
 else
 	export ENV="$HOME/.ashrc"
 fi
