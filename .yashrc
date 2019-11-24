@@ -19,6 +19,8 @@ set +o le-predict
 set +o err-exit
 
 [ -r ~/.environ ] && . ~/.environ
+[ -d ~/.cache   ] && HISTFILE=${HOME}/.cache/.yash_history
+HISTSIZE=2048
 
 # keybinds
 bindkey --emacs '\^N' beginning-search-forward
@@ -69,7 +71,7 @@ if [ "$(id -u)" -eq 0 ]; then
   _uc='\fr\fo.'     # red username for root
   _2c='\fr\fo.'     # red PS2 for root
 else
-  _uc=$_hc _hc=  # same username color as hostname for non-root user
+  _uc='\fm\fo.'  # same username color as hostname for non-root user
   _2c=           # PS2 in normal color for non-root user
 fi
 # The main prompt ($YASH_PS1) contains the username, hostname, working
@@ -90,7 +92,7 @@ YASH_PS4S='\fmo.'
 unset _hc _uc _2c
 
 # No escape sequences allowed in the POSIXly-correct mode.
-PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
+export PS1='${LOGNAME}@${HOSTNAME%%.*} '$PS1
 
 # find escape sequence to change terminal window title
 case "$TERM" in
@@ -185,6 +187,8 @@ _file_type() {
 	fi
 }
 COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
+
+set +o allexport
 
 #
 #	aliases

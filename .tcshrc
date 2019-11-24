@@ -159,22 +159,23 @@ else
 endif
 set histlit
 set history=2048
-set histdup=prev
+set histdup=all
+#set histdup=prev
 set savehist
 set nohistclop
 alias hist 'set lines=`tput lines`; history $lines'
 switch ( $pick_method )
 case fzy:
-	alias hc 'set x=`history -hr | fzy` && eval $x'
+	alias hc 'set x=`history -hr | fzy` && if ( "$x" != "hc" ) eval "$x"'
 	breaksw
 case pick:
-	alias hc 'set x=`history -h | pick -S` && eval $x'
+	alias hc 'set x=`history -h | pick -S` && if ( "$x" != "hc" ) eval "$x"'
 	breaksw
 case iselect:
 	alias hc '\
 	set y=`history | wc -l`;\
 	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
-	if ( "$x" != "" && "$x" != "hc" ) eval $x'
+	if ( "$x" != "" && "$x" != "hc" ) eval "$x"'
 endsw
 
 #
@@ -188,7 +189,7 @@ if ( -d ~/.cache ) then
 else
 	set dirsfile = ~/.tcsh_dirs
 endif
-set dunique
+#set dunique # unfortunately this removes the directory if exists in dirstack
 #set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
 set pushdtohome
@@ -201,15 +202,15 @@ endif
 switch ( $pick_method )
 case fzy:
 	alias go  'set x=`dirs | fzy | cut -f1`; if ( $x != "" ) cd =$x'
-	alias cdd 'set x=`ls -d1 */ --color=never | fzy`; if ( $x != "" ) cd $x'  
+	alias cdd 'set x="`ls -d1 */ --color=never | fzy`"; if ( "$x" != "" ) cd "$x"'
 	breaksw
 case pick:
 	alias go  'set x=`dirs | pick -S | cut -f1`;if ( $x != "" ) cd =$x'
-	alias cdd 'set x=`ls -d1 */ --color=never | pick -S`; if ( $x != "" ) cd $x'  
+	alias cdd 'set x=`ls -d1 */ --color=never | pick -S`; if ( $x != "" ) cd "$x"'
 	breaksw
 case iselect:
 	alias go  'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( $x != "" ) cd =$x'
-	alias cdd 'set x=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( $x != "" ) cd $x'
+	alias cdd 'set x=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( $x != "" ) cd "$x"'
 endsw
 
 #

@@ -23,16 +23,23 @@ shopt -q -s extglob
 shopt -s histappend
 # Make multi-line commandsline in history
 shopt -q -s cmdhist 
+shopt -q -s lithist
 # Get immediate notification of bacground job termination
 set -o notify 
 # Disable [CTRL-D] which is used to exit the shell
-set -o ignoreeof
-	  
+#set -o ignoreeof
+
 PROMPT_COMMAND=()
 
 set -a
 [ -r ~/.environ ] && . ~/.environ
+if [ -d ~/.cache ]; then
+	HISTFILE=${HOME}/.cache/.bash_history
+	HISTFILESIZE=2048
+#	HISTSIZE=2048
+fi
 set +a
+shopt -q -s mailwarn
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -40,10 +47,6 @@ HISTCONTROL=ignoredups:ignorespace
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -80,7 +83,6 @@ if [ $USERID -eq 0 ]; then
 	cdirxcolor="$cred"
 fi
 
-#PS1='\u@\h \w \$ '
 PS1="\[$cusercolor\]\u\[$chostcolor\]@\h \[$cdirxcolor\]\w\[$creset\]"
 export PS1=$PS1' \$ '
 
@@ -133,9 +135,17 @@ _file_type() {
 }
 COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 
+HISTCONTROL=‘ignoredups’
+
 # aliases
 [ -r ~/.aliases ] && . ~/.aliases
 alias reload='. ~/.bashrc'
+alias hist='history $(tput lines)'
+alias dirs='dirs -v'
+
+# another bug in the dust
+#_cd() { pushd "$*" > /dev/null; }
+#alias cd='_cd'
 
 # pick
 list="fzy pick"
@@ -146,28 +156,30 @@ for e in $list; do
 		break
 	fi
 done
-HISTCONTROL=‘ignoredups’
-alias hist='history $(tput lines)'
-#case $pick_method in
-#fzy)
-#	alias hc='x=$(history | fzy) && eval $x' 
-#	alias go='x=$(dirs | fzy | awk '"'"'{print $1}'"'"'); [ -n "$x"] && cd =$x'
-#	;;
-#pick)
-#	alias hc='x=$(history | pick -S) && eval $x'
-#	alias go='x=$(dirs | pick -S | awk '"'"'{print $1}'"'"'); [ -n "$x" ] && cd =$x'
-#	;;
-#esac
+case $pick_method in
+fzy)
+	alias hc='x="$(fc -lnr | fzy)" && eval "$x"' 
+	alias go='x=$(builtin dirs -v | fzy | cut -f1); [ -n "$x"] && cd +$x'
+	alias cdd='x="$(ls -d1 */ --color=never | fzy)"; [ -n "$x" ] && cd "$x"'
+	;;
+pick)
+	alias hc='x="$(fc -lnr | pick -S)" && eval "$x"'
+	alias go='x=$(builtin dirs -v | pick -S | cut -f1); [ -n "$x" ] && cd +$x'
+	alias cdd='x="$(ls -d1 */ --color=never | pick)"; [ -n "$x" ] && cd "$x"'  
+	;;
+esac
 
 #	welcome screen
-if [[ -o login_shell ]]; then
-	[[ $TTY =~ tty* ]] && /bin/echo -ne '\033='
-	echo "Welcome to BaSH $BASH_VERSION"
+if shopt | grep '^login_shell.*on$' > /dev/null; then
+	if [[ $TTY =~ tty* ]]; then
+		/bin/echo -ne '\033='
+	fi
+	echo -e "Welcome to \033[1;36mBaSH\033[0m $BASH_VERSION"
 	echo
-	list="neofetch screenfetch diogenis fortunes"
-	for f in $list; do
-		if [ $(command -pv $f) ]; then
-			$f;
+	list=(diogenis neofetch screenfetch fortune)
+	for e in ${list[@]}; do
+		if which $e > /dev/null; then
+			$e
 			break
 		fi
 	done
@@ -179,4 +191,4 @@ for e in ~/.bashrc-*; do
 done
 
 # clean up
-unset _fsl _tsl f e list
+unset _fsl _tsl e list

@@ -15,6 +15,7 @@ esac
 
 set -o allexport
 [ -r ~/.environ ] && . ~/.environ
+[ -d ~/.cache   ] && HISTFILE=${HOME}/.cache/.ash_history
 set +o allexport
 
 # PROMPT
