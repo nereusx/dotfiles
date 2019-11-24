@@ -7,13 +7,14 @@ umask 022
 [[ $- == *i* ]] || return
 
 set -o emacs
-set -o allexport
 #set -o errexit
 
+set -o allexport
 [ -r ~/.environ ] && . ~/.environ
+set +o allexport
 
 ### Terminal & Keys
-[[ $TERM == "rxvt" ]] && TERM=rxvt-unicode
+[[ $TERM == "rxvt" ]] && export TERM=rxvt-unicode
 function keyboard_trap {
 case ${.sh.edchar} in
 $'\e'[[O]F)   .sh.edchar=$'\cE';; # [END] = end-of-line

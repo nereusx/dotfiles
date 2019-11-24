@@ -9,7 +9,6 @@ umask 022
 #	BASH settings
 #
 set -o emacs
-set -o allexport
 set -o braceexpand
 set -o noclobber
 set -o notify
@@ -17,7 +16,9 @@ set +o errexit
 
 PROMPT_COMMAND=()
 
+set -a
 [ -r ~/.environ ] && . ~/.environ
+set +a
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -67,7 +68,7 @@ fi
 
 #PS1='\u@\h \w \$ '
 PS1="\[$cusercolor\]\u\[$chostcolor\]@\h \[$cdirxcolor\]\w\[$creset\]"
-PS1=$PS1' \$ '
+export PS1=$PS1' \$ '
 
 unset cblack cred cgreen cbrown cblue cmagenta ccyan cwhite
 unset cusercolor chostcolor cdirxcolor

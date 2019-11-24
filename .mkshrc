@@ -11,14 +11,15 @@ umask 022
 #	MKSH settings
 #
 set -o emacs
-set -o allexport
 set -o notify
 set -o noclobber
 set -o utf8-mode
 set -o nounset
 set +o errexit
 
+set -o allexport
 [ -r ~/.environ ] && . ~/.environ
+set +o allexport
 
 # keyboard
 bind '^Q'=abort

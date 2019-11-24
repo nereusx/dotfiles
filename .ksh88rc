@@ -7,10 +7,11 @@ umask 022
 [[ -o interactive ]] || return
 
 set -o emacs
-set -o allexport
 #set -o errexit
 
+set -o allexport
 [ -r ~/.environ ] && . ~/.environ
+set +o allexport
 
 # PROMPT
 PS1='\[$(tput bold)$(tput setaf 5)\]\A\[$(tput op)\] \[$(tput bold)$(tput setaf 2)\]\u'"@${HOSTNAME}\[$(tput op)\]"
