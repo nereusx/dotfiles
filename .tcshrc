@@ -546,7 +546,7 @@ if ( $?loginsh ) then # we are login shell..
 
 	echo 'Welcome to tenex c-shell'
 	echo
-	set list = ( neofetch screenfetch diogenis fortunes )
+	set list = ( fortune neofetch screenfetch diogenis fortunes )
 	foreach f ( $list )
 		if ( -X $f ) then
 			$f

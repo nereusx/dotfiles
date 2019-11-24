@@ -3,6 +3,8 @@
 #	~/.zshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 #
+
+# reset to zsh mode
 emulate -RL zsh
 
 # mode   umask
@@ -15,10 +17,13 @@ emulate -RL zsh
 # 0000 - 0777 - paranoid
 umask 022
 
+# no coredumps
 limit coredumpsize 0
 
-[ $options[INTERACTIVE] = "off" ] && exit
+# only interactive mode
+[[ -o interactive ]] || exit
 
+# modules that we need
 autoload -Uz compinit run-help
 
 #
@@ -33,7 +38,7 @@ setopt AUTO_PUSHD
 setopt ALL_EXPORT
 
 emulate ksh
-[ -r ${HOME}/.environ ] && source ${HOME}/.environ
+[[ -r ${HOME}/.environ ]] && source ${HOME}/.environ
 emulate zsh
 
 list=(fzy pick)
@@ -71,10 +76,9 @@ SAVEHIST=2048
 DIRSTACKSIZE=64
 KEYTIMEOUT=1
 MAILCHECK=0
-MAILPATH=$MAIL
 
 #
-#
+#	completion
 #
 zmodload zsh/complete zsh/complist zsh/datetime
 compinit
@@ -86,13 +90,14 @@ setopt AUTO_LIST
 setopt LIST_AMBIGUOUS
 unsetopt AUTO_MENU
 
+# EMACS mode
 bindkey -e
 
 #
 #	Aliases
 #
 emulate ksh
-[ -r ${HOME}/.aliases ] && source ${HOME}/.aliases
+[[ -r ${HOME}/.aliases ]] && source ${HOME}/.aliases
 emulate zsh
 
 alias reload="source ${HOME}/.zshrc"
@@ -111,10 +116,23 @@ fzy)	alias go='x=$(builtin dirs -v | fzy | cut -f1);[ -n "$x" ] && cd +$x';;
 pick)	alias go='x=$(builtin dirs -v | pick -S | cut -f1);[ -n "$x" ] && cd +$x';;
 esac
 
+# login shell
+if [[ -o login ]]; then
+	list=(diogenis fortune neofetch)
+	echo "Welcome to ZSH $ZSH_VERSION"
+	echo
+	for e in $list; do
+		if which $e > /dev/null; then
+			$e
+			break
+		fi
+	done
+fi
+
 # load local rcs
 setopt nonomatch
 for e in ${HOME}/.zshrc-*; do
-	[ -r $e ] && source $e
+	[[ -r $e ]] && source $e
 done
 unsetopt nonomatch
 
