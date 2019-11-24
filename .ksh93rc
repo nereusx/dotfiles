@@ -36,6 +36,7 @@ if [[ $USER == root ]]; then
 else
 	PS1+="\$ "
 fi
+export PS1
 
 # aliases
 [ -r ~/.aliases ] && . ~/.aliases

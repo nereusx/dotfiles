@@ -45,8 +45,8 @@ blue="$x$(tput setaf 4)$x"
 rst="$x$(tput sgr0)$x"
 
 PS1="$x$(print \\r)$x$(tput bold)$x"
-if [ $USERID -eq 0 ];
-	then PS1+=$red;
+if [ $USERID -eq 0 ]; then
+	PS1+=$red;
 else
 	PS1+=$green;
 fi
@@ -61,6 +61,7 @@ if [ $USERID -eq 0 ]; then
 else 
 	PS1+=$blue' $PWD '$rst'$ '
 fi
+export PS1
 
 unset x red green yellow blue rst
 

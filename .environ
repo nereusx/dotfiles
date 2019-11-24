@@ -46,6 +46,9 @@ done
 PATH=${HOME}/.bin:${HOME}/.help:$PATH
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
+LS_OPTIONS='--color=auto'
+eval "`dircolors -b`"
+
 # --- PAGER ---
 LESS='-R'
 GROFF_ENCODING='utf8'

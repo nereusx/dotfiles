@@ -11,9 +11,23 @@ umask 022
 set -o emacs
 set -o braceexpand
 set -o noclobber
-set -o notify
 set +o errexit
 
+# Correct dir spellings
+shopt -q -s cdspell
+# Make sure display get updated when terminal window get resized
+shopt -q -s checkwinsize
+# Turn on the extended pattern matching features 
+shopt -q -s extglob
+# Append rather than overwrite history on exit
+shopt -s histappend
+# Make multi-line commandsline in history
+shopt -q -s cmdhist 
+# Get immediate notification of bacground job termination
+set -o notify 
+# Disable [CTRL-D] which is used to exit the shell
+set -o ignoreeof
+	  
 PROMPT_COMMAND=()
 
 set -a
