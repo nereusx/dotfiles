@@ -38,6 +38,7 @@ More (void-*):\n\
 \t-m\t\t\tsystem maintenance\n\
 \t-al\t\t\talternatives list\n\
 \t-as\t\t\talternatives set\n\
+\t-gs\t\t\tusing pick as TUI\n\
 "
 
 msgvers="\
@@ -54,7 +55,7 @@ if [ $# -gt 0 ]; then todo="$1"; shift; fi
 case $todo in
 # void-package
 -u|update|upgrade)	void-package -u;;
--i|install|-r|remove|reinstall|-w|info|show|view|-s|search|-rs|regex-search|-fs|file-search)
+-i|install|-r|remove|reinstall|-w|info|show|view|-s|search|-rs|regex-search|-fs|file-search|-gs)
 	void-package $todo $*
 	;;
 -o|-rc|-k|-rok|-f|--files|-a|-af|-ia|-ai)
