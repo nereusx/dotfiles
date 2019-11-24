@@ -156,7 +156,7 @@ set histlit
 set history=1024
 set histdup=prev
 set nohistclop
-alias hist 'history `tput lines`'
+alias hist 'set lines=`tput lines`; history $lines'
 switch ( $pick_method )
 case fzy:
 	alias hc 'set x=`history -hr | fzy` && eval $x'
