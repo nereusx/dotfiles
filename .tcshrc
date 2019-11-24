@@ -152,9 +152,15 @@ unset usercolor hostcolor dirxcolor timecolor rsetcolor
 #
 #	tcsh' history
 #
+if ( -d ~/.cache ) then
+	set histfile = ~/.cache/tcsh.history
+else
+	set histfile = ~/.tcsh_history
+endif
 set histlit
-set history=1024
+set history=2048
 set histdup=prev
+set savehist
 set nohistclop
 alias hist 'set lines=`tput lines`; history $lines'
 switch ( $pick_method )
@@ -177,10 +183,16 @@ endsw
 #	Note: use 'dirs' to show the history of directories;
 #	use 'cd =N' where N the number of the directory as shown by 'dirs'.
 #
+if ( -d ~/.cache ) then
+	set dirsfile = ~/.cache/tcsh.dirs
+else
+	set dirsfile = ~/.tcsh_dirs
+endif
 set dunique
 #set cdpath = ( ${HOME} /usr/src )
 set pushdsilent
 set pushdtohome
+set savedirs
 alias cd 'pushd'
 alias dirs 'dirs -v'
 if ( -X devtodo ) then
