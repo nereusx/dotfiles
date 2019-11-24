@@ -146,7 +146,7 @@ endif
 if ( $?REMOTEHOST ) then
 	set hostcolor="%{\033[33m%}"
 endif
-set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%C4${resetmode} %# "
+set prompt = "${timecolor}%T ${usercolor}%n${hostcolor}@%m ${dirxcolor}%c04${resetmode} %# "
 unset usercolor hostcolor dirxcolor timecolor rsetcolor
 
 #
