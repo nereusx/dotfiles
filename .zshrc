@@ -63,7 +63,7 @@ unsetopt all_export				# stop automatic export variables
 #
 #	PROMPT
 #
-if $(command -v prompt) > /dev/null; then
+if whence -v prompt | grep function > /dev/null; then
     prompt off
 fi
 _ps[1]="%F{magenta}"
