@@ -1,4 +1,4 @@
-# -- mode: shell; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; --
+# -- mode: sh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; --
 #
 #	~/.zshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
@@ -116,15 +116,43 @@ alias help='run-help'
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
 
-case $pick_method in
-fzy)	alias hc='x=$(fc -lnr | fzy) && eval $x';;
-pick)	alias hc='x=$(fc -ln  | pick -S) && eval $x';;
-esac
+_hc_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(fc -lnr | fzy)";;
+	pick)	x="$(fc -lnr | pick -S)";;
+	esac
+	if [[ -n "$x" ]]; then
+		if [[ ! "$x" == "hc" ]]; then
+			eval "$x"
+		fi
+	fi
+	}
+alias hc="_hc_cmd"
 
-case $pick_method in
-fzy)	alias go='x=$(builtin dirs -v | fzy | cut -f1);[ -n "$x" ] && cd +$x';;
-pick)	alias go='x=$(builtin dirs -v | pick -S | cut -f1);[ -n "$x" ] && cd +$x';;
-esac
+_go_back_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(builtin dirs -v | fzy | cut -f1 )";;
+	pick)	x="$(builtin dirs -v | pick -S | cut -f1 )";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd +$x
+	fi
+	}
+alias cd--='_go_back_cmd'
+
+_go_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
+	pick)	x="$(ls -d1 */ --color=never | pick)";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd "$x"
+	fi
+	}
+alias cd++='_go_cmd'
 
 # plugins manager ?
 # curl -L git.io/antigen > ${HOME}/.config/antigen.zsh

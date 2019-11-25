@@ -5,11 +5,13 @@
 umask 022
 
 # if non-interactive shell, exit
-[ -o interactive ] || exit
+[[ -o interactive ]] || exit
 
 #
 #	MKSH settings
 #
+set +o sh
+set +o posix
 set -o emacs
 set -o notify
 set -o noclobber
@@ -18,7 +20,8 @@ set -o nounset
 set +o errexit
 
 set -o allexport
-[ -r ~/.environ ] && . ~/.environ
+[[ -r ~/.environ ]] && . ~/.environ
+[[ -d ~/.cache   ]] && HISTFILE="${HOME}/.cache/.mksh_history"
 set +o allexport
 
 # keyboard
@@ -37,48 +40,73 @@ bind '^[[2~'=yank
 #	PROMPT
 #
 PROMPT_COMMAND=()
-x=$(print \\001)
-red="$x$(tput setaf 1)$x"
-green="$x$(tput setaf 2)$x"
-yellow="$x$(tput setaf 3)$x"
-blue="$x$(tput setaf 4)$x"
-rst="$x$(tput sgr0)$x"
+_ps[1]=1;
+if [[ $USERID -eq 0 ]]; then
+	_ps[2]=31; _ps[4]=31; _ps[5]='#'
+else
+	_ps[2]=35; _ps[4]=34; _ps[5]='$'
+fi
+if [[ -n ${REMOTEHOST-} ]]; then
+	_ps[3]=35
+else
+	_ps[3]=32
+fi
 
-PS1="$x$(print \\r)$x$(tput bold)$x"
-if [ $USERID -eq 0 ]; then
-	PS1+=$red;
-else
-	PS1+=$green;
-fi
-PS1+='$USER'
-if [ -n "${REMOTEHOST-}" ]; then
-	PS1+=$yellow'@$HOSTNAME'
-else
-	PS1+=$green'@$HOSTNAME'
-fi
-if [ $USERID -eq 0 ]; then
-	PS1+=$red' $PWD '$rst'# '
-else 
-	PS1+=$blue' $PWD '$rst'$ '
-fi
+PS1=$'\1\r\1\e[1;${_ps[2]}m\1$USER\1\e[1;${_ps[3]}m\1@$HOSTNAME \1\e[1;${_ps[4]}m\1$PWD \1\e[0m\1${_ps[5]} '
 export PS1
 
-unset x red green yellow blue rst
-
 # aliases
-[ -r ~/.aliases ] && . ~/.aliases
+[[ -r ~/.aliases ]] && . ~/.aliases
 alias sleep="$(command -vp sleep)"
 alias reload='. ~/.mkshrc'
 
+_hc_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(fc -lnr | fzy)";;
+	pick)	x="$(fc -lnr | pick -S)";;
+	esac
+	if [[ -n "$x" ]]; then
+		if [[ ! "$x" == "hc" ]]; then
+			eval "$x"
+		fi
+	fi
+	}
+alias hc="_hc_cmd"
+
+_go_back_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(builtin dirs -v | fzy | cut -f1 )";;
+	pick)	x="$(builtin dirs -v | pick -S | cut -f1 )";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd +$x
+	fi
+	}
+alias cd--='_go_back_cmd'
+
+_go_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
+	pick)	x="$(ls -d1 */ --color=never | pick)";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd "$x"
+	fi
+	}
+alias go='_go_cmd'
+
 #	welcome screen
-if [ -o login ]; then
+if [[ -o login ]]; then
 	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
 	echo "Welcome to $KSH_VERSION"
 	echo
-	list="neofetch screenfetch diogenis fortunes"
-	for f in $list; do
-		if [ $(command -vp $f) ]; then
-			$f;
+	list="fortune diogenis neofetch screenfetch"
+	for e in $list; do
+		if [ $(command -vp $e) ]; then
+			$e;
 			break
 		fi
 	done
@@ -86,10 +114,12 @@ fi
 
 # load local mkshrc files
 for e in ~/.mkshrc-*; do
-	if [ -f $e ]; then
+	if [[ -f $e ]]; then
 		. $e
 	fi
 done
 
 # clean up
-unset e f list
+unset e list
+set -o errexit
+

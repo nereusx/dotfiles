@@ -156,18 +156,46 @@ for e in $list; do
 		break
 	fi
 done
-case $pick_method in
-fzy)
-	alias hc='x="$(fc -lnr | fzy)" && eval "$x"' 
-	alias go='x=$(builtin dirs -v | fzy | cut -f1); [ -n "$x"] && cd +$x'
-	alias cdd='x="$(ls -d1 */ --color=never | fzy)"; [ -n "$x" ] && cd "$x"'
-	;;
-pick)
-	alias hc='x="$(fc -lnr | pick -S)" && eval "$x"'
-	alias go='x=$(builtin dirs -v | pick -S | cut -f1); [ -n "$x" ] && cd +$x'
-	alias cdd='x="$(ls -d1 */ --color=never | pick)"; [ -n "$x" ] && cd "$x"'  
-	;;
-esac
+
+_hc_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(fc -lnr | fzy)";;
+	pick)	x="$(fc -lnr | pick -S)";;
+	esac
+	if [[ -n "$x" ]]; then
+		if [[ ! "$x" == "hc" ]]; then
+			eval "$x"
+		fi
+	fi
+	}
+alias hc="_hc_cmd"
+
+_go_back_cmd() {
+	local x
+	unalias dirs
+	case $pick_method in
+	fzy)	x="$(dirs -p | fzy)";;
+	pick)	x="$(dirs -p | pick)";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd "$x"
+	fi
+	alias dirs='dirs -v'
+	}
+alias cd--='_go_back_cmd'
+
+_go_cmd() {
+	local x
+	case $pick_method in
+	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
+	pick)	x="$(ls -d1 */ --color=never | pick)";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd "$x"
+	fi
+	}
+alias cd++='_go_cmd'
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then

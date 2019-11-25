@@ -159,17 +159,17 @@ else
 endif
 set histlit
 set history=2048
-set histdup=all
-#set histdup=prev
+#set histdup=all	# mess previous
+set histdup=prev
 set savehist
 set nohistclop
-alias hist 'set lines=`tput lines`; history $lines'
+alias hist 'set _=`tput lines`; history $_'
 switch ( $pick_method )
 case fzy:
-	alias hc 'set x=`history -hr | fzy` && if ( "$x" != "hc" ) eval "$x"'
+	alias hc 'set _=`history -hr | fzy` && if ( "$_" != "hc" ) eval "$_"'
 	breaksw
 case pick:
-	alias hc 'set x=`history -h | pick -S` && if ( "$x" != "hc" ) eval "$x"'
+	alias hc 'set _=`history -h | pick -S` && if ( "$_" != "hc" ) eval "$_"'
 	breaksw
 case iselect:
 	alias hc '\
@@ -201,16 +201,16 @@ if ( -X devtodo ) then
 endif
 switch ( $pick_method )
 case fzy:
-	alias go  'set x=`dirs | fzy | cut -f1`; if ( $x != "" ) cd =$x'
-	alias cdd 'set x="`ls -d1 */ --color=never | fzy`"; if ( "$x" != "" ) cd "$x"'
+	alias cd--	'set _=`dirs | fzy | cut -f1` && cd =$_'
+	alias cd++	'set _=`ls -d1 */ --color=never | fzy` && cd "$_"'
 	breaksw
 case pick:
-	alias go  'set x=`dirs | pick -S | cut -f1`;if ( $x != "" ) cd =$x'
-	alias cdd 'set x=`ls -d1 */ --color=never | pick -S`; if ( $x != "" ) cd "$x"'
+	alias cd--	'set _=`dirs | pick | cut -f1` && cd =$_'
+	alias cd++	'set _=`ls -d1 */ --color=never | pick` && cd "$_"'
 	breaksw
 case iselect:
-	alias go  'set x=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( $x != "" ) cd =$x'
-	alias cdd 'set x=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( $x != "" ) cd "$x"'
+	alias cd--	'set _=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( "$_" != "" ) cd =$_'
+	alias cd++	'set _=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( "$_" != "" ) cd "$_"'
 endsw
 
 #
@@ -480,7 +480,7 @@ alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 
 #
 if ( $DISTRO == "void" ) then
-	alias man 'set x=`tput cols`; @ x = $x - 2; /usr/bin/man -O width=$x '
+	alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
 endif
 
 ### information utilities
