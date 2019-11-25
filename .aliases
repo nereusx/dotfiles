@@ -23,14 +23,12 @@ mounted() {	mount | grep -E '^(tmpfs|/dev)' | grep -Ev 'AppImage|/dev/shm|/dev/f
 
 list="/var/log/messages\
 	/var/log/socklog/messages/current\
-	/var/log/current\
-	/var/log/syslog\
+	/var/log/current /var/log/syslog\
 	/var/log/dmesg.log\
 	/var/log/dmesg"
-
-for e in list; do
+for e in $list; do
 	if [ -r $e ]; then
-		if [ "$(command -vp clog)" ]; then
+		if [ -x "$(command -vp clog)" ]; then
 			alias log30="tail -n 30 $e | clog"
 		else
 			alias log30="tail -n 30 $e"
@@ -44,16 +42,25 @@ elif [ -f /var/log/httpd/error.log ]; then
 	alias phplog='tail /var/log/httpd/error.log'
 fi
 alias netlog='netstat -lptu4'
+
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
 alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 
 alias tmux-reload='tmux source-file ~/.tmux.conf'
 alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
+alias fortune-files='dof -e /usr/share/fortunes/*.dat do echo %b | columns'
+if [ -x /usr/bin/vis ]; then
+	alias vi='vis'
+fi
 
 # youtube-dl
 alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
 alias yt-get-plist='youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" "$*"'
+
+# https://github.com/thcipriani/dotfiles/blob/master/aliases
+alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias localip="ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
 
 # calc
 _bc() { echo "$*" | bc -l; }
