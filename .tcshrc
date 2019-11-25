@@ -134,7 +134,8 @@ end
 #
 unset ampm
 set ellipsis
-set usercolor="%{\033[1;32m%}"
+# 1=red 2=green 3=yellow 4=blue 5=magenta 6=cyan 7=white
+set usercolor="%{\033[1;33m%}"
 set hostcolor="%{\033[1;32m%}"
 set timecolor="%{\033[1;35m%}"
 set dirxcolor="%{\033[1;34m%}"

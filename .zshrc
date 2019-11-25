@@ -66,7 +66,7 @@ if [ $USERID -eq 0 ]; then
 	_usercolor="%F{red}"
 	_dirxcolor="%F{red}"
 else
-	_usercolor="%F{magenta}"
+	_usercolor="%F{yellow}"
 	_dirxcolor="%F{blue}"
 fi
 if [ -n "${REMOTEHOST-}" ]; then
@@ -74,7 +74,7 @@ if [ -n "${REMOTEHOST-}" ]; then
 else
 	_hostcolor="%F{green}"
 fi
-PS1="%T%B $_usercolor%n%f$_hostcolor@%M%f $_dirxcolor%38<..<%~%f%b %# "
+PS1="%B%F{magenta}%T%f $_usercolor%n%f$_hostcolor@%M%f $_dirxcolor%38<..<%~%f%b %# "
 export PS1
 
 #
