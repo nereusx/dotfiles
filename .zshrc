@@ -67,6 +67,8 @@ done
 # hostnames
 hosts+=(github.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com)
 
+XDG_RUNTIME_DIR="/tmp/runtime-$USER"
+
 unsetopt all_export				# stop automatic export variables
 
 #
@@ -78,7 +80,7 @@ fi
 _ps[1]="%F{magenta}"
 if [ $USERID -eq 0 ]; then
 	_ps[2]="%F{red}"
-	_ps[4]="%F{red}"
+	_ps[4]="%F{magenta}"
 else
 	_ps[2]="%F{yellow}"
 	_ps[4]="%F{blue}"
@@ -88,9 +90,24 @@ if [ -n "${REMOTEHOST-}" ]; then
 else
 	_ps[3]="%F{green}"
 fi
-PS1="%B${_ps[1]}%T%f ${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
-export PS1
+#PS1="%B${_ps[1]}%T%f ${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
+PS1="%B${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
 
+#	GIT PROMPT
+autoload -Uz vcs_info
+
+git_rprompt() {
+	vcs_info
+	if [[ -n $vcs_info_msg_0_ ]]; then
+		echo "$vcs_info_msg_0_"
+	else
+		echo "%F{magenta}(%f%B%F{white}sys%f%b%F{magenta})-[%f%F{green} %T%f%F{magenta} ]%f "
+	fi
+	}
+RPROMPT='$(git_rprompt)'
+
+#
+#	...
 #
 [[ -d ${HOME}/.cache ]] && export HISTFILE=${HOME}/.cache/.zsh_history
 [[ -d ${HOME}/.cache ]] && export DIRSTACKFILE=${HOME}/.cache/.zsh_dirs
@@ -200,27 +217,43 @@ _go_cmd() {
 alias go='_go_cmd'
 
 #
-#	GIT prompt
+#	Suffix aliases
 #
-autoload -Uz vcs_info
-precmd() {
-	psvar=()
-	vcs_info
-	[[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+xopen() {
+	local f
+	for f in $*; do
+		case $f in
+		*.pdf)	okular "$f";;
+		Makefile) ;&
+		*.(txt|inf|log|css|sh|csh|zsh|c|h|pas))
+				${EDITOR-vi} "$f";;
+		*.(htm|html))
+				firefox "$f";;
+		*.(mp3|ogg|wav|mp4))
+				vlc "$f";;
+		*.(png|jpg|gif))
+				ristretto "$f";;
+#				gwenview "$f";;
+		*.[1-8].gz) ;&
+		*.[1-8]) ;&
+		*.(man|mdoc|ms|me|mom))
+				xview-roff "$f";;
+		*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
+			return 1
+		esac
+	done
 	}
 
-git_rprompt() {
-#	echo "%m%(1v.%F{green}%1v%f.)"
-	if [[ $#psvar -eq 0 ]]; then
-		echo "(idle)"
-	else
-		echo $psvar[1]
-	fi
-	}
+alias -s pdf=okular
+alias -s txt=xopen
+alias -s ms=xview-roff
+alias -s man=xview-roff
+alias -s 1=xview-roff
+alias -s 3=xview-roff
 
-RPROMPT='$(git_rprompt)'
-
-# plugins manager ?
+#
+#	plugins manager
+#
 #if [[ -x "$(command -vp antibody)" ]]; then
 #	source <(antibody init)
 #	[[ -r ~/.zsh_plugins.txt ]] && antibody bundle < ~/.zsh_plugins.txt
