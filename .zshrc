@@ -24,7 +24,7 @@ limit coredumpsize 0
 [[ -o interactive ]] || exit
 
 # modules that we need
-autoload -Uz compinit run-help vcs_info
+autoload -Uz compinit run-help vcs_info colors
 
 #
 #	ENVIRONMENT
@@ -42,11 +42,13 @@ setopt pushd_ignore_dups		# remove duplicated entries
 setopt auto_pushd				# automatic save current directory before cd
 
 setopt all_export				# export all new/modified variables
+setopt prompt_subst				# allow functions in prompt
 
 emulate ksh
 [[ -r ${HOME}/.environ ]] && source ${HOME}/.environ
 emulate zsh
 
+colors
 list=(fzy pick)
 pick_method=none
 for e in $list; do
@@ -61,7 +63,9 @@ unsetopt all_export				# stop automatic export variables
 #
 #	PROMPT
 #
-prompt off
+if $(command -v prompt) > /dev/null; then
+    prompt off
+fi
 _ps[1]="%F{magenta}"
 if [ $USERID -eq 0 ]; then
 	_ps[2]="%F{red}"
@@ -167,25 +171,55 @@ _go_cmd() {
 	}
 alias go='_go_cmd'
 
-_prompt_setup() {
-  prompt_opts=(cr subst percent)
-  autoload -Uz add-zsh-hook vcs_info
+#
+#   GIT PROMPT
+#   https://github.com/jdavis/oh-my-zsh/blob/master/plugins/git-prompt
 
-#  add-zsh-hook precmd _prompt_precmd
-#  add-zsh-hook preexec _prompt_preexec
+## Enable auto-execution of functions.
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
 
-  zstyle ':vcs_info:*' enable git
-  zstyle ':vcs_info:git*' formats ' %b'
-  zstyle ':vcs_info:git*' actionformats ' %b|%a'
+# Append git functions needed for prompt.
+preexec_functions+='preexec_update_git_vars'
+precmd_functions+='precmd_update_git_vars'
+chpwd_functions+='chpwd_update_git_vars'
 
-  # show username@host if logged in through SSH
-  [[ "$SSH_CONNECTION" != '' ]] && _top_row='%F{magenta}%n%F{reset}@%F{orange}%m%F{reset} '
-
-  # prompt turns red if the previous command didn't exit with 0
-  RPS1=" %F{green}%1~%F{reset} %(?.%F{cyan}.%F{red})%f "
+## Function definitions
+function preexec_update_git_vars() {
+    case "$2" in
+        git*)
+        __EXECUTED_GIT_COMMAND=1
+        ;;
+    esac
 }
 
-_prompt_setup "$@"
+function precmd_update_git_vars() {
+    if [ -n "$__EXECUTED_GIT_COMMAND" ]; then
+        update_current_git_vars
+        unset __EXECUTED_GIT_COMMAND
+    fi
+}
+
+function chpwd_update_git_vars() {
+    update_current_git_vars
+}
+
+function update_current_git_vars() {
+    unset __CURRENT_GIT_STATUS
+
+    local gitstatus="$__GIT_PROMPT_DIR/gitstatus.py"
+    _GIT_STATUS=`python ${gitstatus}`
+    __CURRENT_GIT_STATUS=("${(f)_GIT_STATUS}")
+}
+
+function prompt_git_info() {
+    if [ -n "$__CURRENT_GIT_STATUS" ]; then
+        echo "(%{${fg[red]}%}$__CURRENT_GIT_STATUS[1]%{${fg[default]}%}$__CURRENT_GIT_STATUS[2]%{${fg[magenta]}%}$__CURRENT_GIT_STATUS[3]%{${fg[default]}%})"
+    fi
+}
+
+RPROMPT='$(prompt_git_info)'
 
 # plugins manager ?
 #if [[ -x "$(command -vp antibody)" ]]; then
@@ -193,6 +227,7 @@ _prompt_setup "$@"
 #	[[ -r ~/.zsh_plugins.txt ]] && antibody bundle < ~/.zsh_plugins.txt
 #fi
 
+# install: curl -L git.io/antigen > $ANTIGEN_PATH/antigen.zsh
 ANTIGEN_PATH=/usr/local/bin
 source $ANTIGEN_PATH/antigen.zsh
 antigen use oh-my-zsh
