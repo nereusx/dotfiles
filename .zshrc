@@ -200,58 +200,25 @@ _go_cmd() {
 alias go='_go_cmd'
 
 #
-#   GIT PROMPT
-#   https://github.com/jdavis/oh-my-zsh/blob/master/plugins/git-prompt
+#	GIT prompt
+#
+autoload -Uz vcs_info
+precmd() {
+	psvar=()
+	vcs_info
+	[[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+	}
 
-## Enable auto-execution of functions.
-typeset -ga preexec_functions
-typeset -ga precmd_functions
-typeset -ga chpwd_functions
-
-# Append git functions needed for prompt.
-preexec_functions+='preexec_update_git_vars'
-precmd_functions+='precmd_update_git_vars'
-chpwd_functions+='chpwd_update_git_vars'
-
-## Function definitions
-function preexec_update_git_vars() {
-    case "$2" in
-        git*)
-        __EXECUTED_GIT_COMMAND=1
-        ;;
-    esac
-}
-
-function precmd_update_git_vars() {
-    if [ -n "$__EXECUTED_GIT_COMMAND" ]; then
-        update_current_git_vars
-        unset __EXECUTED_GIT_COMMAND
-    fi
-}
-
-function chpwd_update_git_vars() {
-    update_current_git_vars
-}
-
-function update_current_git_vars() {
-    unset __CURRENT_GIT_STATUS
-
-    local gitstatus="/usr/local/bin/gitstatus.py"
-    _GIT_STATUS=`python ${gitstatus}`
-    __CURRENT_GIT_STATUS=("${(f)_GIT_STATUS}")
-}
-
-function prompt_git_info() {
-	if [[ -e /usr/local/bin/gitstatus.py ]]; then
-	    if [[ -n "$__CURRENT_GIT_STATUS" ]]; then
-	        echo "(%{${fg[red]}%}$__CURRENT_GIT_STATUS[1]%{${fg[default]}%}$__CURRENT_GIT_STATUS[2]%{${fg[magenta]}%}$__CURRENT_GIT_STATUS[3]%{${fg[default]}%})"
-		else
-	        echo "(%B%{${fg[black]}%}no git%{${fg[default]}%}%b)"
-	    fi
+git_rprompt() {
+#	echo "%m%(1v.%F{green}%1v%f.)"
+	if [[ $#psvar -eq 0 ]]; then
+		echo "(idle)"
+	else
+		echo $psvar[1]
 	fi
-}
+	}
 
-RPROMPT='$(prompt_git_info)'
+RPROMPT='$(git_rprompt)'
 
 # plugins manager ?
 #if [[ -x "$(command -vp antibody)" ]]; then
@@ -264,9 +231,13 @@ ANTIGEN_PATH=/usr/local/bin
 if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
 	source $ANTIGEN_PATH/antigen.zsh
 	antigen use oh-my-zsh
-	list=(git heroku pip lein command-not-found\
-		zsh-users/zsh-syntax-highlighting zsh-users/zsh-completions zsh-users/zsh-history-substring-search\
-		djui/alias-tips caarlos0/zsh-mkc caarlos0/zsh-open-github-pr\
+	list=(git\
+		zsh-users/zsh-syntax-highlighting\
+		zsh-users/zsh-completions\
+		zsh-users/zsh-history-substring-search\
+		djui/alias-tips\
+		caarlos0/zsh-mkc\
+		caarlos0/zsh-open-github-pr\
 		)
 	#antigen theme robbyrussell
 	for e in $list; do
