@@ -142,7 +142,7 @@ _go_back_cmd() {
 	}
 alias cd--='_go_back_cmd'
 
-_go_cmd() {
+_go_fwd_cmd() {
 	local x
 	case $pick_method in
 	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
@@ -152,7 +152,20 @@ _go_cmd() {
 		cd "$x"
 	fi
 	}
-alias cd++='_go_cmd'
+alias cd++='_go_fwd_cmd'
+
+_go_cmd() {
+	local x
+	x="$*"
+	if [[ -z "$x" ]]; then
+		_go_fwd_cmd
+	elif [[ "$x" == "-" ]]; then
+		_go_back_cmd
+	else
+		pushd "$x"
+	fi
+	}
+alias go='_go_cmd'
 
 # plugins manager ?
 # curl -L git.io/antigen > ${HOME}/.config/antigen.zsh

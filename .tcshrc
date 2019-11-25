@@ -214,6 +214,7 @@ case iselect:
 	alias cd--	'set _=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( "$_" != "" ) cd =$_'
 	alias cd++	'set _=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( "$_" != "" ) cd "$_"'
 endsw
+alias go '[ "\!*" = "-" ] && cd-- || [ "\!*" = "" ] && cd++ || pushd "\!*"'
 
 #
 #	tcsh's completion
