@@ -215,14 +215,16 @@ function update_current_git_vars() {
 }
 
 function prompt_git_info() {
-    if [ -n "$__CURRENT_GIT_STATUS" ]; then
-        echo "(%{${fg[red]}%}$__CURRENT_GIT_STATUS[1]%{${fg[default]}%}$__CURRENT_GIT_STATUS[2]%{${fg[magenta]}%}$__CURRENT_GIT_STATUS[3]%{${fg[default]}%})"
-	else
-        echo "(%B%{${fg[black]}%}no git%{${fg[default]}%}%b)"
-    fi
+	if [[ -e /usr/local/bin/gitstatus.py ]]; then
+	    if [[ -n "$__CURRENT_GIT_STATUS" ]]; then
+	        echo "(%{${fg[red]}%}$__CURRENT_GIT_STATUS[1]%{${fg[default]}%}$__CURRENT_GIT_STATUS[2]%{${fg[magenta]}%}$__CURRENT_GIT_STATUS[3]%{${fg[default]}%})"
+		else
+	        echo "(%B%{${fg[black]}%}no git%{${fg[default]}%}%b)"
+	    fi
+	fi
 }
 
-RPS1="$(prompt_git_info)"
+#RPS1="$(prompt_git_info)"
 RPROMPT='$(prompt_git_info)'
 
 # plugins manager ?
