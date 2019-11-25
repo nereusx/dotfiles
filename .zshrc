@@ -44,6 +44,12 @@ setopt auto_pushd				# automatic save current directory before cd
 setopt all_export				# export all new/modified variables
 setopt prompt_subst				# allow functions in prompt
 
+# lexical
+setopt c_bases
+setopt octal_zeroes
+setopt c_precedences
+setopt interactive_comments
+
 emulate ksh
 [[ -r ${HOME}/.environ ]] && source ${HOME}/.environ
 emulate zsh
@@ -57,6 +63,9 @@ for e in $list; do
 		break
 	fi
 done
+
+# hostnames
+hosts+=(github.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com)
 
 unsetopt all_export				# stop automatic export variables
 
@@ -91,6 +100,9 @@ DIRSTACKSIZE=64
 KEYTIMEOUT=1
 MAILCHECK=0
 
+# EMACS mode
+bindkey -e
+
 #
 #	completion
 #
@@ -99,14 +111,29 @@ zmodload zsh/complete zsh/complist zsh/datetime
 compinit
 _comp_options+=(globdots)
 
-zstyle ':completion:*' rehash true max-errors 0 numeric
-setopt		auto_list
-setopt		list_ambiguous
 unsetopt	menu_complete
 unsetopt	auto_menu
+setopt		auto_list
+setopt		list_ambiguous
+setopt		always_last_prompt
 
-# EMACS mode
-bindkey -e
+zstyle ':completion:*' rehash true max-errors 0 numeric
+zstyle ':completion:*' show-ambiguity 1\;31
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+# Use zsh-completions if it exists
+if [[ -d "/usr/share/zsh-completions" ]]; then
+    fpath=(/usr/share/zsh-completions $fpath)
+fi
+if [[ -d "/usr/local/share/zsh-completions" ]]; then
+    fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
+# kill correction by any means
+unsetopt correct_all
+unsetopt correct
+CORRECT_IGNORE='*'
+CORRECT_IGNORE_FILE='*'
 
 #
 #	Aliases
@@ -224,7 +251,6 @@ function prompt_git_info() {
 	fi
 }
 
-#RPS1="$(prompt_git_info)"
 RPROMPT='$(prompt_git_info)'
 
 # plugins manager ?
@@ -235,19 +261,23 @@ RPROMPT='$(prompt_git_info)'
 
 # install: curl -L git.io/antigen > $ANTIGEN_PATH/antigen.zsh
 ANTIGEN_PATH=/usr/local/bin
-source $ANTIGEN_PATH/antigen.zsh
-antigen use oh-my-zsh
-list=(git heroku pip lein command-not-found\
-	zsh-users/zsh-syntax-highlighting zsh-users/zsh-completions zsh-users/zsh-history-substring-search\
-	djui/alias-tips caarlos0/zsh-mkc caarlos0/zsh-open-github-pr\
-	)
-#antigen theme robbyrussell
-for e in $list; do
-	antigen bundle $e
-done
-antigen apply
+if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
+	source $ANTIGEN_PATH/antigen.zsh
+	antigen use oh-my-zsh
+	list=(git heroku pip lein command-not-found\
+		zsh-users/zsh-syntax-highlighting zsh-users/zsh-completions zsh-users/zsh-history-substring-search\
+		djui/alias-tips caarlos0/zsh-mkc caarlos0/zsh-open-github-pr\
+		)
+	#antigen theme robbyrussell
+	for e in $list; do
+		antigen bundle $e
+	done
+	antigen apply
+fi
 
-# login shell
+#
+#	login shell
+#
 if [[ -o login ]]; then
 	list=(diogenis fortune neofetch)
 	echo -e "Welcome to \033[1;32mZSH\033[0m $ZSH_VERSION"
@@ -270,3 +300,10 @@ unsetopt nonomatch
 # Load zsh-syntax-highlighting; should be last
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
+#	Completion LIST/MENU options
+#	again ... somewhere changed
+unsetopt	menu_complete
+unsetopt	auto_menu
+setopt		auto_list
+setopt		list_ambiguous
+setopt		always_last_prompt
