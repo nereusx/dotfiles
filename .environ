@@ -43,11 +43,11 @@ for e in $list; do
 done
 
 # path
-PATH=${HOME}/.bin:${HOME}/.help:$PATH
+PATH=${HOME}/.bin:${HOME}/.help:$PATH:/usr/local/bin
 [ -x "/bin/path++" ] && PATH=$(/bin/path++)
 
 LS_OPTIONS='--color=auto'
-eval "`dircolors -b`"
+[ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
 
 # --- PAGER ---
 LESS='-R'
