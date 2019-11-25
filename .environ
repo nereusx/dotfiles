@@ -21,7 +21,7 @@ USERID=${USERID:-$(id -u)}
 HOSTNAME=${HOSTNAME:-$(hostname)}
 TTY=${TTY:-$(tty | cut -f3-4 -d/)}
 MAIL=${MAIL:-"/var/mail/$USER"}
-MAILCHECK=${MAILCHECK:-0}
+MAILCHECK=${MAILCHECK:-60}
 _get_distro() {
 	if [ -r /etc/os-release ]; then
 		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)

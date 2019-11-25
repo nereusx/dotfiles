@@ -78,10 +78,12 @@ _amionline() {
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
 	return $offline;
 }
-alias amionline='[ _amionline ] && echo "\033[1;32mOnline\033[0m" || echo "\033[1;31mOffline\033[0m"'
+alias amionline='[ _amionline ] && echo "\033[1;32myes\033[0m" || echo "\033[1;31mno\033[0m"'
 
 alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
+alias psa='ps aux | grep -v "\["'
 alias myip="wget -qO- http://ipecho.net/plain ; echo"
+alias mc='mc --nomouse'
 
 # git
 _git_q() { msg="$*"; if [ -z "$msg" ]; then msg="quick and dirty fix"; fi; git add . && git commit -m "$msg" && git push; }

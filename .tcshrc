@@ -48,6 +48,7 @@ endif
 if ( ! $?HOSTNAME ) then
 	setenv HOSTNAME `hostname`
 endif
+if ( ! $?XDG_RUNTIME_DIR ) setenv XDG_RUNTIME_DIR "/tmp/runtime-$USER"
 
 # find distro
 if ( ! $?DISTRO ) then
@@ -95,7 +96,7 @@ if ( $USERID == 0 ) then
 		endif
 	end
 endif
-# you can get path++ at https://github.com/nereusx/unix-utils
+# you can get 'path++' at https://github.com/nereusx/unix-utils
 if ( -X 'path++' ) setenv PATH `path++`
 
 #
@@ -118,6 +119,12 @@ alias helpcommand 'man \!:1'
 #alias periodic checknews
 unalias periodic
 
+if ( $?TMUX ) then
+	alias usable-lines 'set _=`tput lines`; @ _ -= 3 ; echo $_'
+else
+	alias usable-lines 'set _=`tput lines`; @ _ -= 2 ; echo $_'
+endif
+
 # select program to use for ncurses menus
 set list = ( fzy pick iselect )
 set pick_method = none
@@ -134,8 +141,10 @@ end
 #
 unset ampm
 set ellipsis
+set DOLR=\$
+set EXCL="\041"
 # 1=red 2=green 3=yellow 4=blue 5=magenta 6=cyan 7=white
-set _ps=(1 2 3 4 5)
+set _ps=(clock user host dir reset r-status r-hist r-shlvl)
 set _ps[1]="%{\033[1;35m%}"
 set _ps[2]="%{\033[1;33m%}"
 set _ps[3]="%{\033[1;32m%}"
@@ -143,13 +152,17 @@ set _ps[4]="%{\033[1;34m%}"
 set _ps[5]="%{\033[0m%}"
 if ( $USERID == 0 ) then
 	set _ps[2]="%{\033[1;31m%}"
-	set _ps[4]="%{\033[1;31m%}"
+	set _ps[4]="%{\033[1;35m%}"
 endif
 if ( $?REMOTEHOST ) then
 	set _ps[3]="%{\033[33m%}"
 endif
-set prompt = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
-unset usercolor hostcolor dirxcolor timecolor rsetcolor
+set prompt  = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
+
+set _ps[6]="%{\033[31m%}"
+set _ps[7]="%{\033[36m%}"
+set _ps[8]="%{\033[1;30m%}"
+set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} ${DOLR}${_ps[8]}$shlvl${_ps[5]} "
 
 #
 #	tcsh' history
@@ -165,7 +178,9 @@ set history=2048
 set histdup=prev
 set savehist
 set nohistclop
-alias hist 'set _=`tput lines`; history $_'
+alias hist 'set _=`usable-lines`; history $_'
+history -L
+
 switch ( $pick_method )
 case fzy:
 	alias hc 'set _=`history -hr | fzy` && if ( "$_" != "hc" ) eval "$_"'
@@ -196,6 +211,7 @@ endif
 set pushdsilent
 set pushdtohome
 set savedirs
+#dirs -L >& /dev/null
 alias cd 'pushd'
 alias dirs 'dirs -v'
 if ( -X devtodo ) then
@@ -215,16 +231,28 @@ case iselect:
 	alias cd++	'set _=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( "$_" != "" ) cd "$_"'
 endsw
 alias go 'set _=\!*; [ -z "$_" ] && cd++ || [ "$_" = "-" ] && cd-- || pushd "$_"'
+alias save-last-cmd	'echo "!!" >> ~/.scrap'
+
+# both
+set tperiod = 5
+# dirs -S prints to screen, no way to redirect it
+#alias periodic 'history -S; dirs -S;'
+#I dont think that works correctly... some syntax errors happens
+#alias periodic 'history -S'
 
 #
 #	tcsh's completion
 #
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
-set hosts=`cat /etc/hosts | awk '/^[1-9]+/ {if (substr($2,1,5) != "local") print $2}'`
+set hosts = `cat /etc/hosts | awk '/^[1-9]+/ {if (substr($2,1,5) != "local") print $2}'`
+set hosts = ( $hosts github.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com )
+
 if ( -e /etc/complete.tcsh ) then
 	source /etc/complete.tcsh
 else
-	echo "warning: /etc/complete.tcsh does not exists"
+	echo "Warning: '/etc/complete.tcsh' does not exists. To install it, run the following lines"
+	echo "sudo wget 'https://raw.githubusercontent.com/tcsh-org/tcsh/master/complete.tcsh' -O /etc/complete.tcsh"
+	echo "sudo chmod 0644 /etc/complete.tcsh"
 endif
 uncomplete ln
 uncomplete rm
@@ -312,17 +340,17 @@ endif
 ### EDITORS ###
 
 # settings for JED
-setenv JED_HOME		${HOME}/.jed
+setenv JED_HOME		"${HOME}/.jed"
 alias jed-prep     'xjed -batch -n -l preparse'
 
 # settings for GRIEF
-setenv GRLIB			/usr/local/share/grief
-setenv GRPATH			${HOME}/.grief-local:${GRLIB}/macros
+setenv GRLIB			"/usr/local/share/grief"
+setenv GRPATH			"${HOME}/.grief:${GRLIB}/macros"
 setenv GRFLAGS			"--utf8=yes -m grief-rc"
 setenv GRTERM			"linux"
-setenv GRHELP			${GRLIB}/help
-setenv GRDICTIONARIES	en,el
-setenv GRDICTIONARY		/usr/share/aspell
+setenv GRHELP			"${GRLIB}/help"
+setenv GRDICTIONARIES	"en,el"
+setenv GRDICTIONARY		"/usr/share/aspell"
 
 # select default editor
 set list = ( jed nano joe vim vi emacs ed )
@@ -420,6 +448,7 @@ alias reload		'source ~/.tcshrc'
 alias remake		'make clean; make' # warning: 'remake' began gnu project to debug makefiles
 alias cls			'clear'
 alias psa			'ps aux | grep -v "\["'
+alias psu			'ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
 alias diogenis		'fortune diogenis'
 alias free-h		'free -h'
 alias df-h			'df -h'
@@ -432,8 +461,16 @@ alias ltrim			"sed 's/^[ \t\n\r]*//'"
 alias rtrim			"sed 's/[ \t\n\r]*$DS//'"
 alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
-alias myip			'wget -qO- http://ipecho.net/plain ; echo'
 alias mc			'mc --nomouse'
+
+# you can get 'dof' at https://github.com/nereusx/unix-utils
+if ( -X dof ) then
+	alias fortune-files	'dof -e /usr/share/fortunes/*.dat do echo %b | columns'
+	alias test-colors	'dof -e `seq 0 15` do \'tput setaf %f; echo colour%f; tput op;\''
+else
+	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | columns'
+endif
+if ( -x /usr/bin/vis ) alias vi 'vis'
 
 # colorize
 set color
@@ -462,7 +499,6 @@ if ( $USER != 'root' ) then
 	if ( -X apt-get ) alias apt-get 'sudo apt-get'
 endif
 alias tmux-reload 'tmux source-file ~/.tmux.conf'
-alias amionline   'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
 
 # some nice beeps
 # simple beep
@@ -487,13 +523,24 @@ if ( $DISTRO == "void" ) then
 endif
 
 ### information utilities
+if ( -X isonline ) then
+	alias amionline	'isonline'
+else
+	alias amionline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
+endif
+alias myip			'wget -qO- http://ipecho.net/plain ; echo'
+
+# https://github.com/thcipriani/dotfiles/blob/master/aliases
+alias sniff		"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias localip	"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
+
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
 		if ( -X clog ) then
-			alias log30 "tail -n 30 $e | clog"
+			alias log30 "tail -n `usable-lines` $e | clog"
 		else
-			alias log30 "tail -n 30 $e"
+			alias log30 "tail -n `usable-lines` $e"
 		endif
 		break
 	endif
@@ -501,7 +548,7 @@ end
 set list = ( /var/log/apache2/error.log /var/log/httpd/error.log /var/log/apache/error.log )
 foreach e ( $list )
 	if ( -r $e ) then
-		alias phplog "tail -n 30 $e"
+		alias phplog "tail -n `usable-lines` $e"
 		break
 	endif
 end
@@ -513,7 +560,9 @@ alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 # use system time command (time of process execution statistics) instead of tcsh time
 alias time '/usr/bin/time'
 
-### generic programs
+#
+#	Generic programs
+#
 alias cdwrite	   'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
@@ -522,9 +571,8 @@ if ( ! -X calc ) then
 		alias calc 'echo "\!*" | bc -l'
 	endif
 endif
-if ( -r /var/lib/dpkg/status ) then
-	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
-endif
+
+# GIT
 alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
 alias git-co 	'git checkout'
 alias git-pull	'git pull'
@@ -547,6 +595,11 @@ endif
 if ( -X youtube-dl ) then
 	alias yt-get-audio	'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
 	alias yt-get-plist	'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
+endif
+
+# special case on debian-based distros
+if ( -r /var/lib/dpkg/status ) then
+	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
 endif
 
 #
