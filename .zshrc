@@ -27,7 +27,7 @@ limit coredumpsize 0
 autoload -Uz run-help colors
 
 #
-#	ENVIRONMENT
+#	ZSG ENVIRONMENT, OPTIONS
 #
 setopt hist_no_store			# no store hist command
 setopt hist_ignore_dups			# ignore duplicate last entry
@@ -50,10 +50,16 @@ setopt octal_zeroes
 setopt c_precedences
 setopt interactive_comments
 
+#
+#	System Environment Variables
+#
+
+#	Common Environment Variables to all POSIX shells
 emulate ksh
 [[ -r ${HOME}/.environ ]] && source ${HOME}/.environ
 emulate zsh
 
+#	ZSH specific
 colors
 list=(fzy pick)
 pick_method=none
@@ -67,8 +73,10 @@ done
 # hostnames
 hosts+=(github.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com)
 
+# XDG
 XDG_RUNTIME_DIR="/tmp/runtime-$USER"
 
+# no more exported
 unsetopt all_export				# stop automatic export variables
 
 #
@@ -77,6 +85,8 @@ unsetopt all_export				# stop automatic export variables
 if whence -v prompt | grep function > /dev/null; then
     prompt off
 fi
+#           1       2        3       4         5     
+# _ps = ( clock username hostname directory -------
 _ps[1]="%F{magenta}"
 if [ $USERID -eq 0 ]; then
 	_ps[2]="%F{red}"
@@ -107,7 +117,7 @@ git_rprompt() {
 RPROMPT='$(git_rprompt)'
 
 #
-#	...
+#	ZSH Environment 
 #
 [[ -d ${HOME}/.cache ]] && export HISTFILE=${HOME}/.cache/.zsh_history
 [[ -d ${HOME}/.cache ]] && export DIRSTACKFILE=${HOME}/.cache/.zsh_dirs
@@ -166,16 +176,20 @@ CORRECT_IGNORE_FILE='*'
 #
 #	Aliases
 #
+
+#	Common aliases to all POSIX shells
 emulate ksh
 [[ -r ${HOME}/.aliases ]] && source ${HOME}/.aliases
 emulate zsh
 
+#	ZSH specific
 alias reload="source ${HOME}/.zshrc"
 alias help='run-help'
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh
 
+# TUI: select from history to run again
 _hc_cmd() {
 	local x
 	case $pick_method in
@@ -190,6 +204,7 @@ _hc_cmd() {
 	}
 alias hc="_hc_cmd"
 
+# TUI: select from DIRSTACK to change directory
 _go_back_cmd() {
 	local x
 	case $pick_method in
@@ -214,6 +229,7 @@ _go_fwd_cmd() {
 	}
 alias cd++='_go_fwd_cmd'
 
+# TUI: select from sub-directories to change directory
 _go_cmd() {
 	local x
 	x="$*"
@@ -228,7 +244,7 @@ _go_cmd() {
 alias go='_go_cmd'
 
 #
-#	Suffix aliases
+#	File-type handle - and suffix aliases
 #
 xopen() {
 	local f
@@ -263,12 +279,8 @@ alias -s 1=xview-roff
 alias -s 3=xview-roff
 
 #
-#	plugins manager
+#	plugins manager (optional)
 #
-#if [[ -x "$(command -vp antibody)" ]]; then
-#	source <(antibody init)
-#	[[ -r ~/.zsh_plugins.txt ]] && antibody bundle < ~/.zsh_plugins.txt
-#fi
 
 # install: curl -L git.io/antigen > $ANTIGEN_PATH/antigen.zsh
 ANTIGEN_PATH=/usr/local/bin
@@ -283,7 +295,6 @@ if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
 		caarlos0/zsh-mkc\
 		caarlos0/zsh-open-github-pr\
 		)
-	#antigen theme robbyrussell
 	for e in $list; do
 		antigen bundle $e
 	done
@@ -291,7 +302,7 @@ if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
 fi
 
 #
-#	login shell
+#	login shell; Welcome screen
 #
 if [[ -o login ]]; then
 	list=(diogenis fortune neofetch)
@@ -305,7 +316,9 @@ if [[ -o login ]]; then
 	done
 fi
 
-# load local rcs
+#
+#	Load local RCs
+#
 setopt nonomatch
 for e in ${HOME}/.zshrc-*; do
 	[[ -r $e ]] && source $e
@@ -315,8 +328,9 @@ unsetopt nonomatch
 # Load zsh-syntax-highlighting; should be last
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
+# Last changes... quick and dirty fix
 #	Completion LIST/MENU options
-#	again ... somewhere changed
+#	again ... somewhere I lost them
 unsetopt	menu_complete
 unsetopt	auto_menu
 setopt		auto_list
