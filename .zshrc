@@ -1,4 +1,4 @@
-# -- mode: sh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; --
+# -*- mode: sh; tab-width: 4; indent-tabs-mode: t; indent-style: tab; encoding: utf-8; -*-
 #
 #	~/.zshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
@@ -24,7 +24,7 @@ limit coredumpsize 0
 [[ -o interactive ]] || exit
 
 # modules that we need
-autoload -Uz compinit run-help
+autoload -Uz compinit run-help vcs_info
 
 #
 #	ENVIRONMENT
@@ -50,7 +50,7 @@ emulate zsh
 list=(fzy pick)
 pick_method=none
 for e in $list; do
-	if which $e > /dev/null; then
+	if [[ -x "$(command -vp $e)" ]]; then
 		pick_method=$e
 		break
 	fi
@@ -62,26 +62,25 @@ unsetopt all_export				# stop automatic export variables
 #	PROMPT
 #
 prompt off
+_ps[1]="%F{magenta}"
 if [ $USERID -eq 0 ]; then
-	_usercolor="%F{red}"
-	_dirxcolor="%F{red}"
+	_ps[2]="%F{red}"
+	_ps[4]="%F{red}"
 else
-	_usercolor="%F{yellow}"
-	_dirxcolor="%F{blue}"
+	_ps[2]="%F{yellow}"
+	_ps[4]="%F{blue}"
 fi
 if [ -n "${REMOTEHOST-}" ]; then
-	_hostcolor="%F{yellow}"
+	_ps[3]="%F{yellow}"
 else
-	_hostcolor="%F{green}"
+	_ps[3]="%F{green}"
 fi
-PS1="%B%F{magenta}%T%f $_usercolor%n%f$_hostcolor@%M%f $_dirxcolor%38<..<%~%f%b %# "
+PS1="%B${_ps[1]}%T%f ${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
 export PS1
 
 #
 [[ -d ${HOME}/.cache ]] && export HISTFILE=${HOME}/.cache/.zsh_history
 [[ -d ${HOME}/.cache ]] && export DIRSTACKFILE=${HOME}/.cache/.zsh_dirs
-[[ -d ${HOME}/.cache ]] && export COMPDUMPFILE=${HOME}/.cache/.zcompdump
-export _comp_dumpfile=$COMPDUMPFILE
 HISTSIZE=2048
 SAVEHIST=${HISTSIZE}
 DIRSTACKSIZE=64
@@ -115,6 +114,7 @@ alias reload="source ${HOME}/.zshrc"
 alias help='run-help'
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
+setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh
 
 _hc_cmd() {
 	local x
@@ -167,9 +167,44 @@ _go_cmd() {
 	}
 alias go='_go_cmd'
 
+_prompt_setup() {
+  prompt_opts=(cr subst percent)
+  autoload -Uz add-zsh-hook vcs_info
+
+#  add-zsh-hook precmd _prompt_precmd
+#  add-zsh-hook preexec _prompt_preexec
+
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git*' formats ' %b'
+  zstyle ':vcs_info:git*' actionformats ' %b|%a'
+
+  # show username@host if logged in through SSH
+  [[ "$SSH_CONNECTION" != '' ]] && _top_row='%F{magenta}%n%F{reset}@%F{orange}%m%F{reset} '
+
+  # prompt turns red if the previous command didn't exit with 0
+  RPS1=" %F{green}%1~%F{reset} %(?.%F{cyan}.%F{red})%f "
+}
+
+_prompt_setup "$@"
+
 # plugins manager ?
-# curl -L git.io/antigen > ${HOME}/.config/antigen.zsh
-[[ -r ${HOME}/.config/antigen.zsh ]] && source ${HOME}/.config/antigen.zsh
+#if [[ -x "$(command -vp antibody)" ]]; then
+#	source <(antibody init)
+#	[[ -r ~/.zsh_plugins.txt ]] && antibody bundle < ~/.zsh_plugins.txt
+#fi
+
+ANTIGEN_PATH=/usr/local/bin
+source $ANTIGEN_PATH/antigen.zsh
+antigen use oh-my-zsh
+list=(git heroku pip lein command-not-found\
+	zsh-users/zsh-syntax-highlighting zsh-users/zsh-completions zsh-users/zsh-history-substring-search\
+	djui/alias-tips caarlos0/zsh-mkc caarlos0/zsh-open-github-pr\
+	)
+#antigen theme robbyrussell
+for e in $list; do
+	antigen bundle $e
+done
+antigen apply
 
 # login shell
 if [[ -o login ]]; then
