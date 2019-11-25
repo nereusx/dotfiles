@@ -14,6 +14,6 @@ for f in *; do
 		cp $f "$dest/$f"
 	fi
 done
-install -m 755 -o root -g root gitstatus.py $dest/gitstatus.py
+#install -m 755 -o root -g root gitstatus.py $dest/gitstatus.py
 
 
