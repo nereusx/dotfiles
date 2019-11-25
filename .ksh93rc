@@ -1,17 +1,27 @@
-# -- mode: sh; tab-size: 4; --
+# -*- mode: sh; tab-width: 4; -*-
 # AT&T's ksh93 startup
 
 umask 022
 
 # if non-interactive shell, exit
-[[ $- == *i* ]] || return
+[[ -o interactive ]] || return
 
 set -o emacs
-#set -o errexit
 
 set -o allexport
-[ -r ~/.environ ] && . ~/.environ
+[[ -r ~/.environ ]] && . ~/.environ
+[[ -d ~/.cache   ]] && HISTFILE=${HOME}/.cache/.ksh93_history
+MAILCHECK=0
 set +o allexport
+
+list=(fzy pick)
+pick_method=""
+for e in ${list[@]}; do
+	if [[ -x $(whence -p $e) ]]; then
+		pick_method=$e
+		break
+	fi
+done
 
 ### Terminal & Keys
 [[ $TERM == "rxvt" ]] && export TERM=rxvt-unicode
@@ -23,31 +33,65 @@ esac
 }
 trap keyboard_trap KEYBD
 
-# PROMPT
-#PS1='
-#${LOGNAME}@${HOSTNAME} on ${TTY}
-#[${PWD}] '
-# smul/rmul = underline, sitm/ritm = italics
-# bold, setaf (forground), setab (background), op (reset)
-PS1='$(tput bold)$(tput setaf 2)${USER:=$(id -un)}'"@${HOSTNAME:=$(hostname)}$(tput op)"
-PS1=$PS1' $PWD '
-if [[ $USER == root ]]; then
-	PS1+="\# "
+#
+#	PROMPT
+#
+_ps[1]='$(tput setaf 2)';
+if [[ $USERID -eq 0 ]]; then
+	_ps[2]='$(tput setaf 1)'; _ps[4]='$(tput setaf 1)'; _ps[5]='#'
 else
-	PS1+="\$ "
+	_ps[2]='$(tput setaf 5)'; _ps[4]='$(tput setaf 4)'; _ps[5]='$'
 fi
+if [[ -n ${REMOTEHOST-} ]]; then
+	_ps[3]='$(tput setaf 5)'
+else
+	_ps[3]='$(tput setaf 2)'
+fi
+PS1="$(tput bold)${_ps[2]}${USER}${_ps[3]}@${HOSTNAME}${_ps[4]} "'${PWD}'"$(tput op) ${_ps[5]} "
 export PS1
 
-# aliases
-[ -r ~/.aliases ] && . ~/.aliases
+#
+#	Aliases
+#
+[[ -r ~/.aliases ]] && . ~/.aliases
 alias reload='. ~/.ksh93rc'
+alias which='whence'
 
-# welcome screen
-if [[ -o login ]]; then
+_hc_cmd() {
+#	local x
+	case $pick_method in
+	fzy)	x="$(hist -lnr | fzy)";;
+	pick)	x="$(hist -lnr | pick -S)";;
+	esac
+	if [[ -n "$x" ]]; then
+		if [[ ! "$x" == "hc" ]]; then
+			eval "$x"
+		fi
+	fi
+	}
+alias hc="_hc_cmd"
+
+_go_cmd() {
+#	local x
+	case $pick_method in
+	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
+	pick)	x="$(ls -d1 */ --color=never | pick)";;
+	esac
+	if [[ -n "$x" ]]; then
+		cd "$x"
+	fi
+	}
+alias go='_go_cmd'
+alias cd++='_go_cmd'
+
+#
+#	Welcome screen
+#
+if [[ -o login_shell ]]; then
 	[[ $TTY == tty* ]] && /bin/echo -ne '\033='
 	echo "Welcome to Korn Shell $KSH_VERSION"
 	echo
-	set -A list neofetch screenfetch diogenis fortunes
+	list=(fortune neofetch screenfetch diogenis)
 	for f in ${list[@]}; do
 		if [[ -x $(command -vp $f) ]]; then
 			$f;

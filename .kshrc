@@ -13,7 +13,7 @@ if [ -n "$KSH_VERSION" ]; then
 				rc="$HOME/.ksh88rc"
 				;;
 	Version*\ 20[0-9][0-9]\.*)
-				$__ksh_version="$($0 --version)"
+				[[ -o login_shell ]] || $__ksh_version="$($0 --version)"
 				rc="$HOME/.ksh93rc"
 				;;
 	*)			rc="" ;;
