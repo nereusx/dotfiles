@@ -136,6 +136,17 @@ setopt		always_last_prompt
 
 zstyle ':completion:*' rehash true max-errors 0 numeric
 zstyle ':completion:*' show-ambiguity 1\;31
+zstyle ':completion:*:matches' group 'yes'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*:corrections' format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
+zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # Use zsh-completions if it exists
@@ -264,7 +275,7 @@ ANTIGEN_PATH=/usr/local/bin
 if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
 	source $ANTIGEN_PATH/antigen.zsh
 	antigen use oh-my-zsh
-	list=(git\
+	list=(git git-extras\
 		zsh-users/zsh-syntax-highlighting\
 		zsh-users/zsh-completions\
 		zsh-users/zsh-history-substring-search\

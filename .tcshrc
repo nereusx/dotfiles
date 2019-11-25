@@ -270,6 +270,10 @@ complete pdflatex	'n/*/f:*.{tex,ltx}/'
 complete xelatex	'n/*/f:*.{tex,ltx}/'
 complete adb		'n/push/f:*.{apk}/'
 complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
+complete which 		'p/1/c/'
+complete where 		'p/1/c/'
+complete man 		'p/1/c/'
+		  
 if ( -X tmux ) then
 	# create completion for tmux
 	set tmux_cmds = `tmux list-commands | awk '{print$1}'`

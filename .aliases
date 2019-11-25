@@ -6,7 +6,17 @@
 if [ "$DISTRO" = "void" ]; then
 	man() { command man -O width=$(($(tput cols)-2)) "$@"; }
 fi
-alias source='. '
+if [ -z "$(command -v source)" ]; then
+	alias source='. '
+fi
+
+usable_lines() {
+	if [ -z "$TMUX" ]; then
+		echo $(($(tput lines) - 2))
+	else
+		echo $(($(tput lines) - 3))
+	fi
+	}
 
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
@@ -26,12 +36,13 @@ list="/var/log/messages\
 	/var/log/current /var/log/syslog\
 	/var/log/dmesg.log\
 	/var/log/dmesg"
+
 for e in $list; do
 	if [ -r $e ]; then
 		if [ -x "$(command -vp clog)" ]; then
-			alias log30="tail -n 30 $e | clog"
+			alias log30="tail -n $(usable_lines) $e | clog"
 		else
-			alias log30="tail -n 30 $e"
+			alias log30="tail -n $(usable_lines) $e"
 		fi
 		break
 	fi
@@ -78,7 +89,7 @@ _amionline() {
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
 	return $offline;
 }
-alias amionline='[ _amionline ] && echo "\033[1;32myes\033[0m" || echo "\033[1;31mno\033[0m"'
+alias amionline='[ _amionline ] && echo yes || echo no'
 
 alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
 alias psa='ps aux | grep -v "\["'
