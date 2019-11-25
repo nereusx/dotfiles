@@ -24,7 +24,7 @@ limit coredumpsize 0
 [[ -o interactive ]] || exit
 
 # modules that we need
-autoload -Uz compinit run-help vcs_info colors
+autoload -Uz run-help colors
 
 #
 #	ENVIRONMENT
@@ -94,6 +94,7 @@ MAILCHECK=0
 #
 #	completion
 #
+autoload -Uz compinit
 zmodload zsh/complete zsh/complist zsh/datetime
 compinit
 _comp_options+=(globdots)
@@ -208,7 +209,7 @@ function chpwd_update_git_vars() {
 function update_current_git_vars() {
     unset __CURRENT_GIT_STATUS
 
-    local gitstatus="$__GIT_PROMPT_DIR/gitstatus.py"
+    local gitstatus="/usr/local/bin/gitstatus.py"
     _GIT_STATUS=`python ${gitstatus}`
     __CURRENT_GIT_STATUS=("${(f)_GIT_STATUS}")
 }
@@ -216,9 +217,12 @@ function update_current_git_vars() {
 function prompt_git_info() {
     if [ -n "$__CURRENT_GIT_STATUS" ]; then
         echo "(%{${fg[red]}%}$__CURRENT_GIT_STATUS[1]%{${fg[default]}%}$__CURRENT_GIT_STATUS[2]%{${fg[magenta]}%}$__CURRENT_GIT_STATUS[3]%{${fg[default]}%})"
+	else
+        echo "(%B%{${fg[black]}%}no git%{${fg[default]}%}%b)"
     fi
 }
 
+RPS1="$(prompt_git_info)"
 RPROMPT='$(prompt_git_info)'
 
 # plugins manager ?
