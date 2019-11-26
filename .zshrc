@@ -51,7 +51,7 @@ setopt interactive_comments
 setopt no_beep
 unsetopt auto_cd
 setopt no_bang_hist
-setopt extended_glob
+#setopt extended_glob
 
 #
 #	Modules that we need
