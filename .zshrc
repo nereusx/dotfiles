@@ -23,9 +23,6 @@ limit coredumpsize 0
 # only interactive mode
 [[ -o interactive ]] || exit
 
-# modules that we need
-autoload -Uz run-help colors
-
 #
 #	ZSG ENVIRONMENT, OPTIONS
 #
@@ -50,19 +47,34 @@ setopt octal_zeroes
 setopt c_precedences
 setopt interactive_comments
 
+# other
+setopt no_beep
+unsetopt auto_cd
+setopt no_bang_hist
+setopt extended_glob
+
+#
+#	Modules that we need
+#
+autoload -Uz colors
+#autoload -Uz curses
+#autoload -Uz mathfunc
+[[ $COLORTERM = *(24bit|truecolor)* ]] || zmodload zsh/nearcolor
+autoload -Uz vcs_info
+
 #
 #	System Environment Variables
 #
 
 #	Common Environment Variables to all POSIX shells
-emulate ksh
-[[ -r ${HOME}/.environ ]] && source ${HOME}/.environ
-emulate zsh
+setopt sh_word_split
+[[ -r "${HOME}/.environ" ]] && source "${HOME}/.environ"
+unsetopt sh_word_split
 
 #	ZSH specific
 colors
-list=(fzy pick)
-pick_method=none
+list=('fzy' 'pick')
+pick_method='none'
 for e in $list; do
 	if [[ -x "$(command -vp $e)" ]]; then
 		pick_method=$e
@@ -71,13 +83,14 @@ for e in $list; do
 done
 
 # hostnames
-hosts+=(github.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com)
+hosts+=('github.com' 'sourceforge.net' 'freemail.gr'\
+		'yandex.com' 'yandex.ru' 'duckduckgo.com')
 
 # XDG
 XDG_RUNTIME_DIR="/tmp/runtime-$USER"
 
-# no more exported
-unsetopt all_export				# stop automatic export variables
+# no more exports
+unsetopt all_export
 
 #
 #	PROMPT
@@ -85,33 +98,37 @@ unsetopt all_export				# stop automatic export variables
 if whence -v prompt | grep function > /dev/null; then
     prompt off
 fi
-#           1       2        3       4         5     
-# _ps = ( clock username hostname directory -------
-_ps[1]="%F{magenta}"
+
+declare -A _ps
+_ps[clock]="%F{magenta}"
 if [ $USERID -eq 0 ]; then
-	_ps[2]="%F{red}"
-	_ps[4]="%F{magenta}"
+	_ps[user]='%F{red}'
+	_ps[dirs]='%F{magenta}'
 else
-	_ps[2]="%F{yellow}"
-	_ps[4]="%F{blue}"
+	_ps[user]='%F{yellow}'
+	_ps[dirs]='%F{blue}'
 fi
 if [ -n "${REMOTEHOST-}" ]; then
-	_ps[3]="%F{yellow}"
+	_ps[host]='%F{yellow}'
 else
-	_ps[3]="%F{green}"
+	_ps[host]='%F{green}'
 fi
-#PS1="%B${_ps[1]}%T%f ${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
-PS1="%B${_ps[2]}%n%f${_ps[3]}@%M%f ${_ps[4]}%38<..<%~%f%b %# "
+#PS1="%B${_ps[clock]}%T%f ${_ps[user]}%n%f${_ps[host]}@%M%f ${_ps[dirs]}%38<..<%~%f%b %# "
+PS1="%B${_ps[user]}%n%f${_ps[host]}@%M%f ${_ps[dirs]}%38<..<%~%f%b %# "
 
+#
 #	GIT PROMPT
-autoload -Uz vcs_info
+#
+_ps[frame]='%F{magenta}'
+_ps[key1]='%F{white}'
+_ps[key2]='%F{green}'
 
 git_rprompt() {
 	vcs_info
 	if [[ -n $vcs_info_msg_0_ ]]; then
 		echo "$vcs_info_msg_0_"
 	else
-		echo "%F{magenta}(%f%B%F{white}sys%f%b%F{magenta})-[%f%F{green} %T%f%F{magenta} ]%f "
+		echo "${_ps[frame]}(%f%B${_ps[key1]}sys%f%b${_ps[frame]})-[%f${_ps[key2]} %T %f${_ps[frame]}]%f "
 	fi
 	}
 RPROMPT='$(git_rprompt)'
@@ -119,22 +136,24 @@ RPROMPT='$(git_rprompt)'
 #
 #	ZSH Environment 
 #
-[[ -d ${HOME}/.cache ]] && export HISTFILE=${HOME}/.cache/.zsh_history
-[[ -d ${HOME}/.cache ]] && export DIRSTACKFILE=${HOME}/.cache/.zsh_dirs
+[[ -d "${HOME}/.cache" ]] && export HISTFILE="${HOME}/.cache/zsh.history"
+[[ -d "${HOME}/.cache" ]] && export DIRSTACKFILE="${HOME}/.cache/zsh.dirs"
+
 HISTSIZE=2048
 SAVEHIST=${HISTSIZE}
 DIRSTACKSIZE=64
-KEYTIMEOUT=1
-MAILCHECK=60
 
 # EMACS mode
 bindkey -e
+KEYTIMEOUT=1
+
+MAILCHECK=60
 
 #
-#	completion
+#	Completion
 #
 autoload -Uz compinit
-zmodload zsh/complete zsh/complist zsh/datetime
+zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
@@ -144,7 +163,14 @@ setopt		auto_list
 setopt		list_ambiguous
 setopt		always_last_prompt
 
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${HOME}/.cache/zsh.completion-cache"
+
+zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)(CVS|\.git)'
+zstyle ':completion:*:cd:*' ignored-patterns '(*/)#(CVS|\.git)'
 zstyle ':completion:*' rehash true max-errors 0 numeric
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
 zstyle ':completion:*' show-ambiguity 1\;31
 zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*:options' description 'yes'
@@ -160,12 +186,8 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # Use zsh-completions if it exists
-if [[ -d "/usr/share/zsh-completions" ]]; then
-    fpath=(/usr/share/zsh-completions $fpath)
-fi
-if [[ -d "/usr/local/share/zsh-completions" ]]; then
-    fpath=(/usr/local/share/zsh-completions $fpath)
-fi
+[[ -d '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
+[[ -d '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
 
 # kill correction by any means
 unsetopt correct_all
@@ -178,13 +200,13 @@ CORRECT_IGNORE_FILE='*'
 #
 
 #	Common aliases to all POSIX shells
-emulate ksh
-[[ -r ${HOME}/.aliases ]] && source ${HOME}/.aliases
-emulate zsh
+setopt sh_word_split
+[[ -r "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
+unsetopt sh_word_split
 
 #	ZSH specific
 alias reload="source ${HOME}/.zshrc"
-alias help='run-help'
+#alias help='run-help'
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh
@@ -271,29 +293,29 @@ xopen() {
 	done
 	}
 
-alias -s pdf=okular
-alias -s txt=xopen
-alias -s ms=xview-roff
-alias -s man=xview-roff
-alias -s 1=xview-roff
-alias -s 3=xview-roff
+# Suffixes
+#alias -s pdf=okular
+#alias -s txt=xopen
+#alias -s 1=xview-roff
+#alias -s 3=xview-roff
 
 #
 #	plugins manager (optional)
 #
+#		zsh-users/zsh-syntax-highlighting\
+#		djui/alias-tips\
+#		caarlos0/zsh-mkc\
+#		caarlos0/zsh-open-github-pr\
 
 # install: curl -L git.io/antigen > $ANTIGEN_PATH/antigen.zsh
-ANTIGEN_PATH=/usr/local/bin
-if [[ -e $ANTIGEN_PATH/antigen.zsh ]]; then
-	source $ANTIGEN_PATH/antigen.zsh
+ANTIGEN_PATH="/usr/local/bin"
+if [[ -e "$ANTIGEN_PATH/antigen.zsh" ]]; then
+	source "$ANTIGEN_PATH/antigen.zsh"
 	antigen use oh-my-zsh
-	list=(git git-extras\
-		zsh-users/zsh-syntax-highlighting\
+	list=(\
+		git git-extras\
 		zsh-users/zsh-completions\
 		zsh-users/zsh-history-substring-search\
-		djui/alias-tips\
-		caarlos0/zsh-mkc\
-		caarlos0/zsh-open-github-pr\
 		)
 	for e in $list; do
 		antigen bundle $e
@@ -326,7 +348,10 @@ done
 unsetopt nonomatch
 
 # Load zsh-syntax-highlighting; should be last
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+#stx_files=( /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh )
+#for e in $stx_files; do
+#	[[ -e $e ]] && source $e 2>/dev/null
+#done
 
 # Last changes... quick and dirty fix
 #	Completion LIST/MENU options
