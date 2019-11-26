@@ -172,12 +172,16 @@
 
 --- Ctrl+Alt Keys (non-BRIEF) ------------------------------------------
 
-[Alt+Ctrl+C]                  Center on window
+#[Alt+Ctrl+C]                  Center on window
 [Alt+Ctrl+R]                  Toggle regexp search
 [Alt+Ctrl+S]                  Search backward
 [Alt+Ctrl+A]                  Case Sensitive Toggle
 [Alt+Ctrl+F]                  Search again backward
 [Alt+Ctrl+T]                  Translate backward
+
+[Alt+Ctrl+C]                  Copy to X Clipboard
+[Alt+Ctrl+V]                  Paste from X Clipboard
+[Alt+Ctrl+X]                  Cut to X Clipboard
 
 --- Extra Non-BRIEF Keys -----------------------------------------------
 
@@ -230,6 +234,37 @@ In addition, the following extensions are also supported:
 ` pattern to match zero or more occurances of hello as it is in e.g., egrep.
 
 S-Lang files: regexp.sl 
+
+=== COMMAND LINE =======================================================
+From Command Line (F10) you can run any macro but also any application.
+It is a powerfull tool.
+
+If the line does not start with a special character it just runs CBRIEF
+macros.
+
+Sepcial Characters at the begin of line:
+
+$	then executes in the shell the following commands with eval(); this
+	means slang code.
+	
+?	it prints whatever it follows. (slang)
+	Example: '? 60*sin(0.8), buffer_filename()'
+
+!	executes the rest commands with the shell and insert the output
+	to a new buffer.
+
+&	executes the rest commands with the shell in the background and
+	in new terminal.
+
+<	executes the rest commands with the shell and inserts the output
+	in the current buffer
+
+>	writes the selected text to a new file.
+
+>>	appends the selected text to a file.
+
+|	(pipe) sends the selected text as standard input to the command
+	that follows.
 
 === MACROS =============================================================
 
@@ -782,10 +817,14 @@ color_scheme
 
 xcopy
 `	Copies the selected block to system clipboard.
-`	(non-brief, xjed only)
+`	(non-brief)
 
 xpaste
 `	Inserts the contents of system clipboard into the current bufffer.
-`	(non-brief, xjed only)
+`	(non-brief)
+
+xcut
+`	Copies the selected block to system clipboard, and remove it.
+`	(non-brief)
 
 

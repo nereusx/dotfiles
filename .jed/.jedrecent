@@ -1,9 +1,11 @@
 /home/nikosc/.jed/cbrief.sl
+/home/nikosc/.jed/cbrief-l.hlp
+/home/nikosc/.jed/cbrief.hlp
+/home/nikosc/6win.sh
+/home/nikosc/.tcshrc
 /home/nikosc/.jed/mm-briefmsc.sl
 /home/nikosc/.xfce4-autoexec
 /home/nikosc/.jed/x-keydefs.sl
-/home/nikosc/6win.sh
-/home/nikosc/.tcshrc
 /home/nikosc/.zshrc
 /home/nikosc/.aliases
 /home/nikosc/tmux-palette.sh
@@ -11,5 +13,3 @@
 /home/nikosc/git-rprompt.zsh
 /home/nikosc/gitstatus.py
 /home/nikosc/.zsh/gitprompt.zsh
-/home/nikosc/.zsh/gitprompt.zsh'
-/home/nikosc/.zsh_plugins.txt

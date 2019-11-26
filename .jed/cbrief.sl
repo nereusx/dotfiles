@@ -54,19 +54,27 @@
 %%		
 %%		but, if the first character(s) is(are):
 %%		==================================================================
-%%		$	then executes the whatever it follows with eval();
-%%		?	then prints whatever it follows.
-%%			Example: '? 60*sin(0.8), buffer_filename()'
-%%		!	then executes the whatever it follows with shell and returns
-%%			the output in new buffer;
-%%		&	then executes the whatever it follows with shell in background
-%%			and in new terminal if can do so.
-%%		<	then executes the whatever it follows with shell and insert
-%%			the output in the current buffer;
-%%		>	then writes the selected text of the whole file to whatever
-%%			it follows.
-%%		>>	then appends the selected text of the whole file to whatever
-%%			it follows.
+%% $	then executes in the shell the following commands with eval(); this
+%%		means slang code.
+%%	
+%% ?	it prints whatever it follows. (slang)
+%%		Example: '? 60*sin(0.8), buffer_filename()'
+%%
+%% !	executes the rest commands with the shell and insert the output
+%%		to a new buffer.
+%%
+%% &	executes the rest commands with the shell in the background and
+%%		in new terminal.
+%%
+%% <	executes the rest commands with the shell and inserts the output
+%%		in the current buffer
+%%
+%% >	writes the selected text to a new file.
+%%
+%% >>	appends the selected text to a file.
+%%
+%% |	(pipe) sends the selected text as standard input to the command
+%%		that follows.
 %%
 %%	Notes 4 JED:
 %%		* In Unix command line option +N moves to N line. (-g N)
@@ -3046,7 +3054,7 @@ public define cbrief_cmd()
 					append_region_to_file(in);
 				else {
 					push_spot();
-					bob(); push_mark(); eob();
+					bol(); push_mark(); eol();
 					append_region_to_file(in);
 					pop_mark(0);
 					pop_spot();
@@ -3065,7 +3073,7 @@ public define cbrief_cmd()
 					append_region_to_file(in);
 				else {
 					push_spot();
-					bob(); push_mark(); eob();
+					bol(); push_mark(); eol();
 					append_region_to_file(in);
 					pop_mark(0);
 					pop_spot();
@@ -3075,29 +3083,22 @@ public define cbrief_cmd()
 				uerrorf("Access denied. [%s]", in);
 			err = 1; % exit
 			}
-		else if ( in[0] == '|' ) {	% pipe selected text of the whole buffer to output
-#ifdef UNIX
-			variable tmp_file1 = make_tmp_file("/tmp/cbrief-pipe-in-");
-
+		else if ( in[0] == '|' ) {	% write selected text of the whole buffer to output
 			in = strtrim(substr(in, 2, strlen(in) - 1));
-			if ( file_status(tmp_file1) == 1 )
-				delete_file(tmp_file1);
-			if ( is_visible_mark() )
-				append_region_to_file(tmp_file1);
-			else {
-				push_spot();
-				bob(); push_mark(); eob();
-				append_region_to_file(tmp_file1);
-				pop_mark(0);
-				pop_spot();
+			if ( file_status(in) == 0 ) {
+				if ( is_visible_mark() )
+					pipe_region(in);
+				else {
+					push_spot();
+					bol(); push_mark(); eol();
+					pipe_region(in);
+					pop_mark(0);
+					pop_spot();
+					}
 				}
-			cmd = "cat " + tmp_file1 + " | " + in;
-			shell_perform_cmd(cmd, 0);
-			() = delete_file(tmp_file1);
-#else
-			uerror("Not supported in this OS");
-#endif
-			err = 1; % exit
+			else
+				uerrorf("Access denied. [%s]", in);
+			err = 1; % exit		
 			}
 		else {
 			% it is command line
