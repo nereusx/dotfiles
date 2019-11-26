@@ -95,9 +95,7 @@ unsetopt all_export
 #
 #	PROMPT
 #
-if [[ -n "$functions[prompt]" ]]; then
-    prompt off
-fi
+[[ -n "$functions[prompt]" ]] && prompt off
 
 declare -A _ps
 _ps[clock]="%F{magenta}"
@@ -141,7 +139,7 @@ RPROMPT='$(git_rprompt)'
 
 HISTSIZE=2048
 SAVEHIST=${HISTSIZE}
-DIRSTACKSIZE=64
+DIRSTACKSIZE=128
 
 # EMACS mode
 bindkey -e
@@ -174,7 +172,7 @@ zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*' format ' %B%F{blue}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
