@@ -10,6 +10,9 @@
 %%	2016-09-05 Nicholas Christopoulos
 %%		Rewritten the old brief.sl from scratch, the old module
 %%		still included as mm-brief.sl file and it is used.
+%%	2019-11-26 Nicholas Christopoulos
+%%		xclip used for clipboard, allows to copy/paste text even from terminal version.
+%%		Alt+Ctrl+C = xcopy, Alt+Ctrl+V = xpaste, Alt+Ctrl+X = xcut
 %%
 %%	Based on: BRIEF v3.1, 1991 and secondary on BRIEF v2.1, 1988
 %%	
