@@ -2645,7 +2645,6 @@ private variable mac_list = {
 	{ "compile_add_compiler", &compile_add_compiler, NO_ARG },
 	
 %
-#ifdef XWINDOWS
 	{ "xcopy",				&cbrief_xcopy,				NO_ARG },
 % xcopy
 %	Copies the selected block to system clipboard.
@@ -2655,7 +2654,6 @@ private variable mac_list = {
 % xpaste
 %	Inserts the contents of system clipboard into the current bufffer.
 %	(non-brief)
-#endif
 };
 % v3.1 new macros
 % ===============
