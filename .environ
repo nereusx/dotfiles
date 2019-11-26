@@ -13,7 +13,8 @@ if [ $AUTOLOAD_TMUX -eq 1 ]; then
 fi
 
 # Basic settings
-DS='$'
+DOLR='$'
+EXCL='!'
 [ "$TERM" = "rxvt" ] && TERM="rxvt-unicode"
 USER=${USER:-$(id -un)}
 HOME=${HOME:-"/home/$USER"}

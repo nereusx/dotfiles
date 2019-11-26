@@ -35,7 +35,9 @@ if ( ! $?prompt ) exit
 #
 #	BASIC SYSTEM VARIABLES (for any environment)
 #
-set DS = \$
+set DOLR=\$
+set EXCL="\041"
+
 if ( ! $?USERID )   setenv USERID   `id -u`
 if ( ! $?USER )     setenv USER     `id -un`
 if ( ! $?HOME ) then
@@ -141,27 +143,25 @@ end
 #
 unset ampm
 set ellipsis
-set DOLR=\$
-set EXCL="\041"
-# 1=red 2=green 3=yellow 4=blue 5=magenta 6=cyan 7=white
+# color codes: 30+ 1=red 2=green 3=yellow 4=blue 5=magenta 6=cyan 7=white
 set _ps=(clock user host dir reset r-status r-hist r-shlvl)
-set _ps[1]="%{\033[1;35m%}"
-set _ps[2]="%{\033[1;33m%}"
-set _ps[3]="%{\033[1;32m%}"
-set _ps[4]="%{\033[1;34m%}"
-set _ps[5]="%{\033[0m%}"
+set _ps[1]='%{\033[1;35m%}'
+set _ps[2]='%{\033[1;33m%}'
+set _ps[3]='%{\033[1;32m%}'
+set _ps[4]='%{\033[1;34m%}'
+set _ps[5]='%{\033[0m%}'
 if ( $USERID == 0 ) then
-	set _ps[2]="%{\033[1;31m%}"
-	set _ps[4]="%{\033[1;35m%}"
+	set _ps[2]='%{\033[1;31m%}'
+	set _ps[4]='%{\033[1;35m%}'
 endif
 if ( $?REMOTEHOST ) then
-	set _ps[3]="%{\033[33m%}"
+	set _ps[3]='%{\033[33m%}'
 endif
 set prompt  = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
 
-set _ps[6]="%{\033[31m%}"
-set _ps[7]="%{\033[36m%}"
-set _ps[8]="%{\033[1;30m%}"
+set _ps[6]='%{\033[31m%}'
+set _ps[7]='%{\033[36m%}'
+set _ps[8]='%{\033[1;30m%}'
 #set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} ${DOLR}${_ps[8]}$shlvl${_ps[5]} "
 set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} "
 
@@ -285,35 +285,31 @@ endif
 #
 #	tcsh's terminal fixes and keys
 #
-if ( $TERM == "xterm" ) then
-	bindkey "\033[1;3D" backward-word
-	bindkey "\033[1;3C" forward-word
-else
-	bindkey "\033\033[D" backward-word
-	bindkey "\033\033[C" forward-word
-endif
-bindkey '' list-choices-raw
-bindkey "\033[Z" complete-word-back
-bindkey "\033s" i-search-fwd
-bindkey '' i-search-back
-bindkey "\033q" quoted-insert
-bindkey '' redisplay
-bindkey "\033m" set-mark-command
-bindkey "\033j" exchange-point-and-mark
-bindkey "\033k" kill-line
-bindkey '' backward-kill-line
-bindkey "\033d" kill-whole-line
-bindkey '' kill-region
-bindkey '' yank
-bindkey '' copy-prev-word
-bindkey "\033-" insert-last-word
+bindkey ''	list-choices
+bindkey 'q'	quoted-insert
+bindkey ''	redisplay
+bindkey '1'	expand-history
+bindkey '4'	expand-variables
+bindkey '8'	expand-glob
+
+bindkey '['	copy-prev-word
+bindkey ']'	insert-last-word
+
+bindkey 'd'	kill-whole-line
+bindkey 'k'	kill-line
+bindkey ''	backward-kill-line
+
+bindkey 'm'	set-mark-command
+bindkey 'j'	exchange-point-and-mark
+bindkey 'c'	copy-region-as-kill
+bindkey 'v'	yank
 
 # shift+f5; alt+p (tcsh's default)
-bindkey "\033[15;2~" history-search-backward
-bindkey "\033p" history-search-backward
+bindkey '[15;2~' history-search-backward
+bindkey 'p' history-search-backward
 # f5; alt+n (tcsh's default)
-bindkey "\033[15~" history-search-forward
-bindkey "\033n" history-search-forward
+bindkey '[15~' history-search-forward
+bindkey 'n' history-search-forward
 
 # keypad
 bindkey "\033Om" kill-region
@@ -463,8 +459,8 @@ alias xmerge		'xrdb -merge ~/.Xresources'
 alias xmonitor-off	'xset dpms force off'
 alias warn			'echo "\e[7m\e[5m "\!*" \e[0m"'
 alias ltrim			"sed 's/^[ \t\n\r]*//'"
-alias rtrim			"sed 's/[ \t\n\r]*$DS//'"
-alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DS//'"
+alias rtrim			"sed 's/[ \t\n\r]*$DOLR//'"
+alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DOLR//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
 alias mc			'mc --nomouse'
 

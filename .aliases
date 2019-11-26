@@ -2,6 +2,7 @@
 #
 #	POSIX SHELL: Aliases
 #
+#	zsh: setopt sh_word_split
 
 if [ "$DISTRO" = "void" ]; then
 	man() { command man -O width=$(($(tput cols)-2)) "$@"; }
@@ -61,9 +62,6 @@ alias cdwrite='xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 alias tmux-reload='tmux source-file ~/.tmux.conf'
 alias test-colors='for c in {0..15}; do tput setaf $c; echo colour$c; tput op; done'
 alias fortune-files='dof -e /usr/share/fortunes/*.dat do echo %b | columns'
-if [ -x /usr/bin/vis ]; then
-	alias vi='vis'
-fi
 
 # youtube-dl
 alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
@@ -89,7 +87,11 @@ _amionline() {
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
 	return $offline;
 }
-alias amionline='[ _amionline ] && echo yes || echo no'
+if [ "$(command -vp isonline)" ]; then
+	alias amionline='isonline'
+else
+	alias amionline='[ _amionline ] && echo yes || echo no'
+fi
 
 alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
 alias psa='ps aux | grep -v "\["'
