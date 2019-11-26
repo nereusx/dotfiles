@@ -444,7 +444,7 @@ define cbrief_quote()
 	forever {
 		variable c = getkey ();
 		insert((c == 0) ? "^@" : char(c));
-		ifnot ( input_pending(3) )	break;
+		ifnot ( input_pending(1) )	break;
 		}
 }
 
@@ -453,7 +453,7 @@ define cbrief_escape()
 {
 	if ( is_visible_mark() )	pop_mark(0);
 	call("kbd_quit");
-	if ( input_pending(3) )	flush_input();
+	if ( input_pending(1) )	flush_input();
 }
 
 %% the enter key
@@ -478,7 +478,7 @@ define cbrief_backspace()
 define cbrief_flush_input()
 {
 	ifnot ( EXECUTING_MACRO or DEFINING_MACRO )
-		if ( input_pending(3) )
+		if ( input_pending(1) )
 			flush_input();
 }
 
@@ -716,16 +716,30 @@ define cbrief_xcopy() {
 #ifdef MOUSE
 	copy_kill_to_mouse_buffer();
 #endif
-	if ( x_copy_region_to_selection_p != NULL )
-		x_copy_region_to_selection_p();
+%	if ( x_copy_region_to_selection_p != NULL )
+%		x_copy_region_to_selection_p();
+	pipe_region("xclip -selection c");
 	message("Text copied to clipboard");
+}
+
+%% cut selection to X 
+define cbrief_xcut() {
+#ifdef MOUSE
+	copy_kill_to_mouse_buffer();
+#endif
+%	if ( x_copy_region_to_selection_p != NULL )
+%		x_copy_region_to_selection_p();
+	pipe_region("xclip -selection c");
+	brief_kill_region();
+	message("Text cut to clipboard");
 }
 
 %% paste from X
 define cbrief_xpaste()
 {
-	if ( x_insert_selection_p != NULL )
-		() = x_insert_selection_p();
+%	if ( x_insert_selection_p != NULL )
+%		() = x_insert_selection_p();
+	run_shell_cmd("xclip -o");
 	message("Text inserted from clipboard");
 }
 
@@ -2670,6 +2684,12 @@ private variable mac_list = {
 % xpaste
 %	Inserts the contents of system clipboard into the current bufffer.
 %	(non-brief)
+
+	{ "xcut",				&cbrief_xcut,				NO_ARG },
+% xpaste
+%	Copies the selected block to system clipboard and deletes
+%	the selection.
+%	(non-brief)
 };
 % v3.1 new macros
 % ===============
@@ -3433,14 +3453,11 @@ private define cbrief_build_keymap()
 		list_append( _keymap, { "help_prefix", "^H" } );		% it is free for the JED's "help_prefix"
 	if ( is_xjed() && getenv("DISPLAY") != NULL )
 		list_append( _keymap, { "select_menubar", "[29~" } );	% windows menu key
-#ifdef XWINDOWS
-	if ( 1 == is_xjed() ) {
-		list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Ins  });	% ctrl+ins
-		list_append( _keymap, { "cbrief_xpaste",	Key_Shift_Ins });	% shift+ins
-		list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Shift_C });	% ctrl+shift+c (works?)
-		list_append( _keymap, { "cbrief_xpaste",	Key_Ctrl_Shift_V });	% ctrl+shift+v (-//-)
-		}
-#endif		
+	list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Ins  });	% ctrl+ins
+	list_append( _keymap, { "cbrief_xpaste",	Key_Shift_Ins });	% shift+ins
+	list_append( _keymap, { "cbrief_xcopy",		"" });	% Ctrl+Alt+C
+	list_append( _keymap, { "cbrief_xpaste",	"" });	% Ctrl+Alt+V
+	list_append( _keymap, { "cbrief_xcut",		"" });	% Ctrl+Alt+V
 	_build_keymap = 1;
 }
 
@@ -3495,7 +3512,7 @@ define cbrief_keys()
 		}
 
 	if ( cbrief_nopad_keys() ) {
-		setkey("brief_line_to_mow",		"\e^C");	% Alt+Ctrl C -- center to window
+%		setkey("brief_line_to_mow",		"\e^C");	% Alt+Ctrl C -- center to window
 		setkey("cbrief_toggle_re",		"\e");	% Alt+Ctrl R -- toggle regexp search
 		setkey("cbrief_search_back",  	"\e");	% Alt+Ctrl S -- search backward
 		setkey("cbrief_search_case",	"\e");	% Alt+Ctrl A -- Case Sens. Toggle
