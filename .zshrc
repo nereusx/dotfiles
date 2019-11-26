@@ -95,7 +95,7 @@ unsetopt all_export
 #
 #	PROMPT
 #
-if whence -v prompt | grep function > /dev/null; then
+if [[ -n "$functions[prompt]" ]]; then
     prompt off
 fi
 
@@ -340,7 +340,7 @@ xedit() {
 #		caarlos0/zsh-open-github-pr\
 
 # install: curl -L git.io/antigen > $ANTIGEN_PATH/antigen.zsh
-ANTIGEN_PATH="/usr/local/bin"
+ANTIGEN_PATH='/usr/local/bin'
 if [[ -e "$ANTIGEN_PATH/antigen.zsh" ]]; then
 	source "$ANTIGEN_PATH/antigen.zsh"
 	antigen use oh-my-zsh
@@ -378,10 +378,4 @@ for e in ${HOME}/.zshrc-*; do
 	[[ -r $e ]] && source $e
 done
 unsetopt nonomatch
-
-# Load zsh-syntax-highlighting; should be last
-#stx_files=( /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh )
-#for e in $stx_files; do
-#	[[ -e $e ]] && source $e 2>/dev/null
-#done
 
