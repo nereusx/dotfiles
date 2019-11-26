@@ -211,6 +211,7 @@ alias reload="source ${HOME}/.zshrc"
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh
+alias save-last-cmd 'fc -ln -1 >> ~/.scrap'
 
 # TUI: select from history to run again
 _hc_cmd() {

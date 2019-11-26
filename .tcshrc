@@ -232,8 +232,8 @@ case iselect:
 	alias cd++	'set _=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( "$_" != "" ) cd "$_"'
 endsw
 alias go 'set _=\!*; [ -z "$_" ] && cd++ || [ "$_" = "-" ] && cd-- || pushd "$_"'
-alias save-last-cmd	'echo "!!" >> ~/.scrap'
-
+alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
+ 
 # both
 set tperiod = 5
 # dirs -S prints to screen, no way to redirect it
