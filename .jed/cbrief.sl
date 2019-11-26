@@ -118,14 +118,30 @@ require("compile");
 %% --- before start -------------------------------------------------------
 private variable jed_home = Jed_Home_Directory;
 
-#ifdef XWINDOWS
-private variable term = "xjed";
-public define is_xjed() { return 1; }
-#else
-private variable term = getenv("TERM");
+public define is_xjed()
+{
+	if ( is_defined("x_server_vendor") )
+		return 1;
+	return 0;
+}
+private variable term = NULL;
+if ( is_xjed() )
+	term = "xjed";
+else
+	term = getenv("TERM");
 if ( term == NULL ) term = "ansi";
-public define is_xjed() { return 0; }
-#endif
+
+variable x_copy_region_to_selection_p;
+if ( is_defined("x_server_vendor") )
+	x_copy_region_to_selection_p = __get_reference("x_copy_region_to_selection");
+else
+	x_copy_region_to_selection_p = NULL;
+
+variable x_insert_selection_p = __get_reference("x_insert_selection");
+if ( is_defined("x_server_vendor") )
+	x_insert_selection_p = __get_reference("x_insert_selection");
+else
+	x_insert_selection_p = NULL;
 
 %% 
 private variable Key_Enter = Key_Return;
@@ -700,16 +716,16 @@ define cbrief_xcopy() {
 #ifdef MOUSE
 	copy_kill_to_mouse_buffer();
 #endif
-	variable x_copy_region_to_selection_p = __get_reference("x_copy_region_to_selection");
-	if (is_defined("x_server_vendor")) { x_copy_region_to_selection_p(); }
+	if ( x_copy_region_to_selection_p != NULL )
+		x_copy_region_to_selection_p();
 	message("Text copied to clipboard");
 }
 
 %% paste from X
 define cbrief_xpaste()
 {
-	variable x_insert_selection_p = __get_reference("x_insert_selection");
-	if (is_defined("x_server_vendor")) { () = x_insert_selection_p(); }
+	if ( x_insert_selection_p != NULL )
+		() = x_insert_selection_p();
 	message("Text inserted from clipboard");
 }
 
