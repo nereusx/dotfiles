@@ -161,6 +161,10 @@ show("Key_Up", get_termcap_string("ku"));
 show("Key_Shift_Tab", get_termcap_string("bt"));
 #endif
 
+variable Key_Ctrl_Shift_C       = "\eAc";
+variable Key_Ctrl_Shift_V       = "\eAv";
+variable Key_Ctrl_Shift_X       = "\eAx";
+
 % Numeric Keypad
 % --------------
 
@@ -293,7 +297,7 @@ if (is_defined("x_server_vendor"))
    @x_set_keysym_p(0xFFAA , 0,   Key_KP_Multiply);
    @x_set_keysym_p(0xFFAB , 0,   Key_KP_Add);
    @x_set_keysym_p(0xFFAF , 0,   Key_KP_Divide);
-   
+
    % Shift-Control Movement Keys
    @x_set_keysym_p(0xFF50 , '%', Key_Ctrl_Shift_Home);
    % @x_set_keysym_p(0xFF51 , '%', Key_Ctrl_Shift_Left);
@@ -303,5 +307,8 @@ if (is_defined("x_server_vendor"))
    @x_set_keysym_p(0xFF55 , '%', Key_Ctrl_Shift_PgUp);   
    @x_set_keysym_p(0xFF56 , '%', Key_Ctrl_Shift_PgDn);           
    @x_set_keysym_p(0xFF57 , '%', Key_Ctrl_Shift_End);  
-   
+
+   @x_set_keysym_p(0xFF03 , '%', Key_Ctrl_Shift_C);
+   @x_set_keysym_p(0xFF22 , '%', Key_Ctrl_Shift_V);
+   @x_set_keysym_p(0xFF24 , '%', Key_Ctrl_Shift_X);
 }

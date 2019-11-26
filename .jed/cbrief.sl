@@ -93,9 +93,7 @@
 %%			require("cbrief");
 %%
 
-#ifdef MSWINDOWS XWINDOWS
 () = evalfile("mouse.sl");
-#endif
 require("x-keydefs");				% fixed keys and keypad codes (jedmodes package)
 require("mm-briefmsc");				% Guenter Milde and Marko Mahnic BRIEF module
 require("cbufed");					% list_buffers() replacement
@@ -124,8 +122,6 @@ private variable jed_home = Jed_Home_Directory;
 private variable term = "xjed";
 public define is_xjed() { return 1; }
 #else
-private define x_copy_to_selection()   { }
-private define x_copy_from_selection() { return "console-mode"; }
 private variable term = getenv("TERM");
 if ( term == NULL ) term = "ansi";
 public define is_xjed() { return 0; }
@@ -699,25 +695,23 @@ define	cbrief_bkgoto()
 private variable _scrap_type = 0;
 
 %% X Windows Copy/Paste
-#ifdef XWINDOWS
 %% copy selection to X
 define cbrief_xcopy() {
 #ifdef MOUSE
-%	copy_kill_to_mouse_buffer();
-	x_copy_region_to_selection ();
-#else
-	x_copy_region_to_selection ();
+	copy_kill_to_mouse_buffer();
 #endif
+	variable x_copy_region_to_selection_p = __get_reference("x_copy_region_to_selection");
+	if (is_defined("x_server_vendor")) { x_copy_region_to_selection_p(); }
 	message("Text copied to clipboard");
 }
 
 %% paste from X
 define cbrief_xpaste()
 {
-	() = x_insert_selection(); 
+	variable x_insert_selection_p = __get_reference("x_insert_selection");
+	if (is_defined("x_server_vendor")) { () = x_insert_selection_p(); }
 	message("Text inserted from clipboard");
 }
-#endif
 
 #ifndef CBRIEF_PATCH_V1
 private variable cur_line_mark3;
@@ -3429,6 +3423,8 @@ private define cbrief_build_keymap()
 	if ( 1 == is_xjed() ) {
 		list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Ins  });	% ctrl+ins
 		list_append( _keymap, { "cbrief_xpaste",	Key_Shift_Ins });	% shift+ins
+		list_append( _keymap, { "cbrief_xcopy",		Key_Ctrl_Shift_C });	% ctrl+shift+c (works?)
+		list_append( _keymap, { "cbrief_xpaste",	Key_Ctrl_Shift_V });	% ctrl+shift+v (-//-)
 		}
 #endif		
 	_build_keymap = 1;
