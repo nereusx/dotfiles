@@ -471,7 +471,6 @@ if ( -X dof ) then
 else
 	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | columns'
 endif
-if ( -x /usr/bin/vis ) alias vi 'vis'
 
 # colorize
 set color

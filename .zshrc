@@ -157,12 +157,6 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-unsetopt	menu_complete
-unsetopt	auto_menu
-setopt		auto_list
-setopt		list_ambiguous
-setopt		always_last_prompt
-
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${HOME}/.cache/zsh.completion-cache"
 
@@ -189,11 +183,18 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 [[ -d '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
 [[ -d '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
 
+# no menu, only list
+unsetopt	menu_complete
+unsetopt	auto_menu
+setopt		auto_list
+setopt		list_ambiguous
+setopt		always_last_prompt
+
 # kill correction by any means
-unsetopt correct_all
-unsetopt correct
 CORRECT_IGNORE='*'
 CORRECT_IGNORE_FILE='*'
+unsetopt correct_all
+unsetopt correct
 
 #
 #	Aliases
@@ -268,26 +269,56 @@ alias go='_go_cmd'
 #
 #	File-type handle - and suffix aliases
 #
+
+# open for view
 xopen() {
 	local f
 	for f in $*; do
 		case $f in
-		*.pdf)	okular "$f";;
-		Makefile) ;&
-		*.(txt|inf|log|css|sh|csh|zsh|c|h|pas))
-				${EDITOR-vi} "$f";;
-		*.(htm|html))
+		(*.pdf)	okular "$f";;
+		(Makefile) ;&
+		(*.(txt|inf|log|css|sh|csh|zsh|c|h|pas|tex))
+				${PAGER-less} "$f";;
+		(*.md)	mdcat "$f" | ${PAGER-less}
+		(*.(htm|html))
 				firefox "$f";;
-		*.(mp3|ogg|wav|mp4))
+		(*.menu)
+				pick "$f";;
+		(*.(mp3|ogg|wav|mp4))
 				vlc "$f";;
-		*.(png|jpg|gif))
+		(*.(png|jpg|gif))
 				ristretto "$f";;
 #				gwenview "$f";;
-		*.[1-8].gz) ;&
-		*.[1-8]) ;&
-		*.(man|mdoc|ms|me|mom))
+		(*.[1-8].gz) ;&
+		(*.[1-8]) ;&
+		(*.(man|mdoc|ms|me|mom))
 				xview-roff "$f";;
-		*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
+		(*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
+			return 1
+		esac
+	done
+	}
+
+# open for editing
+xedit() {
+	local f
+	for f in $*; do
+		case $f in
+		(.*rc|Makefile) ;&
+		(*.(txt|inf|log|note|sh|csh|zsh|c|h|pas|php|awk|sh|md|tex|menu))
+				${EDITOR-vi} "$f";;
+		(*.(htm|html|css))
+				${EDITOR-vi} "$f";;
+		(*.(mp3|ogg|wav|mp4))
+				audiocity "$f";;
+		(*.(sfd|ttf|otf|bdf))
+				fontforge "$f";;
+		(*.(png|jpg|gif|bmp|tif))
+				gimp "$f";;
+		(*.[1-8]) ;&
+		(*.(man|mdoc|ms|me|mom))
+				${EDITOR-vi} "$f";;
+		(*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
 			return 1
 		esac
 	done
@@ -353,11 +384,3 @@ unsetopt nonomatch
 #	[[ -e $e ]] && source $e 2>/dev/null
 #done
 
-# Last changes... quick and dirty fix
-#	Completion LIST/MENU options
-#	again ... somewhere I lost them
-unsetopt	menu_complete
-unsetopt	auto_menu
-setopt		auto_list
-setopt		list_ambiguous
-setopt		always_last_prompt
