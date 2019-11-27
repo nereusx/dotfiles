@@ -508,7 +508,7 @@ alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 
 #
 if ( $DISTRO == "void" ) then
-	alias man 'set _v=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_v '
+	alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
 endif
 
 ### information utilities
