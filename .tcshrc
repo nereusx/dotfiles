@@ -128,11 +128,11 @@ else
 endif
 
 # select program to use for ncurses menus
-set list = ( fzy pick iselect )
-set pick_method = none
+set list = ( fzy pick )
+setenv PICKER none
 foreach e ( $list )
 	if ( -X $e ) then
-		set pick_method = $e
+		setenv PICKER $e
 		break
 	endif
 end
@@ -182,7 +182,7 @@ set nohistclop
 alias hist 'set _=`usable-lines`; history $_'
 history -L
 
-switch ( $pick_method )
+switch ( $PICKER )
 case fzy:
 	alias hc 'set _=`history -hr | fzy` && if ( "$_" != "hc" ) eval "$_"'
 	breaksw
@@ -218,20 +218,9 @@ alias dirs 'dirs -v'
 if ( -X devtodo ) then
 	alias cwdcmd 'devtodo --timeout --summary'
 endif
-switch ( $pick_method )
-case fzy:
-	alias cd--	'set _=`dirs | fzy | cut -f1` && cd =$_'
-	alias cd++	'set _=`ls -d1 */ --color=never | fzy` && cd "$_"'
-	breaksw
-case pick:
-	alias cd--	'set _=`dirs | pick | cut -f1` && cd =$_'
-	alias cd++	'set _=`ls -d1 */ --color=never | pick` && cd "$_"'
-	breaksw
-case iselect:
-	alias cd--	'set _=`dirs | iselect -a -n "dirs -v" -t "Change directory to..." | cut -f1`;if ( "$_" != "" ) cd =$_'
-	alias cd++	'set _=`ls -d1 */ --color=never | iselect -a -n "ls */" -t "Change directory to..."`;if ( "$_" != "" ) cd "$_"'
-endsw
-alias go 'set _=\!*; [ -z "$_" ] && cd++ || [ "$_" = "-" ] && cd-- || pushd "$_"'
+alias go--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
+alias go++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
+alias go	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && go++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && go-- || pushd "$_"'
 alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
  
 # both
@@ -511,7 +500,7 @@ endif
 if ( -f /usr/share/sounds/generic/alarm-fire.ogg ) then
 	alias abeep 'paplay /usr/share/sounds/generic/alarm-fire.ogg'
 else
-	alias abeep 'echo -n '
+	alias abeep 'echo -e \a'
 endif
 
 # xwindows title
@@ -519,7 +508,7 @@ alias setxtitle		"echo -n '''\033]0;\!*\007'''"
 
 #
 if ( $DISTRO == "void" ) then
-	alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
+	alias man 'set _v=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_v '
 endif
 
 ### information utilities
