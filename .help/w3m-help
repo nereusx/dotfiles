@@ -1,0 +1,8 @@
+#!/bin/cat
+Alt+b 	Load bookmark
+Alt+a 	Add current to bookmark 
+
+a       Save link to file
+H       Help
+o       Set option
+U       Open URL 

@@ -15,9 +15,9 @@ if [ "$1" = "-d" ]; then
 fi
 if [ $USEFPK -eq 0 ]; then
 	echo "run /opt/viber/"
-	exec env QT_SCALE_FACTOR=1.0 /opt/viber/Viber
+	exec env QT_SCALE_FACTOR=1.15 /opt/viber/Viber
 else
 	echo "run flatpak viber"
-	exec env QT_SCALE_FACTOR=1.0 flatpak run com.viber.Viber
+	exec env QT_SCALE_FACTOR=1.15 flatpak run com.viber.Viber
 fi
 

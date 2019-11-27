@@ -40,7 +40,8 @@ setopt auto_pushd				# automatic save current directory before cd
 
 setopt all_export				# export all new/modified variables
 setopt prompt_subst				# allow functions in prompt
-unsetopt bg_nice				# not renice background jobs
+setopt no_bg_nice				# not renice background jobs
+setopt complete_aliases			# don't expand aliases before completion has finished
 
 # lexical
 setopt c_bases
@@ -57,7 +58,7 @@ setopt no_bang_hist
 #
 #	Modules that we need
 #
-autoload -Uz colors
+autoload -Uz colors parameter
 #autoload -Uz curses
 #autoload -Uz mathfunc
 [[ $COLORTERM = *(24bit|truecolor)* ]] || zmodload zsh/nearcolor
@@ -75,13 +76,14 @@ unsetopt sh_word_split
 #	ZSH specific
 colors
 list=('fzy' 'pick')
-pick_method='none'
+PICKER='none'
 for e in $list; do
 	if [[ -x "$(command -vp $e)" ]]; then
-		pick_method=$e
+		PICKER=$e
 		break
 	fi
 done
+export PICKER
 
 # hostnames
 hosts+=('github.com' 'sourceforge.net' 'freemail.gr'\
@@ -156,8 +158,12 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
+if [[ -d ~/.cache ]]; then
+	zstyle ':completion:*' cache-path "${HOME}/.cache/zsh.completion-cache"
+else
+	zstyle ':completion:*' cache-path "${HOME}/.zsh-completion-cache"
+fi
 zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path "${HOME}/.cache/zsh.completion-cache"
 
 zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)(CVS|\.git)'
 zstyle ':completion:*:cd:*' ignored-patterns '(*/)#(CVS|\.git)'
@@ -179,8 +185,8 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # Use zsh-completions if it exists
-[[ -d '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
-[[ -d '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
+[[ -e '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
+[[ -e '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
 
 # no menu, only list
 unsetopt	menu_complete
@@ -206,7 +212,6 @@ unsetopt sh_word_split
 
 #	ZSH specific
 alias reload="source ${HOME}/.zshrc"
-#alias help='run-help'
 alias hist='history $(tput lines)'
 alias dirs='builtin dirs -v'
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh
@@ -228,9 +233,9 @@ _hc_cmd() {
 alias hc="_hc_cmd"
 
 # TUI: select from DIRSTACK to change directory
-_go_back_cmd() {
+_go_back() {
 	local x
-	case $pick_method in
+	case $PICKER in
 	fzy)	x="$(builtin dirs -v | fzy | cut -f1 )";;
 	pick)	x="$(builtin dirs -v | pick -S | cut -f1 )";;
 	esac
@@ -238,33 +243,33 @@ _go_back_cmd() {
 		cd +$x
 	fi
 	}
-alias cd--='_go_back_cmd'
+alias go--='_go_back'
 
-_go_fwd_cmd() {
+# TUI: select from local sub-directories
+_go_fwd() {
 	local x
-	case $pick_method in
-	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
-	pick)	x="$(ls -d1 */ --color=never | pick)";;
-	esac
+	x="$(ls -d1 */ --color=never | $PICKER)"
 	if [[ -n "$x" ]]; then
 		cd "$x"
 	fi
 	}
-alias cd++='_go_fwd_cmd'
+alias go++='_go_fwd'
 
 # TUI: select from sub-directories to change directory
-_go_cmd() {
+_go() {
 	local x
 	x="$*"
-	if [[ -z "$x" ]]; then
-		_go_fwd_cmd
-	elif [[ "$x" == "-" ]]; then
-		_go_back_cmd
+	if [[ -z "$x" || "$x" == '++' ]]; then
+		_go_fwd
+	elif [[ "$x" == '-' ]]; then
+		cd -
+	elif [[ "$x" == '--' ]]; then
+		_go_back
 	else
 		pushd "$x"
 	fi
 	}
-alias go='_go_cmd'
+alias go='_go'
 
 #
 #	File-type handle - and suffix aliases
@@ -324,6 +329,50 @@ xedit() {
 	done
 	}
 
+# extract compressed files
+extract() {
+    if [ -f $1 ]; then
+        case $1 in
+		(*.tar.gz)      tar -zxvf $1						;;
+		(*.tar.bz2)     tar -jxvf $1						;;
+		(*.tar)         tar -xvf $1							;;
+		(*.tgz)         tar -zxvf $1						;;
+		(*.tbz2)        tar -jxvf $1						;;
+		(*.gz)          gunzip $1							;;
+		(*.bz2)         bunzip2 $1							;;
+		(*.xz)          unxz $1								;;
+		(*.Z)			uncompress $1						;;
+		(*.(zip|ZIP))	unzip $1							;;
+		(*.(rar|RAR))	unrar $1							;;
+		(*.pax)			cat $1 | pax -r						;;
+		(*.pax.Z)		uncompress $1 --stdout | pax -r		;;
+		(*.cab)			cabextract $1						;;
+		(*) echo "'$1' cannot be extracted/mounted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+    }
+
+# standard tar-gz creator
+function totgz() {
+	local dir="$1"
+	local tmp="/tmp/$1.tar"
+	local -i sz
+
+	if [[ $# -eq 0 ]] { echo "usage: totgz dirname"; return 1 }
+	if [[ ! -d "$dir" ]] { echo "$dir" is not a directory; return 1 }
+	# todo: parent=$dir:h; cd parent
+	echo "Creating $tmp…";
+	tar -cvf "$tmp" "$dir" > /dev/null || return 1;
+	sz=$(stat -c"%s" "${tmp}" 2> /dev/null);
+	echo "Compressing $tmp ($((sz / 1024)) KB)…";
+	if [[ -f "${tmp}.gz" ]] rm "${tmp}.gz"
+	gzip "$tmp" || return 1;
+	sz=$(stat -c"%s" "$tmp.gz" 2> /dev/null);
+	echo "${tmp}.gz ($((sz / 1024)) KB) created successfully.";
+	}
+
 # Suffixes
 #alias -s pdf=okular
 #alias -s txt=xopen
@@ -377,4 +426,3 @@ for e in ${HOME}/.zshrc-*; do
 	[[ -r $e ]] && source $e
 done
 unsetopt nonomatch
-

@@ -1,0 +1,8 @@
+#!/bin/cat
+`mail.desktop` file:
+```
+[Desktop Entry]
+Type=Application
+Name=Mail
+Exec=/usr/local/bin/st -e neomutt %u
+```

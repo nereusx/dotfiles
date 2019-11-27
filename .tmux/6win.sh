@@ -1,7 +1,7 @@
 #!/bin/sh
-tmux new-window -n "root" 'sudo su -c "cd ; clear; tcsh"'
-tmux new-window -n "root" 'sudo su -c "cd ; clear; tcsh"'
-tmux new-window -n "root" 'sudo su -c "cd ; clear; tcsh"'
+tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
+tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
+tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
 tmux new-window -n "$USER"
 tmux new-window -n "$USER"
 tmux new-window -n "last"

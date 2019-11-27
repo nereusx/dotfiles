@@ -27,10 +27,14 @@ alias ll='ls --color=auto -lha'
 alias ls='ls --color=auto'
 
 alias cls='clear'
+alias fs='du -sbh'
 alias whereami='echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias remake='make clean; make' # warning: 'remake' began gnu project to debug makefiles
 dff()     { echo "Filesystem      Size  Used Avail Use% Mounted on";df -h | grep '^/dev/'; }
 mounted() {	mount | grep -E '^(tmpfs|/dev)' | grep -Ev 'AppImage|/dev/shm|/dev/fuse'; }
+alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
+alias psa='ps aux | grep -v "\["'
+alias mc='mc --nomouse'
 
 list="/var/log/messages\
 	/var/log/socklog/messages/current\
@@ -53,7 +57,6 @@ if [ -f /var/log/apache2/error.log ]; then
 elif [ -f /var/log/httpd/error.log ]; then
 	alias phplog='tail /var/log/httpd/error.log'
 fi
-alias netlog='netstat -lptu4'
 
 alias xmerge='xrdb -merge ~/.Xresources'
 alias xmonitor-off='xset dpms force off'
@@ -67,10 +70,6 @@ alias fortune-files='dof -e /usr/share/fortunes/*.dat do echo %b | columns'
 alias yt-get-audio='youtube-dl -i -c --extract-audio --audio-format vorbis "$*"'
 alias yt-get-plist='youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" "$*"'
 
-# https://github.com/thcipriani/dotfiles/blob/master/aliases
-alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias localip="ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
-
 # calc
 _bc() { echo "$*" | bc -l; }
 if [ ! "$(command -vp calc)" ]; then
@@ -81,22 +80,21 @@ if [ ! "$(command -vp calc)" ]; then
 	fi
 fi
 
-#
+# net
+alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias myip="wget -qO- http://ipecho.net/plain ; echo"
+alias ips="ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
+alias netlog='netstat -lptu4'
 _amionline() {
 	offline=1
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
-	return $offline;
-}
+	return $offline; 
+	}
 if [ "$(command -vp isonline)" ]; then
 	alias amionline='isonline'
 else
 	alias amionline='[ _amionline ] && echo yes || echo no'
 fi
-
-alias psu='ps S -o pid,pri,pcpu,pmem,rss:6,user,group,cmd'
-alias psa='ps aux | grep -v "\["'
-alias myip="wget -qO- http://ipecho.net/plain ; echo"
-alias mc='mc --nomouse'
 
 # git
 _git_q() { msg="$*"; if [ -z "$msg" ]; then msg="quick and dirty fix"; fi; git add . && git commit -m "$msg" && git push; }

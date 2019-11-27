@@ -1,0 +1,71 @@
+#!/bin/cat
+## Commands
+for vname [ in word ... ] ;do list ;done
+for (( [expr1] ; [expr2] ; [expr3] )) ;do list ;done
+select vname [ in word ... ] ;do list ;done
+case word in [ [(]pattern [ ⎪ pattern ] ... ) list ;; ] ... esac
+if list ;then list [ ;elif list ;then list ] ... [ ;else list ] ;fi
+while list ;do list ;done
+until list ;do list ;done
+((expression))   the expression is evaluated using the rules for arithmetic evaluation.
+(list)           execute list in a separate environment.
+{ list;}         list is simply executed.
+[[ expression ]] evaluates expression and returns a zero exit status when expression is true.
+function varname { list ;} OR varname () { list ;}
+                 define a function which is referenced by varname.
+
+## Variables
+varname=word; varname[word]=word; varname=(assign_list)
+* no space is permitted between varname and the = or between = and word.
+${arrname[*]}	Get all elements
+${#arrname[*]}	Get the number of elements
+${parameter:-word} if parameter is set and is non-null then substitute its value; otherwise substitute word.
+${parameter:=word} if parameter is not set or is null then set it to word; the value of the parameter is then substituted.
+${parameter:?word} if parameter is set and is non-null then substitute its value; otherwise, print word and exit.
+${parameter:+word} if parameter is set and is non-null then substitute word; otherwise substitute nothing.
+* if the colon ( : ) is omitted from the above expressions, then the shell only checks whether parameter is set or not.
+${parameter:offset:length} OR  ${parameter:offset}
+${parameter#pattern} OR ${parameter##pattern}
+If the shell pattern matches the beginning of the value of parameter, then the value of this expansion is the value of
+the parameter with the matched portion deleted; otherwise the value of this parameter is substituted.
+In the first form the smallest matching pattern is deleted and in the second form the largest matching pattern is deleted.
+${parameter%pattern} OR ${parameter%%pattern}
+If the shell pattern matches the end of the value of parameter, then the value of this expansion is the value of the
+parameter with the matched part deleted; otherwise substitute the value of parameter.
+In the first form the smallest matching pattern is deleted and in the second form the largest matching pattern is deleted.
+Variables that contain a path can very easily be stripped of it: ${name##*/} gives you just the filename.
+Or if one wants the path: ${name%/*}. % takes it away from the left and # from the right.
+%% and ## take the longest possibility while % and # just take the shortest one.
+${parameter/pattern/string} OR ${parameter//pattern/string} OR ${parameter/#pattern/string} OR ${parameter/%pattern/string}
+Expands parameter and replaces the longest match of pattern with the given string. / = all occurrences. # = beggining. % = end.
+
+## Examples:
+file=/path/file; if [[ $file = $1 ]];then command; fi
+print -n "Name: "; read name; print ""
+if [[ $value -eq 7 ]];then print "$value is 7";fi
+if [[ $name = "John" ]];then print "Your welcome, ${name}."; fi
+case esac;case $var in; john|fred) print $invitation;;; martin) print $declination;;;*) print "Wrong name...";;;esac
+while [[ $count -gt 0 ]];do;print "\$count is $count";(( count -= 1 ));done
+for foo in $(ls);do;if [[ -d $foo ]];then;print "$foo is a directory";else;print "$foo is not a directory";fi;done
+if [[ $# -eq 0 ]];then; print "No Arguments"; exit; fi
+
+Replacing a variable if it does not yet exits
+
+If we wanted $foo or if not set 4 then: ${foo:-4} but it still remains unset. To change that we use:
+${foo:=4}
+Exiting and stating something if variable is not set
+
+This is very important if our program relays on a certain vaiable: ${foo:?"foo not set!"}
+Just check for the variable
+
+${foo:+1} gives one if $foo is set, otherwise nothing.
+
+function foo {
+   # commands...
+}
+
+foo(){
+   # commands...
+}
+
+

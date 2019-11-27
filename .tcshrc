@@ -452,6 +452,7 @@ alias rtrim			"sed 's/[ \t\n\r]*$DOLR//'"
 alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DOLR//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
 alias mc			'mc --nomouse'
+alias fs			'du -sbh' # file or directory size
 
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
@@ -517,11 +518,9 @@ if ( -X isonline ) then
 else
 	alias amionline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
 endif
-alias myip			'wget -qO- http://ipecho.net/plain ; echo'
-
-# https://github.com/thcipriani/dotfiles/blob/master/aliases
-alias sniff		"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias localip	"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
+alias myip			'wget -qO- http://ipecho.net/plain ; echo ;'
+alias sniff			"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias ips			"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
 
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )

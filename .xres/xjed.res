@@ -13,4 +13,7 @@ xjed*Geometry: 160x40+100+100
 !xjed*font: -misc-fixed-bold-r-normal--14-130-75-75-c-70-iso10646-1
 
 ! XSG 7x16B
-xjed*font: -xsg-xsg fixed 167-*-*-*-*-*-*-*-*-*-*-iso10646-1
+!xjed*font: -xsg-xsg fixed 167-*-*-*-*-*-*-*-*-*-*-iso10646-1
+
+! XSG Term 189
+xjed*font: -xsg-xsg term 189-*-*-*-*-*-*-*-*-*-*-iso10646-1
