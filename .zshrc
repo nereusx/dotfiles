@@ -40,6 +40,7 @@ setopt auto_pushd				# automatic save current directory before cd
 
 setopt all_export				# export all new/modified variables
 setopt prompt_subst				# allow functions in prompt
+unsetopt bg_nice				# not renice background jobs
 
 # lexical
 setopt c_bases
@@ -126,7 +127,7 @@ git_rprompt() {
 	if [[ -n $vcs_info_msg_0_ ]]; then
 		echo "$vcs_info_msg_0_"
 	else
-		echo "${_ps[frame]}(%f%B${_ps[key1]}sys%f%b${_ps[frame]})-[%f${_ps[key2]} %T %f${_ps[frame]}]%f "
+		echo "${_ps[frame]}(%f%B${_ps[key1]}sys%f%b${_ps[frame]})-[?%? %f${_ps[key2]}%D{%H:%M}%f${_ps[frame]}]%f "
 	fi
 	}
 RPROMPT='$(git_rprompt)'
