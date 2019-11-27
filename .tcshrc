@@ -292,8 +292,8 @@ bindkey '1'	expand-history
 bindkey '4'	expand-variables
 bindkey '8'	expand-glob
 
-bindkey '['	copy-prev-word
-bindkey ']'	insert-last-word
+bindkey '9'	copy-prev-word
+bindkey '0'	insert-last-word
 
 bindkey 'd'	kill-whole-line
 bindkey 'k'	kill-line
