@@ -167,7 +167,7 @@ alias hc="_hc_cmd"
 
 _go_back() {
 	local x
-	x=$(command dirs -l -p | ${PICKER})
+	x="$(command dirs -l -p | ${PICKER})"
 	if [[ -n "$x" ]]; then
 		command cd "$x"
 	fi
