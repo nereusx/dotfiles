@@ -67,7 +67,7 @@ creset="\033[0m"
 
 # prompt selections
 ctimecolor="$cmagenta"
-cusercolor="$cgreen"
+cusercolor="$cbrown"
 if [ $USERID -eq 0 ]; then
 	cusercolor="$cred"
 fi
@@ -167,7 +167,7 @@ alias hc="_hc_cmd"
 
 _go_back() {
 	local x
-	x="$(dirs -p | ${PICKER})"
+	x=$(command dirs -p | ${PICKER}) | sed 's/\~/${HOME}/'
 	if [[ -n "$x" ]]; then
 		cd "$x"
 	fi
@@ -198,8 +198,7 @@ _go() {
 	fi
 	}
 alias go='_go'
-alias cd++='go++'
-alias cd--='go--'
+#alias cd='pushd'
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then
