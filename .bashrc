@@ -11,7 +11,6 @@ umask 022
 set -o emacs
 set -o braceexpand
 set -o noclobber
-set +o errexit
 
 # Correct dir spellings
 shopt -q -s cdspell
