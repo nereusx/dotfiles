@@ -221,6 +221,7 @@ _go() {
 	}
 alias go='_go'
 alias cd='pushd'
+complete -o dirnames go
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then
