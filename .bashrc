@@ -133,7 +133,30 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 
 HISTCONTROL=‘ignoredups’
 
-# aliases
+#
+#	functions
+#
+split() {
+	# Usage: split "string" "delimiter"
+	IFS=$'\n' read -d "" -ra arr <<< "${1//$2/$'\n'}"
+	printf '%s\n' "${arr[@]}"
+	}
+remove_array_dups() {
+    # Usage: remove_array_dups "array"
+    declare -A tmp_array
+    for i in "$@"; do
+        [[ $i ]] && IFS=" " tmp_array["${i:- }"]=1
+    done
+    printf '%s\n' "${!tmp_array[@]}"
+	}
+getfilename() {	echo ${1##*/}; }
+getdirname()  { local fn; fn=${1##*/}; echo ${1%"$fn"}; }
+getbasename() {	local fn; fn=${1##*/}; echo ${fn%.*}; }
+getfileext()  { local fb bn; fn=${1##*/}; bn=${fn%.*}; echo ${fn#"$bn"}; }
+
+#
+#	aliases
+#
 [ -r ~/.aliases ] && . ~/.aliases
 alias reload='. ~/.bashrc'
 alias hist='history $(tput lines)'
