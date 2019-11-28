@@ -167,9 +167,9 @@ alias hc="_hc_cmd"
 
 _go_back() {
 	local x
-	x=$(command dirs -p | ${PICKER}) | sed 's/\~/${HOME}/'
+	x=$(command dirs -l -p | ${PICKER})
 	if [[ -n "$x" ]]; then
-		cd "$x"
+		command cd "$x"
 	fi
 	}
 alias go--='_go_back'
@@ -178,7 +178,7 @@ _go_fwd() {
 	local x
 	x="$(ls -d1 */ --color=never | ${PICKER})"
 	if [[ -n "$x" ]]; then
-		cd "$x"
+		command cd "$x"
 	fi
 	}
 alias go++='_go_fwd'
@@ -190,7 +190,7 @@ _go() {
 	if [[ -z "$x" || "$x" == '++' ]]; then
 		_go_fwd
 	elif [[ "$x" == '-' ]]; then
-		cd -
+		command cd -
 	elif [[ "$x" == '--' ]]; then
 		_go_back
 	else
@@ -198,7 +198,7 @@ _go() {
 	fi
 	}
 alias go='_go'
-#alias cd='pushd'
+alias cd='pushd'
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then
