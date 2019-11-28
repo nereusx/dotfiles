@@ -26,8 +26,6 @@ shopt -q -s cmdhist
 shopt -q -s lithist
 # Get immediate notification of bacground job termination
 set -o notify 
-# Disable [CTRL-D] which is used to exit the shell
-#set -o ignoreeof
 
 PROMPT_COMMAND=()
 
@@ -35,9 +33,8 @@ set -a
 [ -r ~/.environ ] && . ~/.environ
 if [ -d ~/.cache ]; then
 	HISTFILE=${HOME}/.cache/.bash_history
-	HISTFILESIZE=2048
-#	HISTSIZE=2048
 fi
+HISTFILESIZE=2048
 set +a
 shopt -q -s mailwarn
 
@@ -143,23 +140,20 @@ alias reload='. ~/.bashrc'
 alias hist='history $(tput lines)'
 alias dirs='dirs -v'
 
-# another bug in the dust
-#_cd() { pushd "$*" > /dev/null; }
-#alias cd='_cd'
-
 # pick
 list="fzy pick"
-pick_method="none"
+PICKER="none"
 for e in $list; do
 	if [ -n "$(command -vp $e)" ]; then
-		pick_method="$e"
+		PICKER="$e"
 		break
 	fi
 done
+export PICKER
 
 _hc_cmd() {
 	local x
-	case $pick_method in
+	case $PICKER in
 	fzy)	x="$(fc -lnr | fzy)";;
 	pick)	x="$(fc -lnr | pick -S)";;
 	esac
@@ -171,31 +165,41 @@ _hc_cmd() {
 	}
 alias hc="_hc_cmd"
 
-_go_back_cmd() {
+_go_back() {
 	local x
-	unalias dirs
-	case $pick_method in
-	fzy)	x="$(dirs -p | fzy)";;
-	pick)	x="$(dirs -p | pick)";;
-	esac
+	x="$(dirs -p | ${PICKER})"
 	if [[ -n "$x" ]]; then
 		cd "$x"
 	fi
-	alias dirs='dirs -v'
 	}
-alias cd--='_go_back_cmd'
+alias go--='_go_back'
 
-_go_cmd() {
+_go_fwd() {
 	local x
-	case $pick_method in
-	fzy)	x="$(ls -d1 */ --color=never | fzy)";;
-	pick)	x="$(ls -d1 */ --color=never | pick)";;
-	esac
+	x="$(ls -d1 */ --color=never | ${PICKER})"
 	if [[ -n "$x" ]]; then
 		cd "$x"
 	fi
 	}
-alias cd++='_go_cmd'
+alias go++='_go_fwd'
+
+# TUI: select from sub-directories to change directory
+_go() {
+	local x
+	x="$*"
+	if [[ -z "$x" || "$x" == '++' ]]; then
+		_go_fwd
+	elif [[ "$x" == '-' ]]; then
+		cd -
+	elif [[ "$x" == '--' ]]; then
+		_go_back
+	else
+		pushd "$x"
+	fi
+	}
+alias go='_go'
+alias cd++='go++'
+alias cd--='go--'
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then
