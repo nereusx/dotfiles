@@ -146,8 +146,8 @@ DIRSTACKSIZE=128
 
 # EMACS mode
 bindkey -e
-KEYTIMEOUT=1
 
+KEYTIMEOUT=1
 MAILCHECK=60
 
 #
@@ -163,7 +163,7 @@ if [[ -d ~/.cache ]]; then
 else
 	zstyle ':completion:*' cache-path "${HOME}/.zsh-completion-cache"
 fi
-zstyle ':completion:*' use-cache on
+zstyle ':completion:*' use-cache off
 
 zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/)(CVS|\.git)'
 zstyle ':completion:*:cd:*' ignored-patterns '(*/)#(CVS|\.git)'
@@ -185,8 +185,8 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # Use zsh-completions if it exists
-[[ -e '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
-[[ -e '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
+#[[ -e '/usr/share/zsh-completions'       ]] && fpath+=('/usr/share/zsh-completions')
+#[[ -e '/usr/local/share/zsh-completions' ]] && fpath+=('/usr/local/share/zsh-completions')
 
 # no menu, only list
 unsetopt	menu_complete
@@ -269,7 +269,11 @@ _go() {
 		pushd "$x"
 	fi
 	}
-alias go='_go'
+#alias go='_go'
+go() { _go "$@" }
+compdef -d go
+zstyle ':completion:*:*:go:*:directories' verbose yes
+
 
 #
 #	File-type handle - and suffix aliases
