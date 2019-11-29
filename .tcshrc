@@ -97,6 +97,9 @@ if ( -X 'path++' ) then
 		set npath = ( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $npath )
 	endif
 	setenv PATH `path++ $npath`
+	
+	set mpath = ( /usr/share/man /usr/local/share/man /usr/man /usr/local/man /usr/pkg/man )
+	setenv MANPATH `path++ -e MANPATH $mpath`
 endif
 
 #

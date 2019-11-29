@@ -51,6 +51,10 @@ if [ -x "/bin/path++" ]; then
 		NEWPATH=/sbin:/usr/sbin:/usr/local/sbin:${NEWPATH}
 	fi
 	PATH=$(/bin/path++ $NEWPATH)
+	
+	NEWPATH=/usr/man:/usr/share/man:/usr/local/man:/usr/local/share/man:$MANPATH
+	MANPATH=$(/bin/path++ -e MANPATH $NEWPATH)
+	unset NEWPATH
 else
 	PATH=${HOME}/.bin:${HOME}/.help:$PATH:/usr/local/bin
 fi
