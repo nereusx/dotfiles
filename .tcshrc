@@ -89,17 +89,15 @@ end
 #
 #	setup and cleanup path
 #
-set path = ( $home/.bin $home/.help /bin /usr/bin /usr/local/bin /usr/pkg/bin $path )
-if ( $USERID == 0 ) then
-	set list =( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $path )
-	foreach e ( $list )
-		if ( -d $e && ! -l $e ) then
-			set path = ( $e $path )
-		endif
-	end
-endif
+
 # you can get 'path++' at https://github.com/nereusx/unix-utils
-if ( -X 'path++' ) setenv PATH `path++`
+if ( -X 'path++' ) then
+	set npath = ( $home/.bin $home/.help /bin /usr/bin /usr/local/bin /usr/pkg/bin $path )
+	if ( $USERID == 0 ) then
+		set npath = ( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $npath )
+	endif
+	setenv PATH `path++ $npath`
+endif
 
 #
 #	SETUP TCSH's ENVIRONMENT

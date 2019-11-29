@@ -44,8 +44,16 @@ for e in $list; do
 done
 
 # path
-PATH=${HOME}/.bin:${HOME}/.help:$PATH:/usr/local/bin
-[ -x "/bin/path++" ] && PATH=$(/bin/path++)
+# you can get 'path++' at https://github.com/nereusx/unix-utils
+if [ -x "/bin/path++" ]; then
+	NEWPATH=${HOME}/.bin:${HOME}/.help:/bin:/usr/bin:/usr/local/bin:${PATH}
+	if [ $USERID -eq 0 ]; then
+		NEWPATH=/sbin:/usr/sbin:/usr/local/sbin:${NEWPATH}
+	fi
+	PATH=$(/bin/path++ $NEWPATH)
+else
+	PATH=${HOME}/.bin:${HOME}/.help:$PATH:/usr/local/bin
+fi
 
 LS_OPTIONS='--color=auto'
 [ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
