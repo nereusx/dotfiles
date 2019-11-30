@@ -147,9 +147,6 @@ DIRSTACKSIZE=128
 # EMACS mode
 bindkey -e
 
-KEYTIMEOUT=1
-MAILCHECK=60
-
 #
 #	Completion
 #
@@ -200,6 +197,31 @@ CORRECT_IGNORE='*'
 CORRECT_IGNORE_FILE='*'
 unsetopt correct_all
 unsetopt correct
+
+#
+#	KEYBOARD
+#
+#bindkey 'p'	history-search-backward
+#bindkey 'n'	history-search-forward
+bindkey '1'	expand-history
+
+bindkey 'u'	undo
+bindkey ''	redo
+bindkey 'd'	kill-whole-line
+bindkey 'k'	kill-line
+bindkey ''	backward-kill-line
+
+# mark,copy/paste/cut
+bindkey 'm'	set-mark-command
+bindkey 'j'	exchange-point-and-mark
+bindkey 'c'	copy-region-as-kill
+bindkey 'v'	yank
+bindkey 'x'	kill-region
+
+# misc
+bindkey 'q'	quoted-insert
+bindkey '`'	quote-line
+bindkey ''	redisplay
 
 #
 #	Aliases
