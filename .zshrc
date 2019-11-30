@@ -447,33 +447,37 @@ fi
 #
 
 # PGUP: get subdirectory name
-ze_get_subdir() {
-	local x
-	x="$(ls -d1 */ --color=never | $PICKER)"
-	if [[ -n "$x" ]]; then
-		RBUFFER="'$x' $RBUFFER"
-		(( CURSOR += ${#x} + 3 ))
-		zle redisplay
-	fi
-	}
-zle -N ze_get_subdir
-bindkey '[5~' ze_get_subdir
+if [[ $PICKER != 'none' ]]; then
+	ze_get_subdir() {
+		local x
+		x="$(ls -d1 */ --color=never | $PICKER)"
+		if [[ -n "$x" ]]; then
+			RBUFFER="'$x' $RBUFFER"
+			(( CURSOR += ${#x} + 3 ))
+			zle redisplay
+		fi
+		}
+	zle -N ze_get_subdir
+	bindkey '[5~' ze_get_subdir
+fi
 
 # PGDN: get directory from dirstack
-ze_get_prevdir() {
-	local x
-	case $PICKER in
-	fzy)	x="$(builtin dirs -lp | fzy )";;
-	pick)	x="$(buildin dirs -lp | pick -S )";;
-	esac
-	if [[ -n "$x" ]]; then
-		RBUFFER="'$x' $RBUFFER"
-		(( CURSOR += ${#x} + 3 ))
-		zle redisplay
-	fi
-	}
-zle -N ze_get_prevdir
-bindkey '[6~' ze_get_prevdir
+if [[ $PICKER != 'none' ]]; then
+	ze_get_prevdir() {
+		local x
+		case $PICKER in
+		fzy)	x="$(builtin dirs -lp | fzy )";;
+		pick)	x="$(buildin dirs -lp | pick -S )";;
+		esac
+		if [[ -n "$x" ]]; then
+			RBUFFER="'$x' $RBUFFER"
+			(( CURSOR += ${#x} + 3 ))
+			zle redisplay
+		fi
+		}
+	zle -N ze_get_prevdir
+	bindkey '[6~' ze_get_prevdir
+fi
 
 #
 #	Load local RCs
