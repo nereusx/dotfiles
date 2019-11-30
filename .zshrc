@@ -203,7 +203,6 @@ unsetopt correct
 #
 #bindkey 'p'	history-search-backward
 #bindkey 'n'	history-search-forward
-bindkey '1'	expand-history
 
 bindkey 'u'	undo
 bindkey ''	redo
