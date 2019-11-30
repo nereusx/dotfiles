@@ -295,7 +295,6 @@ go() { _go "$@" }
 compdef -d go
 zstyle ':completion:*:*:go:*:directories' verbose yes
 
-
 #
 #	File-type handle - and suffix aliases
 #
@@ -444,6 +443,39 @@ if [[ -o login ]]; then
 fi
 
 #
+#	Keyboard MACROS
+#
+
+# PGUP: get subdirectory name
+ze_get_subdir() {
+	local x
+	x="$(ls -d1 */ --color=never | $PICKER)"
+	if [[ -n "$x" ]]; then
+		RBUFFER="'$x' $RBUFFER"
+		(( CURSOR += ${#x} + 3 ))
+		zle redisplay
+	fi
+	}
+zle -N ze_get_subdir
+bindkey '[5~' ze_get_subdir
+
+# PGDN: get directory from dirstack
+ze_get_prevdir() {
+	local x
+	case $PICKER in
+	fzy)	x="$(builtin dirs -lp | fzy )";;
+	pick)	x="$(buildin dirs -lp | pick -S )";;
+	esac
+	if [[ -n "$x" ]]; then
+		RBUFFER="'$x' $RBUFFER"
+		(( CURSOR += ${#x} + 3 ))
+		zle redisplay
+	fi
+	}
+zle -N ze_get_prevdir
+bindkey '[6~' ze_get_prevdir
+
+#
 #	Load local RCs
 #
 setopt nonomatch
@@ -451,3 +483,4 @@ for e in ${HOME}/.zshrc-*; do
 	[[ -r $e ]] && source $e
 done
 unsetopt nonomatch
+
