@@ -96,6 +96,9 @@ if ( -X 'path++' ) then
 	if ( $USERID == 0 ) then
 		set npath = ( /sbin /usr/sbin /usr/local/sbin /usr/pkg/sbin $npath )
 	endif
+	if ( -x /usr/games/fortune ) then
+		set npath = ( $npath /usr/games )
+	endif
 	setenv PATH `path++ $npath`
 	
 	set mpath = ( /usr/share/man /usr/local/share/man /usr/man /usr/local/man /usr/pkg/man )
