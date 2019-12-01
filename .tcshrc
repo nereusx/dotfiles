@@ -145,6 +145,7 @@ if ( -X lf ) then
 	setenv LF_HOME "${HOME}/.config/lf"
 	[ -e "${LF_HOME}/lfcd.csh" ] && source "${LF_HOME}/lfcd.csh"
 	[ -e "${LF_HOME}/lf-complete.csh" ] && source "${LF_HOME}/lf-complete.csh"
+	bindkey -c '[5~' lfcd
 	bindkey -c '' lfcd
 endif
 
@@ -233,7 +234,15 @@ alias go--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
 alias go++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
 alias go	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && go++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && go-- || pushd "$_"'
 alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
- 
+
+if ( $PICKER != "none" ) then
+	if ( ! -X lf ) then
+		bindkey -c '[5~' go++
+		bindkey -c '' go++
+	endif
+	bindkey -c '[6~' go--
+endif
+
 # both
 set tperiod = 5
 # dirs -S prints to screen, no way to redirect it

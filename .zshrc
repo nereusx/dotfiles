@@ -323,7 +323,7 @@ xopen() {
 		(*.(man|mdoc|ms|me|mom))
 				xview-roff "$f";;
 		(*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
-			return 1
+			return 1;;
 		esac
 	done
 	}
@@ -348,7 +348,7 @@ xedit() {
 		(*.(man|mdoc|ms|me|mom))
 				${EDITOR-vi} "$f";;
 		(*)	echo "this file-type ($(file \"$f\")) it is not specified yet."
-			return 1
+			return 1;;
 		esac
 	done
 	}
@@ -446,19 +446,27 @@ fi
 #	Keyboard MACROS
 #
 
-# PGUP: get subdirectory name
-if [[ $PICKER != 'none' ]]; then
-	ze_get_subdir() {
-		local x
-		x="$(ls -d1 */ --color=never | $PICKER)"
-		if [[ -n "$x" ]]; then
-			RBUFFER="'$x' $RBUFFER"
-			(( CURSOR += ${#x} + 3 ))
-			zle redisplay
-		fi
-		}
-	zle -N ze_get_subdir
-	bindkey '[5~' ze_get_subdir
+if which lf > /dev/null; then
+	export LF_HOME="${HOME}/.config/lf"
+	[[ -e $LF_HOME/lfcd.sh ]] && source $LF_HOME/lfcd.sh
+#	[[ -e $LF_HOME/lf-compdef.zsh ]] && source $LF_HOME/lf-compdef.zsh
+	bindkey -s '[5~' 'lfcd\n'
+	bindkey -s '' 'lfcd\n'
+else
+	# PGUP: get subdirectory name
+	if [[ $PICKER != 'none' ]]; then
+		ze_get_subdir() {
+			local x
+			x="$(ls -d1 */ --color=never | $PICKER)"
+			if [[ -n "$x" ]]; then
+				RBUFFER="'$x' $RBUFFER"
+				(( CURSOR += ${#x} + 3 ))
+				zle redisplay
+			fi
+			}
+		zle -N ze_get_subdir
+		bindkey '[5~' ze_get_subdir
+	fi
 fi
 
 # PGDN: get directory from dirstack
