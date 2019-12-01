@@ -1,5 +1,5 @@
 # ~/.strc, nicholas version of suckless terminal
-? test "$HOSTNAME" = "void-t440s"
+? [ "$HOSTNAME" = "mx-t440s" ]
 font=XSG S240:pixelsize=24:antialias=true:autohint=true
 :
 font=XSG Term 189:style=bold:pixelsize=18:antialias=true:autohint=true
