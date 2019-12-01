@@ -141,6 +141,13 @@ foreach e ( $list )
 	endif
 end
 
+if ( -X lf ) then
+	setenv LF_HOME "${HOME}/.config/lf"
+	[ -e "${LF_HOME}/lfcd.csh" ] && source "${LF_HOME}/lfcd.csh"
+	[ -e "${LF_HOME}/lf-complete.csh" ] && source "${LF_HOME}/lf-complete.csh"
+	bindkey -c '' lfcd
+endif
+
 #
 #	tcsh's prompt
 #	man console_codes
@@ -403,10 +410,17 @@ setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
 setenv LESS_TERMCAP_mr	'[7m'
 setenv LESS_TERMCAP_mh	'[2m'
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
-setenv MOST_SWITCHES	'-w'
-setenv MOST_EDITOR		'jed %s -g %d'
 setenv PAGER less
-#setenv PAGER most
+if ( -X most ) then
+	setenv MOST_SWITCHES	'-w'
+	setenv MOST_EDITOR		'jed %s -g %d'
+	setenv PAGER 'most'
+endif
+setenv MANPAGER "$PAGER"
+if ( -X bat ) then
+	setenv BAT_PAGER "$PAGER"
+	setenv PAGER 'bat --paging=always --tabs=4'
+endif
 
 # select graphics browser
 set list = ( firefox falkon yandex-browser surf midori dillo chromium chrome )
@@ -551,7 +565,7 @@ alias netlog        'sudo netstat -lptu4'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 # use system time command (time of process execution statistics) instead of tcsh time
-alias time '/usr/bin/time'
+#alias time '/usr/bin/time'
 
 #
 #	Generic programs
@@ -566,9 +580,11 @@ if ( ! -X calc ) then
 endif
 
 # GIT
-alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
-alias git-co 	'git checkout'
-alias git-pull	'git pull'
+if ( -X git ) then
+	alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
+	alias git-co 	'git checkout'
+	alias git-pull	'git pull'
+endif
 
 ## paps support UTF8, a2ps don't
 #if ( -X paps ) alias a2ps 'paps'

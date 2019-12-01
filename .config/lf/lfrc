@@ -1,0 +1,86 @@
+# lf config
+
+# interpreter for shell commands (needs to be POSIX compatible)
+set shell sh
+set shellopts '-eu'
+
+set color256 on
+set tabstop 4
+set preview on
+
+map + select
+map - unselect
+map = clear
+map * glob-select
+map 8 glob-unselect
+map <c-c> copy
+map <c-v> paste
+map <c-x> cut
+map <f-10> shell
+map <enter> open
+map t toggle
+map c cd
+
+# execute current file (must be executable)
+map x $$f
+map X !$f
+
+#
+cmd edit ${{
+	set -f
+	case $f in
+	*)	jed $f
+	esac
+}}
+map <f-4> edit
+
+#
+cmd view ${{
+	set -f
+	case $f in
+	*)	bat --paging=always --tabs=4 $f
+	esac
+}}
+map <f-3> view
+
+# define a custom 'delete' command
+cmd delete ${{
+	set -f
+	printf "$fx\n"
+	printf "delete?[y/n]"
+	read ans
+	[ $ans = "y" ] && rm -rf $fx
+}}
+map <delete> delete
+
+# extract the current file with the right command
+# (xkcd link: https://xkcd.com/1168/)
+cmd extract ${{
+	set -f
+	case $f in
+		*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+		*.tar.gz|*.tgz) tar xzvf $f;;
+		*.tar.xz|*.txz) tar xJvf $f;;
+		*.zip) unzip $f;;
+		*.rar) unrar x $f;;
+		*.7z) 7z x $f;;
+	esac
+}}
+
+# compress current file or selected files with tar and gunzip
+cmd tar ${{
+	set -f
+	mkdir $1
+	cp -r $fx $1
+	tar czf $1.tar.gz $1
+	rm -rf $1
+}}
+
+# compress current file or selected files with zip
+cmd zip ${{
+	set -f
+	mkdir $1
+	cp -r $fx $1
+	zip -r $1.zip $1
+	rm -rf $1
+}}
