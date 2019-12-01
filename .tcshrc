@@ -219,13 +219,16 @@ if ( -d ~/.cache ) then
 else
 	set dirsfile = ~/.tcsh_dirs
 endif
-#set dunique # unfortunately this removes the directory if exists in dirstack
+unset dunique # unfortunately this removes the directory if exists in dirstack
+unset dextract
 #set cdpath = ( ${HOME} /usr/src )
+unset cdpath
 set pushdsilent
 set pushdtohome
 set savedirs
 #dirs -L >& /dev/null
-alias cd 'pushd'
+unalias cd dirs cwdcmd
+alias cd   'pushd'
 alias dirs 'dirs -v'
 if ( -X devtodo ) then
 	alias cwdcmd 'devtodo --timeout --summary'
