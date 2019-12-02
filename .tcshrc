@@ -440,7 +440,11 @@ if ( -X bat ) then
 	alias list 'bat --paging=always --tabs=4'
 else
 	# list code: just use something with syntax highlight
-	alias list 'less'
+	if ( -X source-highlight-esc.sh ) then
+		alias list 'source-highlight-esc.sh -n \!* | $PAGER'
+	else
+		alias list $PAGER
+	endif
 endif
 
 # select graphics browser
