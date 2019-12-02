@@ -434,16 +434,16 @@ else
 endif
 setenv MANPAGER "$PAGER"
 if ( -X bat ) then
-	setenv BAT_PAGER "$PAGER"
+	setenv BAT_PAGER 'less'
 	setenv PAGER 'bat --paging=always --tabs=4'
 	# list code
 	alias list 'bat --paging=always --tabs=4'
 else
 	# list code: just use something with syntax highlight
 	if ( -X source-highlight-esc.sh ) then
-		alias list 'source-highlight-esc.sh -n \!* | $PAGER'
+		alias list 'source-highlight-esc.sh -n \!* | less'
 	else
-		alias list $PAGER
+		alias list 'less'
 	endif
 endif
 
