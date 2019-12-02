@@ -3,6 +3,8 @@
 #	~/.zshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 #
+#	Completion:
+#		https://github.com/RobSis/zsh-completion-generator
 
 # reset to zsh mode
 emulate -RL zsh
