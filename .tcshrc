@@ -425,11 +425,12 @@ setenv LESS_TERMCAP_ue  '[0m'			# reset underline,		ANSI: [24m
 setenv LESS_TERMCAP_mr	'[7m'
 setenv LESS_TERMCAP_mh	'[2m'
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
-setenv PAGER less
 if ( -X most ) then
 	setenv MOST_SWITCHES	'-w'
 	setenv MOST_EDITOR		'jed %s -g %d'
 	setenv PAGER 'most'
+else
+	setenv PAGER less
 endif
 setenv MANPAGER "$PAGER"
 if ( -X bat ) then
