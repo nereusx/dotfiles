@@ -6,7 +6,9 @@ set shellopts '-eu'
 
 set color256 on
 set tabstop 4
-set preview on
+#set previewer ~/.config/lf/pv.sh
+#set preview on
+map i~/.config/lf/pv.sh $f | less -R
 
 map + select
 map - unselect
