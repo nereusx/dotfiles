@@ -230,8 +230,11 @@ set savedirs
 unalias cd dirs cwdcmd
 alias cd   'pushd'
 alias dirs 'dirs -v'
+alias cwd  'echo "\033[32mCWD: \033[1;32m`pwd`\033[0m"'
 if ( -X devtodo ) then
-	alias cwdcmd 'devtodo --timeout --summary'
+	alias cwdcmd 'cwd; devtodo --timeout --summary'
+else
+	alias cwdcmd 'cwd'
 endif
 alias go--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
 alias go++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
