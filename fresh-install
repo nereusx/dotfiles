@@ -21,8 +21,8 @@ endif
 ./update-nano-syntax-files
 ./install-to-users .tcshrc .yashrc .bashrc .mkshrc .ksh88rc .ksh93rc .profile .ashrc .environ .aliases \
 	.bin .help \
-	.jed .nanorc .grief-local .grinit .joerc .vimrc \
-	.newsboat .clogrc \
+	.jed .nanorc .grief .grinit .joerc .vimrc \
+	.newsboat .clogrc .mostrc \
 	.gitconfig .config \
 	.urxvt .xres .conkyrc \
 	.dof .bc .tmux .tmux.conf .a2ps
