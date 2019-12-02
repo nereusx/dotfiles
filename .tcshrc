@@ -426,9 +426,9 @@ setenv LESS_TERMCAP_mr	'[7m'
 setenv LESS_TERMCAP_mh	'[2m'
 #setenv LESSOPEN "|/usr/bin/source-highlight-esc.sh %s"
 if ( -X most ) then
-	setenv MOST_SWITCHES	'-w'
-	setenv MOST_EDITOR		'jed %s -g %d'
-	setenv PAGER 'most'
+	setenv MOST_SWITCHES '-w'
+	setenv MOST_EDITOR   'jed %s -g %d'
+	setenv PAGER         'most'
 else
 	setenv PAGER less
 endif
@@ -436,6 +436,11 @@ setenv MANPAGER "$PAGER"
 if ( -X bat ) then
 	setenv BAT_PAGER "$PAGER"
 	setenv PAGER 'bat --paging=always --tabs=4'
+	# list code
+	alias list 'bat --paging=always --tabs=4'
+else
+	# list code: just use something with syntax highlight
+	alias list 'less'
 endif
 
 # select graphics browser
