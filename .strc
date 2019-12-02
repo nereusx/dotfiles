@@ -3,6 +3,7 @@
 font=XSG S240:pixelsize=24:antialias=true:autohint=true
 :
 font=XSG Term 189:style=bold:pixelsize=18:antialias=true:autohint=true
+#font=Iosevka Term:pixelsize=15:antialias=true:autohint=true
 -
 cols=140
 rows=40

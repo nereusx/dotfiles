@@ -1,0 +1,15 @@
+color listnormal        white blue
+color listnormal_unread white blue bold
+color listfocus         black cyan
+color listfocus_unread  black cyan
+color info              black white
+color background        white blue bold
+color article           white blue
+
+#color listnormal        green black
+#color listnormal_unread green black bold
+#color listfocus         black green
+#color listfocus_unread  black green
+#color info              black white
+#color background        white black bold
+#color article           white black
