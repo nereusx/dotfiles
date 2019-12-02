@@ -39,6 +39,7 @@ cmd view ${{
 	set -f
 	case $f in
 	*)	bat --paging=always --tabs=4 $f
+#| less
 	esac
 }}
 map <f-3> view
