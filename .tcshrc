@@ -55,7 +55,11 @@ if ( ! $?XDG_RUNTIME_DIR ) setenv XDG_RUNTIME_DIR "/tmp/runtime-$USER"
 # find distro
 if ( ! $?DISTRO ) then
 	if ( -r /etc/os-release ) then
-		setenv DISTRO `awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release`
+		if ( -e /etc/mx-version ) then
+			setenv DISTRO "mx"
+		else
+			setenv DISTRO `awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release`
+		endif
 		if ( ! $?OSTYPE ) setenv OSTYPE `uname -s`
 	else # ignore it
 		setenv DISTRO `uname -s`
@@ -665,12 +669,10 @@ if ( $?loginsh ) then # we are login shell..
 endif
 
 # common packager for root
-if ( $USERID == 0 ) then
-	if ( -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ) then
-		alias app "/usr/src/dotfiles/dist/$DISTRO/$DISTRO"
-	else if ( -x /usr/src/dotfiles/dist/$DISTRO/app ) then
-		alias app "/usr/src/dotfiles/dist/$DISTRO/app"
-	endif
+if ( -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ) then
+	alias app "sudo /usr/src/dotfiles/dist/$DISTRO/$DISTRO"
+else if ( -x /usr/src/dotfiles/dist/$DISTRO/app ) then
+	alias app "sudo /usr/src/dotfiles/dist/$DISTRO/app"
 endif
 
 #
