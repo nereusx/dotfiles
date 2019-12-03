@@ -73,14 +73,14 @@ case -e:
 case -es:
 case enable:
 case enable-service:
-	systemctl enable $argv[2-]
+#	service $argv[2] enable
 	breaksw
 
 case -d:
 case -ds:
 case disable:
 case disable-service:
-	systemctl disable $argv[2-]
+#	service $argv[2] disable
 	breaksw
 
 case start:
@@ -103,7 +103,7 @@ case restart:
 		default:
 			set service = $f
 		endsw
-		systemctl $todo $service
+		service $service $todo
 	end
 	breaksw
 
@@ -112,14 +112,14 @@ case -lds:
 case -av:
 case list-disabled:
 case avail:
-	systemctl list-units --type service -all | grep inactive | sed 's/[ \t\n\r]*$//'
+#	systemctl list-units --type service -all | grep inactive | sed 's/[ \t\n\r]*$//'
 	breaksw
 
 case -le:
 case -les:
 case -nav:
 case list-enabled:
-	systemctl list-units --type service -all | egrep 'loaded[ \t]+active' | sed 's/[ \t\n\r]*$//'
+#	systemctl list-units --type service -all | egrep 'loaded[ \t]+active' | sed 's/[ \t\n\r]*$//'
 	breaksw
 
 case -o:
