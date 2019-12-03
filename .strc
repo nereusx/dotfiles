@@ -1,10 +1,5 @@
 # ~/.strc, nicholas version of suckless terminal
-? test "$(hostname)" = "mx-t440s"
-font=XSG S209:pixelsize=20:antialias=true:autohint=true
-:
-font=XSG S209:pixelsize=20:antialias=true:autohint=true
-#font=XSG Term 189:style=bold:pixelsize=18:antialias=true:autohint=true
--
+font=XSG Term209:pixelsize=20:antialias=true:autohint=true
 cols=160
 rows=40
 border=0

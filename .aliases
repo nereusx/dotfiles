@@ -106,12 +106,10 @@ alias git-l='git log'
 alias git-p='git pull'
 
 # common packager for root
-if [ $USERID -eq 0 ]; then
-	if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then
-		alias app="/usr/src/dotfiles/dist/$DISTRO/$DISTRO"
-	elif [ -x /usr/src/dotfiles/dist/$DISTRO/app ]; then
-		alias app="/usr/src/dotfiles/dist/$DISTRO/app"
-	fi
+if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then
+	alias app="sudo /usr/src/dotfiles/dist/$DISTRO/$DISTRO"
+elif [ -x /usr/src/dotfiles/dist/$DISTRO/app ]; then
+	alias app="sudo /usr/src/dotfiles/dist/$DISTRO/app"
 fi
 
 # cleanup

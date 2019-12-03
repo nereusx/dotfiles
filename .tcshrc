@@ -237,7 +237,7 @@ unset dextract
 unset cdpath
 set pushdsilent
 set pushdtohome
-set savedirs
+#set savedirs # buggy
 unalias cd dirs cwdcmd
 alias cd   'pushd'
 alias dirs 'dirs -v'
