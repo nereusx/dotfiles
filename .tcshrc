@@ -148,9 +148,13 @@ if ( -X lf ) then
 	bindkey -c '[5~' lfcd
 	bindkey -c '' lfcd
 endif
-if ( -X wcd.exe ) then
+if ( -X wcd.exe || -X wcd.exec ) then
 	setenv WCDHOME "${HOME}/.wcd"
-	alias wcd 'wcd.exe -Tc -K -g -j ; source $WCDHOME/bin/wcd.go'
+	if ( -X wcd.exec ) then
+		alias wcd 'wcd.exec -Tc -K -g -j ; source $WCDHOME/bin/wcd.go'
+	else
+		alias wcd 'wcd.exe -Tc -K -g -j ; source $WCDHOME/bin/wcd.go'
+	endif
 endif
 
 #
