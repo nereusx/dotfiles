@@ -6,8 +6,10 @@ set reset = "\033[0m"
 if ( $# > 0 ) then
 	set src = "$1"
 else
+	# change src to local repository
 	set src = '/usr/src/dotfiles'
 endif
+# change 'user' to your catalog 
 set dst = `echo $src | sed 's%/usr/src/dotfiles%/home/user%'`
 #echo "${info}=== scanning $src${reset}"
 
@@ -34,7 +36,7 @@ end
 
 if ( $src == '/usr/src/dotfiles' ) then
 	if ( $cnt > 0 ) then
-		echo "${info}Changes founded, update git${reset}"
+		echo "${info}Files changed, update git${reset}"
 		git add .
 		git commit -m "automatic update"
 		git push
