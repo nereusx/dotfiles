@@ -51,9 +51,8 @@ case $todo in
 	xbps-remove $*
 	;;
 
-reinstall)
-	xbps-remove $*
-	xbps-install -y $*
+-ri|reinstall)
+	xbps-install -f $*
 	;;
 
 -u|update|upgrade)
