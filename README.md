@@ -16,9 +16,9 @@ with special configurations for desktops, laptops, and several terminal types).
 * several patches for each distro
 
 **Note**
-* You may need [fzy](https://github.com/jhawthorn/fzy),
-[pick](https://github.com/mptre/pick) or [iselect](http://www.ossp.org/pkg/tool/iselect/)
-for **ncurses menus** of ***tcsh*** (commands go and hc).
+* You may need [fzy](https://github.com/jhawthorn/fzy) or [pick](https://github.com/mptre/pick)
+for **ncurses menus** of ***tcsh*** (commands go and hc, keys pgup, pgdn).
+If [lfcd](https://github.com/gokcehan/lf) found, it will bind to `Ctrl+/`.
  
 ## The ~/.jed directory
 Just copy it to your home directory, and set the JED_HOME environment variable
