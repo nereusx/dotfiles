@@ -1,11 +1,9 @@
 # sys
-mod4 + shift + l
+super + l
 	xautolock -locknow
-mod4 + l
-	xautolock -locknow
-mod1 + shift + r
-    pkill -USR1 -x sxhkd
-mod1 + ctrl + BackSpace
+#super + shift + r
+#    pkill -USR1 -x sxhkd
+super + ctrl + BackSpace
     pkill xinit
 
 # Hibernate

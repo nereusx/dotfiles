@@ -12,7 +12,7 @@ xautolock &
 #nm-applet &
 
 # notify-osd, dunst
-#dunst &
+dunst &
 
 # clipboard manager
 xfce4-clipman &
