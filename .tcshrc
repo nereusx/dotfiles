@@ -145,13 +145,14 @@ foreach e ( $list )
 	endif
 end
 
+# change dir menu (binds to ctrl+/)
 if ( -X lf ) then
 	setenv LF_HOME "${HOME}/.config/lf"
 	[ -e "${LF_HOME}/lfcd.csh" ] && source "${LF_HOME}/lfcd.csh"
 	[ -e "${LF_HOME}/lf-complete.csh" ] && source "${LF_HOME}/lf-complete.csh"
-	bindkey -c '[5~' lfcd
 	bindkey -c '' lfcd
 endif
+
 if ( -X wcd.exe || -X wcd.exec ) then
 	setenv WCDHOME "${HOME}/.wcd"
 	if ( -X wcd.exec ) then
@@ -206,18 +207,16 @@ set nohistclop
 alias hist 'set _=`usable-lines`; history $_'
 history -L
 
+# history menu (binds to page-up)
 switch ( $PICKER )
 case fzy:
 	alias hc 'set _=`history -hr | fzy` && if ( "$_" != "hc" ) eval "$_"'
+	bindkey -c '[5~' hc
 	breaksw
 case pick:
 	alias hc 'set _=`history -h | pick -S` && if ( "$_" != "hc" ) eval "$_"'
+	bindkey -c '[5~' hc
 	breaksw
-case iselect:
-	alias hc '\
-	set y=`history | wc -l`;\
-	set x=`history -T | iselect -a -p $y -n "history" -t "Run again..." | awk \'{$1="";$2="";print $0;}\'`;\
-	if ( "$x" != "" && "$x" != "hc" ) eval "$x"'
 endsw
 
 #
@@ -252,9 +251,9 @@ alias go++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
 alias go	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && go++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && go-- || pushd "$_"'
 alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
 
+# change dir from history; menu (binds to page-down)
 if ( $PICKER != "none" ) then
 	if ( ! -X lf ) then
-		bindkey -c '[5~' go++
 		bindkey -c '' go++
 	endif
 	bindkey -c '[6~' go--

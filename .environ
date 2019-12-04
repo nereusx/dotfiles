@@ -24,7 +24,9 @@ TTY=${TTY:-$(tty | cut -f3-4 -d/)}
 MAIL=${MAIL:-"/var/mail/$USER"}
 MAILCHECK=${MAILCHECK:-60}
 _get_distro() {
-	if [ -r /etc/os-release ]; then
+	if [ -r /etc/mx-version ]; then # mx-linux returns always debian
+		echo mx
+	elif [ -r /etc/os-release ]; then
 		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
 	else
 		echo $(uname -s)

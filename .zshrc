@@ -243,7 +243,7 @@ alias save-last-cmd 'fc -ln -1 >> ~/.scrap'
 # TUI: select from history to run again
 _hc_cmd() {
 	local x
-	case $pick_method in
+	case $PICKER in
 	fzy)	x="$(fc -lnr | fzy)";;
 	pick)	x="$(fc -lnr | pick -S)";;
 	esac
@@ -449,13 +449,13 @@ fi
 #
 
 if which lf > /dev/null; then
+	# ctr+/: run lfcd (change directory)
 	export LF_HOME="${HOME}/.config/lf"
 	[[ -e $LF_HOME/lfcd.sh ]] && source $LF_HOME/lfcd.sh
 #	[[ -e $LF_HOME/lf-compdef.zsh ]] && source $LF_HOME/lf-compdef.zsh
-	bindkey -s '[5~' 'lfcd\n'
 	bindkey -s '' 'lfcd\n'
 else
-	# PGUP: get subdirectory name
+	# ctr+/: get subdirectory name
 	if [[ $PICKER != 'none' ]]; then
 		ze_get_subdir() {
 			local x
@@ -467,8 +467,25 @@ else
 			fi
 			}
 		zle -N ze_get_subdir
-		bindkey '[5~' ze_get_subdir
+		bindkey '' ze_get_subdir
 	fi
+fi
+
+# PGUP: history
+if [[ $PICKER != 'none' ]]; then
+	ze_get_hist() {
+		local x
+		case $PICKER in
+		fzy)	x="$(fc -lnr | fzy)";;
+		pick)	x="$(fc -lnr | pick -S)";;
+		esac
+		if [[ -n "$x" ]]; then
+			BUFFER="$x"
+		fi
+		zle redisplay
+		}
+	zle -N ze_get_hist
+	bindkey '[5~' ze_get_hist
 fi
 
 # PGDN: get directory from dirstack
