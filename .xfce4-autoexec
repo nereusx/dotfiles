@@ -29,6 +29,9 @@ if ( -X zentile ) then
 	zentile &
 endif
 
+# XFCE's notepad
+xfce4-notes &
+
 ### network required
 # wait for connection
 #unset online
