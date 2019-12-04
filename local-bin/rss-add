@@ -2,7 +2,7 @@
 # https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/rssadd
 
 ! echo "$1" | grep "https*://\S\+\.[A-Za-z]\+\S*" >/dev/null &&
-	notify-send "That doesn't look like a full URL." && exit
+	notify-send "That doesn't look like a full URL." && exit 1
 RSSFILE="$HOME/.rss-list"
 list="$HOME/.newsboat/urls $HOME/.config/newsboat/urls"
 for e in $list; do
