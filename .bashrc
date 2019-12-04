@@ -76,7 +76,7 @@ if [ -n "${REMOTEHOST-}" ]; then
 fi
 cdirxcolor="$cblue"
 if [ $USERID -eq 0 ]; then
-	cdirxcolor="$cred"
+	cdirxcolor="$cmagenta"
 fi
 
 PS1="\[$cusercolor\]\u\[$chostcolor\]@\h \[$cdirxcolor\]\w\[$creset\]"
@@ -186,6 +186,7 @@ _hc_cmd() {
 	fi
 	}
 alias hc="_hc_cmd"
+#[ -n "$PICKER" ] && bind '[5~':_hc_cmd
 
 _go_back() {
 	local x
@@ -195,6 +196,7 @@ _go_back() {
 	fi
 	}
 alias go--='_go_back'
+#[ -n "$PICKER" ] && bind '[6~':_go_back
 
 _go_fwd() {
 	local x
@@ -222,6 +224,13 @@ _go() {
 alias go='_go'
 alias cd='pushd'
 complete -o dirnames go
+
+if [[ -d ~/.config/lf ]]; then
+	# ctr+/: run lfcd (change directory)
+	export LF_HOME="${HOME}/.config/lf"
+	[[ -e $LF_HOME/lfcd.sh ]] && source $LF_HOME/lfcd.sh
+#	bind '"^_":"lfcd\C-m"'
+fi
 
 #	welcome screen
 if shopt | grep '^login_shell.*on$' > /dev/null; then
