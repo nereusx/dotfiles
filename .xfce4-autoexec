@@ -24,6 +24,11 @@ blueman-applet &
 #xfce4-screensaver &
 #xscreensaver -no-splash &
 
+# tiling
+if ( -X zentile ) then
+	zentile &
+endif
+
 ### network required
 # wait for connection
 #unset online
