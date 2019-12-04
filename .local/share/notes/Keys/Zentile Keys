@@ -1,0 +1,10 @@
+# Zentile
+C+S+t 	Tile current workspace
+C+S+u 	Untile current workspace
+C+S+s 	Cycle through layouts
+C+S+n 	Goto next window
+C+S+p 	Goto previous window
+C+]    Increase size of master windows
+C+[    Decrease size of master windows
+C+S+i 	Increment number of master windows
+C+S+d 	Decrement number of master windows
