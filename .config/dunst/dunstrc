@@ -113,7 +113,7 @@
     #
     # It's important to note that markup inside the format option will be parsed
     # regardless of what this is set to.
-    markup = strip
+    markup = full
 
     # The format of the message.  Possible variables are:
     #   %a  appname
@@ -209,6 +209,13 @@
     # is connected or disconnected which might break follow mode if the screen
     # layout changes.
     force_xinerama = false
+
+	# Define the corner radius in pixels. A corner radius of 0 will result in rectangular shaped notifications.
+	# By enabling this setting the outer border and the frame will be shaped. If you have multiple notifications, the whole
+	# window is shaped, not every single notification.
+	# To avoid the corners clipping the icon or text the corner radius will be automatically lowered to half of the notification
+	# height if it exceeds it.
+	# corner_radius (default: 0)
 
 # Experimental features that may or may not work correctly. Do not expect them
 # to have a consistent behaviour across releases.

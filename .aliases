@@ -4,11 +4,9 @@
 #
 #	zsh: setopt sh_word_split
 
+[ -z "$(command -v source)" ] && alias source='. '
 if [ "$DISTRO" = "void" ]; then
 	man() { command man -O width=$(($(tput cols)-2)) "$@"; }
-fi
-if [ -z "$(command -v source)" ]; then
-	alias source='. '
 fi
 
 usable_lines() {
@@ -44,11 +42,8 @@ list="/var/log/messages\
 
 for e in $list; do
 	if [ -r $e ]; then
-		if [ -x "$(command -vp clog)" ]; then
-			alias log30="tail -n $(usable_lines) $e | clog"
-		else
-			alias log30="tail -n $(usable_lines) $e"
-		fi
+		export SYSLOGFILE="$e"
+		[ -x "$(command -vp clog)" ] && alias log30="tail -n $(usable_lines) $e | clog" || alias log30="tail -n $(usable_lines) $e"
 		break
 	fi
 done
@@ -91,11 +86,7 @@ _amionline() {
 	ping 1.1.1.1 -c 1 -w 1 > /dev/null && offline=0
 	return $offline; 
 	}
-if [ "$(command -vp isonline)" ]; then
-	alias amionline='isonline'
-else
-	alias amionline='[ _amionline ] && echo yes || echo no'
-fi
+[ -z "$(command -vp isonline)" ] || alias isonline='[ _amionline ] && echo yes || echo no'
 
 # git
 _git_q() { msg="$*"; if [ -z "$msg" ]; then msg="quick and dirty fix"; fi; git add . && git commit -m "$msg" && git push; }
@@ -105,6 +96,10 @@ alias git-c='git checkout'
 alias git-d='git diff'
 alias git-l='git log'
 alias git-p='git pull'
+
+# some nice beeps
+[ -f ~/.sounds/beep.wav  ] && alias beep  "play -q -v 0.25 ${HOME}/.sounds/beep.wav"  || alias beep  'echo "\a"'
+[ -f ~/.sounds/alarm.wav ] && alias abeep "play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep 'echo "\a"'
 
 # common packager for root
 if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then

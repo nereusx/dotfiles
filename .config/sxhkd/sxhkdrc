@@ -2,9 +2,9 @@
 super + l
 	xautolock -locknow
 #super + shift + r
-#    pkill -USR1 -x sxhkd
+#    sudo pkill -USR1 -x sxhkd
 super + ctrl + BackSpace
-    pkill xinit
+    sudo pkill xinit
 
 # Hibernate
 super + F4

@@ -67,16 +67,6 @@ if ( ! $?DISTRO ) then
 	endif
 endif
 
-#	Start TMUX automagically
-#	echo 'AUTOLOAD_TMUX=1' >> /etc/environment
-if ( $?AUTOLOAD_TMUX ) then
-	if ( $AUTOLOAD_TMUX == 1 ) then
-		if ( ( ! $?TMUX ) && ( ! $?SUDO_USER ) ) then
-			exec tmux
-		endif
-	endif
-endif
-
 #
 #	setup several local directories
 #
@@ -119,7 +109,8 @@ unset autologout
 set mail = ( /var/mail/$user )
 unset noglob
 unalias beepcmd
-if ( -e ~/.sounds/shell-beep.mp3 ) alias beepcmd 'play -q ~/.sounds/shell-beep.mp3'
+#if ( -e ~/.sounds/beep.wav )\
+#	alias beepcmd "play -q -v 0.25 ${HOME}/.sounds/beep.wav"
 set padhour
 alias helpcommand 'man \!:1'
 # Runs every tperiod minutes.
@@ -217,6 +208,8 @@ case pick:
 	alias hc 'set _=`history -h | pick -S` && if ( "$_" != "hc" ) eval "$_"'
 	bindkey -c '[5~' hc
 	breaksw
+default:
+	bindkey -c '[5~' hist
 endsw
 
 #
@@ -246,25 +239,19 @@ if ( -X devtodo ) then
 else
 	alias cwdcmd '_cwd'
 endif
-alias go--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
-alias go++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
-alias go	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && go++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && go-- || pushd "$_"'
 alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
-
-# change dir from history; menu (binds to page-down)
+# go command
+alias gg--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
+alias gg++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
+alias gg	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && gg++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && gg-- || pushd "$_"'
 if ( $PICKER != "none" ) then
+	# change dir with lf (binds to ctrl+/)
 	if ( ! -X lf ) then
-		bindkey -c '' go++
+		bindkey -c '' gg++
 	endif
-	bindkey -c '[6~' go--
+	# change dir from history; menu (binds to page-down)
+	bindkey -c '[6~' gg--
 endif
-
-# both
-set tperiod = 5
-# dirs -S prints to screen, no way to redirect it
-#alias periodic 'history -S; dirs -S;'
-#I dont think that works correctly... some syntax errors happens
-#alias periodic 'history -S'
 
 #
 #	tcsh's completion
@@ -299,7 +286,7 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 complete which 		'p/1/c/'
 complete where 		'p/1/c/'
 complete man 		'p/1/c/'
-complete go			'p/1/d/'
+complete gg			'p/1/d/'
 		  
 if ( -X tmux ) then
 	# create completion for tmux
@@ -311,9 +298,9 @@ endif
 #
 #	tcsh's terminal fixes and keys
 #
-bindkey ''	list-choices
 bindkey 'q'	quoted-insert
 bindkey ''	redisplay
+
 bindkey '1'	expand-history
 bindkey '4'	expand-variables
 bindkey '8'	expand-glob
@@ -453,6 +440,15 @@ else
 	endif
 endif
 
+# select default terminal
+set list = ( st urxvtcd urxvt xfce-terminal xterm )
+foreach e ( $list )
+	if ( -X $e ) then
+		setenv TERMINAL "$e"
+		break
+	endif
+end
+
 # select graphics browser
 set list = ( firefox falkon yandex-browser surf midori dillo chromium chrome )
 foreach e ( $list )
@@ -507,7 +503,7 @@ alias fs			'du -sbh' # file or directory size
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
 	alias fortune-files	'dof -e /usr/share/fortunes/*.dat do echo %b | columns'
-	alias test-colors	'dof -e `seq 0 15` do \'tput setaf %f; echo colour%f; tput op;\''
+	alias test-colors	'dof -e -s:0..15 do \'tput setaf %f; echo colour%f; tput op;\''
 else
 	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | columns'
 endif
@@ -518,7 +514,7 @@ set colorcat
 #
 alias ll	       'ls    --color -lha'
 alias ls	       'ls    --color'
-if ( $DISTRO != "FreeBSD" ) then
+if ( $DISTRO !~ "*BSD" ) then
 	alias grep	       'grep  --color=auto'
 	alias egrep	       'egrep --color=auto'
 	alias dmesg	       'dmesg --color=always'
@@ -527,62 +523,42 @@ alias diff	       'diff  --color=auto'
 
 # sudo
 if ( $USER != 'root' ) then
-	# sudo
-	alias htop     'sudo htop'
-	alias fdisk    'sudo fdisk'
-	alias gdisk    'sudo gdisk'
-	alias cfdisk   'sudo cfdisk'
-	alias cgdisk   'sudo cgdisk'
-	alias parted   'sudo parted'
-	if ( -X dpkg )    alias dpkg    'sudo dpkg'
-	if ( -X apt )     alias apt     'sudo apt'
-	if ( -X apt-get ) alias apt-get 'sudo apt-get'
+	set list = ( htop iotop fdisk cfdsik gparted reboot halt poweroff pmsleep slackpkg apt dpkg apt-get )
+	foreach e ( $list )
+		if ( -X $e ) then
+			alias $e "sudo $e"
+		endif
+	end
 endif
 alias tmux-reload 'tmux source-file ~/.tmux.conf'
 
 # some nice beeps
-# simple beep
-if ( -f /usr/share/sounds/generic/tone-440Hz-250ms.ogg ) then
-	alias beep 'paplay /usr/share/sounds/generic/tone-440Hz-250ms.ogg'
-else
-	alias beep 'echo -n '
-endif
-# alarm
-if ( -f /usr/share/sounds/generic/alarm-fire.ogg ) then
-	alias abeep 'paplay /usr/share/sounds/generic/alarm-fire.ogg'
-else
-	alias abeep 'echo -e \a'
-endif
+[ -f ~/.sounds/beep.wav  ] && alias beep  "play -q -v 0.25 ${HOME}/.sounds/beep.wav"  || alias beep  'echo "\a"'
+[ -f ~/.sounds/alarm.wav ] && alias abeep "play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep 'echo "\a"'
 
 # xwindows title
-alias setxtitle		"echo -n '''\033]0;\!*\007'''"
+alias set-xtitle "echo -n '''\033]0;\!*\007'''"
+alias set-tmpane-title '\033]2;\!*\033\\'
+# alias precmd 'echo -n "\033]0;${HOST}:$cwd\007"'
 
 #
-if ( $DISTRO == "void" ) then
-	alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
-endif
-
-### information utilities
-if ( -X isonline ) then
-	alias amionline	'isonline'
-else
-	alias amionline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
-endif
+if ( $DISTRO == "void" ) alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
+if ( ! -X isonline     ) alias isonline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
 alias myip			'wget -qO- http://ipecho.net/plain ; echo ;'
 alias sniff			"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias ips			"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
 
+# find the correct log file
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
 foreach e ( $list )
 	if ( -r $e ) then
-		if ( -X clog ) then
-			alias log30 "tail -n `usable-lines` $e | clog"
-		else
-			alias log30 "tail -n `usable-lines` $e"
-		endif
+		setenv SYSLOGFILE "$e"
 		break
 	endif
 end
+if ( $?SYSLOGFILE ) alias log30 "tail -n `usable-lines` $SYSLOGFILE"
+if ( -X clog ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | clog"
+
 set list = ( /var/log/apache2/error.log /var/log/httpd/error.log /var/log/apache/error.log )
 foreach e ( $list )
 	if ( -r $e ) then
@@ -595,13 +571,8 @@ alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias netlog        'sudo netstat -lptu4'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
 alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
-# use system time command (time of process execution statistics) instead of tcsh time
-#alias time '/usr/bin/time'
 
-#
-#	Generic programs
-#
-alias cdwrite	   'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
+alias cdwrite 'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
 	if ( -X wcalc ) then
 		alias calc 'wcalc'
@@ -614,7 +585,6 @@ endif
 if ( -X git ) then
 	alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
 	alias git-co 	'git checkout'
-	alias git-pull	'git pull'
 endif
 
 ## paps support UTF8, a2ps don't
@@ -635,11 +605,6 @@ endif
 if ( -X youtube-dl ) then
 	alias yt-get-audio	'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
 	alias yt-get-plist	'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
-endif
-
-# special case on debian-based distros
-if ( -r /var/lib/dpkg/status ) then
-	alias dpkg-dc 'grep -E \'(Package:|Depends:).*debconf\' /var/lib/dpkg/status'
 endif
 
 #

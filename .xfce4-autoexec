@@ -1,57 +1,65 @@
-#!/bin/tcsh
+#!/bin/sh
+# don't ask
 
-### no netwrok required
+# local/bin
+lbin=/usr/local/bin
+
+### basic services & apps
 
 # hotkeys
-sxhkd &
+nohup sxhkd &
 
 # xautolock & xlock
-xautolock &
+nohup xautolock &
 
 # network manager
-#nm-applet &
+#nohup nm-applet &
 
 # notify-osd, dunst
-dunst &
+pkill notify-osd; nohup dunst &
 
 # clipboard manager
-xfce4-clipman &
+nohup xfce4-clipman &
 
 # bluetooth
-blueman-applet &
+nohup blueman-applet &
 
 # enable screesaver
-#xfce4-screensaver &
-#xscreensaver -no-splash &
+#nohup xfce4-screensaver &
+#nohup xscreensaver -no-splash &
 
 # tiling
-if ( -X zentile ) then
-	zentile &
-endif
+if [ -x $lbin/zentile ]; then
+	nohup $lbin/zentile &
+fi
 
 # XFCE's notepad
-xfce4-notes &
+nohup xfce4-notes &
 
-### network required
-# wait for connection
-#unset online
-#while ( 1 )
-#	ping 1.1.1.1 -c 1 -w 1 > /dev/null && set online
-#	if ( $?online ) then
-#		break
-#	endif
-#	sleep 1
-#end
+### Net Apps ###
 
-# run network depended commands
-pidgin &
-claws-mail &
-~/.bin/viber &
-conky &
+# mailer
+nohup claws-mail &
 
-### applications
-st &
+# messangers
+nohup pidgin &
+nohup ~/.bin/viber &
+
+# conky!
+nohup conky &
 
 ### finish
 # play welcome sound
-paplay /usr/share/sounds/ubuntu/stereo/desktop-login.ogg &
+if [ -r ~/.sounds/login.wav ]; then
+	paplay ~/.sounds/login.wav
+fi
+
+# minimize whatever...
+#wmctrl -a Viber -b add,hidden
+wmctrl -c Viber
+
+# XFCE Notes (you have to rename the group)
+wmctrl -c XFCENotes
+
+# run a terminal
+exec $lbin/st -e tmux

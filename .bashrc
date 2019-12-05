@@ -195,7 +195,7 @@ _go_back() {
 		command cd "$x"
 	fi
 	}
-alias go--='_go_back'
+alias gg--='_go_back'
 #[ -n "$PICKER" ] && bind '[6~':_go_back
 
 _go_fwd() {
@@ -205,7 +205,7 @@ _go_fwd() {
 		command cd "$x"
 	fi
 	}
-alias go++='_go_fwd'
+alias gg++='_go_fwd'
 
 # TUI: select from sub-directories to change directory
 _go() {
@@ -221,9 +221,9 @@ _go() {
 		pushd "$x"
 	fi
 	}
-alias go='_go'
+alias gg='_go'
 alias cd='pushd'
-complete -o dirnames go
+complete -o dirnames gg
 
 if [[ -d ~/.config/lf ]]; then
 	# ctr+/: run lfcd (change directory)

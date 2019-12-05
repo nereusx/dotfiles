@@ -3,15 +3,6 @@
 #	POSIX SHELL: Basic settings
 #
 
-# Start TMUX automagically
-# echo 'AUTOLOAD_TMUX=1' >> /etc/environment
-AUTOLOAD_TMUX=${AUTOLOAD_TMUX:-0}
-if [ $AUTOLOAD_TMUX -eq 1 ]; then
-	if [ -z "${TMUX:-}" -a -z "${SUDO_USER:-}" ]; then
-		exec tmux
-	fi
-fi
-
 # Basic settings
 DOLR='$'
 EXCL='!'
@@ -145,7 +136,7 @@ cpus=$(($cpus + 1))
 MAKEFLAGS="-j$cpus"
 __GL_YIELD='USLEEP'
 
-# select BRIEF editor
+# select default terminal
 list="st urxvtcd urxvt xfce-terminal xterm"
 for e in $list; do
 	if [ "$(command -vp $e)" ]; then

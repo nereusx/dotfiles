@@ -266,7 +266,7 @@ _go_back() {
 		cd +$x
 	fi
 	}
-alias go--='_go_back'
+alias gg--='_go_back'
 
 # TUI: select from local sub-directories
 _go_fwd() {
@@ -276,7 +276,7 @@ _go_fwd() {
 		cd "$x"
 	fi
 	}
-alias go++='_go_fwd'
+alias gg++='_go_fwd'
 
 # TUI: select from sub-directories to change directory
 _go() {
@@ -292,10 +292,9 @@ _go() {
 		pushd "$x"
 	fi
 	}
-#alias go='_go'
-go() { _go "$@" }
-compdef -d go
-zstyle ':completion:*:*:go:*:directories' verbose yes
+gg() { _go "$@" }
+compdef -d gg
+zstyle ':completion:*:*:gg:*:directories' verbose yes
 
 #
 #	File-type handle - and suffix aliases
