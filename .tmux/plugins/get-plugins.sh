@@ -1,5 +1,5 @@
 #!/bin/sh
-list="tmux-cpu tmux-net-speed tmux-battery"
+list="tmux-cpu tmux-battery"
 # tmux-online-status
 for m in $list; do
 	rm -r $m

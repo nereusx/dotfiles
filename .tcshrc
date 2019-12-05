@@ -532,6 +532,8 @@ if ( $USER != 'root' ) then
 endif
 alias tmux-reload 'tmux source-file ~/.tmux.conf'
 
+if ( $DISTRO == "void" ) alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
+
 # some nice beeps
 [ -f ~/.sounds/beep.wav  ] && alias beep  "play -q -v 0.25 ${HOME}/.sounds/beep.wav"  || alias beep  'echo "\a"'
 [ -f ~/.sounds/alarm.wav ] && alias abeep "play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep 'echo "\a"'
@@ -540,13 +542,6 @@ alias tmux-reload 'tmux source-file ~/.tmux.conf'
 alias set-xtitle "echo -n '''\033]0;\!*\007'''"
 alias set-tmpane-title '\033]2;\!*\033\\'
 # alias precmd 'echo -n "\033]0;${HOST}:$cwd\007"'
-
-#
-if ( $DISTRO == "void" ) alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/man -O width=$_ '
-if ( ! -X isonline     ) alias isonline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
-alias myip			'wget -qO- http://ipecho.net/plain ; echo ;'
-alias sniff			"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias ips			"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
 
 # find the correct log file
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
@@ -567,10 +562,18 @@ foreach e ( $list )
 	endif
 end
 
-alias check-journal 'sudo iotop -obtqqq | grep jbd2'
+# net
+alias idev			"route -n | awk '/^0.0.0.0/{print $8}'"
+if ( ! -X isonline )\
+	alias isonline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
+alias whereami		'echo "`hostname -f` (`hostname -i`):`pwd`"'
+alias ips			"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
+alias myip			'wget -qO- http://ipecho.net/plain ; echo ;'
+alias sniff			"sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
 alias netlog        'sudo netstat -lptu4'
+
+alias check-journal 'sudo iotop -obtqqq | grep jbd2'
 alias topmemproc   '( @ lines = `echotc lines` - 2; ps aux | head -1; ps aux | tail -n+2 | sort -nrk4 | head -$lines | cut -c-`echotc cols` )'
-alias whereami	   'echo "`hostname -f` (`hostname -i`):`pwd`"'
 
 alias cdwrite 'xorrecord -v speed=16 dev=/dev/sr0 -eject blank=as_needed'
 if ( ! -X calc ) then
