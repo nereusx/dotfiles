@@ -98,8 +98,8 @@ alias git-l='git log'
 alias git-p='git pull'
 
 # some nice beeps
-[ -f ~/.sounds/beep.wav  ] && alias beep  "play -q -v 0.25 ${HOME}/.sounds/beep.wav"  || alias beep  'echo "\a"'
-[ -f ~/.sounds/alarm.wav ] && alias abeep "play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep 'echo "\a"'
+[ -f ~/.sounds/beep.wav  ] && alias beep="play -q -v 0.25 ${HOME}/.sounds/beep.wav"   || alias beep='echo "\a"'
+[ -f ~/.sounds/alarm.wav ] && alias abeep="play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep='echo "\a"'
 
 # common packager for root
 if [ -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ]; then
