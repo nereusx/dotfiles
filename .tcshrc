@@ -175,11 +175,11 @@ if ( $?REMOTEHOST ) then
 endif
 set prompt  = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
 
-set _ps[6]='%{\033[31m%}'
-set _ps[7]='%{\033[36m%}'
-set _ps[8]='%{\033[1;30m%}'
+set _ps[6]='%{\033[0;35m%}' # 1
+set _ps[7]='%{\033[0;35m%}' # 6
+set _ps[8]='%{\033[0;35m%}'
 #set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} ${DOLR}${_ps[8]}$shlvl${_ps[5]} "
-set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} "
+set rprompt = " ${_ps[8]}[?${_ps[6]}%?${_ps[5]} ${_ps[8]}${EXCL}${_ps[7]}%h${_ps[8]}]${_ps[5]} "
 
 #
 #	tcsh' history
