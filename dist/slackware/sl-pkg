@@ -122,8 +122,13 @@ case -lds:
 case list-disabled:
 	set list = ( /etc/rc.d/* )
 	foreach e ( $list )
+		if ( -l $e ) continue
+		if ( -d $e ) continue
+		if ( $e =~ "*.orig" ) continue
+		if ( $e =~ "*/rc.[0123456KMS]" ) continue
 		if ( ! -x $e ) then
-			echo $e
+			set disp = `echo $e:t | awk '{print substr($1,4)}'`
+			echo $disp
 		endif
 	end
 	breaksw
@@ -135,8 +140,13 @@ case -les:
 case list-enabled:
 	set list = ( /etc/rc.d/* )
 	foreach e ( $list )
+		if ( -l $e ) continue
+		if ( -d $e ) continue
+		if ( $e =~ "*.orig" ) continue
+		if ( $e =~ "*/rc.[0123456KMS]" ) continue
 		if ( -x $e ) then
-			echo $e
+			set disp = `echo $e:t | awk '{print substr($1,4)}'`
+			echo $disp
 		endif
 	end
 	breaksw
