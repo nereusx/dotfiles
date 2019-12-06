@@ -40,7 +40,7 @@ case -g:
 case upgrade:
 	slackpkg update gpg
 	breaksw
-case -v:
+case -w:
 case info:
 case view:
 case show:
