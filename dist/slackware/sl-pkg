@@ -58,37 +58,23 @@ case search-file:
 case start:
 case stop:
 case restart:
+case reload:
 case status:
 	set prg = $2
-	switch ( $prg )
-	case apache:
-	case httpd:
-	case http:
-	case apache2:
-		/etc/rc.d/rc.httpd $todo
-		breaksw
-	case smbd:
-	case smb:
-	case samba:
-		/etc/rc.d/rc.samba $todo
-		breaksw
-	case avahi:
-	case mdns:
-		/etc/rc.d/rc.avahi $todo
-		breaksw
-	case nfs:
-	case nfsd:
-		/etc/rc.d/rc.nfsd $todo
-		breaksw
-	default:
+	set f = /etc/rc.d/rc.$prg
+	if ( -x $f ) then
 		/etc/rc.d/rc.$prg $todo
-	endsw
+	else if ( -f $f ) then
+		echo "$prg the service is disabled"
+	else
+		echo "$prg: no such service"
+	endif
 	breaksw
 
 case -e:
 case enable:
 	set prg = $2
-	set f = /etc/rc.d/rc.$prj
+	set f = /etc/rc.d/rc.$prg
 	if ( -f $f ) then
 		if ( -x $f ) then
 			echo "$prg service its already enabled"
@@ -103,7 +89,7 @@ case enable:
 case -d:
 case disable:
 	set prg = $2
-	set f = /etc/rc.d/rc.$prj
+	set f = /etc/rc.d/rc.$prg
 	if ( -f $f ) then
 		if ( -x $f ) then
 			$f stop
