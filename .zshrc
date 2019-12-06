@@ -80,7 +80,7 @@ colors
 list=('fzy' 'pick')
 PICKER='none'
 for e in $list; do
-	if [[ -x "$(command -vp $e)" ]]; then
+	if [[ -x "$(command -v $e)" ]]; then
 		PICKER=$e
 		break
 	fi
@@ -223,6 +223,19 @@ bindkey 'x'	kill-region
 bindkey 'q'	quoted-insert
 bindkey '`'	quote-line
 bindkey ''	redisplay
+
+# fix term
+if [[ $TERM =~ "screen.*" ]]; then
+	bindkey '[1~' beginning-of-line
+	bindkey '[4~' end-of-line
+	bindkey '[2~' overwrite-mode
+	bindkey '[3~' delete-char
+elif [[ $TERM =~ "rxvt.*" ]]; then
+	bindkey '[7~' beginning-of-line
+	bindkey '[8~' end-of-line
+	bindkey '[2~' overwrite-mode
+	bindkey '[3~' delete-char
+fi
 
 #
 #	Aliases

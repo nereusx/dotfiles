@@ -151,6 +151,8 @@ if ( -X wcd.exe || -X wcd.exec ) then
 	else
 		alias wcd 'wcd.exe -Tc -K -g -j ; source $WCDHOME/bin/wcd.go'
 	endif
+else if ( -X wcd ) then
+	setenv WCDHOME "${HOME}/.wcd"
 endif
 
 #
@@ -329,12 +331,14 @@ bindkey "\033Om" kill-region
 bindkey "\033Ok" copy-region-as-kill
 bindkey "\033Op" yank
 
-if ( $TERM == "rxvt" ) then
-	setenv TERM rxvt-unicode
+if ( $TERM == "rxvt" || $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "\033[8~" end-of-line
-else if ( $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
-	bindkey "\033[8~" end-of-line
-else if ( $TERM == "st-256color" ) then
+	bindkey "[2~" overwrite-mode
+	bindkey "[3~" delete-char
+else if ( $TERM == "screen" || $TERM == "screen-256color" ) then
+	bindkey "[2~" overwrite-mode
+	bindkey "[3~" delete-char
+else if ( $TERM == "st" || $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 else
 	bindkey "\033[3~" delete-char
@@ -603,8 +607,9 @@ if ( -X surfraw ) then
 	setenv SURFRAW_graphical			no
 	alias ddg 'surfraw duckduckgo'
 else if ( ! -X ddg ) then
-	alias ddg 'w3m https://duckduckgo.com/lite'
+	alias ddg 'w3m https\://duckduckgo.com/lite'
 endif
+
 if ( -X youtube-dl ) then
 	alias yt-get-audio	'youtube-dl -i -c --extract-audio --audio-format vorbis ''\!*'''
 	alias yt-get-plist	'youtube-dl -i -c --extract-audio --audio-format vorbis -o "%(title)s.%(ext)s" ''\!*'''
@@ -613,7 +618,7 @@ endif
 #
 #	login shell, display welcome screen
 #
-if ( $?loginsh ) then # we are login shell..
+if ( $?loginsh ) then
 	if ( $tty =~ "tty[123456]" ) then
 		# set terminal blank mode in minutes
 		setterm --blank=5
@@ -624,12 +629,12 @@ if ( $?loginsh ) then # we are login shell..
 		echo -n '\033='
 	endif
 
-	echo 'Welcome to tenex c-shell'
+	echo "Welcome to tenex c-shell"
 	echo
 	set list = ( fortune neofetch screenfetch diogenis fortunes )
-	foreach f ( $list )
-		if ( -X $f ) then
-			$f
+	foreach e ( $list )
+		if ( -X $e ) then
+			$e
 			break
 		endif
 	end
