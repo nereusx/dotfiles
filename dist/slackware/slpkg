@@ -28,6 +28,10 @@ case -r:
 case remove:
 	slackpkg remove $argv[2-]
 	breaksw
+case -ri:
+case reinstall:
+	slackpkg reinstall $argv[2-]
+	breaksw
 case -u:
 case upgrade:
 	slackpkg update && slackpkg upgrade-all && slackpkg install-new
@@ -50,6 +54,11 @@ case -f:
 case file-search:
 case search-file:
 	slackpkg file-search $argv[2-]
+	breaksw
+
+case --files:
+case files:
+	slackpkg info $argv[2-]
 	breaksw
 	
 #
@@ -146,7 +155,7 @@ Packages:
     -i  | install ...             install package[s]
     -r  | remove ...              remove package[s]
     -u  | update ...              update package list and upgrade all installed packages
-#    reinstall ...                 reinstall package[s]
+    -ri | reinstall ...           reinstall package[s]
     -s  | search <pattern>        search for packages by matching package-name
     -v  | show | info | view ...  display information about package[s]
     -f  | file-search ...         search file in packages
@@ -154,8 +163,8 @@ Packages:
 Services:
     -e[s]  | enable[-service] <service>
     -d[s]  | disable[-service] <service>
-    -le[s] | -nav | list-enabled  display all actived services
-    -ld[s] | -av | list-disabled  display all available (disabled) services
+    -le[s] | -E | list-enabled    display all actived services
+    -ld[s] | -D | list-disabled   display all available (disabled) services
     start | stop | restart | status <service>
 
 Special:
