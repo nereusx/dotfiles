@@ -32,6 +32,10 @@ case -u:
 case upgrade:
 	slackpkg update && slackpkg upgrade-all && slackpkg install-new
 	breaksw
+case -g:
+case upgrade:
+	slackpkg update gpg
+	breaksw
 case -v:
 case info:
 case view:
@@ -84,69 +88,34 @@ case status:
 case -e:
 case enable:
 	set prg = $2
-	switch ( $prg )
-	case apache:
-	case httpd:
-	case http:
-	case apache2:
-		chmod +x /etc/rc.d/rc.httpd
-		/etc/rc.d/rc.httpd start
-		breaksw
-	case smbd:
-	case smb:
-	case samba:
-		chmod +x /etc/rc.d/rc.samba
-		/etc/rc.d/rc.samba start
-		breaksw
-	case avahi:
-	case mdns:
-		chmod +x /etc/rc.d/rc.avahi
-		/etc/rc.d/rc.avahi start
-		breaksw
-	case nfs:
-	case nfsd:
-		chmod +x /etc/rc.d/rc.nfsd
-		/etc/rc.d/rc.nfsd start
-		breaksw
-	default:
-		chmod +x /etc/rc.d/rc.$prg
-		/etc/rc.d/rc.$prg start
-	endsw
+	set f = /etc/rc.d/rc.$prj
+	if ( -f $f ) then
+		if ( -x $f ) then
+			echo "$prg service its already enabled"
+		else
+			chmod +x $f
+			$f start
+			echo "done"
+		endif
+	endif
 	breaksw
 
 case -d:
 case disable:
 	set prg = $2
-	switch ( $prg )
-	case apache:
-	case httpd:
-	case http:
-	case apache2:
-		/etc/rc.d/rc.httpd stop
-		chmod -x /etc/rc.d/rc.httpd
-		breaksw
-	case smbd:
-	case smb:
-	case samba:
-		/etc/rc.d/rc.samba stop
-		chmod -x /etc/rc.d/rc.samba
-		breaksw
-	case avahi:
-	case mdns:
-		/etc/rc.d/rc.avahi stop
-		chmod -x /etc/rc.d/rc.avahi
-		breaksw
-	case nfs:
-	case nfsd:
-		/etc/rc.d/rc.nfsd stop
-		chmod -x /etc/rc.d/rc.nfsd
-		breaksw
-	default:
-		/etc/rc.d/rc.$prg stop
-		chmod -x /etc/rc.d/rc.$prg
-	endsw
+	set f = /etc/rc.d/rc.$prj
+	if ( -f $f ) then
+		if ( -x $f ) then
+			$f stop
+			chmod -x $f
+			echo "done"
+		else
+			echo "$prg service its already disabled"
+		endif
+	endif
 	breaksw
 
+case -D:
 case -av:
 case -ld:
 case -lds:
@@ -159,6 +128,7 @@ case list-disabled:
 	end
 	breaksw
 
+case -E:
 case -nav:
 case -le:
 case -les:
@@ -174,7 +144,7 @@ case list-enabled:
 help:
 default:
 	cat <<EOF
-Package and service manager for Slackware Linux, version 1.1
+Package and service manager for Slackware Linux, version 1.2
 
 Packages:
     -i  | install ...             install package[s]
@@ -193,6 +163,7 @@ Services:
     start | stop | restart | status <service>
 
 Special:
+    -g                            update gpg
 #    -o   | autoremove              remove obsolete packages
 #    -rc  | reconfigure <package>
 #    -rok | remove-old-kernels
