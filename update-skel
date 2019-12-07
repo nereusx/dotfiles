@@ -4,6 +4,6 @@ if [ -d /etc/skel ]; then
 		.tcshrc .bashrc .environ .aliases\
 		.ksh88rc .ksh93rc .profile .mkshrc .yashrc .ashrc .strc\
 		.tmux .tmux.conf .urxvt .xres .Xresources\
-		.jed .newsboat .bc .a2ps\
+		.jed .newsboat .bc\
 		/etc/skel/
 fi
