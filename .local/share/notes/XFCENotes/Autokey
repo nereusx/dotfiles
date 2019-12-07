@@ -1,8 +1,0 @@
-win+s+l = lock
-win+l = lock
-win+c+bs = kill xinit
-win+f4 = hibernate
-win+s+x = shutdown
-win+x = sleep
-win+s+bs = reboot
-win+s+esc = kill xorg
