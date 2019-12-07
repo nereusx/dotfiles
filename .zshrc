@@ -235,6 +235,9 @@ elif [[ $TERM =~ "rxvt.*" ]]; then
 	bindkey '[8~' end-of-line
 	bindkey '[2~' overwrite-mode
 	bindkey '[3~' delete-char
+elif [[ $TERM =~ "linux.*" ]]; then
+	bindkey '[1~' beginning-of-line
+	bindkey '[4~' end-of-line
 fi
 
 #

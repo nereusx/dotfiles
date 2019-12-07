@@ -340,6 +340,9 @@ else if ( $TERM == "screen" || $TERM == "screen-256color" ) then
 	bindkey "[3~" delete-char
 else if ( $TERM == "st" || $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
+else if ( $TERM == "linux" ) then
+	bindkey '[1~' beginning-of-line
+	bindkey '[4~' end-of-line
 else
 	bindkey "\033[3~" delete-char
 endif
