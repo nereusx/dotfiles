@@ -1,5 +1,6 @@
 #   this script can be used to avoid RH's garbages,
 #   consolekit, elogind, *dm, even parts of systemd.
+#	It is just runs the X after the login.
 
-#if ( $?DISPLAY ) exit
-#exec startx
+if ( $?DISPLAY ) exit
+exec startx
