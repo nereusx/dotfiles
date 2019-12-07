@@ -558,9 +558,13 @@ foreach e ( $list )
 		break
 	endif
 end
-if ( $?SYSLOGFILE ) alias log30 "tail -n `usable-lines` $SYSLOGFILE"
-if ( -X clog ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | clog"
-if ( -X ccze ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | ccze -A"
+if ( $?SYSLOGFILE ) then
+	alias log30 "tail -n `usable-lines` $SYSLOGFILE"
+	if ( -X clog ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | clog"
+	if ( -X ccze ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | ccze -A"
+else
+	alias log 30 "echo 'non root users are not allowed'"
+endif
 
 set list = ( /var/log/apache2/error.log /var/log/httpd/error.log /var/log/apache/error.log )
 foreach e ( $list )
