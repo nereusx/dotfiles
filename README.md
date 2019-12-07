@@ -5,11 +5,11 @@ These files are for ***personal use***, but **you may need**
 * the **'.jed/'** directory as I have it (BRIEF v3.1 texteditor,
 with special configurations for desktops, laptops, and several terminal types).
 
-* pulseaudio-system/,  **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
+* pulseaudio-system/, **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
 
-* my tcsh scripts, include **.tcshrc**
+* my tcsh scripts
 
-* install XFCE system sound theme for void-linux and xubuntu
+* install XFCE system sound theme for slackware, void-linux and xubuntu
 
 * ban ip addresses through iptables, there is a filter based on country of the IP, but you can add more easily.
 
@@ -17,7 +17,7 @@ with special configurations for desktops, laptops, and several terminal types).
 
 **Note**
 * You may need [fzy](https://github.com/jhawthorn/fzy) or [pick](https://github.com/mptre/pick)
-for **ncurses menus** of ***tcsh*** (commands go and hc, keys pgup, pgdn).
+for ncurses menus of tcsh / zsh / bash (commands gg (dirs) and hc (history), keys `PgUp`, `PgDn`).
 If [lfcd](https://github.com/gokcehan/lf) found, it will bind to `Ctrl+/`.
  
 ## The ~/.jed directory
