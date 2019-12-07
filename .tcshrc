@@ -109,8 +109,8 @@ unset autologout
 set mail = ( /var/mail/$user )
 unset noglob
 unalias beepcmd
-#if ( -e ~/.sounds/beep.wav )\
-#	alias beepcmd "play -q -v 0.25 ${HOME}/.sounds/beep.wav"
+if ( -e ~/.sounds/beep.wav )\
+	alias beepcmd "play -q -v 0.1 ${HOME}/.sounds/beep.wav"
 set padhour
 alias helpcommand 'man \!:1'
 # Runs every tperiod minutes.
@@ -576,8 +576,9 @@ end
 
 # net
 alias idev			"route -n | awk '/^0.0.0.0/{print $8}'"
-if ( ! -X isonline )\
+if ( ! -X isonline ) then
 	alias isonline	'ping 1.1.1.1 -c 1 -w 1 > /dev/null && echo yes || echo no'
+endif
 alias whereami		'echo "`hostname -f` (`hostname -i`):`pwd`"'
 alias ips			"ifconfig | awk '/inet addr:.*/ { split(\$2,a,\":\"); print a[2]; }'"
 alias myip			'wget -qO- http://ipecho.net/plain ; echo ;'
