@@ -1,6 +1,0 @@
-#!/bin/sh
-if [ -e ~/.addressbook ]; then
-	rm ~/.addressbook
-fi
-abook --convert --infile ~/.abook/addressbook --outformat pine --outfile ~/.addressbook
-chmod 0600 ~/.addressbook

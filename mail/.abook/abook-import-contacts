@@ -1,2 +1,0 @@
-#!/bin/sh
-abook --convert --informat vcard --infile "$*" --outformat abook --outfile ~/.abook/addressbook
