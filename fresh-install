@@ -24,8 +24,7 @@ endif
 	.jed .nanorc .grief .grinit .joerc .vimrc \
 	.newsboat .mostrc \
 	.gitconfig .config \
-	.urxvt .xres .conkyrc \
-	.dof .bc .tmux .tmux.conf
+	.urxvt .xres .bc .tmux .tmux.conf
 
 # rsync
 if ( -d /srv/file-server ) then
