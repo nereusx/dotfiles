@@ -55,11 +55,16 @@ if [ -r ~/.sounds/login.wav ]; then
 fi
 
 # minimize whatever...
-#wmctrl -a Viber -b add,hidden
-wmctrl -c Viber
+xdo close -N ViberPC
 
 # XFCE Notes (you have to rename the group)
-wmctrl -c XFCENotes
+xdo close -N Xfce4-notes
+
+# close pidgin window asking for ignore SSL
+# class = Pidgin
+code=36
+xdo activate -N Pidgin; sleep 0.2
+xdo key_press -k $code ; sleep 0.2; xdo key_release -k $code
 
 # run a terminal
-exec $lbin/st -e tmux
+exec urxvt -e tmux
