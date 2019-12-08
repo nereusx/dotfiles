@@ -1,15 +1,18 @@
 #!/bin/sh
 
 prog=ccze
-desc="\
-This is CCZE, a fast log colorizer written in C, intended to be a\
-drop-in replacement for colorize (http://colorize.raszi.hu).\
-"
+desc=`cat <<EOT
+This is CCZE, a fast log colorizer written in C, intended to be a
+drop-in replacement for colorize (http://colorize.raszi.hu).
+EOT`
 repo=https://github.com/cornet/$prog
 webp=http://bonehunter.rulez.org/CCZE.html
 
 ######
-[ "$1" = "-i" ] && { echo "# $prog\n\n$desc\n\nHome-page: $webp\nRepository: $webp"; exit; }
+msgdone() { echo "\n\033[1;32mdone\033[0m"; }
+msgfail() { echo "\n\033[1;31mfailed\033[0m"; }
+msginfo() { echo "# \033[1m$prog\033[0m\n\n$desc\n\nHome-page: \033[4m$webp\033[0m\nRepository: \033[4m$repo\033[0m"; }
+[ "$1" = "-i" ] && { msginfo; exit; }
 
 cd /usr/src
 if [ -d $prog ]; then
@@ -19,6 +22,6 @@ else
 	git clone $repo
 	cd $prog
 fi
-./configure && make && make install && make clean && echo "\n\033[32mdone\033[0m" || echo "\n\033[1;31mfailed\033[0m"
+./configure && make && make install && make clean && msgdone || msgfail
 
 
