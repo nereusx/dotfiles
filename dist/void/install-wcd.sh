@@ -2,8 +2,11 @@
 
 prog=wcd
 desc=`cat <<EOT
-This is CCZE, a fast log colorizer written in C, intended to be a
-drop-in replacement for colorize (http://colorize.raszi.hu).
+Wcd is a command-line program to change directory fast.
+It saves time typing at the keyboard.
+One needs to type only a part of a directory name and wcd will jump to it.
+Wcd has a fast selection method in case of multiple matches and allows aliasing and banning of directories.
+Wcd also includes a full screen interactive directory tree browser with speed search. 
 EOT`
 zpkg=wcd-6.0.3.tar.gz
 zdir=wcd-6.0.3
