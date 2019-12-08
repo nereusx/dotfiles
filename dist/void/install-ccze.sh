@@ -11,7 +11,7 @@ webp=http://bonehunter.rulez.org/CCZE.html
 ######
 msgdone() { echo "\n\033[1;32mdone\033[0m"; }
 msgfail() { echo "\n\033[1;31mfailed\033[0m"; }
-msginfo() { echo "# \033[1m$prog\033[0m\n\n$desc\n\nHome-page: \033[4m$webp\033[0m\nRepository: \033[4m$repo\033[0m"; }
+msginfo() { echo "# \033[1m$prog\033[0m\n\n$desc\n\nHome-page : \033[4m$webp\033[0m\nRepository: \033[4m$repo\033[0m"; }
 [ "$1" = "-i" ] && { msginfo; exit; }
 
 cd /usr/src
