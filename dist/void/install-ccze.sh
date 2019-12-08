@@ -1,5 +1,4 @@
 #!/bin/sh
-#
 
 prog=ccze
 desc="\
@@ -9,7 +8,12 @@ drop-in replacement for colorize (http://colorize.raszi.hu).\
 repo=https://github.com/cornet/$prog
 webp=http://bonehunter.rulez.org/CCZE.html
 
-##
+######
+if [ "$1" = "-i" ]; then
+	echo "# $prog\n\n$desc\n\nHome-page: $webp\nRepository: $webp"
+	exit
+fi
+
 cd /usr/src
 if [ -d $prog ]; then
 	cd $prog
