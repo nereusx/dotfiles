@@ -12,6 +12,7 @@ zpkg=wcd-6.0.3.tar.gz
 zdir=wcd-6.0.3
 zurl=https://waterlan.home.xs4all.nl/wcd/$zpkg
 webp=https://waterlan.home.xs4all.nl/
+repo=$zurl
 
 ######
 msgdone() { echo "\n\033[1;32mdone\033[0m"; }
