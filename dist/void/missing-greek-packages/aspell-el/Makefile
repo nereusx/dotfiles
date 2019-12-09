@@ -1,6 +1,6 @@
-ASPELL = /bin/aspell
+ASPELL = /sbin/aspell
 ASPELL_FLAGS = 
-PREZIP = /bin/prezip-bin
+PREZIP = /sbin/prezip-bin
 DESTDIR = 
 dictdir = /usr/lib/aspell-0.60
 datadir = /usr/lib/aspell-0.60

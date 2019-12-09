@@ -12,7 +12,8 @@ usermod -aG kvm $uname
 usermod -aG bluetooth $uname
 usermod -aG wheel $uname
 
-./app -e metalog
+#./app -e metalog
+./app -e rsyslogd
 ./app -e alsa acpid sshd pulseaudio uuidd
 ./app -e bluetoothd
 ./app -e avahi-daemon avahi-dnsconfd

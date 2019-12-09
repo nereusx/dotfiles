@@ -25,6 +25,7 @@ msgminf() { echo "name=$prog\nhome=$webp\nrepo=$repo\ndesc:\n$desc\nEOT"; }
 cd /usr/src
 [ -f $zpkg ] && rm $zpkg
 wget $zurl
+tar xvf $zpkg
 cd $zdir
 make && make install && make clean && msgdone || msgfail
 
