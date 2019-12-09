@@ -15,7 +15,6 @@ fonts="GFS_Didot\
 	GFS_Artemisia\
 	GFS_NeoHellenic\
 	GFS_Elpis\
-	GFS_Galatea\
 	GFS_Didot_Classic\
 	GFS_Porson\
 	GFS_Philostratos\
@@ -23,6 +22,7 @@ fonts="GFS_Didot\
 	GFS_Gazis\
 	GFS_Nicefore\
 	GFS_Eustace\
+	GFS_Galatea\
 "
 
 #
@@ -37,7 +37,12 @@ for f in $fonts; do
 	echo -n "$f:\033[25Gdownloading"
 	wget -q ${prefix}/${f}.zip
 	echo -n " uncompressing"
-	unzip ${f}.zip > /dev/null
+	if [ "$f" = "GFS_Galatea" ]; then
+		mkdir GFS_Galatea
+		unzip ${f}.zip -d GFS_Galatea > /dev/null
+	else 
+		unzip ${f}.zip > /dev/null
+	fi
 	echo -n " installing"
 
 	# if the directory its in upper-case, fix it
