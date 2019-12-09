@@ -110,7 +110,7 @@ case $todo in
 	;;
 	
 -f|--files)
-	xbps-query -f $*
+	xbps-query -Rf $*
 	;;
 
 -a)
