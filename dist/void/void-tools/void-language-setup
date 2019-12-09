@@ -47,7 +47,7 @@ fi
 
 # define at /etc/environment
 if grep '^LANG=' /etc/environment; then
-	sed -i 's/^LANG=.*/LANG=$langcode/g' /etc/environment
+	sed -i "s/^LANG=.*/LANG=$langcode/g" /etc/environment
 else
 	echo "LANG=$langcode" >> /etc/environment
 fi
@@ -57,8 +57,8 @@ echo "LANG=$langcode" > /etc/locale.conf
 echo "LC_COLLATE=C" >> /etc/locale.conf
 
 # libc
-sed -i 's/\#$langcode/$langcode/g' /etc/default/libc-locales
-sed -i 's/\#en_US.UTF-8/en_US.UTF-8/g' /etc/default/libc-locales
+sed -i "s/\#$langcode/$langcode/g" /etc/default/libc-locales
+sed -i "s/\#en_US.UTF-8/en_US.UTF-8/g" /etc/default/libc-locales
 
 # reconfigure
 xbps-reconfigure -f glibc-locales
