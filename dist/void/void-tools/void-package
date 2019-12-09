@@ -73,7 +73,7 @@ case $todo in
 	;;
 
 -gs)
-	x=$(xbps-query -Rs "$*" | pick)
+	x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick)
 	if [ -n "$x" ]; then
 		ins=${x%\]*}
 		res=${x#*\]\ }

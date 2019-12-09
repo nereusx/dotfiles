@@ -116,8 +116,8 @@ if [ -n "${REMOTEHOST-}" ]; then
 else
 	_ps[host]='%F{green}'
 fi
-#PS1="%B${_ps[clock]}%T%f ${_ps[user]}%n%f${_ps[host]}@%M%f ${_ps[dirs]}%38<..<%~%f%b %# "
-PS1="%B${_ps[user]}%n%f${_ps[host]}@%M%f ${_ps[dirs]}%38<..<%~%f%b %# "
+#PS1="%B${_ps[clock]}%T%f ${_ps[user]}%n%f${_ps[host]}@%M%f${_ps[dirs]} %38<..<%~%f%b %# "
+PS1="%B${_ps[user]}%n%f${_ps[host]}@%M%f%b %B${_ps[dirs]}%38<..<%~%f%b %# "
 
 #
 #	GIT PROMPT
