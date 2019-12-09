@@ -1,4 +1,4 @@
-!  === /root/.xres/urxvt.res: 
+!  === /home/nikosc/.xres/urxvt.res: 
 !!	URXVT
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
 
@@ -22,12 +22,16 @@ urxvt.geometry: 160x40
 
 urxvt.reverseVideo: false
 
+! standalone
+!urxvt.saveLines: 4096
+! tmux
+urxvt*saveLines:0
+
 ! --- --- --- --- --- ---
 
 urxvt.iconFile: /usr/share/icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
-urxvt.saveLines: 4096
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 urxvt.cursorColor: #00ff00
@@ -51,14 +55,12 @@ urxvt.scrollBar:false
 
 ! blackish with transparency
 urxvt.depth: 32
-!urxvt.background: rgba:0000/0000/0000/dddd
 urxvt.background: rgba:0000/0000/0000/eeee
 
 !!	URXVT Linux Colors
 
 !! default foreground & background colors
 urxvt*foreground: #CCCCCC
-!urxvt*background: #000000
 
 ! black
 urxvt*color0:  #000000
@@ -87,6 +89,9 @@ urxvt*color14: #54FFFF
 ! white
 urxvt*color7:  #B2B2B2
 urxvt*color15: #FFFFFF
+
+urxvt*visualBell: true
+urxvt*mapAlert: true
 
 !! urxvt + perl ext
 
@@ -129,9 +134,9 @@ URxvt.tabbed.reopen-on-close: yes
 
 urxvt.bell-command: play -v 0.25 -q /usr/share/sounds/beep.wav
 
-!  === /root/.xres/utils.res: 
+!  === /home/nikosc/.xres/utils.res: 
 xautolock.locker: xlock -dpmsoff 600
-!  === /root/.xres/xft.res: 
+!  === /home/nikosc/.xres/xft.res: 
 !Xft.dpi: 126
 !Xft.dpi: 96
 Xft.antialias: 1
@@ -141,7 +146,7 @@ Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 Xft.autohint: 1
 
-!  === /root/.xres/xjed.res: 
+!  === /home/nikosc/.xres/xjed.res: 
 !!	XJED
 
 !xjed*Geometry: 132x30+100+100
@@ -161,7 +166,7 @@ xjed*Geometry: 160x40+100+100
 
 ! XSG Term 189
 xjed*font: -xsg-xsg term 189-*-*-*-*-*-*-*-*-*-*-iso10646-1
-!  === /root/.xres/xterm.res: 
+!  === /home/nikosc/.xres/xterm.res: 
 !!	XTERM
 
 xterm*foreground: rgb:a8/a8/a8

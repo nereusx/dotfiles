@@ -151,8 +151,20 @@ if ( -X wcd.exe || -X wcd.exec ) then
 	else
 		alias wcd 'wcd.exe -Tc -K -g -j ; source $WCDHOME/bin/wcd.go'
 	endif
+#	bindkey -c '' wcd
 else if ( -X wcd ) then
 	setenv WCDHOME "${HOME}/.wcd"
+#	bindkey -c '' wcd
+endif
+
+if ( -X fff ) then
+	alias fffcd 'setenv FFF_CD_ON_EXIT 1; setenv FFF_CD_FILE ${HOME}/.cache/fff_dir; fff && cd "`cat ${HOME}/.cache/fff_dir`"'
+#	bindkey -c '' fffcd
+endif
+
+if ( -X noice ) then
+	# enable colors
+	alias noice 'noice -c'
 endif
 
 #

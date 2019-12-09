@@ -21,12 +21,16 @@ urxvt.geometry: 160x40
 
 urxvt.reverseVideo: false
 
+! standalone
+!urxvt.saveLines: 4096
+! tmux
+urxvt*saveLines:0
+
 ! --- --- --- --- --- ---
 
 urxvt.iconFile: /usr/share/icons/urxvt-icon.png
 uxterm.metaSendsEscape: true
 
-urxvt.saveLines: 4096
 urxvt.iso14755: false
 urxvt.iso14755_52: false
 urxvt.cursorColor: #00ff00
@@ -50,14 +54,12 @@ urxvt.scrollBar:false
 
 ! blackish with transparency
 urxvt.depth: 32
-!urxvt.background: rgba:0000/0000/0000/dddd
 urxvt.background: rgba:0000/0000/0000/eeee
 
 !!	URXVT Linux Colors
 
 !! default foreground & background colors
 urxvt*foreground: #CCCCCC
-!urxvt*background: #000000
 
 ! black
 urxvt*color0:  #000000
@@ -86,6 +88,9 @@ urxvt*color14: #54FFFF
 ! white
 urxvt*color7:  #B2B2B2
 urxvt*color15: #FFFFFF
+
+urxvt*visualBell: true
+urxvt*mapAlert: true
 
 !! urxvt + perl ext
 
