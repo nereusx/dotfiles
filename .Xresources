@@ -22,11 +22,6 @@ urxvt.geometry: 160x40
 
 urxvt.reverseVideo: false
 
-! standalone
-!urxvt.saveLines: 4096
-! tmux
-urxvt*saveLines:0
-
 ! --- --- --- --- --- ---
 
 urxvt.iconFile: /usr/share/icons/urxvt-icon.png
@@ -38,7 +33,6 @@ urxvt.cursorColor: #00ff00
 urxvt.cursorBlink: true
 urxvt*skipBuiltinGlyphs: true
 urxvt.scrollstyle:      plain
-urxvt.secondaryScroll:  true
 
 ! full example of xft format, URxvt.font: xft:monaco:bold:size=10
 ! try it real time
@@ -90,8 +84,8 @@ urxvt*color14: #54FFFF
 urxvt*color7:  #B2B2B2
 urxvt*color15: #FFFFFF
 
-urxvt*visualBell: true
-urxvt*mapAlert: true
+urxvt*visualBell: false
+urxvt*mapAlert: false
 
 !! urxvt + perl ext
 
