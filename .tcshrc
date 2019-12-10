@@ -109,8 +109,8 @@ unset autologout
 set mail = ( /var/mail/$user )
 unset noglob
 unalias beepcmd
-if ( -e ~/.sounds/beep.wav )\
-	alias beepcmd "play -q -v 0.1 ${HOME}/.sounds/beep.wav"
+#if ( -e ~/.sounds/beep.wav )\
+#	alias beepcmd "play -q -v 0.1 ${HOME}/.sounds/beep.wav"
 set padhour
 alias helpcommand 'man \!:1'
 # Runs every tperiod minutes.
