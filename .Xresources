@@ -129,7 +129,9 @@ URxvt.tabbed.reopen-on-close: yes
 urxvt.bell-command: play -v 0.25 -q /usr/share/sounds/beep.wav
 
 !  === /home/nikosc/.xres/utils.res: 
-xautolock.locker: xlock -dpmsoff 600
+!xautolock.locker: xlock -dpmsoff 600
+xautolock.locker: i3lock-fancy
+
 !  === /home/nikosc/.xres/xft.res: 
 !Xft.dpi: 126
 !Xft.dpi: 96
