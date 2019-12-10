@@ -16,7 +16,7 @@ set backslash_quote
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
-umask 022
+umask 077
 
 ##limit stacksize 256k
 ## slackpkg (bash script) needs > 256k !!!
@@ -47,10 +47,8 @@ if ( ! $?HOME ) then
 		setenv HOME "/home/$USER"
 	endif
 endif
-if ( ! $?HOSTNAME ) then
-	setenv HOSTNAME `hostname`
-endif
-if ( ! $?XDG_RUNTIME_DIR ) setenv XDG_RUNTIME_DIR "/tmp/runtime-$USER"
+if ( ! $?HOSTNAME )			setenv HOSTNAME `hostname`
+if ( ! $?XDG_RUNTIME_DIR )	setenv XDG_RUNTIME_DIR "/tmp/runtime-$USER"
 
 # find distro
 if ( ! $?DISTRO ) then
@@ -162,11 +160,6 @@ if ( -X fff ) then
 #	bindkey -c '' fffcd
 endif
 
-if ( -X noice ) then
-	# enable colors
-	alias noice 'noice -c'
-endif
-
 #
 #	tcsh's prompt
 #	man console_codes
@@ -192,17 +185,12 @@ set prompt  = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
 set _ps[6]='%{\033[0;35m%}' # 1
 set _ps[7]='%{\033[0;35m%}' # 6
 set _ps[8]='%{\033[0;35m%}'
-#set rprompt = " ?${_ps[6]}%?${_ps[5]} ${EXCL}${_ps[7]}%h${_ps[5]} ${DOLR}${_ps[8]}$shlvl${_ps[5]} "
 set rprompt = " ${_ps[8]}[?${_ps[6]}%?${_ps[5]} ${_ps[8]}${EXCL}${_ps[7]}%h${_ps[8]}]${_ps[5]} "
 
 #
 #	tcsh' history
 #
-if ( -d ~/.cache ) then
-	set histfile = ~/.cache/tcsh.history
-else
-	set histfile = ~/.tcsh_history
-endif
+if ( -d ~/.cache ) set histfile = "${HOME}/.cache/tcsh.history"
 set histlit
 set history=2048
 #set histdup=all	# mess previous
@@ -232,11 +220,7 @@ endsw
 #	Note: use 'dirs' to show the history of directories;
 #	use 'cd =N' where N the number of the directory as shown by 'dirs'.
 #
-if ( -d ~/.cache ) then
-	set dirsfile = ~/.cache/tcsh.dirs
-else
-	set dirsfile = ~/.tcsh_dirs
-endif
+if ( -d ~/.cache )	set dirsfile = ~/.cache/tcsh.dirs
 unset dunique # unfortunately this removes the directory if exists in dirstack
 unset dextract
 #set cdpath = ( ${HOME} /usr/src )
@@ -302,11 +286,11 @@ complete where 		'p/1/c/'
 complete man 		'p/1/c/'
 complete gg			'p/1/d/'
 		  
+# create completion for tmux
 if ( -X tmux ) then
-	# create completion for tmux
-	set tmux_cmds = `tmux list-commands | awk '{print$1}'`
+	set tmux_cmds = `tmux list-commands | cut -f1 -d\ `
 	uncomplete tmux
-	complete   tmux     "p/1/(${tmux_cmds})/"
+	complete   tmux	"p/1/(${tmux_cmds})/"
 endif
 
 #
@@ -373,8 +357,8 @@ endif
 ### EDITORS ###
 
 # settings for JED
-setenv JED_HOME		"${HOME}/.jed"
-alias jed-prep     'xjed -batch -n -l preparse'
+setenv JED_HOME	"${HOME}/.jed"
+alias jed-prep	'xjed -batch -n -l preparse'
 
 # settings for GRIEF
 setenv GRLIB			"/usr/local/share/grief"
@@ -394,7 +378,6 @@ foreach e ( $list )
 	endif
 end
 setenv VISUAL "$EDITOR"
-alias edit "$EDITOR"
 
 # select default hex editor
 set list = ( hte ht dhex mcedit )
@@ -460,7 +443,7 @@ else
 endif
 
 # select default terminal
-set list = ( st urxvtcd urxvt xfce-terminal xterm )
+set list = ( urxvt urxvtcd st xfce-terminal xterm )
 foreach e ( $list )
 	if ( -X $e ) then
 		setenv TERMINAL "$e"
@@ -530,15 +513,16 @@ endif
 # colorize
 set color
 set colorcat
+if ( -X dircolors )	eval `dircolors -c`
 #
-alias ll	       'ls    --color -lha'
-alias ls	       'ls    --color'
+alias ll			'ls    --color -lha'
+alias ls			'ls    --color'
 if ( $DISTRO !~ "*BSD" ) then
-	alias grep	       'grep  --color=auto'
-	alias egrep	       'egrep --color=auto'
-	alias dmesg	       'dmesg --color=always'
+	alias grep		'grep  --color=auto'
+	alias egrep		'egrep --color=auto'
+	alias dmesg		'dmesg --color=always'
 endif
-alias diff	       'diff  --color=auto'
+alias diff			'diff  --color=auto'
 
 # sudo
 if ( $USER != 'root' ) then
@@ -558,9 +542,11 @@ if ( $DISTRO == "void" ) alias man 'set _=`tput cols`; @ _ = $_ - 2; /usr/bin/ma
 [ -f ~/.sounds/alarm.wav ] && alias abeep "play -q -v 1.00 ${HOME}/.sounds/alarm.wav" || alias abeep 'echo "\a"'
 
 # xwindows title
-alias set-xtitle "echo -n '''\033]0;\!*\007'''"
-alias set-tmpane-title '\033]2;\!*\033\\'
+alias set-xtitle		"echo -n '''\033]0;\!*\007'''"
+alias set-tmpane-title	'\033]2;\!*\033\\'
 # alias precmd 'echo -n "\033]0;${HOST}:$cwd\007"'
+# urxvt change font: set-rxvt-font "xft:Terminus:pixelsize=12"
+alias set-rxvt-font		'\033]710;\!*\007'
 
 # find the correct log file
 set list = ( /var/log/everything/current /var/log/socklog/messages/current /var/log/messages /var/log/syslog /var/log/dmesg.log )
@@ -575,7 +561,7 @@ if ( $?SYSLOGFILE ) then
 	if ( -X clog ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | clog"
 	if ( -X ccze ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | ccze -A"
 else
-	alias log 30 "echo 'non root users are not allowed'"
+	alias log30 "echo 'non root users are not allowed'"
 endif
 
 set list = ( /var/log/apache2/error.log /var/log/httpd/error.log /var/log/apache/error.log )
@@ -615,12 +601,6 @@ if ( -X git ) then
 	alias git-co 	'git checkout'
 endif
 
-## paps support UTF8, a2ps don't
-#if ( -X paps ) alias a2ps 'paps'
-
-## zssh is ssh with ZModem support
-#if ( -X zssh ) alias ssh  'zssh'
-
 # command line web search
 if ( -X surfraw ) then
 	setenv SURFRAW_graphical_browser	"$BROWSER"
@@ -628,7 +608,7 @@ if ( -X surfraw ) then
 	setenv SURFRAW_graphical			no
 	alias ddg 'surfraw duckduckgo'
 else if ( ! -X ddg ) then
-	alias ddg 'w3m https\://duckduckgo.com/lite'
+	alias ddg "$TEXTBROWSER https\://duckduckgo.com/lite"
 endif
 
 if ( -X youtube-dl ) then
