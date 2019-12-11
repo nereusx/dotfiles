@@ -73,20 +73,38 @@ case $todo in
 	;;
 
 -gs)
-	x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick)
-	if [ -n "$x" ]; then
-		ins=${x%\]*}
-		res=${x#*\]\ }
-		pck=${res%%\ *}
-		pck=${pck%-*}
-		if [ $ins = "[-" ]; then
-			xbps-install $pck
-		else
-			xbps-remove $pck
+	# in pick -m, use insert key to add packages
+	if pick -h 2>&1 | grep 'multiple choices'; then
+	 	x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick -m | tr ' ' '^')
+		if [ -n "$x" ]; then
+			for e in $x; do
+				e=$(echo $e|tr '^' ' ')
+				ins=${e%\]*}
+				res=${e#*\]\ }
+				pck=${res%%\ *}
+				pck=${pck%-*}
+				if [ $ins = "[-" ]; then
+					xbps-install $pck
+				else
+					xbps-remove $pck
+				fi
+			done
+		fi
+	else
+		x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick)
+		if [ -n "$x" ]; then
+			ins=${x%\]*}
+			res=${x#*\]\ }
+			pck=${res%%\ *}
+			pck=${pck%-*}
+			if [ $ins = "[-" ]; then
+				echo xbps-install $pck
+			else
+				echo xbps-remove $pck
+			fi
 		fi
 	fi
 	;;
-
 
 -rs|regex-search)
 	xbps-query --regex -Rs "$*"
