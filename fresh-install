@@ -18,7 +18,7 @@ if ( ! -f /etc/complete.tcsh ) then
 endif
 
 # install configuration files
-./update-nano-syntax-files
+./misc/update-nano-syntax-files
 ./install-to-users \
 	.tcshrc .zshrc .bashrc .environ .aliases \
 	.bin .help .sounds \
