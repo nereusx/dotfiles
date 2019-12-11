@@ -74,8 +74,12 @@ case $todo in
 
 -gs)
 	# in pick -m, use insert key to add packages
-	if pick -h 2>&1 | grep 'multiple choices'; then
-	 	x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick -m | tr ' ' '^')
+	if pick -h 2>&1 | grep 'multiple choices' 2>&1 > /dev/null; then
+	 	x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick -m -l\
+			-k 'f:xbps-query -R -f %2 > a.txt; mousepad a.txt; rm a.txt'\
+			-k 'i:xbps-install -Sy %2'\
+			-k 'u:xbps-remove -y %2'\
+			| tr ' ' '^')
 		if [ -n "$x" ]; then
 			for e in $x; do
 				e=$(echo $e|tr '^' ' ')
@@ -91,7 +95,7 @@ case $todo in
 			done
 		fi
 	else
-		x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick)
+		x=$(xbps-query -Rs "$*" | grep -v 32bit | IFS=\  pick -l)
 		if [ -n "$x" ]; then
 			ins=${x%\]*}
 			res=${x#*\]\ }
