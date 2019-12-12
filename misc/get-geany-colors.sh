@@ -1,5 +1,10 @@
 #!/bin/sh
 cd /usr/src
-git clone https://github.com/codebrainz/geany-themes
-cd geany-themes
+if [ -d geany-themes ]; then
+	cd geany-themes
+	git pull
+else
+	git clone https://github.com/codebrainz/geany-themes
+	cd geany-themes
+fi
 ./install.sh
