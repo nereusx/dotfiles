@@ -505,7 +505,7 @@ alias fs			'du -sbh' # file or directory size
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
 	alias fortune-files	'dof -e /usr/share/fortunes/*.dat do echo %b | columns'
-	alias test-colors	'dof -e -s:0..15 do \'tput setaf %f; echo colour%f; tput op;\''
+	alias test-colors	'dof -e -s 0..15 do \'tput setaf %f; echo colour%f; tput op;\''
 else
 	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | columns'
 endif
