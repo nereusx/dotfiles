@@ -16,7 +16,7 @@ set backslash_quote
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
-umask 077
+umask 027
 
 ##limit stacksize 256k
 ## slackpkg (bash script) needs > 256k !!!
@@ -239,7 +239,7 @@ else
 endif
 alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
 # go command
-alias gg--	'set _=`dirs | $PICKER | cut -f1` && cd =$_'
+alias gg--	'set _=`dirs | $PICKER | cut -f1`; [ -n "$_" ] && cd =$_'
 alias gg++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
 alias gg	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && gg++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && gg-- || pushd "$_"'
 if ( $PICKER != "none" ) then
