@@ -55,7 +55,7 @@ if [ -r ~/.sounds/login.wav ]; then
 fi
 
 # minimize whatever...
-xdo close -N ViberPC
+xdo close -N Viber
 
 # XFCE Notes (you have to rename the group)
 xdo close -N Xfce4-notes
