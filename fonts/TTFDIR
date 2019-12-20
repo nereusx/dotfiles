@@ -9,3 +9,14 @@ for x in $list; do
 		break
 	fi
 done
+
+x11dir=/usr/share/fonts/X11/misc/
+list="/usr/share/fonts/X11/misc\
+	/usr/share/X11/fonts/misc\
+	/usr/share/fonts/misc"
+for x in $list; do
+	if [ -d $x ]; then
+		x11dir=$x
+		break
+	fi
+done
