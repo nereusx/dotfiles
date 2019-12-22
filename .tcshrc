@@ -138,7 +138,7 @@ end
 if ( -X lf ) then
 	setenv LF_HOME "${HOME}/.config/lf"
 	[ -e "${LF_HOME}/lfcd.csh" ] && source "${LF_HOME}/lfcd.csh"
-	[ -e "${LF_HOME}/lf-complete.csh" ] && source "${LF_HOME}/lf-complete.csh"
+	[ -e "${LF_HOME}/lf.csh" ] && source "${LF_HOME}/lf.csh"
 	bindkey -c '' lfcd
 endif
 
