@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+# https://raw.githubusercontent.com/LukeSmithxyz/voidrice/master/.local/bin/prompt
+# A dmenu binary prompt script.
+# Gives a dmenu prompt labeled with $1 to perform command $2.
+# For example:
+# `./prompt "Do you want to shutdown?" "shutdown -h now"`
+[ "$(printf "No\\nYes" | smenu -m "$1")" = "Yes" ] && $2
