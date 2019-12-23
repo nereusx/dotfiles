@@ -1892,6 +1892,7 @@ define cbrief_dos()
 		cbrief_new_term();
 	else
 		() = system(cline);
+	update(0);
 }
 
 %% Alt+Z
@@ -1901,6 +1902,7 @@ define cbrief_az()
 		suspend();
 	else
 		cbrief_new_term();
+	update(0);
 }
 
 %%
@@ -2053,6 +2055,7 @@ private variable mac_list = {
 %	Displays the buffer list.
 
 	{ "search_case",	&cbrief_search_case,		C_ARGV },
+	{ "toggle_search_case",	&cbrief_search_case,		C_ARGV },
 % search_case
 %	Toggles upper and lower case sensitivity.
 
@@ -2438,7 +2441,8 @@ private variable mac_list = {
 % reform
 %	Reformats a paragraph, adjusting it to the current right margin.
 	
-	{ "toggle_re",	&cbrief_toggle_re,	NO_ARG },
+	{ "toggle_re",	  &cbrief_toggle_re,	NO_ARG },
+	{ "toggle_regex", &cbrief_toggle_re,	NO_ARG },
 % toggle_re
 %	Toggles whether or not regular expressions are recognized
 %	in patterns.
@@ -3026,7 +3030,10 @@ public define cbrief_cmd()
 		else if ( in[0] == '!' ) {	% run shell command, output in new buf
 			in = substr(in, 2, strlen(in) - 1);
 			err = 1; % exit
+			save_screen();
 			shell_perform_cmd(in, 0);
+			restore_screen();
+			redraw_screen();
 			}
 		else if ( in[0] == '&' ) {	% run shell command, in new term
 #ifdef UNIX
@@ -3039,7 +3046,10 @@ public define cbrief_cmd()
 				}
 			else
 				cmd = strcat(getenv("SHELL") + " -c '", in, "' &");
+			save_screen();
 			() = system(cmd);
+			restore_screen();
+			redraw_screen();
 #else
 			uerror("Not supported in this OS");
 #endif
@@ -3048,7 +3058,16 @@ public define cbrief_cmd()
 		else if ( in[0] == '<' ) {	% run shell command, output in this buf
 			in = substr(in, 2, strlen(in) - 1);
 			err = 1; % exit
+			save_screen();
 			run_shell_cmd(in);
+			restore_screen();
+			redraw_screen();
+			}
+		else if ( in[0] == '~' ) {	% run shell command
+			save_screen();
+			() = system(in);
+			restore_screen();
+			redraw_screen();
 			}
 		else if ( strncmp(in, ">>", 2) == 0 ) { % append selected text of the whole buffer to output
 			in = strtrim(substr(in, 3, strlen(in) - 2));
@@ -3086,9 +3105,10 @@ public define cbrief_cmd()
 				uerrorf("Access denied. [%s]", in);
 			err = 1; % exit
 			}
-		else if ( in[0] == '|' ) {	% write selected text of the whole buffer to output
+		else if ( in[0] == '|' ) {	% write selected text of the whole buffer to output (throu pipe)
 			in = strtrim(substr(in, 2, strlen(in) - 1));
 			if ( file_status(in) == 0 ) {
+				save_screen();
 				if ( is_visible_mark() )
 					pipe_region(in);
 				else {
@@ -3098,6 +3118,8 @@ public define cbrief_cmd()
 					pop_mark(0);
 					pop_spot();
 					}
+				restore_screen();
+				redraw_screen();
 				}
 			else
 				uerrorf("Access denied. [%s]", in);
