@@ -1,2 +1,3 @@
 #!/bin/sh
+# gui-prompt "message..." "command"
 zenity --question --text "$1" && $2

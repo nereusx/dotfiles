@@ -1,6 +1,10 @@
 #!/bin/sh
 if [ -r /etc/os-release ]; then
-	echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
+	if [ -r /etc/mx-version ]; then
+		echo mx
+	else
+		echo $(awk '/^ID=/{gsub(/"/,"",$0);print tolower(substr($0,4))}' /etc/os-release)
+	fi
 else
 	echo $(uname -s)
 fi

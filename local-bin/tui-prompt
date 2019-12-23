@@ -1,4 +1,5 @@
 #!/bin/tcsh -f
+# tui-prompt "message..." "command"
 if ( -X smenu ) then
 	if ( `printf "No\\nYes" | smenu -m "$1"` == "Yes" ) then
 		$2
