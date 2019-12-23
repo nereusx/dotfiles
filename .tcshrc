@@ -284,6 +284,7 @@ complete kill		'c/-/S/' 'c/%/j/' 'n/*/`ps -u $user | awk '"'"'{print $1}'"'"'`/'
 complete which 		'p/1/c/'
 complete where 		'p/1/c/'
 complete man 		'p/1/c/'
+complete xman 		'p/1/c/'
 complete gg			'p/1/d/'
 		  
 # create completion for tmux
@@ -501,6 +502,7 @@ alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DOLR//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
 alias mc			'mc --nomouse'
 alias fs			'du -sbh' # file or directory size
+alias xman          'xview-roff'
 
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
