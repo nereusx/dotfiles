@@ -1,18 +1,18 @@
 #!/bin/tcsh -f
 #
-# View man page for Xorg
+#	Shows man page (or any roff file) as PDF in XWindows
 #
-# v2.0 2019/12/23, added support for man-page in manpath
+#	v2.0 2019/12/23, added support for man-page in manpath
 #
-# Copyright (C) 1998-2019 Nicholas Christopoulos (nereus@freemail.gr)
+#	Copyright (C) 1998-2019 Nicholas Christopoulos (nereus@freemail.gr)
 #
-# This program and its data-file is free software: you can redistribute
-# it and/or modify it under the terms of the GNU General Public License 
-# as published by the Free Software Foundation, either version 3 of
-# the License, or any later version.
+#	This program and its data-file is free software: you can redistribute
+#	it and/or modify it under the terms of the GNU General Public License 
+#	as published by the Free Software Foundation, either version 3 of
+#	the License, or any later version.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#	You should have received a copy of the GNU General Public License
+#	along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
 # select viewer
