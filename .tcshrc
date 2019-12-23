@@ -496,9 +496,6 @@ alias xcp			'rsync -ah --progress'
 alias xmerge		'xrdb -merge ~/.Xresources'
 alias xmonitor-off	'xset dpms force off'
 alias warn			'echo "\e[7m\e[5m "\!*" \e[0m"'
-alias ltrim			"sed 's/^[ \t\n\r]*//'"
-alias rtrim			"sed 's/[ \t\n\r]*$DOLR//'"
-alias trim			"sed 's/^[ \t\n\r]*//;s/[ \t\r\n]*$DOLR//'"
 alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/dev/shm|/dev/fuse\''
 alias mc			'mc --nomouse'
 alias fs			'du -sbh' # file or directory size
