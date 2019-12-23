@@ -608,7 +608,7 @@ if ( -X git ) then
 	complete git \
 		'n/checkout/`git-bl`/' \
 		'n/branch/(-d -f -m -l --show-current switch `git-bl`)/' \
-		"p/1/($cmds)/"
+		"p/1/($e)/"
 endif
 
 # command line web search
