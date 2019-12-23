@@ -604,12 +604,11 @@ if ( -X git ) then
 	alias git-bl	'git branch --no-color --list | cut -c 3-'
 	alias git-sw	'git branch switch'
 	alias git-cur	'git branch --show-current'
-	set cmds=`git help -a | awk '/\\ \\ [A-Za-z]*/{print $1}'`
+	set e=`git help -a | awk '/  [A-Za-z]*/{print $1}'`
 	complete git \
 		'n/checkout/`git-bl`/' \
 		'n/branch/(-d -f -m -l --show-current switch `git-bl`)/' \
-		'p/1/$cmds/'
-	unset cmds
+		"p/1/($cmds)/"
 endif
 
 # command line web search
