@@ -17,9 +17,9 @@
 
 # select viewer
 set vw = xpdf
-set vwlst = ( /usr/bin/epdfview /usr/bin/qpdfview /usr/bin/evince /usr/bin/okular /usr/bin/xpdf )
+set vwlst = ( epdfview qpdfview okular evince xpdf )
 foreach f ( $vwlst )
-	if ( -e $f ) then
+	if ( -X $f ) then
 		set vw = $f
 		break
 	endif
