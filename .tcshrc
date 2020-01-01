@@ -604,7 +604,8 @@ if ( -X git ) then
 	alias git-curbra	'git branch --show-current'
 	alias git-amend     'git commit --amend'
 	alias git-rename-last-commit 'git commit --amend && git push -f'
-	alias git-github-sync	'git fetch upstream && git checkout master && git merge upstream/master'
+	alias github-sync	'git fetch upstream && git checkout master && git merge upstream/master'
+#	alias github-clone	'set repo="\!*"; git clone $repo && git remote add upstream $repo'
 	#
 	set e=`git help -a | awk '/  [A-Za-z]*/{print $1}'`
 	complete git \
