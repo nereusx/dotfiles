@@ -16,7 +16,7 @@ set backslash_quote
 # 0750 - 0027 - logical
 # 0700 - 0077 - nice
 # 0000 - 0777 - paranoid
-umask 027
+umask 022
 
 ##limit stacksize 256k
 ## slackpkg (bash script) needs > 256k !!!

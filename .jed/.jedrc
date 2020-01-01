@@ -36,6 +36,8 @@ ifnot ( BATCH ) {
 
 %}}}
 
+require("popup-test");
+
 %% loading modules
 require("pcre");
 require("cbrief");
