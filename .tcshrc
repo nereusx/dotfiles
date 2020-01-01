@@ -598,13 +598,16 @@ endif
 if ( -X git ) then
 	alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
 	alias git-co 	'git checkout'
-	alias git-bl	'git branch --no-color --list | cut -c 3-'
-	alias git-sw	'git branch switch'
-	alias git-cur	'git branch --show-current'
+	alias git-branches	'git branch --no-color --list | cut -c 3-'
+	alias git-select-branch 'git switch `git-branches | fzy`'
+	alias git-switch	'git branch switch'
+	alias git-curbranch	'git branch --show-current'
+	alias git-amend     'git commit --amend'
+	alias git-rename-last-commit 'git commit --amend && git push -f'
 	set e=`git help -a | awk '/  [A-Za-z]*/{print $1}'`
 	complete git \
-		'n/checkout/`git-bl`/' \
-		'n/branch/(-d -f -m -l --show-current switch `git-bl`)/' \
+		'n/checkout/`git-branches`/' \
+		'n/branch/(-d -f -m -l --show-current switch `git-branches`)/' \
 		"p/1/($e)/"
 endif
 
