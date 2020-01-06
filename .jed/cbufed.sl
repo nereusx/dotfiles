@@ -446,3 +446,33 @@ define cbrief_bufed ()
 	set_mode(mode, 0);
 	cbufed_short_help();
 }
+
+#ifdef CBRIEF_PATCH_V5
+% using popup menu to change buffer
+define cbrief_bufpu()
+{
+	variable s, e, n = 0, ml = 0, count;
+	
+	prev_buf = whatbuf();
+	cbuf_list = {};
+	_build_list();
+	% calculate the maximum width of buffer's name
+	count = 0;
+	foreach e ( cbuf_list ) {
+		if ( strcmp(e[2], prev_buf) == 0 )
+			n = count;
+		if ( strlen(e[2]) > ml )
+			ml = strlen(e[2]);
+		count ++;
+		}
+	% build options string
+	s = "";
+	foreach e ( cbuf_list )
+		s = sprintf("%s%-*s %s\n", s, ml, e[2], e[4]);
+	% call popup menu
+	n = popup_menu(s, n);
+	if ( n >= 0 ) % if !cancel switch to buffer
+		sw2buf(cbuf_list[n][2]);
+	redraw_screen();
+}
+#endif

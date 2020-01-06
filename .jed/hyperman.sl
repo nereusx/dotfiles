@@ -350,7 +350,12 @@ static define man(subj)
 #ifdef OS2
    man_cmd = sprintf("man %s 2> nul", subj);
 #else
-   man_cmd = sprintf("MAN_KEEP_FORMATTING=1 MANWIDTH=%d man %s 2> /dev/null", SCREEN_WIDTH, subj);
+% man-db
+%   man_cmd = sprintf("MAN_KEEP_FORMATTING=1 MANWIDTH=%d man %s 2> /dev/null", SCREEN_WIDTH, subj);
+% mandoc
+%   man_cmd = sprintf("MAN_KEEP_FORMATTING=1 man -O width=%d %s 2> /dev/null", SCREEN_WIDTH - 6, subj);
+% both
+   man_cmd = sprintf("MAN_KEEP_FORMATTING=1 MANWIDTH=%d man -O width=%d %s 2> /dev/null", SCREEN_WIDTH, SCREEN_WIDTH-6, subj);
 #endif
    variable return_status = run_shell_cmd (man_cmd);
    if (return_status && bobp() && eobp())

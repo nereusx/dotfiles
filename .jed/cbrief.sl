@@ -1473,7 +1473,11 @@ define cbrief_dired()
 %%
 define cbrief_buf_list()
 {
+#ifdef CBRIEF_PATCH_V5
+	cbrief_bufpu();
+#else
 	cbrief_bufed();
+#endif
 }
 
 %% --- files --------------------------------------------------------------
@@ -1815,38 +1819,9 @@ define cbrief_find_xterm()
 {
 	if ( CBRIEF_XTERM == "" ) {
 #ifdef UNIX
-		variable xterm = getenv("COLORTERM");
-		variable desktop = getenv("DESKTOP_SESSION");
-		variable path = getenv("PATH");
-		if ( xterm == NULL ) xterm = "xterm";
-	
-		if ( xterm == "rxvt" ) {
-			if ( file_status(path, "urxvtcd") != NULL )
-				xterm = "urxvtcd";
-			else if ( search_path_for_file(path, "urxvt") != NULL )
-				xterm = "urxvt";
-			else if ( search_path_for_file(path, "rxvt") != NULL )
-				xterm = "rxvt";
-			else
-				xterm = ""; % search for xterm
-			}
-		
-		if ( desktop != NULL && xterm == "" ) {
-			if ( desktop == "xfce" )
-				xterm = "xfce4-terminal";
-			else if ( desktop == "mate" )
-				xterm = "mate-terminal";
-			else if ( desktop == "kde" )
-				xterm = "konsole";
-			else if ( desktop == "gnome" )
-				xterm = "gnome-terminal";
-			else
-				xterm = "xterm";
-	
-			if ( search_path_for_file(path, xterm) == NULL )
-				xterm = "xterm"; % whatever
-			}
-
+		variable xterm = getenv("TERMINAL");
+		if ( xterm == NULL )
+			xterm = "xterm";
 		CBRIEF_XTERM = xterm;
 #endif
 		}
@@ -2007,6 +1982,40 @@ define cbrief_to_buf_rel(n)
 
 define cbrief_next_buf()		{ cbrief_to_buf_rel(1); }
 define cbrief_prev_buf()		{ cbrief_to_buf_rel(0); }
+
+%%
+%%	show help about the keyword under the cursor
+%% 
+define cbrief_wordhelp()
+{
+	variable w, mode;
+
+	push_spot();
+	% jump to beginning of word
+	if ( isalnum(what_char()) == 0 )
+		bskip_non_word_chars();
+	bskip_word_chars();
+	push_mark();
+	
+	% copy word
+	skip_word_chars();
+	w = bufsubstr();
+
+	% restore
+%	pop_mark();
+	pop_spot();
+
+	% show help
+	if ( strlen(w) ) {
+		(mode,) = what_mode();
+#ifdef UNIX
+		if ( mode == "C" || mode == "SH" || mode == "CSH" || mode == "TCSH" )
+			unix_man(w);
+		else
+			message(strcat("On-line help: No command for mode [", mode, "]"));
+#endif
+		}
+}
 
 define cbrief_eow()				{ goto_bottom_of_window(); eol(); }
 
@@ -3030,10 +3039,14 @@ public define cbrief_cmd()
 		else if ( in[0] == '!' ) {	% run shell command, output in new buf
 			in = substr(in, 2, strlen(in) - 1);
 			err = 1; % exit
+#ifdef CBRIEF_PATCH_V5
 			save_screen();
+#endif
 			shell_perform_cmd(in, 0);
+#ifdef CBRIEF_PATCH_V5
 			restore_screen();
 			redraw_screen();
+#endif
 			}
 		else if ( in[0] == '&' ) {	% run shell command, in new term
 #ifdef UNIX
@@ -3046,10 +3059,14 @@ public define cbrief_cmd()
 				}
 			else
 				cmd = strcat(getenv("SHELL") + " -c '", in, "' &");
+#ifdef CBRIEF_PATCH_V5
 			save_screen();
+#endif
 			() = system(cmd);
+#ifdef CBRIEF_PATCH_V5
 			restore_screen();
 			redraw_screen();
+#endif
 #else
 			uerror("Not supported in this OS");
 #endif
@@ -3058,16 +3075,24 @@ public define cbrief_cmd()
 		else if ( in[0] == '<' ) {	% run shell command, output in this buf
 			in = substr(in, 2, strlen(in) - 1);
 			err = 1; % exit
+#ifdef CBRIEF_PATCH_V5
 			save_screen();
+#endif
 			run_shell_cmd(in);
+#ifdef CBRIEF_PATCH_V5
 			restore_screen();
 			redraw_screen();
+#endif
 			}
 		else if ( in[0] == '~' ) {	% run shell command
+#ifdef CBRIEF_PATCH_V5
 			save_screen();
+#endif
 			() = system(in);
+#ifdef CBRIEF_PATCH_V5
 			restore_screen();
 			redraw_screen();
+#endif
 			}
 		else if ( strncmp(in, ">>", 2) == 0 ) { % append selected text of the whole buffer to output
 			in = strtrim(substr(in, 3, strlen(in) - 2));
@@ -3108,7 +3133,9 @@ public define cbrief_cmd()
 		else if ( in[0] == '|' ) {	% write selected text of the whole buffer to output (throu pipe)
 			in = strtrim(substr(in, 2, strlen(in) - 1));
 			if ( file_status(in) == 0 ) {
+#ifdef CBRIEF_PATCH_V5
 				save_screen();
+#endif
 				if ( is_visible_mark() )
 					pipe_region(in);
 				else {
@@ -3118,8 +3145,10 @@ public define cbrief_cmd()
 					pop_mark(0);
 					pop_spot();
 					}
+#ifdef CBRIEF_PATCH_V5
 				restore_screen();
 				redraw_screen();
+#endif
 				}
 			else
 				uerrorf("Access denied. [%s]", in);
@@ -3352,6 +3381,7 @@ static variable _keymap = {
 	%%  shift-arrow, alt-arrow = quick change window (Borland/KEYBOARD.H)
 	%%
 	{ "cbrief_change_win",			Key_F1 },		% Brief Manual: Change Window
+	{ "cbrief_wordhelp",			Key_Ctrl_F1 },	% on-line help on word
 	{ "cbrief_resize_win",			Key_F2 },		% Brief Manual: Resize Window
 	{ "one_window",					Key_Alt_F2 },	% Brief Manual: Zoom
 	{ "cbrief_create_win",			Key_F3 },		% Brief Manual: Create Window
@@ -3694,4 +3724,5 @@ cbrief_keys();
 
 % run hooks
 runhooks("keybindings_hook", _Jed_Emulation);
+
 

@@ -134,7 +134,6 @@ else if ( term == "xterm" || term == "xterm-color" || term == "xterm-256color" )
 	Key_Ctrl_PgDn = "[6;5~";
 	Key_Ctrl_Home = "[1;5H";
 	Key_Ctrl_End = "[1;5F";
-
 	Key_F1 = "OP";
 	Key_Shift_F1 = "[1;2P";
 	Key_Alt_F1 = "[1;3P";
@@ -215,7 +214,8 @@ else if ( term == "linux" ) {
 	Key_KP_Add = "Ol";
 	Key_KP_Multiply = "OR";
 	}
-else if ( term == "screen" ) { % screen/tmux
+% screen/tmux
+else if ( term == "screen" || term == "screen-color" || term == "screen-256color" ) {
 	Key_BS = "";
 	Key_Alt_BS = "";
 	Key_Ctrl_BS = "";
@@ -225,53 +225,53 @@ else if ( term == "screen" ) { % screen/tmux
 %	Key_Ctrl_Right = "";
 
 	Key_F1 = "OP";
-	Key_Ctrl_F1 = "[25^";
-	Key_Alt_F1 = "[25!";
+	Key_Ctrl_F1 = "[1;5P";
+	Key_Alt_F1 = "OP";
 	Key_Shift_F1 = "[25~";
 	Key_F2 = "OQ";
-	Key_Alt_F2 = "[26!";
-	Key_Ctrl_F2 = "[26^";
-	Key_Shift_F2 = "[26~";
+	Key_Alt_F2 = "OQ";
+	Key_Ctrl_F2 = "[1;5Q";
+	Key_Shift_F2 = "[24~";
 	Key_F3 = "OR";
-	Key_Alt_F3 = "[29!";
-	Key_Ctrl_F3 = "[29^";
-	Key_Shift_F3 = "[29~";
+	Key_Alt_F3 = "OR";
+	Key_Ctrl_F3 = "[1;5R";
+	Key_Shift_F3 = "[1;2P";
 	Key_F4 = "OS";
-%	Key_Alt_F4 = "";
-%	Key_Ctrl_F4 = "";
-	Key_Shift_F4 = "[29~";
+	Key_Alt_F4 = "OS";
+	Key_Ctrl_F4 = "[1;5S";
+	Key_Shift_F4 = "[1;2Q";
 	Key_F5 = "[15~";
-	Key_Alt_F5 = "[31!";
-	Key_Ctrl_F5 = "[31^";
-	Key_Shift_F5 = "[31~";
+	Key_Alt_F5 = "[15~";
+	Key_Ctrl_F5 = "[15;5~";
+	Key_Shift_F5 = "[1;2R";
 	Key_F6 = "[17~";
-	Key_Alt_F6 = "[32!";
-	Key_Ctrl_F6 = "[32^";
-	Key_Shift_F6 = "[32~";
+	Key_Alt_F6 = "[17~";
+	Key_Ctrl_F6 = "[17;5~";
+	Key_Shift_F6 = "[1;2S";
 	Key_F7 = "[18~";
-	Key_Alt_F7 = "[33!";
-	Key_Ctrl_F7 = "[33^";
-	Key_Shift_F7 = "[33~";
+	Key_Alt_F7 = "[18~";
+	Key_Ctrl_F7 = "[18;5~";
+	Key_Shift_F7 = "[15;2~";
 	Key_F8 = "[19~";
-	Key_Alt_F8 = "[35!";
-	Key_Ctrl_F8 = "[34^";
-	Key_Shift_F8 = "[34~";
+	Key_Alt_F8 = "[19~";
+	Key_Ctrl_F8 = "[19;5~";
+	Key_Shift_F8 = "[17;2~";
 	Key_F9 = "[20~";
-%	Key_Alt_F9 = "";
-	Key_Ctrl_F9 = "[35^";
-	Key_Shift_F9 = "[35~";
+	Key_Alt_F9 = "[20~";
+	Key_Ctrl_F9 = "[20;5~";
+	Key_Shift_F9 = "[18;2~";
 	Key_F10 = "[21~";
-	Key_Alt_F10 = "[36!";
-	Key_Ctrl_F10 = "[36^";
-	Key_Shift_F10 = "[36~";
+	Key_Alt_F10 = "[21~";
+	Key_Ctrl_F10 = "[21;5~";
+	Key_Shift_F10 = "[19;2~";
 	Key_F11 = "[23~";
-%	Key_Alt_F11 = "";
-%	Key_Ctrl_F11 = "";
-%	Key_Shift_F11 = "";
+	Key_Alt_F11 = "[23~";
+	Key_Ctrl_F11 = "[23;5~";
+	Key_Shift_F11 = "[23;2~";
 	Key_F12 = "[24~";
-%	Key_Alt_F12 = "";
-%	Key_Ctrl_F12 = "";
-%	Key_Shift_F12 = "";
+	Key_Alt_F12 = "[24~";
+	Key_Ctrl_F12 = "[24;5~";
+	Key_Shift_F12 = "[24;2~";
 
 	Key_KP_Subtract = "OS";
 	Key_KP_Add = "Ol";
