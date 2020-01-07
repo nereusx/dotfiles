@@ -448,31 +448,120 @@ define cbrief_bufed ()
 }
 
 #ifdef CBRIEF_PATCH_V5
+%
+private variable table;
+
+%
+define cbrief_bufpu_hook(item, code, key)
+{	
+	variable i, count, buf, pbuf, s;
+	
+	if ( code == 'd' ) { % delete item
+		buf = table[item];
+		count = length(table);
+		for ( i = item; i < count - 1; i ++ )
+			table[i] = table[i+1];
+		delbuf(buf);
+		}
+%	else if ( code == 's' ) % select item
+%		sw2buf(table[item]);
+	else if ( code == 'k' ) { % unhandled key
+		if ( key == 'w' || key == 'W' ) {
+			pbuf = whatbuf();
+			buf = table[item];
+			setbuf(buf);
+			save_buffer();
+			setbuf(pbuf);
+			return -2; % redraw
+			}
+		else if ( key == 0x168 ) { % Alt+H
+			s = "\
+ENTER   : Select buffer\n\
+ESC,q,Q : Close window\n\
+w,W     : Write buffer\n\
+DEL,d,D : Delete buffer\n\
+";
+			msgbox(" Help ", s, 0);
+			}
+		else if ( key > 0x100 || key < 0 )
+			msgbox(" Key ", sprintf("Key: 0x%X", key), 0);
+		}
+	return 0;
+}
+
 % using popup menu to change buffer
 define cbrief_bufpu()
 {
-	variable s, e, n = 0, ml = 0, count;
+	variable s, i, n, ml, count, found;
+	variable list, e, fs;
+	variable file, dir, name, flags;
 	
 	prev_buf = whatbuf();
-	cbuf_list = {};
-	_build_list();
-	% calculate the maximum width of buffer's name
-	count = 0;
-	foreach e ( cbuf_list ) {
-		if ( strcmp(e[2], prev_buf) == 0 )
-			n = count;
-		if ( strlen(e[2]) > ml )
-			ml = strlen(e[2]);
-		count ++;
-		}
-	% build options string
-	s = "";
-	foreach e ( cbuf_list )
-		s = sprintf("%s%-*s %s\n", s, ml, e[2], e[4]);
-	% call popup menu
-	n = popup_menu(s, n);
-	if ( n >= 0 ) % if !cancel switch to buffer
-		sw2buf(cbuf_list[n][2]);
+
+	do {
+		% get the list of buffers
+		count = buffer_list();
+		if ( count == 0 ) return;
+		list  = __pop_list(count);
+		
+		% remove hidden buffers
+		if ( cbuf_hide ) {
+			found = 0;
+			do {
+				for ( i = 0; i < count; i ++ ) {
+					found = 0;
+					if ( list[i][0] == ' ' ) {
+						list_delete(list, i);
+						count --;
+						found = 1;
+						break;
+						}
+					foreach s ( ignore_list )
+						if ( strcmp(list[i], s) == 0 ) {
+							list_delete(list, i);
+							count --;
+							found = 1;
+							break;
+							}
+					if ( found ) break;
+					}		
+				} while ( found );
+			}
+		if ( count == 0 ) return;
+	
+		% convert to table and sort it
+		table = list_to_array(list);
+		table = table[array_sort(table, &strcmp)];
+	
+		% for each buffer
+		n  = 0;
+		ml = 0;
+		for ( i = 0; i < count; i ++ ) {
+			% default selected file
+			if ( n == 0 && strcmp(table[i], prev_buf) == 0 )	n = i;
+			% calculate the maximum width of buffer's name
+			if ( strlen(table[i]) > ml )		ml = strlen(table[i]);
+			}
+	
+		% build options string
+		s = "";
+		for ( i = 0; i < count; i ++ ) {
+			setbuf(table[i]);
+			(file, dir, name, flags) = getbuf_info();
+			fs = "-";
+			if ( flags & 1 ) fs = "*";
+			if ( flags & 8 ) fs = "R"; % read-only
+			if ( flags & 4 ) fs = "!"; % modified in disk
+			s = sprintf("%s%-*s %s %s\n", s, ml, table[i], fs, path_concat(dir, file));
+			}
+		setbuf(prev_buf);
+		
+		% call popup menu
+		n = popup_menu5(1, s, n, " buffer list ", " alt-h: help ", "cbrief_bufpu_hook");
+		if ( n >= 0 ) % if !cancel switch to buffer
+			sw2buf(table[n]);
+		} while ( n < -1 );
+	
 	redraw_screen();
 }
 #endif

@@ -1905,9 +1905,20 @@ define cbrief_dos()
 
 	if ( cline == "" )
 		cbrief_new_term();
-	else
+	else {
+#ifdef CBRIEF_PATCH_V5
+		save_screen();
 		() = system(cline);
+		restore_screen();
+#else
+		() = system(cline);
+#endif
+		}
+#ifdef CBRIEF_PATCH_V5
+	redraw_screen();
+#else
 	update(0);
+#endif
 }
 
 %% Alt+Z
@@ -2686,6 +2697,14 @@ private variable mac_list = {
 	{ "uncomment_block",	&uncomment_region_or_line,	NO_ARG },
 % uncomment_block
 %	Uncomment block
+
+	{ "bufed",				&bufed,						C_LINE },
+% bufed
+%	Jed's bufed macro (buffer manager).
+
+	{ "cbufed",				&cbrief_bufed,				C_LINE },
+% cbufed
+%	CBRIEF's bufed macro (buffer manager).
 
 	{ "dired",				&dired,						C_LINE },
 % dired

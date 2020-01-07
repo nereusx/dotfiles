@@ -220,7 +220,8 @@ else if ( term == "screen" || term == "screen-color" || term == "screen-256color
 	Key_Alt_BS = "";
 	Key_Ctrl_BS = "";
 %	Key_Shift_BS = "";
-	Key_Shift_Tab = "\e\t";
+%	Key_Shift_Tab = "\e\t";
+	Key_Shift_Tab = "[Z";
 %	Key_Ctrl_Left = "";
 %	Key_Ctrl_Right = "";
 
