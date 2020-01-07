@@ -1509,12 +1509,46 @@ private define cbrief_file_do(argc, argv, prompt, do_f)
 		}
 }
 
+#ifdef CBRIEF_PATCH_V5
+%% this is the completion of filenames (the TAB in command-line)
+public define ff_exp(filepat)
+{
+	variable s, idx;
+	variable count, list, table, i;
+	variable dname = path_dirname(filepat);
+
+	count = directory(strcat(filepat, "*"));
+	if ( count ) {
+		list  = __pop_list(count);
+		table = list_to_array(list);
+		table = table[array_sort(table, &strcmp)];
+		s = "";
+		for ( i = 0; i < count; i ++ )
+			s = sprintf("%s%s\n", s, table[i]);
+		if ( strlen(s) ) {
+			idx = 0;
+			idx = popup_menu(s, idx);
+			if ( idx >= 0 ) 
+				return (path_concat(dname, table[idx]), 1);
+			}
+		}
+	return 0;
+}
+#endif
+
 %% edit_file(fname) -- open file
 define cbrief_edit_file()
 {
 	variable argv = (_NARGS) ? () : NULL;
 	variable n, argc = _argc(argv);
+	
+#ifdef CBRIEF_PATCH_V5
+	set_expansion_hook("ff_exp");
 	cbrief_file_do(argc, argv, "File to edit:", &find_file);
+%%	set_expansion_hook("");
+#else
+	cbrief_file_do(argc, argv, "File to edit:", &find_file);
+#endif
 }
 
 %% read_file(fname) -- inserts file into buffer
@@ -1522,7 +1556,13 @@ define cbrief_read_file()
 {
 	variable argv = (_NARGS) ? () : NULL;
 	variable n, argc = _argc(argv);
+#ifdef CBRIEF_PATCH_V5
+	set_expansion_hook("ff_exp");
 	cbrief_file_do(argc, argv, "File to read:", &insert_file);
+%%	set_expansion_hook("");
+#else
+	cbrief_file_do(argc, argv, "File to read:", &insert_file);
+#endif
 }
 
 %% change directory
@@ -2966,6 +3006,7 @@ define cbrief_split(in, delim, flags)
 %%	m x   = BRIEF syntax
 %%
 private variable cin_opts = "";
+private variable cin_hist_file = jed_home + "/.hist_cmdline";
 
 private define cbrief_build_opts()
 {
@@ -3006,9 +3047,11 @@ public define cbrief_calc()
 }
 
 %%
+%%	Command line (F10)
+%%	
 public define cbrief_cmd()
 {
-	variable in, argv, argl, i, l, argc, cmd, err, e;
+	variable in, argv, argl, i, l, argc, cmd, err, e, fp;
 
 	if ( cin_opts == "" )
 		cbrief_build_opts();
@@ -3019,6 +3062,15 @@ public define cbrief_cmd()
 			cbrief_minimap(1);
 			in = read_with_completion(cin_opts, "Command:", "", "", 's');
 			cbrief_minimap(0);
+
+			% store to histrory
+%			fp = fopen(cin_hist_file, "a");
+%			if ( fp != NULL ) {
+%				in = strtrim(in);
+%				if ( strlen(in) )
+%					fputs(in, fp);
+%				fclose(fp);
+%			   }
 			}
 		
 		err = 0;
@@ -3414,7 +3466,7 @@ static variable _keymap = {
 	{ "cbrief_buf_list",			"\eb" },		% Alt B -- Brief Manual: Buffer List (buffer managment list)
 	{ "cbrief_mark_column",   		"\ec" },		% Alt C -- Brief Manual: Column Mark; (BRIEF 2.1 = toggle case search)
 	{ "delete_line",           		"\ed" },		% Alt D -- Brief Manual: Delete Line
-	{ "find_file",					"\ee" },		% Alt E -- Brief Manual: Edit File (open file)
+	{ "cbrief_edit_file",			"\ee" },		% Alt E -- Brief Manual: Edit File (open file)
 	{ "cbrief_disp_file",			"\ef" },		% Alt F -- Brief Manual: Display File Name
 	{ "goto_line_cmd",         		"\eg" },		% Alt G -- Brief Manual: Go To Line
 	{ "cbrief_help",				"\eh" },		% Alt H -- Brief Manual: Help

@@ -1,4 +1,8 @@
+/home/nikosc/.jed/awk.sl
 /home/nikosc/.jed/cbrief.sl
+/home/nikosc/.jed/.hist_cmdline
+/home/nikosc/.jed/awk.txt
+/home/nikosc/.jed/awk.otl
 /home/nikosc/.tcshrc
 /home/nikosc/.jed/terminal.sl
 /home/nikosc/.jed/hyperman.sl
@@ -9,7 +13,3 @@
 /home/nikosc/.jed/popup-test.sl
 /usr/src/jed/src/ledit.c
 /usr/src/jed/src/cbrief.c
-/usr/src/jed/lib/acompile.sl
-/usr/src/jed/lib/brief.sl
-/usr/src/jed/src/config.h
-/usr/src/jed/src/keymap.c
