@@ -1511,7 +1511,7 @@ private define cbrief_file_do(argc, argv, prompt, do_f)
 
 #ifdef CBRIEF_PATCH_V5
 %% this is the completion of filenames (the TAB in command-line)
-public define ff_exp(filepat)
+public define cbrief_file_completion(filepat)
 {
 	variable s, idx;
 	variable count, list, table, i;
@@ -1543,9 +1543,9 @@ define cbrief_edit_file()
 	variable n, argc = _argc(argv);
 	
 #ifdef CBRIEF_PATCH_V5
-	set_expansion_hook("ff_exp");
+	set_expansion_hook("cbrief_file_completion");
 	cbrief_file_do(argc, argv, "File to edit:", &find_file);
-%%	set_expansion_hook("");
+	set_expansion_hook("");
 #else
 	cbrief_file_do(argc, argv, "File to edit:", &find_file);
 #endif
@@ -1557,9 +1557,9 @@ define cbrief_read_file()
 	variable argv = (_NARGS) ? () : NULL;
 	variable n, argc = _argc(argv);
 #ifdef CBRIEF_PATCH_V5
-	set_expansion_hook("ff_exp");
+	set_expansion_hook("cbrief_file_completion");
 	cbrief_file_do(argc, argv, "File to read:", &insert_file);
-%%	set_expansion_hook("");
+	set_expansion_hook("");
 #else
 	cbrief_file_do(argc, argv, "File to read:", &insert_file);
 #endif

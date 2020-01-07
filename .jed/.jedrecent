@@ -1,5 +1,6 @@
-/home/nikosc/.jed/awk.sl
 /home/nikosc/.jed/cbrief.sl
+/home/nikosc/.jed/bufutils.sl
+/home/nikosc/.jed/awk.sl
 /home/nikosc/.jed/.hist_cmdline
 /home/nikosc/.jed/awk.txt
 /home/nikosc/.jed/awk.otl
@@ -12,4 +13,3 @@
 /home/nikosc/.jed/.jedrc
 /home/nikosc/.jed/popup-test.sl
 /usr/src/jed/src/ledit.c
-/usr/src/jed/src/cbrief.c
