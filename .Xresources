@@ -1,3 +1,58 @@
+!  === linux theme: 
+! blackish with transparency
+*.depth: 32
+*.background: rgba:0000/0000/0000/eeee
+*.foreground: #CCCCCC
+*.cursorColor: #d0ffd0
+*.cursorColor2: #3a803a
+*.colorBD: #e4e4e4
+
+! black
+*.color0:  #000000
+*.color8:  #686868
+! red
+*.color1:  #B21818
+*.color9:  #FF5454
+! green
+*.color2:  #18B218
+*.color10: #54FF54
+! yellow
+*.color3:  #B26818
+*.color11: #FFFF54
+! blue
+!urxvt*color4:  #1818B2
+!urxvt*color4:  #1818FF
+*.color4:  #18187F
+!urxvt*color12: #5454FF
+*.color12: #7474FF
+! purple
+*.color5:  #B218B2
+*.color13: #FF54FF
+! cyan
+*.color6:  #18B2B2
+*.color14: #54FFFF
+! white
+*.color7:  #B2B2B2
+*.color15: #FFFFFF
+!  === /home/nikosc/.xres/dmenu.res: 
+! Demnu
+dmenu.selforeground:      #d8dee9
+dmenu.background:         #2e3440
+dmenu.selbackground:      #bf616a
+dmenu.foreground:         #d8dee9
+!  === /home/nikosc/.xres/rofi.res: 
+! rofi
+rofi.terminal: st
+rofi.location: 2
+rofi.yoffset: 250
+rofi.lines: 5
+rofi.columns: 4
+rofi.font: Noto Sans 14
+rofi.bw: 10
+rofi.padding: 0
+rofi.eh: 1
+rofi.separator-style: solid
+rofi.hide-scrollbar: true
 !  === /home/nikosc/.xres/urxvt.res: 
 !!	URXVT
 !!	http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.7.html
@@ -160,8 +215,8 @@ xjed*Geometry: 160x40+100+100
 ! XSG 7x16B
 !xjed*font: -xsg-xsg fixed 167-*-*-*-*-*-*-*-*-*-*-iso10646-1
 
-! XSG Term 189
-xjed*font: -xsg-xsg term 189-*-*-*-*-*-*-*-*-*-*-iso10646-1
+! XSG Term 209
+xjed*font: -xsg-xsg term 209-bold-r-normal--20-140-100-100-p-79-iso10646-1
 !  === /home/nikosc/.xres/xterm.res: 
 !!	XTERM
 
