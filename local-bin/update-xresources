@@ -1,15 +1,41 @@
-#!/bin/tcsh -f
+#!/bin/tcsh
 
 # resources directory
-set xres=${HOME}/.xres
+set xres = ${HOME}/.xres
 
 # backup directory
 if ( ! $?backup ) then
-	set backup=${HOME}
+	set backup = ${HOME}
 endif
 
 # default colorset
-set colorset=linux
+set colorset = linux
+
+###
+while ( $# )
+	switch ( $1 )
+	case "-h":
+	case "--help":
+		echo "update-xresources [ -c colorset ]"
+		exit 1
+	case "-v":
+	case "--version":
+		echo "update-xresources version 1.0"
+		exit 1
+	case "-c":
+		if ( $# > 1 ) then
+			set colorset = $2
+			if ( -e "${xres}/${colorset}.cset" ) then
+				echo "$colorset theme selected"
+			else
+				echo "${xres}/${colorset}.cset file missing"
+			endif
+		else
+			echo "colorset parameter missing"
+		endif
+	endsw
+	shift
+end
 
 ###
 
@@ -20,7 +46,7 @@ if ( -d ${xres} ) then
 	endif
 	
 	# set color theme
-	if ( -e ${xres}/${colorset}.cset ) then
+	if ( -e "${xres}/${colorset}.cset" ) then
 		echo "!  === ${colorset} theme: " > ~/.Xresources
 		cat ${xres}/${colorset}.cset >> ~/.Xresources
 	else
