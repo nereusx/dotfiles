@@ -50,39 +50,6 @@ urxvt.scrollBar:false
 urxvt.depth: 32
 urxvt.background: rgba:0000/0000/0000/eeee
 
-!!	URXVT Linux Colors
-
-!! default foreground & background colors
-urxvt*foreground: #CCCCCC
-
-! black
-urxvt*color0:  #000000
-urxvt*color8:  #686868
-! red
-urxvt*color1:  #B21818
-urxvt*color9:  #FF5454
-! green
-urxvt*color2:  #18B218
-urxvt*color10: #54FF54
-! yellow
-urxvt*color3:  #B26818
-urxvt*color11: #FFFF54
-! blue
-!urxvt*color4:  #1818B2
-!urxvt*color4:  #1818FF
-urxvt*color4:  #18187F
-!urxvt*color12: #5454FF
-urxvt*color12: #7474FF
-! purple
-urxvt*color5:  #B218B2
-urxvt*color13: #FF54FF
-! cyan
-urxvt*color6:  #18B2B2
-urxvt*color14: #54FFFF
-! white
-urxvt*color7:  #B2B2B2
-urxvt*color15: #FFFFFF
-
 urxvt*visualBell: false
 urxvt*mapAlert: false
 

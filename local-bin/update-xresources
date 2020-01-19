@@ -9,7 +9,7 @@ if ( ! $?backup ) then
 endif
 
 # default colorset
-set colorset = linux
+set colorset = default
 
 ###
 while ( $# )
@@ -27,6 +27,7 @@ while ( $# )
 			set colorset = $2
 			if ( -e "${xres}/${colorset}.cset" ) then
 				echo "$colorset theme selected"
+				ln -sf "${xres}/${colorset}.cset" "${xres}/default.cset"
 			else
 				echo "${xres}/${colorset}.cset file missing"
 			endif
