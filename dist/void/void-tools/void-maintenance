@@ -54,6 +54,10 @@ ldconfig
 # update system
 if [ $online -eq 1 ]; then
 	cnt=$((cnt+1))
+	echo "${title}${cnt}. Upgrade xbps${rst}"
+	xbps-install -Suy xbps
+
+	cnt=$((cnt+1))
 	echo "${title}${cnt}. Upgrade packages${rst}"
 	xbps-install -Suy
 
