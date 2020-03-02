@@ -54,12 +54,16 @@ ldconfig
 # update system
 if [ $online -eq 1 ]; then
 	cnt=$((cnt+1))
-	echo "${title}${cnt}. Upgrade xbps${rst}"
-	xbps-install -Suy xbps
+	echo "${title}${cnt}. Synchronize package repos${rst}"
+	xbps-install -S
+	
+	cnt=$((cnt+1))
+	echo "${title}${cnt}. Update xbps${rst}"
+	xbps-install -uy xbps
 
 	cnt=$((cnt+1))
 	echo "${title}${cnt}. Upgrade packages${rst}"
-	xbps-install -Suy
+	xbps-install -uy
 
 	if [ -e /usr/bin/xlocate ]; then
 		cnt=$((cnt+1))
