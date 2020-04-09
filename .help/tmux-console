@@ -1,0 +1,7 @@
+#!/bin/cat
+Create window:               Alt+ENTER
+Kill window:                 Alt+/
+Toggle Zoom:                 Alt+Ctrl+'z'
+Select prev/next window:     Alt+, / Alt+.
+Split vert/horz/delete:      Alt+- / Alt+= / Alt+Shift-/
+Select prev/next pane:       Ctrl-, / Ctrl+.
