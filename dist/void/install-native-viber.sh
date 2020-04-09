@@ -18,6 +18,7 @@ chmod +x Makefile.PL
 ./Makefile.PL
 make
 make install
+make clean
 cd -
 
 ### install viber
