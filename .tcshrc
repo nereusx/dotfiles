@@ -328,20 +328,17 @@ bindkey "\033Om" kill-region
 bindkey "\033Ok" copy-region-as-kill
 bindkey "\033Op" yank
 
+bindkey "[3~" delete-char
 if ( $TERM == "rxvt" || $TERM == "rxvt-unicode" || $TERM == "rxvt-unicode-256color" ) then
 	bindkey "\033[8~" end-of-line
 	bindkey "[2~" overwrite-mode
-	bindkey "[3~" delete-char
 else if ( $TERM == "screen" || $TERM == "screen-256color" ) then
 	bindkey "[2~" overwrite-mode
-	bindkey "[3~" delete-char
 else if ( $TERM == "st" || $TERM == "st-256color" ) then
 	bindkey "\033[P" delete-char
 else if ( $TERM == "linux" ) then
 	bindkey '[1~' beginning-of-line
 	bindkey '[4~' end-of-line
-else
-	bindkey "\033[3~" delete-char
 endif
 
 # SSH
