@@ -10,7 +10,6 @@ if wget https://downloads.sourceforge.net/project/alien-pkg-convert/release/${pk
 	make
 	make install
 	make clean
-	cd ..
-	rm ${pkg}.tar.xz
+	rm ../${pkg}.tar.xz
 fi
 cd -
