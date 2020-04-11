@@ -1,0 +1,2 @@
+#!/bin/sh
+/opt/Movim-linux-x64/movim &
