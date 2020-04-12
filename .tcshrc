@@ -604,11 +604,11 @@ if ( -X git ) then
 	alias github-sync	'git fetch upstream && git checkout master && git merge upstream/master'
 #	alias github-clone	'set repo="\!*"; git clone $repo && git remote add upstream $repo'
 	#
-	set e=`git help -a | awk '/  [A-Za-z]*/{print $1}'`
-	complete git \
-		'n/checkout/`git-bra`/' \
-		'n/branch/(-d -f -m -l --show-current switch `git-bra`)/' \
-		"p/1/($e)/"
+#	set e=`git help -a | awk '/  [A-Za-z]*/{print $1}'`
+#	complete git \
+#		'n/checkout/`git-bra`/' \
+#		'n/branch/(-d -f -m -l --show-current switch `git-bra`)/' \
+#		"p/1/($e)/"
 endif
 
 # command line web search
