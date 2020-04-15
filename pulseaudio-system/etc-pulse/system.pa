@@ -79,6 +79,6 @@ load-module module-position-event-sounds
 #
 #	Publish all local sinks/sources using mDNS Zeroconf (avahi)
 #
-.ifexists module-zeroconf-publish.so
-load-module module-zeroconf-publish
-.endif
+#.ifexists module-zeroconf-publish.so
+#load-module module-zeroconf-publish
+#.endif
