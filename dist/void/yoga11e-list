@@ -304,6 +304,7 @@ harfbuzz-devel
 hdparm
 hexchat
 hicolor-icon-theme
+htop
 http-parser
 hunspell
 hwids
@@ -461,7 +462,6 @@ libXxf86vm
 libXxf86vm-devel
 liba52
 libaio
-libao
 libaom
 libappindicator
 libarchive
@@ -863,6 +863,7 @@ live555
 llhttp
 lm_sensors
 lmdb
+lnav
 lua
 lua-lpeg
 lua52
@@ -931,7 +932,6 @@ openssh
 openttd
 openttd-data
 opus
-opusfile
 orc
 os-prober
 p11-kit
@@ -1104,7 +1104,6 @@ smproxy
 snappy
 sonnet
 soundtouch
-sox
 spandsp
 speexdsp
 spice
