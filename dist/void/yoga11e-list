@@ -509,6 +509,7 @@ libcdr
 libcec
 libcheese
 libchmlib
+libcloudproviders
 libcmis
 libcolord
 libcpufreq
@@ -910,6 +911,7 @@ nettle
 network-manager-applet
 networkmanager-qt5
 newt
+nextcloud-client
 nghttp2
 nm-tray
 nodejs
@@ -959,6 +961,7 @@ perl-MailTools
 perl-Net-SMTP-SSL
 perl-Net-SSLeay
 perl-TimeDate
+perl-Tk
 perl-URI
 perl-XML-Parser
 phonon-qt5
@@ -1064,12 +1067,14 @@ qt5-virtualkeyboard
 qt5-wayland
 qt5-webchannel
 qt5-webengine
+qt5-webkit
 qt5-widgets
 qt5-x11extras
 qt5-xml
 qt5-xmlpatterns
 qt5pas
 qtchooser
+qtkeychain-qt5
 quazip
 rawtherapee
 re2
@@ -1121,6 +1126,7 @@ taglib
 talloc
 tar
 tcl
+tcllib
 tcsh
 terminus-font
 texlive-bin
