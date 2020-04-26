@@ -35,10 +35,10 @@ load-module module-switch-on-port-available
 ### Load audio drivers statically
 ### (it's probably better to not load these drivers manually, but instead
 ### use module-udev-detect -- see below -- for doing this automatically)
-#load-module module-alsa-sink
-#load-module module-alsa-source device=hw:1,0
-#load-module module-null-sink
-#load-module module-pipe-sink
+load-module module-alsa-sink
+load-module module-alsa-source device=hw:1,0
+load-module module-null-sink
+load-module module-pipe-sink
 
 ### Automatically load driver modules depending on the hardware available
 .ifexists module-udev-detect.so
@@ -73,13 +73,12 @@ load-module module-bluetooth-discover
 .ifexists module-esound-protocol-unix.so
 load-module module-esound-protocol-unix
 .endif
-#load-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-server
 
 ### Network access (may be configured with paprefs, so leave this commented
 ### here if you plan to use paprefs)
-load-module module-esound-protocol-tcp
-load-module module-native-protocol-tcp
-load-module module-zeroconf-publish
+#load-module module-esound-protocol-tcp
+#load-module module-native-protocol-tcp
+#load-module module-zeroconf-publish
 
 ### Load the RTP receiver module (also configured via paprefs, see above)
 #load-module module-rtp-recv
