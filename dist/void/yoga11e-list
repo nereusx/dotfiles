@@ -1,3 +1,4 @@
+CPU-X
 MesaLib-devel
 NetworkManager
 SDL
@@ -26,6 +27,7 @@ arc-theme
 aspell
 aspell-el
 aspell-en
+astyle
 at-spi2-atk
 at-spi2-atk-devel
 at-spi2-core
@@ -55,6 +57,7 @@ bamf
 base-files
 base-system
 bash
+bat
 binutils
 binutils-doc
 blackbird-themes
@@ -63,6 +66,7 @@ bluedevil
 bluez
 bluez-qt5
 boost
+botan
 breeze
 breeze-icons
 brotli
@@ -80,6 +84,7 @@ cantarell-fonts
 cblas
 celt
 cgit
+cgo
 cheese
 chromaprint
 claws-mail
@@ -130,15 +135,19 @@ dosbox
 dosfstools
 double-conversion
 dracut
+dunst
 e2fsprogs
 e2fsprogs-libs
 ebook-tools
 efibootmgr
 efitools-efi
 elfutils-devel
+emacs
+emacs-common
 enchant
 enchant2
 encodings
+enscript
 ethtool
 eudev
 eudev-libudev
@@ -152,10 +161,12 @@ faac
 faad2
 farstream
 fdk-aac
+fex
 ffmpeg
 ffmpegthumbnailer
 figlet
 file
+filelight
 filezilla
 findutils
 firefox
@@ -169,6 +180,7 @@ font-adobe-utopia-100dpi
 font-adobe-utopia-75dpi
 font-adobe-utopia-type1
 font-alias
+font-b612
 font-bh-100dpi
 font-bh-75dpi
 font-bh-lucidatypewriter-100dpi
@@ -233,7 +245,6 @@ gist
 git
 gitg
 gitk
-gjs
 glade3-devel
 glib
 glib-networking
@@ -304,6 +315,7 @@ harfbuzz-devel
 hdparm
 hexchat
 hicolor-icon-theme
+highlight
 htop
 http-parser
 hunspell
@@ -409,6 +421,7 @@ lcms2
 lcms2-devel
 lensfun
 less
+lesspipe
 lesstif
 libICE
 libICE-devel
@@ -513,6 +526,7 @@ libcloudproviders
 libcmis
 libcolord
 libcpufreq
+libcpuid
 libcracklib
 libcrypto45
 libcryptsetup
@@ -860,6 +874,8 @@ linux-firmware-nvidia
 linux-headers
 linux5.4
 linux5.4-headers
+linux5.6
+linux5.6-headers
 live555
 llhttp
 lm_sensors
@@ -884,6 +900,7 @@ mc
 mcpp
 mdadm
 mdocml
+meld
 mesa
 mesa-dri
 milou
@@ -915,6 +932,7 @@ nextcloud-client
 nghttp2
 nm-tray
 nodejs
+notepadqq
 noto-fonts-ttf
 npth
 nspr
@@ -923,6 +941,7 @@ ntp
 nvi
 ocl-icd
 oclock
+octoxbps
 okteta
 okular
 onboard
@@ -942,6 +961,7 @@ pam
 pam-base
 pam-libs
 pam_ssh
+pamixer
 pango
 pango-devel
 pango-xft
@@ -990,6 +1010,7 @@ powerdevil
 prison
 procps-ng
 psensor
+pstate-frequency
 pugixml
 pulseaudio
 purple-plugin-pack
@@ -1036,6 +1057,7 @@ qalculate
 qalculate-gtk
 qca-qt5
 qemu
+qownnotes
 qqc2-desktop-style
 qt5
 qt5-concurrent
@@ -1068,6 +1090,7 @@ qt5-wayland
 qt5-webchannel
 qt5-webengine
 qt5-webkit
+qt5-websockets
 qt5-widgets
 qt5-x11extras
 qt5-xml
@@ -1129,8 +1152,10 @@ tcl
 tcllib
 tcsh
 terminus-font
+texi2html
+texinfo
 texlive-bin
-texlive2019-bin
+texlive2020-bin
 texstudio
 thin-provisioning-tools
 threadweaver
