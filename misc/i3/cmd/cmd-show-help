@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+#	command: show-help
+#
+
+yad --text-info --filename=${HOME}/.config/i3/doc/i3-cheat-sheet.md --width=800 --height=500
