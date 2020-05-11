@@ -1,7 +1,0 @@
-#!/bin/sh
-
-dunst &
-pgrep NetworkManager > /dev/null 2>&1 && nm-applet &
-qxkb &
-
-

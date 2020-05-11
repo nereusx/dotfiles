@@ -9,11 +9,12 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+set $cmd ~/.config/i3/scripts
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 12
+font pango:XSG Fixed 167 14
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -26,20 +27,22 @@ font pango:monospace 12
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-exec --no-startup-id cmd/cmd-start-services
+exec_always --no-startup-id ~/.fehbg
+exec --no-startup-id $cmd/cmd-start-services
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec cmd/cmd-terminal
+bindsym $mod+Return exec $cmd/cmd-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec "rofi -modi drun -show drun -theme nord"
+#bindsym $mod+d exec "rofi -modi drun -show drun -theme nord"
+bindsym $mod+d exec rofi -combi-modi window#drun#run -show combi
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -137,7 +140,8 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-msg exit"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -172,13 +176,26 @@ bar {
         status_command i3status
 }
 
+# switch between workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+assign [class=Firefox|KeePassXC|qBittorrent] $ws3
+assign [class=ViberPC|Pidgin] $ws4
+assign [class="mpv"] $ws6
+
+# focus
+for_window [class="mpv"] focus
+for_window [class="URxvt"] focus
+for_window [class=feh|Lxappearance] floating enable
+
 # Arman
-exec --no-startup-id picom --config ~/.config/picom/picom.conf
-exec --no-startup-id feh --bg-scale ~/Pictures/wallpaper/wall_1.jpg
-exec --no-startup-id numlockx on
+#exec --no-startup-id picom --config ~/.config/picom/picom.conf
+#exec --no-startup-id feh --bg-scale /usr/share/backgrounds/i-love-linux.png
+#exec --no-startup-id numlockx on
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
-bindsym $mod+Shift+/ exec cmd/cmd-show-help
+bindsym $mod+shift+h exec $cmd/cmd-show-help
 
 focus_follows_mouse no
 
@@ -186,10 +203,10 @@ bindsym XF86PowerOff exec --no-startup-id ~/.config/polybar/scripts/power_menu.s
 bindsym mod1+Control+l exec --no-startup-id i3lock-fancy-rapid 8 5
 
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id cmd/cmd-audio inc  && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id cmd/cmd-audio dec  && $refresh_i3status
-bindsym XF86AudioMute        exec --no-startup-id cmd/cmd-audio mute && $refresh_i3status
-#bindsym XF86AudioMicMute     exec --no-startup-id cmd/cmd-audio micmute && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id $cmd/cmd-audio inc  && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id $cmd/cmd-audio dec  && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id $cmd/cmd-audio mute && $refresh_i3status
+#bindsym XF86AudioMicMute     exec --no-startup-id $cmd/cmd-audio micmute && $refresh_i3status
 
 #bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse sset Master 5%+
 #bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse sset Master 5%-
@@ -205,7 +222,7 @@ bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
 #exec --no-startup-id openfortigui
 #exec --no-startup-id blueman-tray
 #exec --no-startup-id copyq
-exec --no-startup-id ~/.config/i3/specific-workspace-startup-apps.sh
+exec --no-startup-id ~/.config/i3/autoexec
 
 
 set $BorderCol #4C566A

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+	echo "Usage : $0 [{inc|dec|set|get}]"
+	exit 1
+fi
+if [ $# -gt 1 ]; then
+	par="$2"
+fi
+
+case "$1" in
+inc)
+	par=${par-10}
+	xbacklight -inc $par ;;
+dec)
+	par=${par-10}
+	xbacklight -dec $par ;;
+set)
+	par=${par-100}
+	xbacklight -set $par ;;
+get)
+	xbacklight -get ;;
+esac
+

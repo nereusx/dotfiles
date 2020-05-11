@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ -x /usr/bin/picom ] && picom --config ~/.config/picom/picom.conf &
+[ -x /usr/bin/dunst ] && dunst &
+pgrep NetworkManager > /dev/null 2>&1 && nm-applet &
+[ -x /usr/bin/qxkb  ] && qxkb &
+
+

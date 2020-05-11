@@ -1,3 +1,4 @@
 #!/bin/sh
 
 TERMINAL=${TERMINAL-urxvt}
+$TERMINAL
