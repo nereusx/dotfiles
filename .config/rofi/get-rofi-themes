@@ -1,0 +1,7 @@
+#!/bin/sh
+git clone https://github.com/davatorium/rofi-themes
+cd rofi-themes
+./install.sh
+cd ..
+rm -rf rofi-themes
+echo "run rofi-theme-selector"
