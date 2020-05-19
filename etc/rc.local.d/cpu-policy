@@ -1,0 +1,2 @@
+#!/bin/sh
+cpufreq-set -g performance
