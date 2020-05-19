@@ -1,3 +1,3 @@
 #!/bin/sh
-xset r delay 500 30
+xset r rate 500 30
 
