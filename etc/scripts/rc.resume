@@ -1,0 +1,9 @@
+#!/bin/sh
+
+list=$(ls /etc/scripts/resume/*)
+for f in $list; do
+	if [ -x $f ]; then
+		echo "rc.resume: $f"
+		$f
+	fi
+done

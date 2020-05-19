@@ -1,0 +1,3 @@
+#!/bin/sh
+# turn on keyboard light
+light -s sysfs/leds/tpacpi::kbd_backlight  -S 100
