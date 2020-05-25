@@ -1,0 +1,5 @@
+# xset s blank
+xset s off
+# xset s 900 1200
+xset +dpms
+xset dpms 900 1200 1800
