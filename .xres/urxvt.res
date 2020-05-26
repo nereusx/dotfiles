@@ -21,6 +21,9 @@ urxvt.geometry: 160x40
 
 urxvt.reverseVideo: false
 
+! For TMUX: remove shift+pgup
+urxvt.saveLines: 0
+
 ! --- --- --- --- --- ---
 
 urxvt.iconFile: /usr/share/icons/urxvt-icon.png
