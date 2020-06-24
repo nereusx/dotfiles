@@ -1,9 +1,9 @@
 #!/bin/sh
 
-list=$(ls /etc/scripts/xorg/*)
+list=$(ls /etc/scripts/suspend/*)
 for f in $list; do
 	if [ -x $f ]; then
-		echo "rc.xorg-start: $f"
+		echo "rc.suspend: $f"
 		$f
 	fi
 done

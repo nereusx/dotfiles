@@ -1,0 +1,9 @@
+#!/bin/sh
+
+list=$(ls /etc/scripts/xorg/*)
+for f in $list; do
+	if [ -x $f ]; then
+		echo "rc.xorg: $f"
+		$f
+	fi
+done
