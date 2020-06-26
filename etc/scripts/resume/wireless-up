@@ -1,2 +1,3 @@
 #!/bin/sh
 ifconfig wlan0 up
+dhclient wlan0
