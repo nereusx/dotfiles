@@ -7,3 +7,4 @@ for f in $list; do
 		$f
 	fi
 done
+echo "rc.resume: done"

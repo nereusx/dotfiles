@@ -1,9 +1,10 @@
 #!/bin/sh
 
-list=$(ls /etc/scripts/rclocal/*)
+list=$(ls /etc/scripts/startup/*)
 for f in $list; do
 	if [ -x $f ]; then
 		echo "rc.local: $f"
 		$f
 	fi
 done
+echo "rc.local: done"
