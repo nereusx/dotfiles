@@ -60,11 +60,13 @@ There are many utilities to keep all those in working order.
 
 ## Keys TMUX / XWM
 
-Shift-arrows = tmux: moving on windows
-Super-arrows = wm: moving on virtual desktops
-Super-digit  = wm: select virtual desktop
-Super-Z      = wm: toggle zoom
-Super-F      = wm: toggle fullscreen
+	Alt+Enter    = tmux: create window
+	Shift-arrows = tmux: moving on windows
+
+	Super-arrows = wm: moving on virtual desktops
+	Super-digit  = wm: select virtual desktop
+	Super-Z      = wm: toggle zoom
+	Super-F      = wm: toggle fullscreen
 
 ## Notes
 1. local-bin could be installed at ~/.bin instead of /usr/local/bin
