@@ -58,6 +58,12 @@ There are many utilities to keep all those in working order.
 * with minor exception like joe, where I use WordStar keys
 * My shell is the **tcsh**, so .tcshrc is last version, the other shells are follow... Also, install `tcsh` before use anything.
 
+## Keys TMUX / XWM
+
+Shift-arrows = tmux: moving on windows
+Super-arrows = wm: moving on virtual desktops
+Super-digit  = wm: select virtual desktop
+
 ## Notes
 1. local-bin could be installed at ~/.bin instead of /usr/local/bin
 1. all are free under GPL; a few are not mine
