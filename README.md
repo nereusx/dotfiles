@@ -62,11 +62,20 @@ There are many utilities to keep all those in working order.
 
 	Alt+Enter    = tmux: create window
 	Shift-arrows = tmux: moving on windows
+	more on tmux see ~/.tmux/* files
 
 	Super-arrows = wm: moving on virtual desktops
 	Super-digit  = wm: select virtual desktop
 	Super-Z      = wm: toggle zoom
 	Super-F      = wm: toggle fullscreen
+	Super-D      = wm: drun (or rofi)
+	Super-L      = wm: lock
+	Super-X      = wm: xkill
+	Super-Q      = wm: close window
+	Super-T      = wm: terminal
+	Super-E      = wm: file manager
+	Super-M      = wm: mail client
+	Super-W      = wm: web browser
 
 ## Notes
 1. local-bin could be installed at ~/.bin instead of /usr/local/bin
