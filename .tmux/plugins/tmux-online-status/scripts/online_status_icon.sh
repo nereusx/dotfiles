@@ -7,8 +7,8 @@ offline_option_string="@offline_icon"
 ping_timeout_string="@ping_timeout"
 route_to_ping_string="@route_to_ping"
 
-online_icon="✔"
-offline_icon="❌ "
+online_icon="1"
+offline_icon="0"
 ping_timeout_default="1"
 route_to_ping_default="1.1.1.1"
 
