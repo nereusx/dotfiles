@@ -62,9 +62,11 @@ There are many utilities to keep all those in working order.
 
 	Alt+Enter    = tmux: create window
 	Shift-arrows = tmux: moving on windows
+	Alt-arrows   = tmux: moving on panes
 	more on tmux see ~/.tmux/* files
 
 	Super-arrows = wm: moving on virtual desktops
+	Alt+Tab      = wm: remains: cycling windows
 	Super-digit  = wm: select virtual desktop
 	Super-Z      = wm: toggle zoom
 	Super-F      = wm: toggle fullscreen
