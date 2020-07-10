@@ -1,7 +1,11 @@
 #!/bin/sh
+
+vers=8.95
+
+##
 cd /usr/src
-pkg=alien_8.95
-pkgdir=alien-8.95
+pkg=alien_$vers
+pkgdir=alien-$vers
 if wget https://downloads.sourceforge.net/project/alien-pkg-convert/release/${pkg}.tar.xz; then
 	tar xvf ${pkg}.tar.xz
 	cd ${pkgdir}
