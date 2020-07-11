@@ -18,9 +18,20 @@ cd /usr/src
 # cd -
 
 ### install viber
+
+echo '*** downloading...'
 wget https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb
+
+echo '*** convert to tar.gz ...'
 alien -t --scripts viber.deb
-tar xvfz viber-*.tgz -C /
+
+read -p "*** install (y/N) ? " yn
+case $yn in
+[yY]* )
+	tar xvfz viber-*.tgz -C /
+	break;;
+esac
+
 rm viber.deb viber-*.tgz
 
 ### run it
