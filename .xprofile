@@ -1,0 +1,14 @@
+# keybaord
+xset r rate 500 30
+
+# screensaver
+xset s off
+xset +dpms
+xset dpms 900 1200 1800
+
+# ThinkPad synaptics input driver fix
+synclient TapButton1=1
+synclient TapButton2=3
+synclient TapButton3=2
+synclient VertEdgeScroll=1
+synclient HorizTwoFingerScroll=1
