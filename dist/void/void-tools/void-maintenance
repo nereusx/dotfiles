@@ -140,6 +140,7 @@ if [ -e /usr/bin/updatedb ]; then
 fi
 
 ## SSD trim
+## use discard option in fstab
 #if [ -e /usr/bin/fstrim ]; then
 #	cnt=$((cnt+1))
 #	echo "${title}${cnt}. FS-trim SSD${rst}"
