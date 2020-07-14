@@ -139,13 +139,13 @@ if [ -e /usr/bin/updatedb ]; then
 	updatedb
 fi
 
-# SSD trim
-if [ -e /usr/bin/fstrim ]; then
-	cnt=$((cnt+1))
-	echo "${title}${cnt}. FS-trim SSD${rst}"
-	fstrim -v -a
-	sync
-fi
+## SSD trim
+#if [ -e /usr/bin/fstrim ]; then
+#	cnt=$((cnt+1))
+#	echo "${title}${cnt}. FS-trim SSD${rst}"
+#	fstrim -v -a
+#	sync
+#fi
 
 #
 cnt=$((cnt+1))
