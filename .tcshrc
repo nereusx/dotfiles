@@ -92,9 +92,11 @@ if ( -X 'path++' ) then
 		set npath = ( $npath /usr/games )
 	endif
 	setenv PATH `path++ $npath`
-	
+	unset npath
+
 	set mpath = ( /usr/share/man /usr/local/share/man /usr/man /usr/local/man /usr/pkg/man )
 	setenv MANPATH `path++ -e MANPATH $mpath`
+	unset mpath
 endif
 
 #
@@ -472,6 +474,7 @@ if ( -e /proc/cpuinfo ) then
 	set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
 	@ cpus ++
 	setenv MAKEFLAGS "-j$cpus"
+	unset cpus
 endif
 
 # HOW-TO: shut up KDE's debug messages; 
@@ -667,5 +670,9 @@ foreach conf ( $list )
 	if ( -r $conf ) source $conf
 end
 unset nonomatch
+
+unset e
+unset list
+unset conf
 
 # EOF
