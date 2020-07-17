@@ -1,13 +1,17 @@
 #!/bin/cat
 
 ## SWAP
-/dev/x none swap  sw                       0 0
+/dev/x none  swap  sw                       0 0
+/dev/y none  swap  sw,discard               0 0
 
 ## SSD
-/dev/x /    ext4  defaults,noatime,discard 0 1
+/dev/x /     ext4  defaults,noatime,discard 0 1
 
 ## FAT
-/dev/x /fat vfat  defaults                 0 2
+/dev/x /fat  vfat  defaults                 0 2
 
 ## TMP
-tmpfs  /tmp tmpfs defaults,nosuid,nodev    0 0
+tmpfs  /tmp  tmpfs defaults,nosuid,nodev    0 0
+
+## BIND
+/src   /dest none  bind                     0 0
