@@ -1,0 +1,4 @@
+#!/bin/sh
+TAG=`basename $0`
+find /tmp -type f -ctime +7 -delete
+logger -t $TAG "cleanup /tmp"
