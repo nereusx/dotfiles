@@ -1,17 +1,25 @@
 #!/bin/cat
 
 ## SWAP
-/dev/x none  swap  sw                       0 0
-/dev/y none  swap  sw,discard               0 0
+/dev/x none  swap  sw                            0 0
+/dev/y none  swap  sw,discard=once               0 0
 
 ## SSD
-/dev/x /     ext4  defaults,noatime,discard 0 1
+/dev/x /     ext4  defaults,noatime,discard      0 1
 
 ## FAT
-/dev/x /fat  vfat  defaults                 0 2
+/dev/x /fat  vfat  defaults                      0 2
+
+## NTFS
+/dev/x /win  nfts  rw,noauto,umask=0,allow_other 0 0
+
+# removable devices
+/dev/x /cdr  auto  noauto                        0 0
 
 ## TMP
-tmpfs  /tmp  tmpfs defaults,nosuid,nodev    0 0
+tmpfs  /tmp  tmpfs defaults,nosuid,nodev         0 0
+tmpfs  /tmp  tmpfs defaults,nosuid,nodev,size=2G 0 0
 
 ## BIND
-/src   /dest none  bind                     0 0
+/src   /dest none  bind                          0 0
+
