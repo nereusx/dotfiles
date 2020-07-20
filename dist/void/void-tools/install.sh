@@ -12,7 +12,7 @@ for f in *; do
 		ext=${f#"$bas"}
 		if [ -z "$ext" -a -x "$bas" ]; then
 			echo $f
-			cp $f "$dest/$f"
+			install -m 755 -o root -g root "$f" "$dest/$f"
 		fi
 	fi
 done
