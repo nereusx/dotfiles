@@ -7,8 +7,10 @@ xset +dpms
 xset dpms 900 1200 1800
 
 # ThinkPad synaptics input driver fix
-synclient TapButton1=1
-synclient TapButton2=3
-synclient TapButton3=2
-synclient VertEdgeScroll=1
-synclient HorizTwoFingerScroll=1
+if lsmod | grep thinkpad > /dev/null; then
+	synclient TapButton1=1
+	synclient TapButton2=3
+	synclient TapButton3=2
+	synclient VertEdgeScroll=1
+	synclient HorizTwoFingerScroll=1
+fi
