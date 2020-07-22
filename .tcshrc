@@ -470,11 +470,8 @@ foreach e ( $list )
 end
 
 # use make in so many threads as your processors
-if ( -e /proc/cpuinfo ) then
-	set cpus=`cat /proc/cpuinfo | grep processor | tail -1 | sed 's/processor.*://g'`
-	@ cpus ++
-	setenv MAKEFLAGS "-j$cpus"
-	unset cpus
+if ( -r /proc/cpuinfo ) then
+	setenv MAKEFLAGS "-j"`grep -c processor /proc/cpuinfo`
 endif
 
 # HOW-TO: shut up KDE's debug messages; 
@@ -503,10 +500,10 @@ alias xman          'xview-roff'
 
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
-	alias fortune-files	'dof -e /usr/share/fortunes/*.dat do echo %b | columns'
+	alias fortune-files	'dof -e /usr/share/fortunes/*.dat do echo %b | column'
 	alias test-colors	'dof -e -s 0..15 do \'tput setaf %f; echo colour%f; tput op;\''
 else
-	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | columns'
+	alias fortune-files	'ls -1 --color=never /usr/share/fortunes/*.dat | column'
 endif
 
 # colorize
