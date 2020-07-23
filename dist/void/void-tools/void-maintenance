@@ -151,9 +151,7 @@ fi
 #
 cnt=$((cnt+1))
 echo "${title}${cnt}. Check for new configs${rst}"
-for f in /etc/*.new*; do
-	echo $f
-done
+find /etc -name '*.new*'
 
 # done
 echo "${title}* done *${rst}"
