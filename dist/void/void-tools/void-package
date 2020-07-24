@@ -115,7 +115,7 @@ case $todo in
 	;;
 
 -fs|file-search)
-	xbps-query --regex -Ro "$*"
+#	xbps-query --regex -Ro "$*"
 	xlocate "$*"
 	;;
 
