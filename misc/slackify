@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# /usr/*
+list="doc man info"
+for f in $list; do
+	if [ ! -e /usr/$f ]; then
+		ln -s /usr/share/$f /usr/$f
+	fi
+done
+
+# /usr/local/*
+list="doc man info"
+for f in $list; do
+	if [ ! -e /usr/local/$f ]; then
+		ln -s /usr/local/share/$f /usr/local/$f
+	fi
+done
+
+# lib64
+if [ ! -e /usr/lib64 ]; then
+	ln -s /usr/lib /usr/lib64
+fi
+if [ ! -e /lib64 ]; then
+	ln -s /usr/lib /lib64
+fi
+
+# rc.d
+if [ ! -d /etc/rc.d ]; then
+	mkdir /etc/rc.d
+fi
+
+# add this to /etc/rc.local:
+#
+#	list=$(ls /etc/rc.d/rc.*)
+#	for f in $list; do
+#		[ -x $f ] && $f start
+#	done
+
+# add this to /etc/rc.shutdown:
+#
+#	list=$(ls /etc/rc.d/rc.*)
+#	for f in $list; do
+#		[ -x $f ] && $f stop
+#	done
