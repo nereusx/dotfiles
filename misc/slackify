@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Links:
+#	https://mirrors.slackware.com/slackware/slackware64-current/source/a/pkgtools
+
 # /usr/*
 list="doc man info"
 for f in $list; do
