@@ -639,7 +639,18 @@ if ( $?loginsh ) then
 		# enable keypad
 		echo -n '\033='
 	endif
+	
+	# ssh agent
+#	if ( -X ssh-agent ) then
+#		pgrep ssh-agent -u $USER > /dev/null || set loadssh
+#		if ( $?loadssh ) then
+#			eval `ssh-agent`
+##			ssh-add
+#			unset loadssh
+#		endif
+#	endif
 
+	# welcome screen
 	echo "Welcome to tenex c-shell"
 	echo
 	set list = ( fortune neofetch screenfetch diogenis fortunes )
