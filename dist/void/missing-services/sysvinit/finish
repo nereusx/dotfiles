@@ -1,0 +1,13 @@
+#!/bin/sh
+# data directory /etc/sv/sysvinit/
+# configuration  /etc/sv/sysvinit/conf
+
+# sysv init
+list=$(ls /etc/rc.d/rc.*)
+for f in $list; do
+	if [ -x $f ]; then
+		echo "$f:"
+		$f stop 
+	fi
+done
+
