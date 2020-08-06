@@ -3,22 +3,18 @@
 # configuration  /etc/sv/sysvinit/conf
 [ -r conf ] && . ./conf
 
-LOG="/usr/bin/logger -t sysvinit"
-$LOG 'start'
+#LOG="/usr/bin/logger -t sysvinit"
 
 # modules
-$LOG 'rc.modules'
 [ -x /etc/rc.d/rc.modules ] && /etc/rc.d/rc.modules
 
 # sysv init
 list=$(ls /etc/rc.d/rc.*)
 for f in $list; do
 	if [ -x $f ]; then
-		$LOG "$f"
 		echo "$f:"
 		$f start 
 	fi
 done
 
-$LOG 'finish'
 exec pause
