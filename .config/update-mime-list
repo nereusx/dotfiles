@@ -1,0 +1,12 @@
+#!/bin/sh
+# app -i mimeo
+# warning: use last the primary application
+
+mimeo --unprefer wine.desktop
+mimeo --prefer 'glob:audio/*'	vlc.desktop
+mimeo --prefer 'glob:video/*'	vlc.desktop mpv.desktop
+mimeo --prefer 'glob:text/*'	org.kde.kate.desktop
+mimeo --prefer 'glob:text/html'	org.kde.kate.desktop firefox.desktop
+mimeo --prefer 'glob:image/*'	gimp.desktop ristretto.desktop
+
+
