@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# one-shot case
+[ "$1" != "start" ] && exit 0
+
+# fix ryzen 7 CPU bug
+#ryzen-stabilizator --disable-aslr --disable-c6
+
+#
+/usr/local/sbin/update-distro-user-dirs
+
+# remove write-cache on SSDs
+hdparm -W 0 /dev/sda
+hdparm -W 0 /dev/sdc
+
+# set enable sleep mode on magnetic disks, 60 = 5 min
+hdparm -S 60 /dev/sdb
+hdparm -S 60 /dev/sdd
+
+# if hddparm does not seems working try hd-idle
+#hd-idle -i 300
+
+#
+#/usr/local/sbin/pulse-start-daemon
+

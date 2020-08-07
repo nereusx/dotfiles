@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# one-shot case
+[ "$1" != "start" ] && exit 0
+
+#
+/usr/sbin/arpd
+/usr/sbin/arpwatch

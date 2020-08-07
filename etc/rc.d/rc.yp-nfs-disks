@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# create mount-points
+svlist="srv-x230.local:/"
+mplist="/mnt/x230-server"
+for dir in $mplist; do
+	[ ! -d $dir ] && mkdir $dir
+done
+
+# start
+yp_start() {
+	local dir
+	local svr
+	local i=0
+	if isonline -q $(ypwhich); then
+		for dir in $mplist; do
+			svr=$svlist[$i]
+			mount -t nfs4 $srv $dir -o rw && echo "NFS $dir: mounted"
+			i=$((i+1))
+		done
+	fi
+	}
+
+# stop
+yp_stop() {
+	local dir
+	for dir in $mplist; do
+		umount $dir && echo "NFS $dir: disconnected"
+	done
+	}
+
+# main
+case "$1" in
+'start')	yp_start;;
+'stop')		yp_stop;;
+'restart')  yp_stop; yp_start;;
+*)			echo "usage $0 start|stop|restart"
+esac

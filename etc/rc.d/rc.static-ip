@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# one-shot case
+[ "$1" != "start" ] && exit 0
+
+# enable network
+ifconfig eth0 192.168.1.100
+ifconfig eth0 up
+route add -net 0.0.0.0 gw 192.168.1.254

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# one-shot case
+[ "$1" != "start" ] && exit 0
+
+# create/update the /etc/motd file
+/usr/local/sbin/motd-create > /dev/null

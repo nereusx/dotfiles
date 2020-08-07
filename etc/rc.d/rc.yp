@@ -1,0 +1,130 @@
+#!/bin/sh
+# /etc/rc.d/rc.yp
+#
+# Start NIS (Network Information Service).  NIS provides network-wide
+# distribution of hostname, username, and other information databases.
+# After configuring NIS, you will either need to uncomment the parts
+# of this script that you want to run, or tweak /etc/default/yp
+#
+# NOTE: for detailed information about setting up NIS, see the
+# documentation in /usr/doc/yp-tools, /usr/doc/ypbind,
+# /usr/doc/ypserv, and /usr/doc/Linux-HOWTOs/NIS-HOWTO.
+
+# Set non-zero to enable yp client functions
+# Can also be used in /etc/default/yp to override this default:
+YP_CLIENT_ENABLE=1
+
+# Set non-zero to enable yp server functions
+# Can also be used in /etc/default/yp to override this default:
+YP_SERVER_ENABLE=0
+
+# If YP_SERVER_ENABLE is set, a non-zero YP_XFRD_ENABLE setting will
+# enable ypxfrd.
+# Can also be used in /etc/default/yp to override this default:
+YP_XFRD_ENABLE=0
+
+PID_PATH=/var/run
+
+# Source options. Doing this here makes it possible
+# to override YP_*_ENABLE set above
+if [ -r /etc/default/yp ]; then
+  . /etc/default/yp
+fi
+
+yp_start() {
+
+  if [ $YP_SERVER_ENABLE -ne 0 ]; then
+    # NIS SERVER CONFIGURATION:
+    # If you are the master server for the NIS domain, you must run ypserv to
+    # service clients on the domain.
+    if [ -x /usr/sbin/ypserv ]; then
+      echo "Starting NIS server:  /usr/sbin/ypserv $YPSERV_OPTS"
+      /usr/sbin/ypserv $YPSERV_OPTS
+    fi
+
+    # If you are the master server for the NIS domain, you must also run
+    # rpc.yppasswdd, which is the RPC server that lets users change their
+    # passwords.
+
+    if [ -x /usr/sbin/rpc.yppasswdd ]; then
+      echo "Starting NIS master password server:  /usr/sbin/rpc.yppasswdd $YPPASSWDD_OPTS"
+      /usr/sbin/rpc.yppasswdd $YPPASSWDD_OPTS
+    fi
+
+    # If you have NIS slave servers, you might also want to start up
+    # rpc.ypxfrd, which transfers changes in the NIS domain to slave servers.
+    # Alternatively, rpc.ypxfrd can be run out of inetd.
+    if [ $YP_XFRD_ENABLE -ne 0 ]; then
+      if [ -x /usr/sbin/rpc.ypxfrd ]; then
+        echo "Starting NIS transfer server:  /usr/sbin/rpc.ypxfrd $YPXFRD_OPTS"
+        /usr/sbin/rpc.ypxfrd $YPXFRD_OPTS
+      fi
+    fi
+  fi
+
+  if [ $YP_CLIENT_ENABLE -ne 0 ]; then
+    # NIS CLIENT CONFIGURATION:
+    # If you are a NIS client, all you need to do is run ypbind.
+    # Your NIS server might also be a client.
+    if [ -d /var/yp ]; then
+#      if [ -z "$YPBIND_OPTS" ]; then
+#        YPBIND_OPTS="-broadcast"
+#      fi
+      echo "Starting NIS services:  /usr/sbin/ypbind $YPBIND_OPTS"
+      /usr/sbin/ypbind $YPBIND_OPTS
+    fi
+  fi
+}
+
+yp_stop() {
+  if [ -r ${PID_PATH}/ypbind.pid ]; then
+    echo "Stopping NIS services."
+    kill $(cat ${PID_PATH}/ypbind.pid)
+  fi
+
+  if [ -r ${PID_PATH}/ypxfrd.pid ]; then
+    echo "Stopping NIS transfer server."
+    kill $(cat ${PID_PATH}/ypxfrd.pid)
+  fi
+
+  if [ -r ${PID_PATH}/yppasswdd.pid ]; then
+    echo "Stopping NIS master password server."
+    kill $(cat ${PID_PATH}/yppasswdd.pid)
+  fi
+
+  if [ -r ${PID_PATH}/ypserv.pid ]; then
+    echo "Stopping NIS server."
+    kill $(cat ${PID_PATH}/ypserv.pid)
+  fi
+}
+
+# First, we must setup the NIS domainname.  NOTE: this is not necessarily
+# the same as your DNS domainname, set in /etc/resolv.conf.  The NIS
+# domainname is the name of a domain served by your NIS server.
+#
+# If /etc/defaultdomain has not been configured we'll bail out.
+if [ -r /etc/defaultdomain ] && [ -x /bin/nisdomainname ]; then
+  if ! /bin/nisdomainname 1>/dev/null 2>/dev/null ; then
+    nisdomainname $(cat /etc/defaultdomain)
+  fi
+else
+  echo "/etc/rc.d/rc.yp:  NIS not configured.  Hint: set up /etc/defaultdomain."
+  exit 0
+fi
+
+case "$1" in
+'start')
+  yp_start
+  ;;
+'stop')
+  yp_stop
+  ;;
+'restart')
+  yp_stop
+  yp_start
+  ;;
+*)
+  echo "usage $0 start|stop|restart"
+esac
+
+# # Done setting up NIS.

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# special case rc: no argument
+[ $# -gt 0 ] && exit 0
+
+# load modules
+# modprobe
