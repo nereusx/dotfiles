@@ -1,8 +1,19 @@
 #!/bin/sh
 
-# one-shot case
-[ "$1" != "start" ] && exit 0
+case "$1" in
+'start')
+	/usr/sbin/arpd -b /var/tmp/arpd.db
+#	[ -x /usr/sbin/arpwatch ] && /usr/sbin/arpwatch
+	;;
+'stop')
+	killall arpd
+#	killall arpwatch
+	;;
+'restart')
+	$0 stop
+	$0 start
+	;;
+*)
+	echo "usage: $0 start|stop|restart"
+esac
 
-#
-/usr/sbin/arpd
-/usr/sbin/arpwatch
