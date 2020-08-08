@@ -13,6 +13,8 @@ apache rule / 5[0-9][0-9] / --> bold red match
 
 # BSD syslog
 default rule / syslogd / --> black on red line
+default rule / rsyslogd: / --> black on red line
+default rule /-- MARK --/ --> bold black line
 default rule /xbps-install:/ --> suppress
 default rule /xbps-remove:/ --> suppress
 default rule /ntpdate\[[0-9]+\]:/ --> green line
@@ -21,4 +23,27 @@ default rule / USB Mass Storage device detected/ --> underline bold green line
 default rule / \[[A-z0-9]+\] Attached SCSI removable disk/ --> bold yellow on red match
 default rule / new full-speed USB device number/ --> underline bold green line
 default rule / USB disconnect/ --> bold red line
-default rule / kernel: / --> bold red match
+default rule / kernel: \[.*\] [A-z0-9_]+:/ --> bold green match
+default rule / kernel: \[.*\] [A-z0-9_]+ [0-9-]+:/ --> bold green match
+default rule / kernel: \[.*\] / --> bold red match
+
+#
+default rule /NetworkManager\[[0-9]+\]:/   --> bold yellow line
+default rule /mtp-probe:/   --> bold magenta line
+default rule /usbserial:/   --> bold blue line
+default rule /Bluetooth:/   --> bold blue line
+
+# strings
+default rule /\".*\"/ --> bold cyan match
+default rule /'.*'/ --> bold cyan match
+
+# keywords
+default rule /regist(er|ered)/ --> bold green match
+default rule /w[lw]+an[0-9]+:/   --> bold green match
+default rule /eth[0-9]+:/   --> bold green match
+default rule /sd[a-z]+[0-9]+:/   --> bold green match
+default rule /tty[A-z]+[0-9]+:/   --> bold green match
+default rule /usb [0-9]+-[0-9]+:/   --> bold green match
+
+# left part
+default rule /^[A-z]+[ \t]+[0-9]+ [0-9]+:[0-9]+:[0-9]+ [0-9A-z_\-]+/   --> green match
