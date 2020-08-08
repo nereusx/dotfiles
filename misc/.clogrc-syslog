@@ -15,8 +15,8 @@ apache rule / 5[0-9][0-9] / --> bold red match
 default rule / syslogd / --> black on red line
 default rule / rsyslogd: / --> black on red line
 default rule /-- MARK --/ --> bold black line
-default rule /xbps-install:/ --> suppress
-default rule /xbps-remove:/ --> suppress
+default rule /xbps-install:/ --> bold black line
+default rule /xbps-remove:/ --> bold black line
 default rule /ntpdate\[[0-9]+\]:/ --> green line
 default rule /dbus-daemon\[[0-9]+\]:/ --> yellow line
 default rule / USB Mass Storage device detected/ --> underline bold green line
@@ -31,7 +31,9 @@ default rule / kernel: \[.*\] / --> bold red match
 default rule /NetworkManager\[[0-9]+\]:/   --> bold yellow line
 default rule /mtp-probe:/   --> bold magenta line
 default rule /usbserial:/   --> bold blue line
-default rule /Bluetooth:/   --> bold blue line
+default rule /[Bb]+luetoothd\[[0-9]+\]:/   --> bold blue line
+default rule /[Bb]+luetooth:/   --> bold blue line
+default rule /smartd\[[0-9]+\]:/   --> bold blue line
 
 # strings
 default rule /\".*\"/ --> bold cyan match
