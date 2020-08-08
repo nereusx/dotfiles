@@ -39,11 +39,14 @@ default rule /'.*'/ --> bold cyan match
 
 # keywords
 default rule /regist(er|ered)/ --> bold green match
-default rule /w[lw]+an[0-9]+:/   --> bold green match
-default rule /eth[0-9]+:/   --> bold green match
-default rule /sd[a-z]+[0-9]+:/   --> bold green match
-default rule /tty[A-z]+[0-9]+:/   --> bold green match
-default rule /usb [0-9]+-[0-9]+:/   --> bold green match
+default rule / w[lw]+an[0-9]+/   --> bold green match
+default rule / eth[0-9]+/   --> bold green match
+default rule / sd[a-z]+[0-9]+/   --> bold green match
+default rule / tty[A-z]+[0-9]+/   --> bold green match
+default rule / usb [0-9]+-[0-9]+:/   --> bold green match
+default rule / sudo:/   --> bold green match
+default rule / su:/   --> bold green match
+default rule / [a-z._\-]+\[[0-9]+\]:/   --> bold green match
 
 # left part
 default rule /^[A-z]+[ \t]+[0-9]+ [0-9]+:[0-9]+:[0-9]+ [0-9A-z_\-]+/   --> green match
