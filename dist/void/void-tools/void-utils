@@ -31,7 +31,7 @@ Services (void-service):\n\
 \t-d | disable ...\tdisable service[s]\n\
 \t-E | enabled\t\tdisplay all enabled services\n\
 \t-D | disabled\t\tdisplay all disabled services\n\
-\t{ start | stop | restart | reload | status } <service>\n\
+\t{ start | stop | restart | reload | status } <service> (-q alias of restart)\n\
 \t\t\t\tsv <action> <service>\n\
 \n\
 More (void-*):\n\
@@ -71,7 +71,9 @@ case $todo in
 start|stop|status|restart|reload)
 	void-service $todo $*
 	;;
-
+-q)
+	void-service restart $*
+	;;
 -m|maintenance)
 	void-maintenance
 	;;
