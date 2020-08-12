@@ -83,16 +83,19 @@ echo "${title}${cnt}. Remove old kernels${rst}"
 vkpurge rm all
 
 # latex
-if [ $online -eq 1 ]; then
-	if [ -e /usr/bin/which ]; then
-		if which tlmgr 2>&1 > /dev/null; then
-			cnt=$((cnt+1))
-			echo "${title}${cnt}. Texlive subsystem${rst}"
-			tlmgr update -self
-			tlmgr update -all
-		fi
-	fi
-fi
+#
+# 12/08/2020: void repos added full support to texlive
+#
+#if [ $online -eq 1 ]; then
+#	if [ -e /usr/bin/which ]; then
+#		if which tlmgr 2>&1 > /dev/null; then
+#			cnt=$((cnt+1))
+#			echo "${title}${cnt}. Texlive subsystem${rst}"
+#			tlmgr update -self
+#			tlmgr update -all
+#		fi
+#	fi
+#fi
 
 # man
 if [ -e /usr/bin/makewhatis ]; then
