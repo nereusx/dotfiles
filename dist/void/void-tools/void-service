@@ -18,14 +18,15 @@ Usage: void-service [-p] [-l|-E|-D] [-e|-d|-r [service ...]]\n\n\
 \t-d\tDisable service\n\
 \t-r\tRestart service (-l reload, -u up, -w down)\n\
 \t-s\tStatus of service\n\
-\t-L\tPrint list of services\n\
-\t-E\tPrint enabled services only\n\
-\t-D\tPrint disabled services only\n\
+\t-L [service]\tPrint list of services (#1)\n\
+\t-E [service]\tPrint enabled services only (#1)\n\
+\t-D [service]\tPrint disabled services only (#1)\n\
 \t-p\tUse plain text only\n\
 \n\
 \t{ restart | reload | start | stop | status } <service>\n\
 \n\
-Void Linux services managment (runit)."
+Void Linux services managment (runit).\n\
+[1] if service is specified, shows only this service and returns 1 if not listed."
 
 #
 msgvers="\
@@ -81,32 +82,42 @@ esac
 
 case $todo in
 list)
+	specsrv="$1"
+	[ ! -z "$specsrv" ] && retval=1 || retval=0
+	
 	# list of services
 	for f in /etc/sv/*; do
 		s=${f##*/}
 		if [ -e /var/service/$s ]; then
 			if [ $list_disabled -eq 0 ]; then
-				if [ $plain -eq 1 ]; then
-					echo "$s"
-				else
-					msg=$(sv status $s)
-					if [ -n "${msg%down*}" ]; then
-						echo "+ ${gre}enabled  ${yel}$s${rst}\t\033[40G$msg"
+				if [ -z "$specsrv" -o "$specsrv" = "$s" ]; then
+					retval=0
+					if [ $plain -eq 1 ]; then
+						echo "$s"
 					else
-						echo "~ ${yel}enabled  ${red}$s\t\033[40G$msg$rst"
+						msg=$(sv status $s)
+						if [ -n "${msg%down*}" ]; then
+							echo "+ ${gre}enabled  ${yel}$s${rst}\t\033[40G$msg"
+						else
+							echo "~ ${yel}enabled  ${red}$s\t\033[40G$msg$rst"
+						fi
 					fi
 				fi
 			fi
 		else
 			if [ $list_enabled -eq 0 ]; then
-				if [ $plain -eq 1 ]; then
-					echo "$s"
-				else
-					echo "- ${red}disabled ${yel}$s${rst}"
+				if [ -z "$specsrv" -o "$specsrv" = "$s" ]; then
+					retval=0
+					if [ $plain -eq 1 ]; then
+						echo "$s"
+					else
+						echo "- ${red}disabled ${yel}$s${rst}"
+					fi
 				fi
 			fi
 		fi
 	done
+	exit $retval
 	;;
 
 enable)

@@ -29,10 +29,11 @@ Packages (void-package):\n\
 Services (void-service):\n\
 \t-e | enable ...\t\tenable service[s]\n\
 \t-d | disable ...\tdisable service[s]\n\
-\t-E | enabled\t\tdisplay all enabled services\n\
-\t-D | disabled\t\tdisplay all disabled services\n\
+\t-E | enabled [service]\t\tdisplay all enabled services. #1\n\
+\t-D | disabled [service]\t\tdisplay all disabled services. #1\n\
 \t{ start | stop | restart | reload | status } <service> (-q alias of restart)\n\
 \t\t\t\tsv <action> <service>\n\
+[1] if service is specified, shows only this service and returns 1 if not listed.\n\
 \n\
 More (void-*):\n\
 \t-m\t\t\tsystem maintenance\n\
