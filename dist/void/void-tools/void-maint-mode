@@ -1,0 +1,30 @@
+#!/bin/sh
+
+echo "This is in alpha test, avoid to use it"
+
+if [ ! "$USER" = "root" ]; then
+	echo "Only root allowed to run this script"
+	exit 1
+fi
+
+# shutdown multiuser components
+PATH=/usr/bin:/usr/sbin
+
+. /etc/runit/functions
+detect_virt
+[ -r /etc/rc.conf ] && . /etc/rc.conf
+
+echo
+msg "Waiting for services to stop..."
+sv force-stop /var/service/*
+sv exit /var/service/*
+
+# now it is supposed that we are in init 1
+# check it remove or fix what needed more
+
+sulogin
+
+# at exit, if not rebooted by user
+# rerun stage 2
+
+/etc/runit/2
