@@ -1,24 +1,2 @@
 #!/bin/sh
-#runsvchdir single
-
-# shutdown multiuser components
-PATH=/usr/bin:/usr/sbin
-
-echo "warning: this is in alpha test"
-if [ ! "$USER" = "root" ]; then
-	echo "Only root allowed to enter in single mode"
-	exit 1
-fi
-
-. /etc/runit/functions
-detect_virt
-[ -r /etc/rc.conf ] && . /etc/rc.conf
-
-echo
-msg "Waiting for services to stop..."
-sv force-stop /var/service/*
-sv exit /var/service/*
-
-# now it is supposed that we are in init 1
-# check it remove or fix what needed more
-
+runsvchdir single
