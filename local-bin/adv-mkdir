@@ -1,0 +1,38 @@
+#!/bin/sh
+# mkdir [-o user:group] [-m mode] ...any... name
+
+# the name of the directory
+name=""
+
+# owner parameters (see chown)
+owner=""
+
+# mode parameters (see chmod)
+mode=""
+
+# other parameters (i.e. -p)
+other=""
+
+#
+while test $# -gt 0; do
+	opt="$1"
+	shift
+	case "$opt" in
+	-o)	owner="$1"; shift ;;
+	-m)	mode="$1";  shift ;;
+	*)
+		other="$other $name" 
+		name="$opt"
+		;;
+	esac
+done
+
+#
+if [ ! -z "$name" ]; then
+	mkdir $other $name
+	[ ! -z "$owner" ] && chown $owner $name
+	[ ! -z "$mode"  ] && chmod $mode  $name
+else
+	echo "no directory specified"
+fi
+
