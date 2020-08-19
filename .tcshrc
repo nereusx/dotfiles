@@ -184,10 +184,11 @@ if ( $?REMOTEHOST ) then
 endif
 set prompt  = "${_ps[1]}%T ${_ps[2]}%n${_ps[3]}@%m ${_ps[4]}%c04${_ps[5]} %# "
 
-set _ps[6]='%{\033[0;35m%}' # 1
-set _ps[7]='%{\033[0;35m%}' # 6
-set _ps[8]='%{\033[0;35m%}'
-set rprompt = " ${_ps[8]}[?${_ps[6]}%?${_ps[5]} ${_ps[8]}${EXCL}${_ps[7]}%h${_ps[8]}]${_ps[5]} "
+# right side prompt, displays return code of last command and history number
+#set _ps[6]='%{\033[0;35m%}' # 1
+#set _ps[7]='%{\033[0;35m%}' # 6
+#set _ps[8]='%{\033[0;35m%}'
+#set rprompt = " ${_ps[8]}[?${_ps[6]}%?${_ps[5]} ${_ps[8]}${EXCL}${_ps[7]}%h${_ps[8]}]${_ps[5]} "
 
 #
 #	tcsh' history
