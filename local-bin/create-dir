@@ -1,5 +1,7 @@
 #!/bin/sh
-# mkdir [-o user:group] [-m mode] ...any... name
+#
+#	mkdir [-R] [-o user:group] [-m mode] ...any-mkdir-params... name
+#
 
 # the name of the directory
 name=""
@@ -13,13 +15,20 @@ mode=""
 # other parameters (i.e. -p)
 other=""
 
+# reursive (for own/mod)
+recs=""
+
 #
 while test $# -gt 0; do
 	opt="$1"
 	shift
 	case "$opt" in
+	-h|--help|--usage|-v|--version)
+	echo "create-dir [-R] [-o user:group] [-m mode] ...any-mkdir-params... name"
+	exit 1;;
 	-o)	owner="$1"; shift ;;
 	-m)	mode="$1";  shift ;;
+	-R) recs="$1";	shift ;;
 	*)
 		other="$other $name" 
 		name="$opt"
@@ -30,8 +39,8 @@ done
 #
 if [ ! -z "$name" ]; then
 	mkdir $other $name
-	[ ! -z "$owner" ] && chown $owner $name
-	[ ! -z "$mode"  ] && chmod $mode  $name
+	[ ! -z "$owner" ] && chown $recs $owner $name
+	[ ! -z "$mode"  ] && chmod $recs $mode  $name
 else
 	echo "no directory specified"
 fi
