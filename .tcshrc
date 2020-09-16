@@ -556,6 +556,7 @@ end
 if ( $?SYSLOGFILE ) then
 	alias log30 "tail -n `usable-lines` $SYSLOGFILE"
 	if ( -X clog ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | clog"
+	if ( -X colorize ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | colorize"
 	if ( -X ccze ) alias log30 "tail -n `usable-lines` $SYSLOGFILE | ccze -A"
 else
 	alias log30 "echo 'non root users are not allowed'"
