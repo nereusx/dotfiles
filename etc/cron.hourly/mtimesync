@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+#	take time from server list
+#
+servers="master.nic-net.lan 3.gr.pool.ntp.org"
+for s in $servers; do
+	if isonline -q $s; then
+		ntpdate -s $s
+		hwclock --systohc
+		break
+	fi
+done
+
