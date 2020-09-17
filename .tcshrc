@@ -3,6 +3,8 @@
 #	~/.tcshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 
+[ -r /etc/tcsh/tcshrc ] && source /etc/tcsh/tcshrc
+
 # (non-)interactive absolute values
 set parseoctal
 set echo_style=both
