@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+#	C app to colorize log files,
+#	need patch, something make it slow
+#
 cd /usr/src
 if [ -d ccze ]; then
 	cd ccze

@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+#	perl script to colorize log files
+#
 cd /usr/src
 if [ -d colorize ]; then
 	cd colorize
