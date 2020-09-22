@@ -22,13 +22,13 @@ ETCDIR=/etc
 if [ "$DISTRO" = "FreeBSD" ]; then
 	ETCDIR=/usr/local/etc
 fi	
-if [ -f /etc/environment ]; then
+cp etc-pulse/*   $ETCDIR/pulse/
+if [ -r /etc/environment ]; then
 	if [ $(grep -c PULSE_SERVER /etc/environment) -eq 0 ]; then
 		echo "PULSE_SERVER=unix:/tmp/pulse-server" >> /etc/environment
 	fi
 else
 	cp etc-profile/* $ETCDIR/profile.d/
-	cp etc-pulse/*   $ETCDIR/pulse/
 fi
 
 # pulse user
