@@ -1,6 +1,6 @@
 #!/bin/tcsh -f
 #
-#	Package and service manager for Void Linux
+#	Package and service manager for slackware
 #
 #	Copyright (C) 2019, Nicholas Christopoulos <nereus@freemail.gr>
 #
@@ -11,7 +11,13 @@
 #
 
 ###
-set appver=1.3
+if ( $user != "root" ) then
+	echo "$0: must be superuser."
+	exit 1
+else
+	set path = ( /sbin /usr/sbin /usr/local/sbin $path )
+endif
+set appver=1.4
 set todo = help
 if ( $#argv > 0 ) then
 	set todo = $1
@@ -33,6 +39,7 @@ case -ri:
 case reinstall:
 	slackpkg reinstall $argv[2-]
 	breaksw
+case -m:
 case -u:
 case upgrade:
 	slackpkg update && slackpkg upgrade-all && slackpkg install-new
@@ -122,6 +129,8 @@ case list-disabled:
 		if ( -l $e ) continue
 		if ( -d $e ) continue
 		if ( $e =~ "*.orig" ) continue
+		if ( $e =~ "*.conf" ) continue
+		if ( $e =~ "*.new" ) continue
 		if ( $e =~ "*/rc.[0123456KMS]" ) continue
 		if ( ! -x $e ) then
 			set disp = `echo $e:t | awk '{print substr($1,4)}'`
@@ -140,10 +149,12 @@ case list-enabled:
 		if ( -l $e ) continue
 		if ( -d $e ) continue
 		if ( $e =~ "*.orig" ) continue
+		if ( $e =~ "*.conf" ) continue
+		if ( $e =~ "*.new" ) continue
 		if ( $e =~ "*/rc.[0123456KMS]" ) continue
 		if ( -x $e ) then
 			set disp = `echo $e:t | awk '{print substr($1,4)}'`
-			echo $disp
+			echo ${disp}
 		endif
 	end
 	breaksw
@@ -184,9 +195,6 @@ Services:
 
 Special:
     -g                            update gpg
-#    -o   | autoremove              remove obsolete packages
-#    -rc  | reconfigure <package>
-#    -rok | remove-old-kernels
 
 EOF
 endsw
