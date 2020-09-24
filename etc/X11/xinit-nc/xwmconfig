@@ -44,8 +44,8 @@ fi
 # Do we already have an existing default?
 unset PRESELECT
 if [ -L $xidir/xinitrc ]; then
-  CURRENT="$xidir/xwmlist -s"
-  PRESELECT=" --default-item $CURRENT "
+  CURRENT=$($xidir/xwmlist -s)
+  PRESELECT=" --default-item \"$CURRENT\" "
 fi
 
 # Figure out who we are and set up some background information:
@@ -142,6 +142,7 @@ if [ -r $xidir/$OUTPUT -a ! "$HOME" = "/" ]; then
     mv $HOME/.xinitrc $HOME/.xinitrc-backup
   fi
 	echo "#!/bin/sh" > $HOME/.xinitrc
+	echo "# $OUTPUT" >> $HOME/.xinitrc
 	cat $xidir/$OUTPUT >> $HOME/.xinitrc
 	cat $xidir/xinitrc >> $HOME/.xinitrc
   if [ -r $HOME/.xsession ]; then
@@ -149,6 +150,7 @@ if [ -r $xidir/$OUTPUT -a ! "$HOME" = "/" ]; then
     mv $HOME/.xsession $HOME/.xsession-backup
   fi
 	echo "#!/bin/sh" > $HOME/.xsession
+	echo "# $OUTPUT" >> $HOME/.xsession
 	cat $xidir/$OUTPUT >> $HOME/.xsession
 	cat $xidir/xinitrc >> $HOME/.xsession
   chmod 755 $HOME/.xsession
