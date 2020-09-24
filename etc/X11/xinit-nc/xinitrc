@@ -4,19 +4,25 @@
 dir=/etc/X11/xinit-nc/
 
 # default values and default desktop environment
-: ${desk_name:="XFCE4"}
-: ${desk_desc:="The Cholesterol Free Desktop Environment"}
-: ${desk_comd:="startxfce4"}
-: ${desk_opts:=""}
-: ${desk_sess:="ck-launch-session dbus-launch --exit-with-session"}
-: ${desk_norm:="dbus-launch --exit-with-session"}
-: ${desk_prep:=0}
+if [ -z "$desk_name" ]; then
+	desk_name="XFCE4"
+	desk_desc="The Cholesterol Free Desktop Environment"
+	desk_comd="startxfce4"
+	desk_opts=""
+	desk_sess="ck-launch-session dbus-launch --exit-with-session"
+	desk_norm="dbus-launch --exit-with-session"
+	desk_prep=0
 
-# load default configuration (that was selected by xwmconfig)
-if [ $# -gt 1 ]; then
-	[ -r $dir/"$2" ] && . $dir/"$2"
+	# load default configuration (that was selected by xwmconfig)
+	if [ $# -gt 1 ]; then
+		[ -r $dir/"$2" ] && . $dir/"$2"
+	else
+		[ -r $dir/conf ] && . $dir/conf
+	fi
 else
-	[ -r $dir/conf ] && . $dir/conf
+	if [ -z "$desk_prep" ]; then
+		desk_prep=0
+	fi
 fi
 
 if [ $# -gt 0 ]; then
