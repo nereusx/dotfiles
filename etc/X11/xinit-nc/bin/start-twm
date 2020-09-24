@@ -1,0 +1,6 @@
+#!/bin/sh
+/usr/bin/twm &
+/usr/bin/xclock -geometry 50x50-1+1 &
+/usr/bin/xterm -geometry 80x50+494+51 &
+/usr/bin/xterm -geometry 80x20+494-0 &
+exec /usr/bin/xterm -geometry 80x66+0+0 -name login

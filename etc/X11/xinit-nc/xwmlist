@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# directory of data
+dir=/etc/X11/xinit-nc/
+
+# options
+only_installed=0
+fmt_dialog=0
+while getopts ihcxs o; do
+	case $o in
+	i) only_installed=1;;
+	h)
+	echo "xwmconfig, configuration files list"
+	echo "usage: xwmlist [-i|-h|-c|-s|-x]\n"
+	echo "-i .. installed only (default print all)"
+	echo "-c .. print current configuration name"
+	echo "-s .. print current configuration file"
+	echo "-x .. list of installed for xwmconfig dialog setup"
+	echo "-h .. this screen"
+	exit 1;;
+	c) cat $dir/conf | grep desk_name | cut -d= -f2 | xargs echo; exit 0;;
+	s) ls -la $dir/conf | cut -d'>' -f2 | xargs echo; exit 0;;
+	x) fmt_dialog=1;;
+	esac
+done
+shift `expr $OPTIND - 1`
+
+#
+cd $dir
+for f in *.conf; do
+	if [ $fmt_dialog -eq 1 ]; then
+		if $dir/xinitrc -e $f; then
+			dsc=$($dir/xinitrc -l $f)
+			echo "\"$f\" \"$dsc\" \\"
+		fi
+	elif [ $only_installed -eq 1 ]; then
+		if $dir/xinitrc -e $f; then
+			echo -n "$f\033[32G"
+			$dir/xinitrc -l $f;
+		fi
+	else
+		if $dir/xinitrc -e $f; then
+			echo -n "(i) "
+		else
+			echo -n "--- "
+		fi
+		echo -n "$f\033[32G"
+		$dir/xinitrc -l $f;
+	fi
+done
+

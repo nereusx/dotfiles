@@ -1,0 +1,27 @@
+xinitrc subsystem
+Copyright (c) 2020 Nicholas Christopoulos <mailto:nereus@freemail.gr>
+LICENSE: GPL v3 or newer
+
+The common short name of the desktop environment
+desk_name="XFCE4"
+
+A long description
+desk_desc="The Cholesterol Free Desktop Environment"
+
+The command to execute
+desk_comd="/usr/bin/startxfce4"
+
+Arguments to desk_comd
+desk_opts=""
+
+Prefix for session manager (exec $desk_sess $desk_comd $desk_opts)
+desk_sess="ck-launch-session dbus-launch --exit-with-session"
+
+Prefix without session manager (exec $desk_norm $desk_comd $desk_opts)
+desk_norm="dbus-launch --exit-with-session"
+
+[Optional]
+Use script to initialize before run.
+if desk_prep = 1 then runs conf file with parameter "prepare".
+This is used by wmaker to run wmaker.inst. Default is 0.
+desk_prep={0|1}

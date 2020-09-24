@@ -1,0 +1,88 @@
+#!/bin/sh
+
+# directory of data
+dir=/etc/X11/xinit-nc/
+
+# default values and default desktop environment
+: ${desk_name:="XFCE4"}
+: ${desk_desc:="The Cholesterol Free Desktop Environment"}
+: ${desk_comd:="startxfce4"}
+: ${desk_opts:=""}
+: ${desk_sess:="ck-launch-session dbus-launch --exit-with-session"}
+: ${desk_norm:="dbus-launch --exit-with-session"}
+: ${desk_prep:=0}
+
+# load default configuration (that was selected by xwmconfig)
+if [ $# -gt 1 ]; then
+	[ -r $dir/"$2" ] && . $dir/"$2"
+else
+	[ -r $dir/conf ] && . $dir/conf
+fi
+
+if [ $# -gt 0 ]; then
+	case "$1" in
+	"-e") # check if exists
+		command -vp $desk_comd > /dev/null && exit 0;;
+	"-d") # print data
+		echo $desk_name
+		echo $desk_desc
+		echo $desk_comd
+		echo $desk_opts
+		echo $desk_sess
+		echo $desk_norm
+		echo $desk_prep
+		exit 0;;
+	"-l") # print description
+		echo $desk_desc
+		exit 0;;
+	"*")
+		echo "usage: -e if exist; -n print description"
+	esac
+	exit 1
+fi
+
+# special case, window maker initialization if needed
+if [ $desk_prep -eq 1 ]; then
+	. $dir/conf prepare
+fi
+
+# check session Manager
+use_sess=0
+[ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ] && use_sess=1
+
+# merge defaults and keymaps
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+userxprof=$HOME/.xprofile
+sysresources=$dir/.Xresources
+sysmodmap=$dir/.Xmodmap
+sysxprof=$dir/.xprofile
+
+[ -f $sysresources  ] && /usr/bin/xrdb -merge $sysresources
+[ -f $sysmodmap     ] && /usr/bin/xmodmap $sysmodmap
+[ -f $userresources ] && /usr/bin/xrdb -merge $userresources
+[ -f $usermodmap    ] && /usr/bin/xmodmap $usermodmap
+
+# if !session run xprofile
+if [ $use_sess -eq 0 ]; then
+	[ -f $sysxprof  ] && . $sysxprof
+	[ -f $userxprof ] && . $userxprof
+fi
+
+# start the selected desktop environment
+if [ $use_sess -eq 1 ]; then
+	desk_exec="exec $desk_sess $desk_comd $desk_opts"
+else
+	desk_exec="exec $desk_norm $desk_comd $desk_opts"
+fi
+
+# load local configuration if exists;
+# does not need to touch system confs again
+if [ $use_sess -eq 1 ]; then
+	[ -f $HOME/.xsession.local ] && . $HOME/.xsession.local
+else
+	[ -f $HOME/.xinitrc.local  ] && . $HOME/.xinitrc.local
+fi
+
+# finaly run it
+$desk_exec
