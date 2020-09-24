@@ -43,7 +43,7 @@ fi
 
 # Do we already have an existing default?
 unset PRESELECT
-if [ -L $xidir/xinitrc ]; then
+if [ -L $xidir/conf ]; then
   CURRENT=$($xidir/xwmlist -s)
   PRESELECT=" --default-item \"$CURRENT\" "
 fi
