@@ -1,0 +1,52 @@
+#!/bin/cat
+-- Operators ---------------------------------------------------------------------------------------------------------------------
+^ = Match beginning of field | ~ = Match opterator | !~ = Do not match operator
+
+-- Variables ---------------------------------------------------------------------------------------------------------------------
+FS = Field separator of input file (whitespace) | NF = No of fields in current record | NR = Line no of the current record
+FILENAME = Reference current input file | FNR = Reference number of the current record relative to current input file
+OFS = Field separator of the outputted data (whitespace) | ORS = Record separator of the outputted data (newline)
+RS = Record separator of input file (newline) | CONVFMT = Conversion format used when converting numbers (default %.6g)
+SUBSEP = Separates multiple subscripts (default 034) | OFMT = Output format for numbers (default %.6g)
+ARGC = Argument count, assignable | ARGV = Argument array, assignable | ENVIRON = Array of environment variables
+RLENGTH = the length of a string matched by match | RSTART = the start position of a string matched by match
+								  
+-- Commands ----------------------------------------------------------------------------------------------------------------------
+if( expression ) statement [ else statement ]
+for( expression ; expression ; expression ) statement | for( var in array ) statement
+while( expression ) statement | do statement while( expression )
+{ [ statement ... ] } | break | continue | return [ expression ] | exit [ expression ] 
+delete array[ expression ] = delete an array element | delete array = delete all elements of array
+
+print [...] [>[>]file] [|[&]pipe]           = Print current record line or args
+printf fmt, expr-list [>[>]file] [|[&]pipe] = Format and print
+getline [var] [<file]                       = Set var or $0 to next input record. Returns 0 on EOF and –1 on error
+command |[&] getline [var]                  = Run command as a co-process piping the output either into $0 or var
+BEGIN = Denotes block executed once at start    | END = Denotes block executed once at end
+next = stop processing the current input record | nextfile = stop processing the current input file
+
+-- Mathematics -------------------------------------------------------------------------------------------------------------------
+rand = Random number between 0 and 1 | srand(n) = Set seed for rand
+int(x), cos(x), sin(x), sqrt(x), exp(x), log(x) = as usual
+atan2(y, x) = Returns the arctangent of y/x in radians
+strtonum(s) = returns s numeric value. prefixes 0 for octals, 0x for hexadecimals
+and(v1, v2) = bitwise AND | compl(val) = bitwise complement | or(v1, v2) = bitwise OR | xor(v1, v2) = bitwise XOR
+lshift(v, c) = bitwise left shift v by c | rshift(v, c) = bitwise right shift v by c
+
+-- Functions ---------------------------------------------------------------------------------------------------------------------
+length(s) = Length of string s (or $0 if no arg) | index(s,t) = Position in string s where string t occurs, 0 if not found
+substr(s,index,len) = Return len-char substring of s that begins at index (counted from 1)
+tolower(s) = String s to lowercase | toupper(s) = String s to uppercase
+split(s,a,fs) = Split string s into array a split by fs, returning length of a
+match(s,r) = Position in string s where regex r occurs, or 0 if not found
+sub(r,t,s) = Substitute t for first occurrence of regex r in string s (or $0 if s not given)
+gsub(r,t,s) = Substitute t for all occurrences of regex r in string s
+sprintf(fmt, expr-list) = Prints expr-list according to fmt, and returns the resulting string.                
+system(cmd) = Execute cmd and return exit status
+asort(s [, d]) = (gawk) sorts array, returns the no of elements. d is the destination array otherwise s will be used
+asorti(s [, d]) = (gawk) as asort(), except that the array indices are used for sorting, not the array values
+gensub(r, s, h [, t]) = (gawk) advanced gsub, use man.
+systime() = (gawk) returns the current time of day as the number of seconds since the Epoch (1970-01-01 00:00:00 | UTC on POSIX systems).
+mktime(datespec) = (gawk) Turns datespec into a time stamp of the same form as returned by systime()
+                   The datespec is a string of the form YYYY MM DD HH MM SS[ DST].
+strftime([format [, timestamp]]) = (gawk) Formats timestamp according to the specification in format.
