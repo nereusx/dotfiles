@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dirx="npick"
+dirx="unix-utils"
 repo="https://github.com/nereusx/$dirx"
 
 cd /usr/src
@@ -11,5 +11,5 @@ else
 	git clone $repo
 	cd $dirx
 fi
-./configure && make && make install && make clean && echo -e "\ndone" || echo -e "\n\033[31mfailed\033[0m"
+./install.sh
 
