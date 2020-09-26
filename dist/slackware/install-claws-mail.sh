@@ -7,7 +7,7 @@
 #	Note: it requires libsasl2.a, it is not installed by slackware
 #
 sbo=/usr/sbin/sbopkg
-[ -x $sbo ] || ./install-sbopkg
+[ -x $sbo ] || ./install-sbopkg.sh
 
 if [ -x $sbo ]; then
 	$sbo -B -i libetpan
