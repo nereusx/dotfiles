@@ -56,8 +56,10 @@ if ( -d ${xres} ) then
 	
 	# all resources
 	foreach f ( ${xres}/*.res )
-		echo "!  === ${f}: " >> ~/.Xresources
-		cat $f >> ~/.Xresources
+		if ( -r $f ) then
+			echo "!  === ${f}: " >> ~/.Xresources
+			cat $f >> ~/.Xresources
+		endif
 	end
 	
 	# merge it
