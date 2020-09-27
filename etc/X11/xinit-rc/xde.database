@@ -15,15 +15,16 @@ xfce4   ; The Cholesterol Free Desktop Environment; startxfce4; ${ssde}; ${node}
 plasma  ; KDE: K Desktop Environment (plasma-x11); startplasma-x11; ${ssck}; ${none};
 kde     ; KDE: K Desktop Environment (standard); startkde; ${ssck}; ${none};
 wmaker  ; X11 Window Manager with a NEXTSTEP look and feel; wmaker; ${ssde}; ${node};
-lxqt    ; The lightweight Qt Desktop Environment; startlxqt; ${ssde}; ${none};
+lxqt    ; The lightweight Qt Desktop Environment; lxqt; ${ssde} start-lxqt; ${none} start-lxqt;
 i3      ; Improved Tiling Window Manager; i3; ${ssde}; ${none};
 awesome ; Highly Configurable, Tiling Window Manager; awesome; ${ssde}; ${none};
 e16     ; Enlightenment DR16 Window Manager; starte16; ${ssde}; ${none};
-fvwm2   ; An extremely powerful ICCCM-compliant window manager; startfvwm2; ${ssck}; ${node};
+fvwm2   ; An extremely powerful ICCCM-compliant window manager; fvwm2; start-fvwm2; start-fvwm2;
 fvwm95  ; Fvwm2 with a Windows 95 look and feel; fvwm95; ${ssck}; ${none};
 openbox ; Standards compliant, fast, light, extensible window manager; openbox; ${ssck}; ${none};
 fluxbox ; Highly configurable and low resource X11 window manager; startflubox; ${ssck}; ${none};
 blackbox; Stacking window manager for X11; startblackbox; ${ssck}; ${none};
+mwm     ; Motif Window Manager; mwm; ${sscc}; ${none};
 ctwm    ; Claude's Tab Window Manager; ctwm; ${sscc}; ${none};
 twm     ; Tab Window Manager for the X Window system; twm; ${sscc}; ${none};
 vtwm    ; Virtual Tab Window Manager; vtwm; ${sscc}; ${none};
