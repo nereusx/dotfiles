@@ -6,3 +6,7 @@ fi
 installpkg packages/slackpkg*
 cp etc/slackpkg/* /etc/slackpkg/
 
+slackpkg update gpg
+slackpkg update
+slackpkg upgrade-all
+slackpkg install-new
