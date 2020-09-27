@@ -1,0 +1,127 @@
+#!/bin/bash
+
+sysdir=/etc/X11/xinit-rc
+. $sysdir/xde.bash
+
+usage() {
+	echo "xinit-rc subsystem"
+	echo "xwmlist: displays desktop environment database and configuration data"
+	echo "usage: xwmlist {-h|-a|-b [key]|-i|-c|-s key [-f field]|-x}"
+	echo
+	echo "-a       ... list all entries"
+	echo "-i       ... list installed only"
+	echo "-c       ... print current configuration name"
+	echo "-s key   ... print xde data for the key"
+	echo "-f field ... use it with -s, this displays only the field value"
+	echo "-x       ... list entries for xwmconfig dialog"
+	echo "-b       ... prints a new xinitrc for the current key"
+	echo "-h       ... this screen"
+	exit 1
+	}
+
+# options
+[ $# -eq 0 ] &&	usage
+while getopts "haixcs:f:b:" options; do
+	case "${options}" in     
+	h) usage;;
+	a) opt_list=all;;
+	b) opt_build=$OPTARG;;
+	i) opt_list=inst;;
+	x) opt_list=xdlg;;
+	s) opt_info=$OPTARG;;
+	f) opt_field=$OPTARG;;
+	c) opt_print_cur=y;;
+	esac
+done
+#shift $(($OPTIND − 1))
+ 
+# print info about specific desktop environment
+if [ -n "$opt_info" ]; then
+	idx=0
+	for i in $(seq 0 $xde_max); do
+		if [ ${xde_key[$i]} = $opt_info ]; then
+			idx=$i
+			break
+		fi
+	done
+	if [ -z "$opt_field" ]; then
+		echo -e "index:\t$idx"
+		echo -e "key:\t${xde_key[$idx]}"
+		echo -e "desc:\t${xde_desc[$idx]}"
+		echo -e "cmd:\t${xde_cmd[$idx]}"
+		echo -e "spre:\t${xde_spre[$idx]}"
+		echo -e "npre:\t${xde_npre[$idx]}"
+	else
+		case "$opt_field" in
+		index)	echo $idx;;
+		key)	echo ${xde_key[$idx]};;
+		desc)	echo ${xde_desc[$idx]};;
+		cmd)	echo ${xde_cmd[$idx]};;
+		spre)	echo ${xde_spre[$idx]};;
+		npre)	echo ${xde_npre[$idx]};;
+		esac
+	fi
+fi
+
+# print current 
+if [ -n "$opt_print_cur" ]; then
+	if [ "$USER" = "root" ]; then
+		[ ! -f $sysdir/default ] && echo ${xde_key[0]} > $sysdir/default
+		cat $sysdir/default
+	else
+		cat $HOME/.xinitrc | head -2 | tail -1 | cut -d\  -f2
+	fi
+fi
+
+# print lists
+if [ -n "$opt_list" ]; then
+	for i in $(seq 0 $xde_max); do
+		case "$opt_list" in
+		all)
+			command -vp ${xde_cmd[$i]} > /dev/null && echo -n "(i) " ||	echo -n "--- "
+			echo -ne ${xde_key[$i]}"\033[20G"
+			echo ${xde_desc[$i]}
+			;;
+		inst)
+			if command -vp ${xde_cmd[$i]} > /dev/null; then
+				echo -ne ${xde_key[$i]}"\033[20G"
+				echo ${xde_desc[$i]}
+			fi
+			;;
+		xdlg)
+			if command -vp ${xde_cmd[$i]} > /dev/null; then
+				echo "\""${xde_key[$i]}"\" \""${xde_desc[$i]}"\" \\"
+			fi
+			;;
+		esac
+	done
+fi
+
+# build a new xinitrc
+if [ -n "$opt_build" ]; then
+	idx=0
+	for i in $(seq 0 $xde_max); do
+		if [ ${xde_key[$i]} = $opt_build ]; then
+			idx=$i
+			break
+		fi
+	done
+	cat <<EOT
+#!/bin/sh
+# $opt_build
+
+# system-wide data directory
+xdir="$sysdir"
+
+# extra start-desktop commands can be added to $sysdir/bin
+PATH="\${PATH}:\$xdir/bin"
+
+# execution command in normal mode 
+exec_normal="${xde_npre[$idx]} ${xde_cmd[$idx]}"
+
+# execution command in session mode
+exec_session="${xde_spre[$idx]} ${xde_cmd[$idx]}"
+
+EOT
+	cat $sysdir/xinitrc-template
+fi

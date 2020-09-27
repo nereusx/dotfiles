@@ -20,13 +20,13 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-xidir=/etc/X11/xinit-nc
+sysdir=/etc/X11/xinit-rc
 
 # First, let's bail if our being here doesn't make sense:
-if [ ! -d $xidir ]; then
+if [ ! -d $sysdir ]; then
   exit 1
 fi
-if [ "`cd $xidir ; echo *.*`" = '*.*' ]; then
+if [ "`cd $sysdir ; echo *.*`" = '*.*' ]; then
   exit 1
 fi
 
@@ -42,15 +42,12 @@ if [ ! -d $TMP ]; then
 fi
 
 # Do we already have an existing default?
-unset PRESELECT
-if [ -L $xidir/conf ]; then
-  CURRENT=$($xidir/xwmlist -s)
-  PRESELECT=" --default-item \"$CURRENT\" "
-fi
+CURRENT=$($sysdir/xwmlist -c)
+PRESELECT=" --default-item \"$CURRENT\" "
 
 # Figure out who we are and set up some background information:
 if [ "$USER" = "root" ]; then
-  BACKTITLE="--backtitle \"Setting system-wide default window manager in $xidir/\""
+  BACKTITLE="--backtitle \"Setting system-wide default window manager in $sysdir/\""
 else
   BACKTITLE="--backtitle \"Setting default window manager in $HOME/.xinitrc and $HOME/.xsession\""
 fi
@@ -64,7 +61,7 @@ fi
 rm -f $TMP/tmpscript.sh
 
 # Add the top of the script:
-if [ -r $xidir/xinitrc.gnome -a -r $xidir/xinitrc.kde ]; then
+if [ -r $sysdir/xinitrc.gnome -a -r $sysdir/xinitrc.kde ]; then
 cat << EOF > $TMP/tmpscript.sh
 #!/bin/sh
 dialog $BACKTITLE --title "SELECT DEFAULT WINDOW MANAGER FOR X" $PRESELECT --menu \\
@@ -75,7 +72,7 @@ with Windows or MacOS experience will find either one easy to use. \\
 Other window managers are easier on system \\
 resources, or provide other unique features." 12 74 0 \\
 EOF
-elif [ -r $xidir/xinitrc.kde ]; then 
+elif [ -r $sysdir/xinitrc.kde ]; then 
 cat << EOF > $TMP/tmpscript.sh
 #!/bin/sh
 dialog $BACKTITLE --title "SELECT DEFAULT WINDOW MANAGER FOR X" $PRESELECT --menu \\
@@ -86,7 +83,7 @@ with Windows or MacOS experience will find it easy to use. \\
 Other window managers are easier on system \\
 resources, or provide other unique features." 12 74 0 \\
 EOF
-elif [ -r $xidir/xinitrc.xfce ]; then
+elif [ -r $sysdir/xinitrc.xfce ]; then
 cat << EOF > $TMP/tmpscript.sh
 #!/bin/sh
 dialog $BACKTITLE --title "SELECT DEFAULT WINDOW MANAGER FOR X" $PRESELECT --menu \\
@@ -106,7 +103,7 @@ the computer uses." 12 74 0 \\
 EOF
 fi
 
-$xidir/xwmlist -x >> $TMP/tmpscript.sh
+$sysdir/xwmlist -x >> $TMP/tmpscript.sh
 
 # Then, the tail end:
 cat << EOF >> $TMP/tmpscript.sh
@@ -129,31 +126,22 @@ OUTPUT=`cat $TMP/output`
 
 # If xwmconfig is run by root, it changes the system-wide default for users
 # that do not have a $HOME/.xinitrc:
-if [ "$USER" = "root" ]; then
-  if [ -r $xidir/$OUTPUT ]; then
-    ( cd $xidir ; rm -f conf ; ln -sf $OUTPUT conf )
-  fi
-fi
+[ "$USER" = "root" ] && echo $OUTPUT > $sysdir/default
 
 # Also set up a new $HOME/.xinitrc and $HOME/.xsession:
-if [ -r $xidir/$OUTPUT -a ! "$HOME" = "/" ]; then
-  if [ -r $HOME/.xinitrc ]; then
-    rm -f $HOME/.xinitrc-backup
-    mv $HOME/.xinitrc $HOME/.xinitrc-backup
-  fi
-	echo "#!/bin/sh" > $HOME/.xinitrc
-	echo "# $OUTPUT" >> $HOME/.xinitrc
-	cat $xidir/$OUTPUT >> $HOME/.xinitrc
-	cat $xidir/xinitrc >> $HOME/.xinitrc
-  if [ -r $HOME/.xsession ]; then
-    rm -f $HOME/.xsession-backup
-    mv $HOME/.xsession $HOME/.xsession-backup
-  fi
-	echo "#!/bin/sh" > $HOME/.xsession
-	echo "# $OUTPUT" >> $HOME/.xsession
-	cat $xidir/$OUTPUT >> $HOME/.xsession
-	cat $xidir/xinitrc >> $HOME/.xsession
-  chmod 755 $HOME/.xsession
+if [ ! "$HOME" = "/" ]; then
+	if [ -r $HOME/.xinitrc ]; then
+		rm -f $HOME/.xinitrc-backup
+		mv $HOME/.xinitrc $HOME/.xinitrc-backup
+	fi
+	$sysdir/xwmlist -b $OUTPUT > $HOME/.xinitrc
+
+	if [ -r $HOME/.xsession ]; then
+		rm -f $HOME/.xsession-backup
+		mv $HOME/.xsession $HOME/.xsession-backup
+	fi
+	$sysdir/xwmlist -b $OUTPUT > $HOME/.xsession
+	chmod 755 $HOME/.xsession
 fi
 
 rm -f $TMP/tmpscript.sh $TMP/output

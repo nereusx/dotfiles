@@ -1,0 +1,24 @@
+# check session manager runs
+[ -z "$DESKTOP_SESSION" -a -x /usr/bin/ck-launch-session ] && use_xsession=1 || use_xsession=0
+
+# merge defaults, keymaps and run .xprofile
+[ -r $xdir/.Xresources ] && xrdb -merge $xdir/.Xresources
+[ -r $xdir/.Xmodmap    ] && xmodmap $xdir/.Xmodmap
+[ -r $HOME/.Xdefaults  ] && xrdb -merge $HOME/.Xdefaults
+[ -r $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
+[ -r $HOME/.Xmodmap    ] && xmodmap $HOME/.Xmodmap
+[ -r $xdir/.xprofile   ] && . $xdir/.xprofile
+[ -r $HOME/.xprofile   ] && . $HOME/.xprofile
+
+# prepare start_desktop to the selected desktop environment
+[ $use_xsession -eq 1  ] &&	start_desktop=${exec_session} || start_desktop=${exec_normal}
+
+# load local configuration if exists; does not need to touch system confs again
+if [ $use_xsession -eq 1 ]; then
+	[ -r $HOME/.xsession.local ] && . $HOME/.xsession.local
+else
+	[ -r $HOME/.xinitrc.local  ] && . $HOME/.xinitrc.local
+fi
+
+# finaly run it
+$start_desktop

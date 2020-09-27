@@ -66,7 +66,7 @@ static define awk_dfa_callback (name)
    dfa_define_highlight_rule("\"([^\"\\\\]|\\\\.)*\\\\?", "string", name);
    dfa_define_highlight_rule("'([^'\\\\]|\\\\.)*'", "string", name);
    dfa_define_highlight_rule("'([^'\\\\]|\\\\.)*\\\\?$", "string", name);
-   dfa_define_highlight_rule("[ \t]+", "normal", name);
+%   dfa_define_highlight_rule("[ \t]+", "normal", name);
    dfa_define_highlight_rule("[\\(\\[{}\\]\\),;\\?:]", "delimiter", name);
    dfa_define_highlight_rule("[%\\-\\+/&\\*=<>\\|!~\\^\\$]", "operator", name);
    dfa_build_highlight_table(mode);
@@ -74,215 +74,6 @@ static define awk_dfa_callback (name)
 dfa_set_init_callback (&awk_dfa_callback, "awk");
 %%% DFA_CACHE_END %%%
 #endif
-
-%}}}
-%{{{ indentation
-
-% find the end of the line before any comment
-define eol_bskip_white_comment()
-{
-   eol();
-   while (-2 == parse_to_point)
-     {
-	() = bfind_char('#');
-	bskip_chars("# \t");
-     }
-   bskip_white;
-}
-
-% count the opening brackets on this line
-define count_bra()
-{
-   variable open_count = 0, ln=what_line();
-   push_spot();
-   eol_bskip_white_comment();
-   while (find_matching_delimiter('}'))
-     {
-	if (ln != what_line()) break;
-	open_count++;
-     }
-   pop_spot;
-   return open_count;
-}
-
-% count the closing brackets on this line
-define count_ket()
-{
-   variable close_count = 0, ln=what_line();
-   push_spot_bol();
-   while (1 == parse_to_point()) () = ffind_char('"');
-   if (looking_at_char('}'))
-     close_count++;
-   while (1 == find_matching_delimiter('{'))
-     {
-	if (ln != what_line()) break;
-	close_count++;
-     }
-   pop_spot;
-   return close_count;
-}
-
-% go up skipping continued strings and comments
-define awk_go_up ()
-{
-   forever {
-      !if (up_1 ())
-	return 0;
-      bol_skip_white ();
-      if (eolp ()) continue;
-      if (-1 == parse_to_point) continue;
-      if (what_char () != '#') return 1;
-   }
-}
-
-% find the location of the last match of regexp in str
-define last_match(str, regexp)
-{
-   variable match = string_match (str, regexp, 1), next_match;
-   !if (match) return 0;
-   forever
-     {
-	next_match = string_match (str, regexp, match+1);
-	!if (next_match) return match;
-	match += next_match;
-     }
-}
-
-private variable continued_re = pcre_compile("(&|\\?|:|\\\\)$"),
-do_else_re=pcre_compile("\\b(do|else)$");
-
-% Is the next line the continuation of this one?
-define is_continued_line ()
-{
-   
-. push_spot
-
-. {
-.   pop_spot
-. } EXIT_BLOCK
-
-. bol push_mark eol_bskip_white_comment
-   variable line = bufsubstr();
-   % string
-   if (-1 == parse_to_point) return 0;
-   % continued line other than {
-   if (pcre_exec(continued_re, line))
-     return 1;
-   % do, else
-   if (andelse {pcre_exec(do_else_re, line)}
-	 {not(andelse {down_1} {skip_white, looking_at("{")})})
-     return 1;
-   % if, while, for
-   if (andelse {blooking_at(")")} {go_left_1, 1 == find_matching_delimiter(0)})
-     {
-	bskip_white;
-	push_mark;
-	bskip_chars("a-z");
-	variable beg = bufsubstr();
-
-	% do .. while
-	if (beg == "while")
-	  {
-	     bskip_white();
-	     if (looking_at_char('}')) % do { .. } while
-	       () = find_matching_delimiter('}');
-	     push_mark();
-	     push_mark();
-	     () = find_matching_delimiter('}'); % maybe a do { .. while .. }
-	     exchange_point_and_mark();
-	     () = up (2);
-	     bol();
-	     check_region(0);
-	     pop_mark_0();
-	     exchange_point_and_mark();
-	     variable s =bufsubstr, do_match = last_match(s, "\\<do\\>");
-	     if (andelse {do_match}
-		   {not string_match(s, "\\<while\\>", do_match)})
-	       return 0;
-	  }
-	if (andelse{strlen(beg)}
-	      {is_list_element("if while for", beg, ' ')}
-	    % This should cancel the indentation of the line after an if()
-	    % when it begins with {. This is getting messy.
-	      {goto_spot,not(andelse {down_1} {skip_white, looking_at("{")})})
-	  return 1;
-     }
-   return 0;
-}
-
-% How much indenting based on the previous line?
-define awk_prev_line_rule ()
-{
-   variable indent = 0;
-   push_spot ();
-   if(awk_go_up ()) {
-      % It is assumed that this line is correctly aligned.
-      indent = what_column ();
-      indent += C_INDENT * count_bra();
-      
-      % Is the next a continuation line?
-      if (is_continued_line ())
-	indent += C_CONTINUED_OFFSET;
-      if (andelse { awk_go_up () } { is_continued_line () })
-	indent -= C_CONTINUED_OFFSET;
-   }
-   pop_spot ();
-   return indent;
-}
-
-define awk_indent_to (n)
-{
-   bol_skip_white ();
-   if (what_column != n)
-     {
-	bol_trim ();
-	n--;
-	whitespace (n);
-     }
-}
-
-% Indent the current line.
-define awk_indent_line ()
-{
-   push_spot_bol();
-   
-   if (-1 == parse_to_point) return pop_spot(); % in continued string
-   
-   variable indent;
-   
-   skip_white ();
-   
-   indent  = awk_prev_line_rule ();
-   indent -= C_INDENT * count_ket();
-   awk_indent_to (indent);
-   pop_spot();
-   if (bolp) goto_column(indent);
-}
-
-
-define awk_newline_and_indent ()
-{
-.   bolp { newline awk_indent_line return } if
-.   push_spot_bol skip_white 
-.   "#" looking_at
-.    {
-.	bol push_mark "#\t " skip_chars bufsubstr pop_spot newline
-.       insert % bufsubstr
-.	return
-.    } if
-.   pop_spot newline awk_indent_line
-}
-
-define insert_bra()
-{
-.   push_spot bskip_white bolp pop_spot '{' insert_char 
-.   {indent_line} if % bolp
-}
-
-define insert_ket()
-{
-.  '}' insert_char push_spot indent_line pop_spot
-}
 
 %}}}
 %{{{ help
@@ -434,44 +225,6 @@ define help_for_awk(w)
 }
 
 %}}}
-%{{{ keymap
-
-!if (keymap_p (mode))
-  {
-     make_keymap (mode);
-     definekey("awk->insert_bra", "{", mode);
-     definekey("awk->insert_ket", "}", mode);
-     definekey("indent_line", "\t", mode);
-  }
-
-%}}}
-%{{{ wrap hook
-% Awk mode wraps! It automagically inserts the '\' and should be smart enough
-% to continue comments. If you don't want this, add this to awk_mode_hook:
-% set_mode("awk", 2);
-define wrap_hook()
-{  
-   push_spot;
-   go_up_1;
-   if (-2 < parse_to_point)
-     insert(" \\");
-   else % continue the comment
-     {
-	bol;
-	while (ffind_char('#') 
-	       and (-1 == parse_to_point())) % maybe a '#' inside a string
-	  go_right_1;
-	push_mark;
-	skip_chars("# \t");
-	bufsubstr;
-	go_down_1;
-	insert();
-     }
-   pop_spot;
-%   indent_line;
-}
-
-%}}}
 %{{{ menu
 
 define functions_popup_callback(popup)
@@ -490,10 +243,7 @@ define functions_popup_callback(popup)
 define awk_init_menu(menu)
 {
    menu_append_popup(menu, "functions");
-   menu_set_select_popup_callback (strcat (menu, ".functions"),
-				   &functions_popup_callback);
-   if (is_defined("indent_buffer")) % in txtutils.sl
-     menu_append_item (menu, "&Format Buffer", "indent_buffer");
+   menu_set_select_popup_callback (strcat (menu, ".functions"), &functions_popup_callback);
    menu_append_item (menu, "&Apropos", "awk->awk_apropos");
 }
 
@@ -502,10 +252,6 @@ define awk_init_menu(menu)
 public define awk_mode ()
 {
    set_mode(mode, 1);
-   use_keymap(mode);
-   set_buffer_hook ("indent_hook", &awk_indent_line);
-   set_buffer_hook ("newline_indent_hook", &awk_newline_and_indent);
-   set_buffer_hook ("wrap_hook", &wrap_hook);
    mode_set_mode_info (mode, "init_mode_menu", &awk_init_menu);
 
    use_syntax_table (mode);
