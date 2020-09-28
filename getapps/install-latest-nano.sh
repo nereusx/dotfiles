@@ -1,11 +1,14 @@
 #!/bin/sh
+dirx=nano
+repo=git://git.savannah.gnu.org/$dirx.git
+
 cd /usr/src
-if [ -d nano ]; then
-	cd nano
+if [ -d $dirx ]; then
+	cd $dirx
 	git pull
 else
-	git clone git://git.savannah.gnu.org/nano.git nano
-	cd nano
+	git clone $repo $dirx
+	cd $dirx
 fi
 sh autogen.sh
 ./configure && make && make install && make clean
