@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ $# -lt 2 ]; then
+	echo "usage: add-user-to-group user group"
+	echo "example: add-user-to-group george users"
+	exit 1
+fi
+
+userx="$1"
+group="$2"
+
+usermod -aG $group $userx
