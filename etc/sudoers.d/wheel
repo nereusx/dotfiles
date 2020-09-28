@@ -1,2 +1,2 @@
-%wheel ALL=(root) NOPASSWD: ALL
+%wheel ALL=(ALL) NOPASSWD: ALL
 
