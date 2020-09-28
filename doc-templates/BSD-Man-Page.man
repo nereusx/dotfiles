@@ -16,8 +16,6 @@
 \#   Documentation License along with this program.  If not, see
 \#   <https://www.gnu.org/licenses/>.
 \#
-\# This documentation created by Nicholas Christopoulos for XXX project.
-\#
 \# Please check this project <https://github.com/nereusx/md2roff>
 \# to create man pages easily from markdown.
 \#
