@@ -1,0 +1,106 @@
+\# Copyright (C) 1999-2020 Free Software Foundation, Inc.
+\#
+\# This document is dual-licensed.  You may distribute and/or modify it
+\# under the terms of either of the following licenses:
+\#
+\# * The GNU General Public License, as published by the Free Software
+\#   Foundation, version 3 or (at your option) any later version.  You
+\#   should have received a copy of the GNU General Public License
+\#   along with this program.  If not, see
+\#   <https://www.gnu.org/licenses/>.
+\#
+\# * The GNU Free Documentation License, as published by the Free
+\#   Software Foundation, version 1.2 or (at your option) any later
+\#   version, with no Invariant Sections, no Front-Cover Texts, and no
+\#   Back-Cover Texts.  You should have received a copy of the GNU Free
+\#   Documentation License along with this program.  If not, see
+\#   <https://www.gnu.org/licenses/>.
+\#
+\# This documentation created by Nicholas Christopoulos for XXX project.
+\#
+\# Please check this project <https://github.com/nereusx/md2roff>
+\# to create man pages easily from markdown.
+\#
+\# Linux groff format (not good) -> man groff_man
+\#.do mso man.tmac
+\#
+\# BSD groff format (much better) -> man groff_mdoc
+.do mso doc.tmac
+\# both cases will work on Linux... well it should (tested on slackware and voidlinux)
+\# of course the first is real UNIX and the second wanna be real UNIX.
+\#
+\# Note 1: do not leave empty lines, it is not problem but may get ugly results.
+\# Note 2: MacOS X+ runs on BSD, so there shouldn't be any problem.
+\#
+.Dd Nov 17, 1971
+.Dt COMMAND 1 "category-title"
+.Os
+\#
+.Sh NAME
+.Nm command
+.Nd short-description.
+\#
+.Sh SYNOPSIS
+.Nm command
+.Op Fl opt1
+.Op Fl optN
+\#
+.Sh DESCRIPTION
+The
+.Nm command
+long description blah blah
+blah blah blah.
+.Pp
+\# Adding a list
+\# .Bl -bullet -offset indent
+\# .It
+\# text text text
+\# .D1 <http://gopkg.in/yaml.v3>
+\# .It
+\# JSON - RFC 7159 Encoding/JSON
+\# .D1 <https://tools.ietf.org/html/rfc7159>
+\# .El
+\#
+.Sh OPTIONS
+.Bl -tag -width Ds 
+.It Fl opt1
+description
+.br
+.It Fl opt2
+description
+.El
+\#
+\# .Sh ENVIRONMENT
+\# related environment variables goes here
+\#
+\# .Sh FILES
+\# configuration files goes here
+\#
+\# .Sh NOTES
+\#
+\# .Sh EXAMPLES
+\# The following example displays the results of ips-find in human readable format:
+\# .Bd -literal -offset indent
+\# $ wget https://api.ipfs-search.com/v1/search\\?q=linux -O results.json
+\# $ cat results.json | yj -i -jt
+\# .Ed
+\#
+\# .Sh SEE ALSO
+\# .Xr csh 1 ,
+\# .Xr ksh 1
+\#
+\# .Sh CONFORMING TO
+\# RFC 7159 Encoding/JSON
+\# .D1 <https://tools.ietf.org/html/rfc7159>
+\#
+\# .Sh HISTORY
+\#
+\# .Sh AUTHOR
+\# .An Nicholas Christopoulos Aq Mt nereus@freemail.gr
+\# .br
+\# .Lk https://github.com/sclevine/yj
+\#
+\# .Sh BUGS 
+\# known problems goes here
+\#
+\# EOF
