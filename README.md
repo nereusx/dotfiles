@@ -13,7 +13,9 @@ with special configurations for desktops, laptops, and several terminal types).
 
 * ban ip addresses through iptables, there is a filter based on country of the IP, but you can add more easily.
 
-* several patches for each distro
+* document templates for LaTeX, XeLaTeX, BSD or Linux man page, etc (dotfiles/doc-templates)
+
+* several patches for each distro (dotfiles/dist subdirectory)
 
 **Note**
 * You may need [fzy](https://github.com/jhawthorn/fzy) or [pick](https://github.com/mptre/pick)
