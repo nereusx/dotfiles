@@ -1,25 +1,36 @@
 #!/bin/sh
 DISTRO=$( grep '^ID=' /etc/os-release | awk 'BEGIN{FS="=";}{print $2}' | sed s/\"//g )
-USEFPK=0
+
+scale=1.333
 if [ -x /opt/viber/Viber ]; then
-	USEFPK=0
-fi
-#if [ "$DISTRO" = "void" ]; then
-#	USEFPK=1
-#fi
-if [ "$1" = "-f" ]; then
-	USEFPK=1
-	shift
-fi
-if [ "$1" = "-d" ]; then
-	USEFPK=0
-	shift
-fi
-if [ $USEFPK -eq 0 ]; then
-	echo "run /opt/viber/"
-	exec env QT_SCALE_FACTOR=1.15 /opt/viber/Viber $*
+	method=n
+elif [ -x /opt/viber.AppImage ]; then
+	method=a
 else
-	echo "run flatpak viber"
-	exec env QT_SCALE_FACTOR=1.15 flatpak run com.viber.Viber $*
+	method=f
 fi
+
+while getopts afnhs: o; do
+	case "$o" in
+	h)
+		echo "usage: viber [-h|-n|-a|-f] [-s factor]"
+		echo "-n        ... native version"
+		echo "-a        ... appimage version"
+		echo "-f        ... flatpak version"
+		echo "-s factor ... zoom scaling factor"
+		echo "-h        ... this screen"
+		echo "default method=$method with scaling=$scale"
+		exit 1
+		;;
+	s)	scale="$OPTARG";;
+	n)	method=n;;
+	a)	method=a;;
+	f)	method=f;;
+	esac
+done
+
+[ "$method" = "n" ] && QT_SCALE_FACTOR=$scale /opt/viber/Viber $@ &
+[ "$method" = "a" ] && QT_SCALE_FACTOR=$scale /opt/viber.AppImage $@ &
+[ "$method" = "f" ] && QT_SCALE_FACTOR=$scale flatpak run com.viber.Viber $@ &
+
 
