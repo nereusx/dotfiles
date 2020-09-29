@@ -41,7 +41,7 @@ make && make install
 Note: I discover that in a few distros, jed (and my ~/.jed scripts) are not working well because `shsl` (part of libslang that JED is uses) isn't installed even if libslang it is.
 
 ## Help files (~/.help)
-Help files are written for 132x35 terminals
+Help files, cheatsheets, short manula, are written for 132x35 terminals plain text.
 
 ## Distro's subdirectories
 There many distro's subdirectories that contains fresh install scripts, and several patches that I had to write...
