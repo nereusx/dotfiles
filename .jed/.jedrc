@@ -101,10 +101,6 @@ define hyperhelp_load_popup_hook(menubar)
 }
 append_to_hook ("load_popup_hooks", &hyperhelp_load_popup_hook);
 
-%%
-autoload("awk_mode", "awk");
-add_mode_for_extension("awk", "awk");
-
 %% makefile
 autoload("make_mode", "make");
 private define set_modes_hook(base, ext)
