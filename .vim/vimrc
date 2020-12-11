@@ -25,12 +25,16 @@ set softtabstop=4	" Number of spaces per Tab
 " Advanced
 set ruler	" Show row and column ruler information
 
-set backupdir=~/.backup/text	" Backup directories
+if filereadable(expand('~/.backup/text'))
+	set backupdir=~/.backup/text	" Backup directories
+endif
 
 set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour;6u
 
-" 
-source /usr/share/vim/vimfiles/colors/onedark.vim
+" onedark turbo borland
+" source /usr/share/vim/vimfiles/colors/borland.vim
+source ~/.vim/colors.vim
 source ~/.vim/fix-alt.vim
 source ~/.vim/brief.vim
+source ~/.vim/ndc-brief.vim

@@ -1,0 +1,2 @@
+#!/bin/sh
+wget https://raw.githubusercontent.com/yegappan/brief/master/plugin/brief.vim

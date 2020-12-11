@@ -1,15 +1,7 @@
 " File: brief.vim
-"
-" Nicholas Christopoulos (nereus@freemail.gr)
-" Version: Jan 2021
-" Use F10 for command-line (ESC)
-"
-" This is the Nicholas's modified version of:
-"
-"	Original version:
-"	Author: Yegappan Lakshmanan
-"	Version: 1.0
-"	Last Modified: April 5 2002
+" Author: Yegappan Lakshmanan
+" Version: 1.0
+" Last Modified: April 5 2002
 "
 " Overview
 " --------
@@ -170,12 +162,6 @@ if exists("loaded_brief")
   finish
 endif
 let loaded_brief=1
-
-"-----------------------
-" F10: command-line
-"-----------------------
-map <C-O> <ESC>
-inoremap <F10> <C-O>:
 
 "
 " The following Vim settings are used for emulating brief like behavior
@@ -376,11 +362,9 @@ inoremap <silent> <A-s> <C-O>:call <SID>BriefSearch(expand("<cword>")<CR>
 
 " search again
 inoremap <silent> <S-F5> <C-O>n
-inoremap <silent> <A-f> <C-O>n
 
 " Reverse search
 inoremap <silent> <A-F5> <C-O>N
-inoremap <silent> <C-S> <C-O>N
 
 " Search and replace from the current cursor position
 inoremap <silent> <F6> <C-O>:call <SID>BriefSearchAndReplace("")<CR>
@@ -428,7 +412,7 @@ inoremap <silent> <C-kMinus> <C-O>:bdelete<CR>
 inoremap <A-b> <C-O>:buffers<CR>:buffer 
 
 " Display buffer information
-"inoremap <A-f> <C-O>:file<CR>
+inoremap <A-f> <C-O>:file<CR>
 
 "-----------------------
 " Compiler related
