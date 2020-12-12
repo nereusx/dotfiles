@@ -146,7 +146,7 @@ inoremap <silent> <A-b>	<C-O>:BufList<CR>
 if s:use_qui
 	let g:quickui_border_style = 2
 	command! Routines :call quickui#tools#list_function()
-	command! HelpTUI :call quickui#tools#display_help('index')
+	inoremap <silent> <C-G>	<C-O>:Routines<CR>
 	inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
 endif
 
