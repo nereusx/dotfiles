@@ -22,6 +22,7 @@ done
 #dos2unix borland/colors/borland.vim
 
 list=""
+list="$list https://github.com/vim-utils/vim-man"
 #list="$list https://github.com/preservim/nerdtree"
 #list="$list https://github.com/vimwiki/vimwiki"
 list="$list https://github.com/bling/vim-bufferline"
