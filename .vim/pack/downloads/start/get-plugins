@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#mkdir ~/.vim/autoload
+#curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+list="borland brief bufselect fileselect mru scratch"
+for b in $list; do
+	rm -rf $b
+	git clone https://github.com/yegappan/$b
+done
+
+list=""
+list="$list https://github.com/preservim/nerdtree"
+#list="$list https://github.com/vimwiki/vimwiki"
+list="$list https://github.com/bling/vim-bufferline"
+list="$list https://github.com/Shougo/unite.vim"
+list="$list https://github.com/vim-airline/vim-airline"
+for b in $list; do
+	p=$(basename $b)
+	rm -rf $p
+	git clone $b
+done
