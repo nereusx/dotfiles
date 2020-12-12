@@ -10,7 +10,7 @@ for b in $list; do
 done
 
 list=""
-list="$list https://github.com/preservim/nerdtree"
+#list="$list https://github.com/preservim/nerdtree"
 #list="$list https://github.com/vimwiki/vimwiki"
 list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/Shougo/unite.vim"
