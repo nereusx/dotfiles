@@ -6,6 +6,7 @@ if exists('g:loaded_ndc_brief')
     finish
 endif
 let g:loaded_ndc_brief = v:true
+let s:use_qui = v:true
 
 " F10: command-line
 inoremap <F10> <C-O>:
@@ -132,8 +133,20 @@ while !exitf
 endwhile
 endfunc
 
+func! s:BufList()
+	if s:use_qui
+		exec "call quickui#tools#list_buffer('e')"
+	else
+		exec 'buffers'
+	endif
+endfunc
+command! BufList :call <SID>BufList()
 
-
-
+if s:use_qui
+	let g:quickui_border_style = 2
+	command! Routines :call quickui#tools#list_function()
+	command! HelpTUI :call quickui#tools#display_help('index')
+	inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
+endif
 
 

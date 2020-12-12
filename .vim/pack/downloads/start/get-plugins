@@ -24,6 +24,7 @@ list="$list https://github.com/Shougo/unite.vim"
 list="$list https://github.com/vim-airline/vim-airline"
 #list="$list https://github.com/theniceboy/vim-calc"
 list="$list https://github.com/frazrepo/vim-rainbow"
+list="$list https://github.com/skywind3000/vim-quickui"
 for b in $list; do
 	p=$(basename $b)
 	echo "$p"
