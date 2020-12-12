@@ -1,12 +1,14 @@
 syntax on
 set tabstop=4
+filetype on
 
 " General
 set number	" Show line numbers
 "set no wrap	" Wrap lines
 set textwidth=132 " Line wrap (number of cols)
 set showmatch	" Highlight matching brace
-set spell	" Enable spell-checking
+"set spell spelllang=en_us,el_gr	" Enable spell-checking
+set nospell
 set virtualedit=insert	" Enable free-range cursor
 set errorbells	" Beep or flash screen on errors
 set visualbell	" Use visual bell (no beeping)
@@ -41,3 +43,6 @@ color borland
 source ~/.vim/fix-alt.vim
 source ~/.vim/brief.vim
 source ~/.vim/ndc-brief.vim
+
+autocmd FileType markdown setlocal spell
+autocmd FileType text setlocal spell
