@@ -35,8 +35,9 @@ set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour;6u
 
 " onedark turbo borland
+color borland
+
 " source /usr/share/vim/vimfiles/colors/borland.vim
-source ~/.vim/colors.vim
 source ~/.vim/fix-alt.vim
 source ~/.vim/brief.vim
 source ~/.vim/ndc-brief.vim

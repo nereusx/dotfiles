@@ -3,7 +3,11 @@
 #mkdir ~/.vim/autoload
 #curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
-list="borland brief bufselect fileselect mru scratch"
+list=""
+#list="$list borland"
+#list="$list bufselect"
+#list="$list scratch"
+list="$list brief fileselect mru"
 for b in $list; do
 	echo "$b"
 	if [ -d $b/.git ]; then
@@ -15,6 +19,7 @@ for b in $list; do
 		git clone https://github.com/yegappan/$b
 	fi
 done
+#dos2unix borland/colors/borland.vim
 
 list=""
 #list="$list https://github.com/preservim/nerdtree"
@@ -25,6 +30,7 @@ list="$list https://github.com/vim-airline/vim-airline"
 #list="$list https://github.com/theniceboy/vim-calc"
 list="$list https://github.com/frazrepo/vim-rainbow"
 list="$list https://github.com/skywind3000/vim-quickui"
+list="$list https://github.com/entrez/reedline.vim"
 for b in $list; do
 	p=$(basename $b)
 	echo "$p"
@@ -37,3 +43,4 @@ for b in $list; do
 		git clone $b
 	fi
 done
+
