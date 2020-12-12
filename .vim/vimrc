@@ -25,6 +25,8 @@ set softtabstop=4	" Number of spaces per Tab
 " Advanced
 set ruler	" Show row and column ruler information
 
+let g:rainbow_active = 1
+
 if filereadable(expand('~/.backup/text'))
 	set backupdir=~/.backup/text	" Backup directories
 endif

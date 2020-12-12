@@ -5,8 +5,15 @@
 
 list="borland brief bufselect fileselect mru scratch"
 for b in $list; do
-	rm -rf $b
-	git clone https://github.com/yegappan/$b
+	echo "$b"
+	if [ -d $b/.git ]; then
+		cd $b
+		git pull
+		cd ..
+	else
+		rm -rf $b
+		git clone https://github.com/yegappan/$b
+	fi
 done
 
 list=""
@@ -16,8 +23,16 @@ list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/Shougo/unite.vim"
 list="$list https://github.com/vim-airline/vim-airline"
 #list="$list https://github.com/theniceboy/vim-calc"
+list="$list https://github.com/frazrepo/vim-rainbow"
 for b in $list; do
 	p=$(basename $b)
-	rm -rf $p
-	git clone $b
+	echo "$p"
+	if [ -d $p/.git ]; then
+		cd $p
+		git pull
+		cd ..
+	else
+		rm -rf $p
+		git clone $b
+	fi
 done
