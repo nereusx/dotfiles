@@ -1,6 +1,12 @@
 " cbrief.vim, fix and addons to brief.vim
 " Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
 
+" prevent to load again
+if exists('g:loaded_ndc_brief')
+    finish
+endif
+let g:loaded_ndc_brief = v:true
+
 " F10: command-line
 inoremap <F10> <C-O>:
 
@@ -37,25 +43,97 @@ vnoremap <silent> <C-X> "ax
 " ================
 
 " === windows ===
-" Split window
-inoremap <silent> <F3> <C-O>:WinSplit<CR>
 
 " move to window
-inoremap <silent> <F1> <C-O><C-W>
+inoremap <silent> <F1>	<C-O>:call <SID>ExecArrow(2)<CR>
+
+" resize window
+inoremap <silent> <F2>	<C-O>:call <SID>ExecArrow(3)<CR>
+
+" Split window
+inoremap <silent> <F3>	<C-O>:call <SID>ExecArrow(1)<CR>
+
+" Close window
+inoremap <silent> <F4>	<C-O>:call <SID>ExecArrow(4)<CR>
 
 " ------------------
 
-func! NDCWinSplit()
-	call inputsave()
-	let dir = input("(v)ertical or (h)orizontal ? ")
-	call inputrestore()
-	if dir == "h"
-		:split
-	else
-		:vsplit
+func! s:ExecArrow(mode)
+let exitf = v:false
+if a:mode == 1 " Split
+	echo "Select side for the new window (use cursor keys)."
+elseif a:mode == 2 " Move
+	echo "Point to destination (use cursor keys)."
+elseif a:mode == 3 " Resize
+	echo "Select an edge to move (use cursor keys)."
+elseif a:mode == 4 " Delete
+	echo "Select window edge to delete (use cursor keys)."
+endif
+while !exitf
+	let key = getchar()
+	if a:mode == 1 " Split
+		if key == "\<Left>"
+			silent! exec "leftabove vsplit"
+		elseif key == "\<Up>"
+			silent! exec "leftabove split"
+		elseif key == "\<Right>"
+			silent! exec "rightbelow vsplit"
+		elseif key == "\<Down>"
+			silent! exec "rightbelow split"
+		endif
+		let exitf = v:true
+	elseif a:mode == 2 " Move
+		if key == "\<Left>"
+			silent! exec "wincmd h"
+		elseif key == "\<Up>"
+			silent! exec "wincmd k"
+		elseif key == "\<Right>"
+			silent! exec "wincmd l"
+		elseif key == "\<Down>"
+			silent! exec "wincmd j"
+		endif
+		let exitf = v:true
+	elseif a:mode == 3 " Resize
+		if key == "\<Left>"
+			silent! exec "vert res -1"
+		elseif key == "\<Up>"
+			silent! exec "res -1"
+		elseif key == "\<Right>"
+			silent! exec "vert res +1"
+		elseif key == "\<Down>"
+			silent! exec "res +1"
+		elseif key == 27
+			let exitf = v:true
+		elseif key == 113
+			let exitf = v:true
+		else
+			echo "key code = " .. string(key)
+		endif
+		let exitf = v:true " ??? getchar does not work well
+	elseif a:mode == 4 " close
+		if key == "\<Left>"
+			silent! exec "wincmd h"
+			silent! exec "close"
+		elseif key == "\<Up>"
+			silent! exec "wincmd k"
+			silent! exec "close"
+		elseif key == "\<Right>"
+			silent! exec "wincmd l"
+			silent! exec "close"
+		elseif key == "\<Down>"
+			silent! exec "wincmd j"
+			silent! exec "close"
+		endif
+		let exitf = v:true
 	endif
+"	while getchar(1)
+"		getchar(0)
+"	endwhile
+endwhile
 endfunc
-command! WinSplit :call NDCWinSplit()
+
+
+
 
 
 

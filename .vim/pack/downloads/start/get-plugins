@@ -15,6 +15,7 @@ list="$list https://github.com/preservim/nerdtree"
 list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/Shougo/unite.vim"
 list="$list https://github.com/vim-airline/vim-airline"
+#list="$list https://github.com/theniceboy/vim-calc"
 for b in $list; do
 	p=$(basename $b)
 	rm -rf $p
