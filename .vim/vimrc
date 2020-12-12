@@ -1,13 +1,13 @@
-syntax on
+scriptencoding utf-8
+set nocompatible
 set tabstop=4
-filetype on
 
 " General
 set number	" Show line numbers
 "set no wrap	" Wrap lines
 set textwidth=132 " Line wrap (number of cols)
 set showmatch	" Highlight matching brace
-"set spell spelllang=en_us,el_gr	" Enable spell-checking
+"set spell spelllang=en,el	" Enable spell-checking
 set nospell
 set virtualedit=insert	" Enable free-range cursor
 set errorbells	" Beep or flash screen on errors
@@ -19,30 +19,64 @@ set ignorecase	" Always case-insensitive
 set incsearch	" Searches for strings incrementally
 
 set autoindent	" Auto-indent new lines
-set shiftwidth=4	" Number of auto-indent spaces
-set smartindent	" Enable smart-indent
-set smarttab	" Enable smart-tabs
-set softtabstop=4	" Number of spaces per Tab
+"set shiftwidth=4	" Number of auto-indent spaces
+"set smartindent	" Enable smart-indent
+"set smarttab	" Enable smart-tabs
+"set softtabstop=4	" Number of spaces per Tab
 
 " Advanced
 set ruler	" Show row and column ruler information
 
-let g:rainbow_active = 1
-
 if filereadable(expand('~/.backup/text'))
+	set backup
 	set backupdir=~/.backup/text	" Backup directories
 endif
 
 set undolevels=1000	" Number of undo levels
 set backspace=indent,eol,start	" Backspace behaviour;6u
 
-" onedark turbo borland
-color borland
+syntax on
+filetype on
+filetype plugin on
 
-" source /usr/share/vim/vimfiles/colors/borland.vim
-source ~/.vim/fix-alt.vim
+" -----------------------------------
+" extra packages
+
+runtime! ftplugin/man.vim
+packadd! reedline.vim
+packadd! ctrlp.vim
+packadd! vim-quickui
+packadd! vim-airline
+
+" -----------------------------------
+" colors
+packadd! borland
+" onedark turbo borland
+colorscheme borland
+
+" -----------------------------------
+
+" fix ALT keys mapping
+source ~/.vim/altkeys.vim
+
+" load default BRIEF emulation
 source ~/.vim/brief.vim
+
+" my BRIEF's version
 source ~/.vim/ndc-brief.vim
 
-autocmd FileType markdown setlocal spell
-autocmd FileType text setlocal spell
+" -----------------------------------
+
+" Markdown files
+au BufRead,BufNewFile *.md setlocal filetype=markdown
+" Treat all .tex files as latex
+au BufRead,BufNewFile *.tex setlocal filetype=tex
+" LaTeX class files
+au BufRead,BufNewFile *.cls setlocal filetype=tex
+" SQLite-specific file
+au BufRead,BufNewFile *.sqlite setlocal filetype=sql
+
+" enable spell on simple docs
+autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
+
+

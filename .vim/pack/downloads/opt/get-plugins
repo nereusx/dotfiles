@@ -4,9 +4,9 @@
 #curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 list=""
-#list="$list borland"
-#list="$list bufselect"
-#list="$list scratch"
+list="$list borland"
+list="$list bufselect"
+list="$list scratch"
 list="$list brief fileselect mru"
 for b in $list; do
 	echo "$b"
@@ -19,19 +19,30 @@ for b in $list; do
 		git clone https://github.com/yegappan/$b
 	fi
 done
-#dos2unix borland/colors/borland.vim
+# fix dos version
+if command -v dos2unix; then
+	dos2unix borland/colors/borland.vim
+fi
 
 list=""
 list="$list https://github.com/vim-utils/vim-man"
-#list="$list https://github.com/preservim/nerdtree"
-#list="$list https://github.com/vimwiki/vimwiki"
+list="$list https://github.com/preservim/nerdtree"
+list="$list https://github.com/vimwiki/vimwiki"
 list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/Shougo/unite.vim"
 list="$list https://github.com/vim-airline/vim-airline"
-#list="$list https://github.com/theniceboy/vim-calc"
+list="$list https://github.com/theniceboy/vim-calc"
 list="$list https://github.com/frazrepo/vim-rainbow"
 list="$list https://github.com/skywind3000/vim-quickui"
 list="$list https://github.com/entrez/reedline.vim"
+list="$list https://github.com/preservim/tagbar"
+list="$list https://github.com/xolox/vim-easytags"
+list="$list https://github.com/xolox/vim-misc"
+list="$list https://github.com/vim-syntastic/syntastic"
+list="$list https://github.com/kien/ctrlp.vim"
+list="$list https://github.com/Raimondi/delimitMate"
+list="$list https://github.com/aitjcize/cppman"
+list="$list https://github.com/powerman/vim-plugin-viewdoc"
 for b in $list; do
 	p=$(basename $b)
 	echo "$p"
