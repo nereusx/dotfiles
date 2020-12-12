@@ -141,6 +141,7 @@ func! s:BufList()
 	endif
 endfunc
 command! BufList :call <SID>BufList()
+inoremap <silent> <A-b>	<C-O>:BufList<CR>
 
 if s:use_qui
 	let g:quickui_border_style = 2
