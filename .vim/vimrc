@@ -89,6 +89,9 @@ source ~/.vim/altkeys.vim
 " load default BRIEF emulation
 source ~/.vim/brief.vim
 
+" my autojoin lines 
+source ~/.vim/joinlines.vim
+
 " my BRIEF's version
 source ~/.vim/ndc-brief.vim
 
