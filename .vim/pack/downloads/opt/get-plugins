@@ -3,13 +3,16 @@
 #mkdir ~/.vim/autoload
 #curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
+vid=1
+
+echo "=== download/update vim plugins ==="
 list=""
 list="$list borland"
 list="$list bufselect"
 list="$list scratch"
-list="$list brief fileselect mru"
+list="$list brief fileselect mru lsp"
 for b in $list; do
-	echo "$b"
+	printf "\033[1m%02d. %s:\033[0m " $vid "$b"
 	if [ -d $b/.git ]; then
 		cd $b
 		git pull
@@ -18,34 +21,39 @@ for b in $list; do
 		rm -rf $b
 		git clone https://github.com/yegappan/$b
 	fi
+	vid=$(($vid+1))
 done
-# fix dos version
-if command -v dos2unix; then
-	dos2unix borland/colors/borland.vim
-fi
+
+# python scripts
+#list="$list https://github.com/dense-analysis/ale"
+#list="$list https://github.com/ycm-core/YouCompleteMe"
+#list="$list https://github.com/aitjcize/cppman"
+#list="$list https://github.com/theniceboy/vim-calc"
+#list="$list https://github.com/Shougo/unite.vim"
+#list="$list https://github.com/xolox/vim-easytags"
+#list="$list https://github.com/xolox/vim-misc"
+#list="$list https://github.com/vim-syntastic/syntastic"
 
 list=""
 list="$list https://github.com/vim-utils/vim-man"
 list="$list https://github.com/preservim/nerdtree"
 list="$list https://github.com/vimwiki/vimwiki"
 list="$list https://github.com/bling/vim-bufferline"
-list="$list https://github.com/Shougo/unite.vim"
 list="$list https://github.com/vim-airline/vim-airline"
-list="$list https://github.com/theniceboy/vim-calc"
 list="$list https://github.com/frazrepo/vim-rainbow"
 list="$list https://github.com/skywind3000/vim-quickui"
 list="$list https://github.com/entrez/reedline.vim"
 list="$list https://github.com/preservim/tagbar"
-list="$list https://github.com/xolox/vim-easytags"
-list="$list https://github.com/xolox/vim-misc"
-list="$list https://github.com/vim-syntastic/syntastic"
 list="$list https://github.com/kien/ctrlp.vim"
 list="$list https://github.com/Raimondi/delimitMate"
-list="$list https://github.com/aitjcize/cppman"
 list="$list https://github.com/powerman/vim-plugin-viewdoc"
+list="$list https://github.com/mileszs/ack.vim"
+list="$list https://github.com/ervandew/supertab"
+list="$list https://github.com/manasthakur/vim-commentor"
+list="$list https://github.com/natebosch/vim-lsc"
 for b in $list; do
 	p=$(basename $b)
-	echo "$p"
+	printf "\033[1m%02d. %s:\033[0m " $vid "$p"
 	if [ -d $p/.git ]; then
 		cd $p
 		git pull
@@ -54,5 +62,15 @@ for b in $list; do
 		rm -rf $p
 		git clone $b
 	fi
+	vid=$(($vid+1))
 done
+
+echo "=== apply patches ==="
+d2u_list="borland/colors/borland.vim"
+if command -v dos2unix > /dev/null 2>&1; then
+	for p in $d2u_list; do
+		dos2unix $p
+	done
+fi
+echo "=== done ==="
 

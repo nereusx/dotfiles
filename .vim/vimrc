@@ -19,21 +19,29 @@ set ignorecase	" Always case-insensitive
 set incsearch	" Searches for strings incrementally
 
 set autoindent	" Auto-indent new lines
-"set shiftwidth=4	" Number of auto-indent spaces
+set shiftwidth=4	" Number of auto-indent spaces
 "set smartindent	" Enable smart-indent
 "set smarttab	" Enable smart-tabs
-"set softtabstop=4	" Number of spaces per Tab
+set softtabstop=4	" Number of spaces per Tab
+set noexpandtab
 
 " Advanced
 set ruler	" Show row and column ruler information
+set showmatch
+set matchtime=3
 
-if filereadable(expand('~/.backup/text'))
-	set backup
-	set backupdir=~/.backup/text	" Backup directories
+" backup
+if !isdirectory($HOME."/.backup/text")
+	silent! execute "!mkdir -p ~/.backup/text"
 endif
+set backup
+set backupdir=~/.backup/text
+" not generate .swap
+set noswapfile
 
+"
 set undolevels=1000	" Number of undo levels
-set backspace=indent,eol,start	" Backspace behaviour;6u
+set backspace=indent,eol,start	" Backspace behaviour
 
 syntax on
 filetype on
@@ -47,6 +55,10 @@ packadd! reedline.vim
 packadd! ctrlp.vim
 packadd! vim-quickui
 packadd! vim-airline
+
+packadd! vim-commentor
+command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
+" on select mode press gc to (un)comment block
 
 " -----------------------------------
 " colors
@@ -64,6 +76,9 @@ source ~/.vim/brief.vim
 
 " my BRIEF's version
 source ~/.vim/ndc-brief.vim
+
+imap [1;5P <C-F1>
+inoremap <silent> <C-F1> <C-O>K
 
 " -----------------------------------
 
