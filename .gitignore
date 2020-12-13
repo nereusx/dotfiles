@@ -3,4 +3,5 @@
 *~
 path++
 .tmux/resurrect/*
+.vim/sessions/*
 update-me
