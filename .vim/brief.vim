@@ -147,7 +147,7 @@
 " <A-8>        - Mark bookmark 8
 " <A-9>        - Mark bookmark 9
 " <A-j>        - Jump to a bookmark
-" 
+"
 " Windows Commands
 " ----------------
 " <F3>         - Split window

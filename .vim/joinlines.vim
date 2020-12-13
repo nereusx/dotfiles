@@ -7,23 +7,39 @@
 " --------
 " The joinlines.vim Vim plugin reconfigures [backspace] and [delete] keys
 " to automatic join lines when are pressed at begin or at the end of the line.
+"
 
-func! s:JBS()
-	if col(".") <= 1
-		if line(".") != 1
+" prevent to load again
+if exists('g:loaded_joinlines')
+    finish
+endif
+let g:loaded_joinlines = v:true
+
+func! s:JoinLinesBS()
+	if col(".") <= 1 " begin of line
+		if line(".") != 1 " not begin of file
 			normal k$Jx
 		endif
 	else
-		normal X
+		if virtcol("$") <= virtcol(".")
+			let last_pos = virtcol(".")
+			normal $l
+			if last_pos == virtcol(".")
+				normal X
+			endif
+		else
+			normal X		
+		endif
 	endif
 endfunc
-inoremap <silent> <BS> <C-O>:call <SID>JBS()<CR>
+inoremap <silent> <BS> <C-O>:call <SID>JoinLinesBS()<CR>
 
-func! s:JDEL()
+func! s:JoinLinesDEL()
 	if virtcol(".") != virtcol("$")
         normal x
 	else
-		normal Jx
+		normal gJ
 	endif
 endfunc
-inoremap <silent> <DEL> <C-O>:call <SID>JDEL()<CR>
+inoremap <silent> <DEL> <C-O>:call <SID>JoinLinesDEL()<CR>
+

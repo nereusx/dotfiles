@@ -1,6 +1,8 @@
 " cbrief.vim, fix and addons to brief.vim
 " Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
 
+set sel=inclusive
+
 " prevent to load again
 if exists('g:loaded_ndc_brief')
     finish
@@ -14,6 +16,9 @@ inoremap <F10> <C-O>:
 " Brief: Ctrl+W = toggle automatic backup
 " Use VIM's Window Control
 inoremap <C-W> <C-O><C-W>
+
+" open file
+inoremap <A-e> <C-O>":edit "
 
 " search
 inoremap <silent> <A-s> <C-O>/

@@ -56,18 +56,12 @@ filetype plugin on
 " extra packages
 
 runtime! ftplugin/man.vim
-packadd! reedline.vim
-packadd! ctrlp.vim
 packadd! vim-quickui
-
 packadd! lightline.vim
 "set noshowmode
-
 packadd! vim-commentor
 command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
-
-"packadd! vim-lastplace
 
 let g:workspace_session_directory = $HOME . '/.vim/sessions/'
 let g:workspace_session_disable_on_args = 1
@@ -89,7 +83,7 @@ source ~/.vim/altkeys.vim
 " load default BRIEF emulation
 source ~/.vim/brief.vim
 
-" my autojoin lines 
+" my autojoin lines
 source ~/.vim/joinlines.vim
 
 " my BRIEF's version
