@@ -34,7 +34,8 @@ inoremap <A-b> <C-O>:buffers<CR>
 " === clipboard ===
 " Paste scrap buffer contents to current cursor position.
 " Vim register 'a' is used as the scrap buffer
-inoremap <silent> <C-V> <C-O>"ap
+inoremap <silent> <Ins> <C-O>"aP
+inoremap <silent> <C-V> <C-O>"aP
 " Copy marked text to scrap.
 inoremap <silent> <C-C> <C-O>"ayy
 vnoremap <silent> <C-C> "ay
@@ -56,6 +57,11 @@ inoremap <silent> <F3>	<C-O>:call <SID>ExecArrow(1)<CR>
 
 " Close window
 inoremap <silent> <F4>	<C-O>:call <SID>ExecArrow(4)<CR>
+
+" ------------------
+
+imap [1;5P <C-F1>
+inoremap <silent> <C-F1> <C-O>K
 
 " ------------------
 

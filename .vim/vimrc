@@ -77,9 +77,6 @@ source ~/.vim/brief.vim
 " my BRIEF's version
 source ~/.vim/ndc-brief.vim
 
-imap [1;5P <C-F1>
-inoremap <silent> <C-F1> <C-O>K
-
 " -----------------------------------
 
 " Markdown files
