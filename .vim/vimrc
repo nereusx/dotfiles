@@ -12,7 +12,6 @@ set textwidth=132 " Line wrap (number of cols)
 set showmatch	" Highlight matching brace
 "set spell spelllang=en,el	" Enable spell-checking
 set nospell
-set virtualedit=insert	" Enable free-range cursor
 set errorbells	" Beep or flash screen on errors
 set visualbell	" Use visual bell (no beeping)
 

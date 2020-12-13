@@ -1,7 +1,9 @@
 " cbrief.vim, fix and addons to brief.vim
 " Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
 
-set sel=inclusive
+"set sel=inclusive
+set virtualedit=onemore
+set startofline
 
 " prevent to load again
 if exists('g:loaded_ndc_brief')
@@ -18,7 +20,7 @@ inoremap <F10> <C-O>:
 inoremap <C-W> <C-O><C-W>
 
 " open file
-inoremap <A-e> <C-O>":edit "
+inoremap <A-e> <C-O>:edit<space>
 
 " search
 inoremap <silent> <A-s> <C-O>/
