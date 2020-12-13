@@ -1,6 +1,9 @@
 scriptencoding utf-8
 set nocompatible
 set tabstop=4
+"if !has('gui_running')
+"	set t_Co=256
+"endif
 
 " General
 set number	" Show line numbers
@@ -19,11 +22,13 @@ set ignorecase	" Always case-insensitive
 set incsearch	" Searches for strings incrementally
 
 set autoindent	" Auto-indent new lines
+"set noautoindent
 set shiftwidth=4	" Number of auto-indent spaces
-"set smartindent	" Enable smart-indent
-"set smarttab	" Enable smart-tabs
+set smartindent	" Enable smart-indent
+set smarttab	" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
 set noexpandtab
+set terse
 
 " Advanced
 set ruler	" Show row and column ruler information
@@ -54,11 +59,21 @@ runtime! ftplugin/man.vim
 packadd! reedline.vim
 packadd! ctrlp.vim
 packadd! vim-quickui
-packadd! vim-airline
+
+packadd! lightline.vim
+"set noshowmode
 
 packadd! vim-commentor
 command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
+
+"packadd! vim-lastplace
+
+let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+let g:workspace_session_disable_on_args = 1
+let g:workspace_autosave_always = 1
+packadd! vim-workspace
+" Use :ToggleWorkspace of there is no auto-session
 
 " -----------------------------------
 " colors
@@ -87,6 +102,8 @@ au BufRead,BufNewFile *.tex setlocal filetype=tex
 au BufRead,BufNewFile *.cls setlocal filetype=tex
 " SQLite-specific file
 au BufRead,BufNewFile *.sqlite setlocal filetype=sql
+" Treat all .h files as C (not cpp)
+au BufRead,BufNewFile *.h setlocal filetype=c
 
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el

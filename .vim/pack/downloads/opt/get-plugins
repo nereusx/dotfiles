@@ -51,6 +51,10 @@ list="$list https://github.com/mileszs/ack.vim"
 list="$list https://github.com/ervandew/supertab"
 list="$list https://github.com/manasthakur/vim-commentor"
 list="$list https://github.com/natebosch/vim-lsc"
+list="$list https://github.com/itchyny/lightline.vim"
+list="$list https://github.com/junegunn/fzf.vim"
+list="$list https://github.com/thaerkh/vim-workspace"
+list="$list https://github.com/farmergreg/vim-lastplace"
 for b in $list; do
 	p=$(basename $b)
 	printf "\033[1m%02d. %s:\033[0m " $vid "$p"

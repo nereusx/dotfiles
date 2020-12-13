@@ -383,13 +383,13 @@ inoremap <silent> <C-F5> <C-O>:set invignorecase<CR>
 "-----------------------
 
 " open file
-inoremap <A-e> <C-O>:edit 
+inoremap <A-e> <C-O>:edit
 
 " exit
 inoremap <silent> <A-x> <C-O>:confirm quit<CR>
 
 " read file
-inoremap <A-r> <C-O>:read  
+inoremap <A-r> <C-O>:read
 
 " Save the current file
 inoremap <silent> <A-w> <C-O>:call <SID>BriefSave()<CR>
@@ -409,7 +409,7 @@ inoremap <silent> <C--> <C-O>:bdelete<CR>
 inoremap <silent> <C-kMinus> <C-O>:bdelete<CR>
 
 " Display buffer list
-inoremap <A-b> <C-O>:buffers<CR>:buffer 
+inoremap <A-b> <C-O>:buffers<CR>:buffer
 
 " Display buffer information
 inoremap <A-f> <C-O>:file<CR>
@@ -465,7 +465,7 @@ inoremap <silent> <C-Down>  <C-O>]]
 inoremap <silent> <A-z> <C-O>:stop<CR>
 
 " Search for a keyword in the online help
-inoremap <A-F1> <C-O>:help  
+inoremap <A-F1> <C-O>:help
 
 "-----------------------
 " Bookmark

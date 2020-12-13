@@ -60,11 +60,6 @@ inoremap <silent> <F4>	<C-O>:call <SID>ExecArrow(4)<CR>
 
 " ------------------
 
-imap [1;5P <C-F1>
-inoremap <silent> <C-F1> <C-O>K
-
-" ------------------
-
 func! s:ExecArrow(mode)
 let exitf = v:false
 if a:mode == 1 " Split
@@ -139,6 +134,7 @@ while !exitf
 endwhile
 endfunc
 
+" buffer list
 func! s:BufList()
 	if s:use_qui
 		exec "call quickui#tools#list_buffer('e')"
@@ -146,8 +142,30 @@ func! s:BufList()
 		exec 'buffers'
 	endif
 endfunc
-command! BufList :call <SID>BufList()
-inoremap <silent> <A-b>	<C-O>:BufList<CR>
+inoremap <silent> <A-b>	<C-O>:call <SID>BufList()<CR>
+
+function! s:FpMan(word)
+	let opts = {"close":"button", "title":"Free Pascal Documentation: [" .. a:word .. "]"}
+	let cmd = "fpman " .. a:word .. " | col -bx"
+	call quickui#textbox#command(cmd, opts)
+endfunc
+
+function! s:UxMan(word)
+	let opts = {"close":"button", "title":"Unix Man Pages: [" .. a:word .. "]"}
+	let cmd = "man " .. a:word .. " | col -bx"
+	call quickui#textbox#command(cmd, opts)
+endfunc
+
+function! s:HelpOnKey(word)
+if &filetype == "pascal"
+	call <SID>FpMan(a:word)
+else
+	call <SID>UxMan(a:word)
+endif
+endfunc
+
+"inoremap <silent> <C-F1> <C-O>K
+inoremap <silent> <C-F1> <C-O>:call <SID>HelpOnKey(expand("<cword>"))<CR>
 
 if s:use_qui
 	let g:quickui_border_style = 2
@@ -156,4 +174,25 @@ if s:use_qui
 	inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
 endif
 
+" BS, joins lines
+func! s:BriefBS()
+	if col(".") <= 1
+		if line(".") != 1
+			normal k$Jx
+		endif
+	else
+		normal X
+	endif
+endfunc
+inoremap <silent> <BS> <C-O>:call <SID>BriefBS()<CR>
+
+" DEL, joins lines
+func! s:BriefDEL()
+	if virtcol(".") != virtcol("$")
+        normal x
+	else
+		normal Jx
+	endif
+endfunc
+inoremap <silent> <DEL> <C-O>:call <SID>BriefDEL()<CR>
 
