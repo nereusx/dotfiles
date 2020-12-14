@@ -1,0 +1,4 @@
+- hostnames in vimrc
+- Explore in normal mode
+- better autosave/autoload session
+

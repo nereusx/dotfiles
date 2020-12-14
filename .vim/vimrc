@@ -74,7 +74,13 @@ let g:workspace_autosave_always = 1
 "let g:cc_schemes = ["cbrief", "turbo", "onedark"]
 if has("gui_running")
 	colorscheme onedark
-	set gfn=Iosevka\ Fixed\ Semi-Bold\ 16
+	if $HOSTNAME == "quicksand64"
+		set gfn=Iosevka\ Fixed\ Semi-Bold\ 16
+	elseif $HOSTNAME == "void-t440s"
+		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
+	else
+		set gfn=Iosevka\ Fixed\ Semi-Bold\ 10
+	endif
 else
 	colorscheme cbrief
 endif
@@ -109,15 +115,17 @@ set lazyredraw
 " -----------------------------------
 
 " Markdown files
-au BufRead,BufNewFile *.md setlocal filetype=markdown
+au BufRead,BufNewFile *.md setlocal filetype=markdown spell
 " Treat all .tex files as latex
-au BufRead,BufNewFile *.tex setlocal filetype=tex
+au BufRead,BufNewFile *.tex setlocal filetype=tex spell
 " LaTeX class files
-au BufRead,BufNewFile *.cls setlocal filetype=tex
+au BufRead,BufNewFile *.cls setlocal filetype=tex spell
 " SQLite-specific file
 au BufRead,BufNewFile *.sqlite setlocal filetype=sql
 " Treat all .h files as C (not cpp)
 au BufRead,BufNewFile *.h setlocal filetype=c
+" set spell on text files
+au BufRead,BufNewFile *.txt setlocal filetype=text spell
 
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
