@@ -1,18 +1,21 @@
 " Vim color file
-" Maintainer:   Yegappan Lakshmanan
-" Last Change:  2001 Sep 9
-
-" Color settings similar to that used in Borland IDE's.
+" Maintainer:   Nicholas Christopoulos
+" Last Change:  2020 Dec 14
+"
+" Color settings close to that used in Borland IDE's.
+" This is modified version of borland.vim color-scheme for use
+" with cbrief.vim.
+"
 
 set background=dark
 hi clear
 if exists("syntax_on")
     syntax reset
 endif
-let g:colors_name="borland"
+let g:colors_name="cbrief"
 
-hi Normal       term=NONE cterm=NONE ctermfg=Yellow ctermbg=DarkBlue
-hi Normal       gui=NONE guifg=Yellow guibg=DarkBlue
+hi Normal       term=NONE cterm=NONE ctermfg=White ctermbg=DarkBlue
+hi Normal       gui=NONE guifg=White guibg=DarkBlue
 hi NonText      term=NONE cterm=NONE ctermfg=White ctermbg=DarkBlue
 hi NonText      gui=NONE guifg=White guibg=DarkBlue
 
@@ -66,3 +69,4 @@ hi PmenuSbar	term=NONE cterm=NONE ctermfg=Black ctermbg=White
 hi PmenuSbar    gui=NONE guifg=Black guibg=White
 hi PmenuThumb	term=NONE cterm=NONE ctermfg=Black ctermbg=White
 hi PmenuThumb   gui=NONE guifg=Black guibg=White
+

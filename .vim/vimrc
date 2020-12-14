@@ -1,9 +1,6 @@
 scriptencoding utf-8
 set nocompatible
 set tabstop=4
-"if !has('gui_running')
-"	set t_Co=256
-"endif
 
 " General
 set number	" Show line numbers
@@ -20,8 +17,8 @@ set smartcase	" Enable smart-case search
 set ignorecase	" Always case-insensitive
 set incsearch	" Searches for strings incrementally
 
-set autoindent	" Auto-indent new lines
-"set noautoindent
+"set autoindent	" Auto-indent new lines
+set noautoindent
 set shiftwidth=4	" Number of auto-indent spaces
 set smartindent	" Enable smart-indent
 set smarttab	" Enable smart-tabs
@@ -58,7 +55,8 @@ filetype plugin on
 runtime! ftplugin/man.vim
 packadd! vim-quickui
 packadd! lightline.vim
-packadd! fileselect
+packadd! fileselect " VIM version issues
+packadd! taglist
 packadd! vim-commentor
 command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
@@ -71,14 +69,20 @@ let g:workspace_autosave_always = 1
 
 " -----------------------------------
 " colors
-"packadd! borland " moved to modified, added colors for popups
-"let g:cc_schemes = ["cborland", "turbo", "onedark"]
-colorscheme cborland
+"let g:cc_schemes = ["cbrief", "turbo", "onedark"]
+if has("gui_running")
+	colorscheme onedark
+	set gfn=Iosevka\ Fixed\ Semi-Bold\ 16
+else
+	colorscheme cbrief
+endif
 
 " -----------------------------------
 
 " fix ALT keys mapping
-source ~/.vim/altkeys.vim
+if !has("gui_running")
+	source ~/.vim/altkeys.vim
+endif
 
 " load default BRIEF emulation
 source ~/.vim/brief.vim

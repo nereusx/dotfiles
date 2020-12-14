@@ -10,10 +10,10 @@
 "
 
 " prevent to load again
-if exists('g:loaded_joinlines')
+if exists('loaded_joinlines')
     finish
 endif
-let g:loaded_joinlines = v:true
+let loaded_joinlines = v:true
 
 func! s:JoinLinesBS()
 	if col(".") <= 1 " begin of line
@@ -21,7 +21,7 @@ func! s:JoinLinesBS()
 			normal k$Jx
 		endif
 	else
-		normal X		
+		normal X
 	endif
 endfunc
 inoremap <silent> <BS> <C-O>:call <SID>JoinLinesBS()<CR>

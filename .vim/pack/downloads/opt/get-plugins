@@ -7,9 +7,10 @@ vid=1
 
 echo "=== download/update vim plugins ==="
 list=""
-list="$list borland"
+#list="$list borland"
 list="$list bufselect"
 list="$list scratch"
+list="$list taglist"
 list="$list brief fileselect mru lsp"
 for b in $list; do
 	printf "\033[1m%02d. %s:\033[0m " $vid "$b"

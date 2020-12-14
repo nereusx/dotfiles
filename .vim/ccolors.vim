@@ -18,10 +18,10 @@
 "
 
 " Has this already been loaded?
-if exists('g:loaded_ccscheme')
+if exists('loaded_ccscheme')
 	finish
 endif
-let g:loaded_ccscheme = v:true
+let loaded_ccscheme = v:true
 let g:cc_selected = 0
 
 " cc_schemes is the array with the colorschemes...

@@ -3,17 +3,20 @@
 "
 " Required:
 "	vim-quickui
+"
+" Optional:
 "	fileselect
+"
 
 "set sel=inclusive
 set virtualedit=onemore
 set startofline
 
 " prevent to load again
-if exists('g:loaded_ndc_brief')
+if exists('loaded_ndc_brief')
     finish
 endif
-let g:loaded_ndc_brief = v:true
+let loaded_ndc_brief = v:true
 
 " export msgbox
 func! cbrief#msgbox(title, lines)
@@ -32,8 +35,11 @@ inoremap <F10> <C-O>:
 inoremap <C-W> <C-O><C-W>
 
 " open file
-"inoremap <A-e> <C-O>:edit<space>
-inoremap <A-e> <C-O>:Fileselect<CR>
+if exists(':Fileselect')
+	inoremap <A-e> <C-O>:Fileselect<CR>
+else
+	inoremap <A-e> <C-O>:edit<space>
+endif
 
 " search
 inoremap <silent> <A-s> <C-O>/
