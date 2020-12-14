@@ -74,12 +74,12 @@ for b in $list; do
 	vid=$(($vid+1))
 done
 
-echo "=== apply patches ==="
-d2u_list="borland/colors/borland.vim"
-if command -v dos2unix > /dev/null 2>&1; then
-	for p in $d2u_list; do
-		dos2unix $p
-	done
-fi
+#echo "=== apply patches ==="
+#d2u_list="borland/colors/borland.vim"
+#if command -v dos2unix > /dev/null 2>&1; then
+#	for p in $d2u_list; do
+#		dos2unix $p
+#	done
+#fi
 echo "=== done ==="
 
