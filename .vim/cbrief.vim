@@ -74,7 +74,7 @@ vnoremap <silent> <C-X> "ax
 func! s:BriefSCPaste()
 	let ai = &autoident
 	normal "*P
-	let &autident = ai
+	let &autoident = ai
 endfunc
 
 " Copy marked text to system clipboard.  If no mark, copy current line
