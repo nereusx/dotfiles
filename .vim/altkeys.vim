@@ -22,6 +22,9 @@ endfor
 imap [1;5P <C-F1>
 imap [21;5~ <C-F10>
 imap [21;3~ <A-F10>
+imap [24;2~ <S-F12>
+imap [24;3~ <A-F12>
+imap [24;5~ <C-F12>
 set <C-Right>=\<ESC>[1;5C
 set <C-Left>=\<ESC>[1;5D
 

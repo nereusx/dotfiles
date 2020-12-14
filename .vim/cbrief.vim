@@ -1,5 +1,8 @@
 " cbrief.vim, fix and addons to brief.vim
 " Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
+"
+" Required:
+"	vim-quickui plugin
 
 "set sel=inclusive
 set virtualedit=onemore
@@ -10,7 +13,15 @@ if exists('g:loaded_ndc_brief')
     finish
 endif
 let g:loaded_ndc_brief = v:true
-let s:use_qui = v:true
+
+" export msgbox
+func! cbrief#msgbox(title, lines)
+	let opts = {'close':'button'}
+	let opts.index = 1
+	let opts.resize = 1
+	let opts.title = a:title
+	call quickui#textbox#create(a:lines, opts)
+endfunc
 
 " F10: command-line
 inoremap <F10> <C-O>:
@@ -21,6 +32,7 @@ inoremap <C-W> <C-O><C-W>
 
 " open file
 inoremap <A-e> <C-O>:edit<space>
+"inoremap <A-e> <C-O>:Fileselect<CR>
 
 " search
 inoremap <silent> <A-s> <C-O>/
@@ -50,6 +62,25 @@ vnoremap <silent> <C-C> "ay
 inoremap <silent> <C-X> <C-O>"add
 vnoremap <silent> <C-X> "ax
 " ================
+
+" === system clipboard ===
+func! s:BriefSCPaste()
+	let ai = &autoident
+	normal "*P
+	let &autident = ai
+endfunc
+
+" Copy marked text to system clipboard.  If no mark, copy current line
+inoremap <silent> <C-Ins> <C-O>"*yy
+vnoremap <silent> <C-Ins> "*y
+
+" Paste the system clipboard contents to current cursor
+inoremap <silent> <S-Ins> <C-O>:call <SID>BriefSCPaste()<CR>
+
+" Cut the marked text to system clipboard. If no mark, cut the current line
+inoremap <silent> <S-Del> <C-O>"*dd
+vnoremap <silent> <S-Del> "*d
+" ========================
 
 " === windows ===
 
@@ -142,14 +173,11 @@ endwhile
 endfunc
 
 " buffer list
-func! s:BufList()
-	if s:use_qui
-		exec "call quickui#tools#list_buffer('e')"
-	else
-		exec 'buffers'
-	endif
+func! cbrief#buflist()
+	exec "call quickui#tools#list_buffer('e')"
+"	exec 'buffers' " if !quickui
 endfunc
-inoremap <silent> <A-b>	<C-O>:call <SID>BufList()<CR>
+inoremap <silent> <A-b>	<C-O>:call cbrief#buflist()<CR>
 
 function! s:FpMan(word)
 	let opts = {"close":"button", "title":"Free Pascal Documentation: [" .. a:word .. "]"}
@@ -174,11 +202,9 @@ endfunc
 "inoremap <silent> <C-F1> <C-O>K
 inoremap <silent> <C-F1> <C-O>:call <SID>HelpOnKey(expand("<cword>"))<CR>
 
-if s:use_qui
-	let g:quickui_border_style = 2
-	command! Routines :call quickui#tools#list_function()
-	inoremap <silent> <C-G>	<C-O>:Routines<CR>
-	inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
-endif
+let g:quickui_border_style = 2
+command! Routines :call quickui#tools#list_function()
+inoremap <silent> <C-G>	<C-O>:Routines<CR>
+inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
 
 

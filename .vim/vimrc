@@ -28,6 +28,7 @@ set smarttab	" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
 set noexpandtab
 set terse
+set more
 
 " Advanced
 set ruler	" Show row and column ruler information
@@ -57,7 +58,7 @@ filetype plugin on
 runtime! ftplugin/man.vim
 packadd! vim-quickui
 packadd! lightline.vim
-"set noshowmode
+"packadd! fileselect
 packadd! vim-commentor
 command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
@@ -65,7 +66,7 @@ command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 let g:workspace_session_directory = $HOME . '/.vim/sessions/'
 let g:workspace_session_disable_on_args = 1
 let g:workspace_autosave_always = 1
-packadd! vim-workspace
+"packadd! ~/.vim/mod/vim-workspace " moved to modified directory
 " Use :ToggleWorkspace of there is no auto-session
 
 " -----------------------------------
@@ -85,9 +86,20 @@ source ~/.vim/brief.vim
 " my autojoin lines
 source ~/.vim/joinlines.vim
 
-" my BRIEF's version
-source ~/.vim/ndc-brief.vim
+" colors
+source ~/.vim/ccolors.vim
 
+" my BRIEF's version
+source ~/.vim/cbrief.vim
+
+" -----------------------------------
+" Display who change it:
+" :verbose set showmode?
+"
+set noshowmode
+set noshowcmd
+set laststatus=2
+set lazyredraw
 " -----------------------------------
 
 " Markdown files

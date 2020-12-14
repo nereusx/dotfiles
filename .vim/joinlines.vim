@@ -21,15 +21,7 @@ func! s:JoinLinesBS()
 			normal k$Jx
 		endif
 	else
-		if virtcol("$") <= virtcol(".")
-			let last_pos = virtcol(".")
-			normal $l
-			if last_pos == virtcol(".")
-				normal X
-			endif
-		else
-			normal X		
-		endif
+		normal X		
 	endif
 endfunc
 inoremap <silent> <BS> <C-O>:call <SID>JoinLinesBS()<CR>
