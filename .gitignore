@@ -1,8 +1,10 @@
 *.slc
 *.cm
 *~
+.netrwhist
 path++
 .tmux/resurrect/*
 .vim/sessions/*
 .vim/.undodir
+.vim/pack/downloads*
 update-me

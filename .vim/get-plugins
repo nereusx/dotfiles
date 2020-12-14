@@ -3,6 +3,11 @@
 #mkdir ~/.vim/autoload
 #curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
+if [ ! -d ~/.vim/pack/downloads/opt ]; then
+	mkdir -p ~/.vim/pack/downloads/opt
+fi
+cd ~/.vim/pack/downloads/opt || exit 1
+
 vid=1
 
 echo "=== download/update vim plugins ==="

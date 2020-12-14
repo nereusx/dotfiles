@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ ! -d ~/.suve/fpman ]; then
+	echo "use fpman to create the man pages"
+	exit 1
+fi
+find ~/.suve/fpman/ -iname "$@.*" -exec man \{\} \;
