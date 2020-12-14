@@ -11,6 +11,7 @@
 "set sel=inclusive
 set virtualedit=onemore
 set startofline
+set backspace=indent,eol,start
 
 " prevent to load again
 if exists('loaded_ndc_brief')
@@ -53,9 +54,6 @@ inoremap <silent> <C-F> <C-O>N
 
 " Search and replace from the current cursor position
 inoremap <silent> <A-t> <F6>
-
-" Display buffer list
-inoremap <A-b> <C-O>:buffers<CR>
 
 " === clipboard ===
 " Paste scrap buffer contents to current cursor position.

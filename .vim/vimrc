@@ -95,9 +95,6 @@ endif
 " load default BRIEF emulation
 source ~/.vim/brief.vim
 
-" my autojoin lines
-source ~/.vim/joinlines.vim
-
 " colors
 source ~/.vim/ccolors.vim
 
@@ -112,6 +109,7 @@ set noshowmode
 set noshowcmd
 set laststatus=2
 set lazyredraw
+set backspace=indent,eol,start
 " -----------------------------------
 
 " Markdown files
@@ -130,4 +128,9 @@ au BufRead,BufNewFile *.txt setlocal filetype=text spell
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
 
+"set digraph
+digraph kk 983 " greek ampersand
+
+" add to c
+"abb #i #include
 

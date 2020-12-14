@@ -2,4 +2,5 @@
 - Explore in normal mode
 - better autosave/autoload session
 - spellsuggest solution
-
+- digraph
+- multi-helper
