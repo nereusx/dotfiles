@@ -2,7 +2,8 @@
 " Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
 "
 " Required:
-"	vim-quickui plugin
+"	vim-quickui
+"	fileselect
 
 "set sel=inclusive
 set virtualedit=onemore
@@ -31,8 +32,8 @@ inoremap <F10> <C-O>:
 inoremap <C-W> <C-O><C-W>
 
 " open file
-inoremap <A-e> <C-O>:edit<space>
-"inoremap <A-e> <C-O>:Fileselect<CR>
+"inoremap <A-e> <C-O>:edit<space>
+inoremap <A-e> <C-O>:Fileselect<CR>
 
 " search
 inoremap <silent> <A-s> <C-O>/

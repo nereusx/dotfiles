@@ -58,7 +58,7 @@ filetype plugin on
 runtime! ftplugin/man.vim
 packadd! vim-quickui
 packadd! lightline.vim
-"packadd! fileselect
+packadd! fileselect
 packadd! vim-commentor
 command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
@@ -71,9 +71,9 @@ let g:workspace_autosave_always = 1
 
 " -----------------------------------
 " colors
-packadd! borland
-" onedark turbo borland
-colorscheme borland
+"packadd! borland " moved to modified, added colors for popups
+"let g:cc_schemes = ["cborland", "turbo", "onedark"]
+colorscheme cborland
 
 " -----------------------------------
 
