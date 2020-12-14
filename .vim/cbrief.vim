@@ -8,16 +8,22 @@
 "	fileselect
 "
 
-"set sel=inclusive
-set virtualedit=onemore
-set startofline
-set backspace=indent,eol,start
-
 " prevent to load again
 if exists('loaded_ndc_brief')
     finish
 endif
 let loaded_ndc_brief = v:true
+
+"set sel=inclusive
+set virtualedit=onemore
+set startofline
+set backspace=indent,eol,start
+
+" Only insert mode is supported
+" Use CTRL-O to execute one Normal mode command.
+" Use CTRL-L to execute a number of Normal mode commands,
+" then use <Esc> to get back to Insert mode.
+set insertmode
 
 " export msgbox
 func! cbrief#msgbox(title, lines)
@@ -212,4 +218,5 @@ command! Routines :call quickui#tools#list_function()
 inoremap <silent> <C-G>	<C-O>:Routines<CR>
 inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
 
+"command! NAV <C-L>:Explore<CR>
 

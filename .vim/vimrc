@@ -8,7 +8,7 @@ set number	" Show line numbers
 "set no wrap	" Wrap lines
 set textwidth=132 " Line wrap (number of cols)
 set showmatch	" Highlight matching brace
-"set spell spelllang=en,el	" Enable spell-checking
+"set spelllang=en,el	" Enable spell-checking
 set nospell
 set errorbells	" Beep or flash screen on errors
 set visualbell	" Use visual bell (no beeping)
@@ -75,7 +75,8 @@ let g:workspace_autosave_always = 1
 if has("gui_running")
 	colorscheme onedark
 	if $HOSTNAME == "quicksand64"
-		set gfn=Iosevka\ Fixed\ Semi-Bold\ 16
+"		set gfn=Iosevka\ Fixed\ Semi-Bold\ 15
+		set gfn=Go\ Mono\ 13
 	elseif $HOSTNAME == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
