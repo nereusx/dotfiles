@@ -55,7 +55,8 @@ filetype plugin on
 
 runtime! ftplugin/man.vim
 packadd! vim-quickui
-packadd! lightline.vim
+"packadd! lightline.vim
+packadd! vim-airline
 packadd! fileselect " VIM version issues
 packadd! taglist
 packadd! vim-commentor
