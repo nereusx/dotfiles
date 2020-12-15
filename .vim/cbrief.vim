@@ -21,8 +21,6 @@ set backspace=indent,eol,start
 
 " Only insert mode is supported
 " Use CTRL-O to execute one Normal mode command.
-" Use CTRL-L to execute a number of Normal mode commands,
-" then use <Esc> to get back to Insert mode.
 set insertmode
 
 " export msgbox
@@ -42,11 +40,16 @@ inoremap <F10> <C-O>:
 inoremap <C-W> <C-O><C-W>
 
 " open file
-if exists(':Fileselect')
-	inoremap <A-e> <C-O>:Fileselect<CR>
-else
-	inoremap <A-e> <C-O>:edit<space>
-endif
+func! s:OpenFileDlg()
+	if exists(':NnnPicker') == 2
+		call nnn#pick('')
+	elseif exists(':Fileselect') == 2
+		call fileselect#showMenu('')
+	else		
+		exec "Explore"
+	endif
+endfunc
+inoremap <A-e> <C-O>:call <SID>OpenFileDlg()<CR>
 
 " search
 inoremap <silent> <A-s> <C-O>/
@@ -77,8 +80,11 @@ vnoremap <silent> <C-X> "ax
 " === system clipboard ===
 func! s:BriefSCPaste()
 	let ai = &autoident
+	set noautoident
 	normal "*P
 	let &autoident = ai
+	redraw
+	echom "Clipborad's text inserted."
 endfunc
 
 " Copy marked text to system clipboard.  If no mark, copy current line

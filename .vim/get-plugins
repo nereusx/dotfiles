@@ -60,6 +60,8 @@ list="$list https://github.com/itchyny/lightline.vim"
 list="$list https://github.com/junegunn/fzf.vim"
 list="$list https://github.com/thaerkh/vim-workspace"
 list="$list https://github.com/farmergreg/vim-lastplace"
+list="$list https://github.com/mcchrish/nnn.vim"
+list="$list https://github.com/voldikss/vim-floaterm"
 for b in $list; do
 	p=$(basename $b)
 	printf "\033[1m%02d. %s:\033[0m " $vid "$p"

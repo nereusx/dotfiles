@@ -115,7 +115,7 @@
 " -------------------------
 " <A-F10>      - Compile current buffer
 " <C-n>        - Jump to the next error
-" <C-l>        - pJump to the next previous error
+" <C-l>        - Jump to the next previous error
 " <C-p>        - View compiler output
 " 
 " Mark commands
