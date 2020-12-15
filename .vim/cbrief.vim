@@ -4,17 +4,13 @@
 " Required:
 "	vim-quickui
 "
-" Optional:
-"	fileselect
-"
 
 " prevent to load again
-if exists('loaded_ndc_brief')
+if exists('g:loaded_ndc_brief')
     finish
 endif
-let loaded_ndc_brief = v:true
+let g:loaded_ndc_brief = v:true
 
-"set sel=inclusive
 set virtualedit=onemore
 set startofline
 set backspace=indent,eol,start
@@ -34,26 +30,26 @@ endfunc
 
 " F10: command-line
 inoremap <F10> <C-O>:
+nnoremap <F10> <ESC>:
 
-" Brief: Ctrl+W = toggle automatic backup
-" Use VIM's Window Control
-inoremap <C-W> <C-O><C-W>
+" F11: switch modes
+func! cbrief#toggle_insert_mode()
+if &insertmode == 1
+	set noinsertmode
+else
+	set insertmode
+endif
+endfunc
+
+inoremap <F11> <C-O>:call cbrief#toggle_insert_mode()<CR>
+nnoremap <F11> <ESC>:call cbrief#toggle_insert_mode()<CR><ESC>
 
 " open file
-func! s:OpenFileDlg()
-	if exists(':NnnPicker') == 2
-		call nnn#pick('')
-	elseif exists(':Fileselect') == 2
-		call fileselect#showMenu('')
-	else		
-		exec "Explore"
-	endif
-endfunc
-inoremap <A-e> <C-O>:call <SID>OpenFileDlg()<CR>
+inoremap <A-e> <C-O>:edit<space>
 
 " search
-inoremap <silent> <A-s> <C-O>/
-inoremap <silent> <C-S> <C-O>?
+inoremap <A-s> <C-O>/
+inoremap <C-S> <C-O>?
 
 " search next
 inoremap <silent> <A-f> <C-O>n

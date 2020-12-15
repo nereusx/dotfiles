@@ -1,7 +1,20 @@
+set nocompatible
 scriptencoding utf-8
 set encoding=utf-8
-set nocompatible
+set noerrorbells
+
+" TAB
 set tabstop=4
+set noexpandtab
+"set autoindent		" Auto-indent new lines
+set noautoindent
+set shiftwidth=4	" Number of auto-indent spaces
+set smartindent		" Enable smart-indent
+set smarttab		" Enable smart-tabs
+set softtabstop=4	" Number of spaces per Tab
+set wildmenu
+"set wildmode=longest,list " tcsh's style
+set wildignorecase
 
 " it is not a dummy terminal
 set notimeout
@@ -10,48 +23,39 @@ set timeoutlen=0
 set ttimeoutlen=-1
 
 " General
-set number		" Show line numbers
-"set no wrap	" Wrap lines
-set textwidth=132 " Line wrap (number of cols)
-set showmatch	" Highlight matching brace
-"set spelllang=en,el	" Enable spell-checking
+set backspace=indent,eol,start	" Backspace behaviour
+set number			" Show line numbers
+"set no wrap		" Wrap lines
+set textwidth=80	" Line wrap (number of cols)
 set nospell
-set errorbells	" Beep or flash screen on errors
-set visualbell	" Use visual bell (no beeping)
+set spelllang=en,el	" Enable spell-checking
 
-set hlsearch	" Highlight all search results
-set smartcase	" Enable smart-case search
-set ignorecase	" Always case-insensitive
-set incsearch	" Searches for strings incrementally
+set hlsearch		" Highlight all search results
+set smartcase		" Enable smart-case search
+set incsearch		" Searches for strings incrementally
 
-"set autoindent	" Auto-indent new lines
-set noautoindent
-set shiftwidth=4	" Number of auto-indent spaces
-set smartindent	" Enable smart-indent
-set smarttab	" Enable smart-tabs
-set softtabstop=4	" Number of spaces per Tab
-set noexpandtab
 set terse
 set more
 
-" Advanced
-set ruler	" Show row and column ruler information
-"set showmatch
-"set matchtime=3
+set ruler			" Show row and column ruler information
+set showmatch
+set matchtime=1
 
-" backup
+" backup & undo
 if !isdirectory($HOME."/.backup/text")
 	silent! execute "!mkdir -p ~/.backup/text"
 endif
 set backup
 set backupdir=~/.backup/text
-" not generate .swap
 set noswapfile
 
-"
+if !isdirectory($HOME."/.backup/viundo")
+	silent! execute "!mkdir -p ~/.backup/viundo"
+endif
+set undodir=~/.backup/viundo
 set undolevels=1000	" Number of undo levels
-set backspace=indent,eol,start	" Backspace behaviour
 
+" plugins
 syntax on
 filetype on
 filetype plugin on
@@ -63,42 +67,23 @@ runtime! ftplugin/man.vim
 packadd! vim-quickui
 packadd! lightline.vim
 "packadd! vim-airline
-packadd! fileselect " VIM version issues
+"let g:airline#extensions#obsession#enabled = 1
+"packadd! fileselect " VIM version issues
 "packadd! bufselect " modified
-packadd! taglist
+"packadd! taglist
 
-packadd! nnn.vim
-" Opens the nnn window in a split
-" let g:nnn#layout = 'new' " or vnew, tabnew etc.
-" Or pass a dictionary with window size
-" let g:nnn#layout = { 'left': '~20%' } " or right, up, down
-" Floating window (neovim latest and vim with patch 8.2.191)
-let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
-"let g:nnn#action = {
-"	\ '<c-t>': 'tab split',
-"	\ '<c-x>': 'split',
-"	\ '<c-v>': 'vsplit' }
-
-packadd! fileselect " VIM version issues
-
-packadd! vim-commentor
-command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
+"packadd! vim-commentor
+"command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
-
-let g:workspace_session_directory = $HOME . '/.vim/sessions/'
-let g:workspace_session_disable_on_args = 1
-let g:workspace_autosave_always = 1
-"packadd! ~/.vim/mod/vim-workspace " moved to modified directory
-" Use :ToggleWorkspace of there is no auto-session
 
 " -----------------------------------
 " colors
 "let g:cc_schemes = ["cbrief", "turbo", "onedark"]
 if has("gui_running")
 	colorscheme onedark
-	if $HOSTNAME == "quicksand64"
-		set gfn=FiraMono\ Nerd\ Font\ Medium\ 13
-	elseif $HOSTNAME == "void-t440s"
+	if hostname() == "quicksand64"
+		set gfn=Cousine\ 14
+	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 10
@@ -131,7 +116,7 @@ source ~/.vim/cbrief.vim
 " :verbose set showmode?
 "
 set noshowmode
-set noshowcmd
+set showcmd
 set laststatus=2
 set lazyredraw
 set backspace=indent,eol,start
@@ -154,8 +139,17 @@ au BufRead,BufNewFile *.txt setlocal filetype=text spell
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
 
 "set digraph
-digraph kk 983 " greek ampersand
+"digraph kk 983 " greek ampersand
 
 " add to c
 "abb #i #include
+
+" === Sessions ===
+let g:workspace_autocreate = 1
+let g:workspace_create_new_tabs = 0
+let g:workspace_session_directory = $HOME . '/.vim/sessions/'
+let g:workspace_session_disable_on_args = 1
+let g:workspace_undodir = &undodir
+let g:workspace_autosave = 0
+packadd! vim-workspace
 
