@@ -10,7 +10,7 @@ for pkg in $packages; do
 	echo "+ unzip"
 	unzip ${pkg}-${VER}.zip
 	echo "+ copy to system directory"
-	cp ttf/*.ttf $sysdir
+	cp ttf/*-fixed-*.ttf $sysdir
 	echo "+ remove files"
 	rm *.zip *.css
 	rm -r ttf ttc ttf-unhinted woff woff2
