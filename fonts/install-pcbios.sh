@@ -18,6 +18,7 @@ for dir in 'ttf - Ac (aspect-corrected)' 'ttf - Px (pixel outline)'; do
 	cd "$dir"
 	rm *437*
 	rm *-2x.*
+	rm *x8.*
 	rm *CGA*
 	cp ??Plus*.ttf $sysdir
 	cd ..
