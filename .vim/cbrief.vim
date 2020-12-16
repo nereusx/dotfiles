@@ -77,9 +77,9 @@ vnoremap <silent> <C-X> "ax
 func! cbrief#sys_paste()
 	let ai = &autoindent
 	let si = &smartindent
-	set noautoindent
-	set nosmartindent
-	normal "*P
+	let &autoindent = 0
+	let &smartindent = 0
+	exec 'normal "*P'
 	let &smartindent = si
 	let &autoindent = ai
 	redraw

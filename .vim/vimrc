@@ -162,15 +162,6 @@ set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
 set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 
-" === Sessions ===
-let g:workspace_autocreate = 1
-let g:workspace_create_new_tabs = 0
-let g:workspace_session_directory = $HOME . '/.vim/sessions/'
-let g:workspace_session_disable_on_args = 1
-let g:workspace_undodir = &undodir
-let g:workspace_autosave = 0
-packadd! vim-workspace
-
 " === Define Commands
 " Command Interface: 
 " com! -bar -nargs=0 SWP	call F()
@@ -184,4 +175,6 @@ packadd! vim-workspace
 "nnoremap <C-L> :nohl<CR><C-L>
 "inoremap <C-L> <C-O>:nohl<CR><C-L>
 
+" my session manager
+source ~/.vim/csession.vim
 
