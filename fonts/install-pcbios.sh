@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+#set -e
 . ./TTFDIR
 #
 f=oldschool_pc_font_pack_v2.2_linux.zip
@@ -18,8 +18,14 @@ for dir in 'ttf - Ac (aspect-corrected)' 'ttf - Px (pixel outline)'; do
 	cd "$dir"
 	rm *437*
 	rm *-2x.*
+	rm *x11.*
+	rm *x12.*
 	rm *x8.*
 	rm *CGA*
+	rm *EGA*
+	rm *BIOS*
+	rm *Tandy*
+	rm *Amstrad_PC*
 	cp ??Plus*.ttf $sysdir
 	cd ..
 	rm -rf "$dir"
