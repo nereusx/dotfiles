@@ -74,21 +74,25 @@ vnoremap <silent> <C-X> "ax
 " ================
 
 " === system clipboard ===
-func! s:BriefSCPaste()
-	let ai = &autoident
-	set noautoident
+func! cbrief#sys_paste()
+	let ai = &autoindent
+	let si = &smartindent
+	set noautoindent
+	set nosmartindent
 	normal "*P
-	let &autoident = ai
+	let &smartindent = si
+	let &autoindent = ai
 	redraw
 	echom "Clipborad's text inserted."
 endfunc
+command! Bxpaste	call cbrief#sys_paste()
 
 " Copy marked text to system clipboard.  If no mark, copy current line
 inoremap <silent> <C-Ins> <C-O>"*yy
 vnoremap <silent> <C-Ins> "*y
 
 " Paste the system clipboard contents to current cursor
-inoremap <silent> <S-Ins> <C-O>:call <SID>BriefSCPaste()<CR>
+inoremap <silent> <S-Ins> <C-O>:call cbrief#sys_paste()<CR>
 
 " Cut the marked text to system clipboard. If no mark, cut the current line
 inoremap <silent> <S-Del> <C-O>"*dd

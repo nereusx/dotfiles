@@ -1,7 +1,11 @@
+" .vimrc
+" 
 set nocompatible
 scriptencoding utf-8
 set encoding=utf-8
 set noerrorbells
+"set mouse=a " Enable mouse for scrolling and resizing
+set nofoldenable " Disable folding by default
 
 " TAB
 set tabstop=4
@@ -17,10 +21,8 @@ set wildmenu
 set wildignorecase
 
 " it is not a dummy terminal
-set notimeout
-set nottimeout
-set timeoutlen=0
-set ttimeoutlen=-1
+"set notimeout nottimeout timeoutlen=0 ttimeoutlen=-1
+set notimeout ttimeout ttimeoutlen=50 " fandom
 
 " General
 set backspace=indent,eol,start	" Backspace behaviour
@@ -34,7 +36,6 @@ set hlsearch		" Highlight all search results
 set smartcase		" Enable smart-case search
 set incsearch		" Searches for strings incrementally
 
-set terse
 set more
 
 set ruler			" Show row and column ruler information
@@ -82,7 +83,7 @@ packadd! lightline.vim
 if has("gui_running")
 	colorscheme onedark
 	if hostname() == "quicksand64"
-		set gfn=Cousine\ 14
+		set gfn=Cousine\ 13
 	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
@@ -95,9 +96,7 @@ endif
 " -----------------------------------
 
 " fix ALT keys mapping
-if !has("gui_running")
-	source ~/.vim/altkeys.vim
-endif
+source ~/.vim/altkeys.vim
 
 " load default BRIEF emulation
 source ~/.vim/brief.vim
@@ -108,9 +107,6 @@ source ~/.vim/ccolors.vim
 " my BRIEF's version
 source ~/.vim/cbrief.vim
 
-" Start nnn in the current file's directory
-"inoremap <C-E> <C-O>:NnnPicker %:p:h<CR>
-
 " -----------------------------------
 " Display who change it:
 " :verbose set showmode?
@@ -120,6 +116,7 @@ set showcmd
 set laststatus=2
 set lazyredraw
 set backspace=indent,eol,start
+"set noconfirm
 " -----------------------------------
 
 " Markdown files
@@ -134,6 +131,8 @@ au BufRead,BufNewFile *.sqlite setlocal filetype=sql
 au BufRead,BufNewFile *.h setlocal filetype=c
 " set spell on text files
 au BufRead,BufNewFile *.txt setlocal filetype=text spell
+" quickfix
+au FileType qf setlocal nonumber
 
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
@@ -144,6 +143,25 @@ autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
 " add to c
 "abb #i #include
 
+" ----------------------------------------------------------------------
+" stuff to ignore when tab completing
+set wildignore=*.o
+set wildignore+=*.obj,*~,*.exe,*.a,*.pdb,*.lib 
+set wildignore+=*.so,*.dll,*.swp,*.egg,*.jar,*.class,*.pyc,*.pyo,*.bin,*.dex
+set wildignore+=*.zip,*.7z,*.rar,*.gz,*.tar,*.gzip,*.bz2,*.tgz,*.xz
+set wildignore+=*DS_Store*,*.ipch,*.gem
+set wildignore+=*.png,*.jpg,*.gif,*.bmp,*.tga,*.pcx,*.ppm,*.img,*.iso
+set wildignore+=*.so,*.swp,*.zip,*/.Trash/**,*.pdf,*.dmg,*/.rbenv/**
+set wildignore+=*/.nx/**,*.app,*.git,.git
+set wildignore+=*.wav,*.mp3,*.ogg,*.pcm
+set wildignore+=*.mht,*.suo,*.sdf,*.jnlp
+set wildignore+=*.chm,*.epub,*.pdf,*.mobi,*.ttf
+set wildignore+=*.mp4,*.avi,*.flv,*.mov,*.mkv,*.swf,*.swc
+set wildignore+=*.ppt,*.pptx,*.docx,*.xlt,*.xls,*.xlsx,*.odt,*.wps
+set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
+set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
+set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
+
 " === Sessions ===
 let g:workspace_autocreate = 1
 let g:workspace_create_new_tabs = 0
@@ -152,4 +170,18 @@ let g:workspace_session_disable_on_args = 1
 let g:workspace_undodir = &undodir
 let g:workspace_autosave = 0
 packadd! vim-workspace
+
+" === Define Commands
+" Command Interface: 
+" com! -bar -nargs=0 SWP	call F()
+" com! -bar -nargs=? RWP	call F(<args>)
+" com! -bar -nargs=1 SM		call F(<q-args>)
+" 
+" Start nnn in the current file's directory
+"inoremap <C-E> <C-O>:NnnPicker %:p:h<CR>
+
+" redraw
+"nnoremap <C-L> :nohl<CR><C-L>
+"inoremap <C-L> <C-O>:nohl<CR><C-L>
+
 

@@ -41,12 +41,14 @@ done
 #list="$list https://github.com/vim-syntastic/syntastic"
 
 list=""
+list="$list https://github.com/junegunn/vim-plug"
 #list="$list https://github.com/preservim/nerdtree"
 #list="$list https://github.com/vimwiki/vimwiki"
 list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/vim-airline/vim-airline"
 #list="$list https://github.com/frazrepo/vim-rainbow"
 list="$list https://github.com/skywind3000/vim-quickui"
+list="$list https://github.com/skywind3000/quickmenu.vim"
 #list="$list https://github.com/entrez/reedline.vim"
 list="$list https://github.com/preservim/tagbar"
 list="$list https://github.com/kien/ctrlp.vim"
@@ -63,6 +65,7 @@ list="$list https://github.com/farmergreg/vim-lastplace"
 list="$list https://github.com/mcchrish/nnn.vim"
 list="$list https://github.com/voldikss/vim-floaterm"
 list="$list https://github.com/tpope/vim-obsession"
+list="$list https://github.com/arcticicestudio/nord-vim"
 for b in $list; do
 	p=$(basename $b)
 	printf "\033[1m%02d. %s:\033[0m " $vid "$p"

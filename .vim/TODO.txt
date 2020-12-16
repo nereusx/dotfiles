@@ -1,5 +1,3 @@
-- Explore in normal mode
-- better autosave/autoload session
 - spellsuggest solution
 - multi-helper
 - full buflist
