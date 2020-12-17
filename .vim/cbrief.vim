@@ -19,14 +19,19 @@ set backspace=indent,eol,start
 " Use CTRL-O to execute one Normal mode command.
 set insertmode
 
-" export msgbox
-func! cbrief#msgbox(title, lines)
-	let opts = {'close':'button'}
-	let opts.index = 1
-	let opts.resize = 1
-	let opts.title = a:title
-	call quickui#textbox#create(a:lines, opts)
-endfunc
+" msgbox:
+" call popup_create('do you want to quit (Yes/no)?', #{
+"	\ filter: 'popup_filter_yesno',
+"	\ callback: 'QuitCallback',
+"	\ })
+"
+" listbox:
+" func ColorSelected(id, result) " use a:result, index or -1 for cancel
+" endfunc
+" call popup_menu(['red', 'green', 'blue'], #{
+"	\ callback: 'ColorSelected',
+"	\ })
+"
 
 " F10: command-line
 inoremap <F10> <C-O>:
@@ -34,15 +39,45 @@ nnoremap <F10> <ESC>:
 
 " F11: switch modes
 func! cbrief#toggle_insert_mode()
-if &insertmode == 1
-	set noinsertmode
-else
-	set insertmode
-endif
+	if &insertmode == 1
+		set noinsertmode
+	else
+		set insertmode
+	endif
 endfunc
 
 inoremap <F11> <C-O>:call cbrief#toggle_insert_mode()<CR>
 nnoremap <F11> <ESC>:call cbrief#toggle_insert_mode()<CR><ESC>
+
+" Alt+X: Quit
+func! s:CountModBufs()
+    redir => buflist
+    silent! ls +
+    redir END
+    return len(split(buflist, '\n'))
+endfunc
+
+func! cbrief#quit()
+	let cnt = s:CountModBufs()
+	if cnt > 0
+		let choice = confirm(
+			\ printf('%d %s', cnt, 'buffer(s) has not been saved. Exit?'),
+			\  "&yes\n&no\n&write", 1)
+		if choice == 1
+			silent! execute 'qa!'
+		elseif choice == 2
+			" nothing, remain in editor
+			redraw
+			echo "canceled"
+		elseif choice == 3
+			silent! execute 'wqa!'
+			echom "write all and quit!"
+		endif
+	else
+		silent! execute 'qa!'
+	endif
+endfunc
+inoremap <A-x> <C-O>:call cbrief#quit()<CR>
 
 " open file
 inoremap <A-e> <C-O>:edit<space>
@@ -71,6 +106,18 @@ vnoremap <silent> <C-C> "ay
 " Cut line or mark to scrap buffer.
 inoremap <silent> <C-X> <C-O>"add
 vnoremap <silent> <C-X> "ax
+
+" shift-arrows
+inoremap <S-Up>		<C-O>:normal V<CR>
+inoremap <S-Down>	<C-O>:normal V<CR>
+inoremap <S-Left>	<C-O>:normal v<CR>
+inoremap <S-Right>	<C-O>:normal v<CR>
+inoremap <S-Home>	<C-O>:normal v^<CR>
+inoremap <S-End>	<C-O>:normal v$<CR>
+vnoremap <S-Up>		k
+vnoremap <S-Down>	j
+vnoremap <S-Left>	h
+vnoremap <S-Right>	l
 " ================
 
 " === system clipboard ===
@@ -191,7 +238,8 @@ endfunc
 
 " buffer list
 func! cbrief#buflist()
-	exec "call quickui#tools#list_buffer('e')"
+	call cbuflist#buflist()
+"	exec "call quickui#tools#list_buffer('e')"
 "	exec 'buffers' " if !quickui
 endfunc
 inoremap <silent> <A-b>	<C-O>:call cbrief#buflist()<CR>

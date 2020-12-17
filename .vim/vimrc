@@ -81,9 +81,12 @@ packadd! lightline.vim
 " colors
 "let g:cc_schemes = ["cbrief", "turbo", "onedark"]
 if has("gui_running")
+	" note: invoke gvim with specified size
+	"	alias g 'gvim -geom 112x30'
+	" or use set lines, set columns in ~/.vimrc
 	colorscheme onedark
 	if hostname() == "quicksand64"
-		set gfn=Cousine\ 13
+		set gfn=Cousine\ Bold\ 14
 	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
@@ -104,6 +107,9 @@ source ~/.vim/brief.vim
 " colors
 source ~/.vim/ccolors.vim
 
+" my buflist
+source ~/.vim/cbuflist.vim
+
 " my BRIEF's version
 source ~/.vim/cbrief.vim
 
@@ -116,7 +122,6 @@ set showcmd
 set laststatus=2
 set lazyredraw
 set backspace=indent,eol,start
-"set noconfirm
 " -----------------------------------
 
 " Markdown files

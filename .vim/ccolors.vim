@@ -40,9 +40,9 @@ func! s:CCSwitch(swinc)
 	elseif g:cc_selected < 0
 		let g:cc_selected = cnt - 1
 	endif
-	silent! execute "colorscheme " .. g:cc_schemes[g:cc_selected]
+	silent! execute printf('colorscheme %s', g:cc_schemes[g:cc_selected])
 	redraw
-	echom "Using [" .. g:cc_schemes[g:cc_selected] .. "] color-scheme"
+	echom printf('Using [%s] color-scheme.', g:cc_schemes[g:cc_selected])
 endfunc
 
 func! s:CCSelect()
@@ -50,7 +50,7 @@ func! s:CCSelect()
 		let g:cc_selected = a:code
 		silent! execute "colorscheme " .. g:cc_schemes[g:cc_selected]
 		redraw
-		echom "Using [" .. g:cc_schemes[g:cc_selected] .. "] color-scheme"
+		echom printf('Using [%s] color-scheme.', g:cc_schemes[g:cc_selected])
 	endfunc
 	let opts = {"close":"button", "index":string(g:cc_selected), "title":"Select Color Scheme"}
 	let opts.callback = 'CCSelList'
