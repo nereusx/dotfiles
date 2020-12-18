@@ -1,8 +1,8 @@
-" cbrief.vim, fix and addons to brief.vim
-" Nicholas Christopoulos (nereus@freemail.gr), 2012 .. 2021
-"
-" Required:
-"	vim-quickui
+" File: cbrief.vim
+" Description: fix and improvement of brief.vim
+" Author: Nicholas Christopoulos (nereus@freemail.gr)
+" Version: 1.0
+" Last Modified: Jan 2021
 "
 
 " prevent to load again
@@ -14,6 +14,15 @@ let g:loaded_ndc_brief = v:true
 set virtualedit=onemore
 set startofline
 set backspace=indent,eol,start
+
+if has("gui_running") == 0 && has("nvim") == 0
+	if $TERM != "linux" " terminal emulator
+		set esckeys
+		"set modifyotherKeys
+		let &t_TI = "\<Esc>[>4;2m"
+		let &t_TE = "\<Esc>[>4;m"
+	endif
+endif
 
 " Only insert mode is supported
 " Use CTRL-O to execute one Normal mode command.
@@ -270,7 +279,15 @@ inoremap <silent> <C-F1> <C-O>:call <SID>HelpOnKey(expand("<cword>"))<CR>
 let g:quickui_border_style = 2
 command! Routines :call quickui#tools#list_function()
 inoremap <silent> <C-G>	<C-O>:Routines<CR>
-inoremap <silent> <A-h>	<C-O>:call quickui#tools#display_help('index')<CR>
+
+" Alt+H
+func! cbrief#help()
+	let topk = inputdialog('Enter topic: ', 'index', '')
+	if topk != ''
+		call quickui#tools#display_help(topk)
+	endif
+endfunc
+inoremap <silent> <A-h>	<C-O>:call cbrief#help()<CR>
 
 "command! NAV <C-L>:Explore<CR>
 

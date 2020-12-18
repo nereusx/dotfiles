@@ -42,18 +42,25 @@ set ruler			" Show row and column ruler information
 set showmatch
 set matchtime=1
 
+" root of secondary directories
+if exists('$BACKUPDIR')
+	let g:backuproot = $BACKUPDIR
+else
+	let g:backuproot = $HOME."/.backup"
+endif
+
 " backup & undo
-if !isdirectory($HOME."/.backup/text")
-	silent! execute "!mkdir -p ~/.backup/text"
+if !isdirectory(g:backuproot."/text")
+	call mkdir(g:backuproot."/text", "p", 0700)
 endif
 set backup
-set backupdir=~/.backup/text
+set backupdir=g:backuproot."/text"
 set noswapfile
 
-if !isdirectory($HOME."/.backup/viundo")
-	silent! execute "!mkdir -p ~/.backup/viundo"
+if !isdirectory(g:backuproot."/vim-undo")
+	call mkdir(g:backuproot."/vim-undo", "p", 0700)
 endif
-set undodir=~/.backup/viundo
+set undodir=g:backuproot."/vim-undo"
 set undolevels=1000	" Number of undo levels
 
 " plugins

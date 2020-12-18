@@ -13,7 +13,15 @@ if exists('g:loaded_csession')
 	finish
 endif
 let g:loaded_csession = v:true
-let g:csession_directory = "~/.vim/sessions"
+if exists('g:backuproot')
+	let g:csession_directory = g:backuproot."/vim-sessions"
+else
+	if exists('$BACKUPDIR')
+		let g:csession_directory = $BACKUPDIR."/vim-sessions"
+	else
+		let g:csession_directory = $HOME."/.vim/vim-sessions"
+	endif
+endif
 let g:csession_file = ""
 let s:cstdin = 0
 

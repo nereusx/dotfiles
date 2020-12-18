@@ -44,9 +44,11 @@ endfunc
 
 " on-close
 func! cbuflist#popselect(id, result)
-	echo 'choice made: ' .. a:result
 	if a:result > 0
-		silent! execute printf('b%d', s:idx2bid[a:result-1])
+		let bid = s:idx2bid[a:result-1]
+		silent! execute printf('b%d', bid)
+		redraw
+		echo 'File: ' . bufname(bid)
 	endif
 endfunc
 
@@ -69,12 +71,18 @@ func! cbuflist#popfilter(id, key)
 	if a:key == 'r' " reload buffer
 		return 1
 	endif
+"	if a:key == 'e'
+"		exec 'b '. a:bid
+"	elseif a:key == 'v'
+"		exec 'vs'
+"		exec 'b '. a:bid
+"	elseif code == 's'
+"		exec 'split'
+"		exec 'b '. a:bid
 
 	" No shortcut, pass to generic filter
 	return popup_filter_menu(a:id, a:key)
 endfunc
-
-
 
 " get content
 func! cbuflist#buflist()
@@ -97,42 +105,11 @@ func! cbuflist#buflist()
 		\ 'callback': 'cbuflist#popselect' }
 	if len(content)
 		redraw
-		echo "ENTER: select, (w)rite, (d)elete, (r)eload"
+		echo "ENTER: select, (s)plit, (v)split, (w)rite, (d)elete, (r)eload"
 		call popup_menu(content, opts)
 	else
 		redraw
 		echom "*** the buffer list is empty! ***"
 	endif
 endfunc
-
-" switch buffer callback
-func! cbuflist#buffer_switch(bid)
-	let code = g:quickui#listbox#current.tag
-	let name = fnamemodify(bufname(a:bid), ':p')
-	if code == ''
-		exec s:switch . ' '. fnameescape(name)
-	elseif code == '1'
-		exec 'b '. a:bid
-	elseif code == '2'
-		exec 'vs'
-		exec 'b '. a:bid
-	elseif code == '3'
-		exec 'split'
-		exec 'b '. a:bid
-	elseif code == '4'
-		exec 'tab split'
-		exec 'b '. a:bid
-	elseif code == '5'
-		exec 'tab drop ' . fnameescape(name)
-	elseif code == 'w' " write
-		let prev = bufnr()
-		exec printf('b %d\nw\nb %d', a:bid, prev)
-	elseif code == 'a' " chmod
-	elseif code == 'd' " remove buffer (!file)
-		exec 'bd! ' . a:bid
-	elseif code == 'R' " reload (revert from disk)
-	elseif code == 'q' " close buflist
-	endif
-endfunc
-
 
