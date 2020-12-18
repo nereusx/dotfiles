@@ -27,8 +27,8 @@ _get_distro() {
 : ${OSTYPE:=$(uname -s)}
 
 # setup several local directories
-backup=${HOME}/.backup
-list="$backup $backup/text $backup/saves $HOME/.bin $HOME/.help $HOME/.misc"
+BACKUPDIR=${HOME}/.backup
+list="$BACKUPDIR $BACKUPDIR/text $BACKUPDIR/saves $HOME/.bin $HOME/.help $HOME/.misc"
 for e in $list; do
 	if [ ! -d $e ]; then
 		mkdir -p $e
