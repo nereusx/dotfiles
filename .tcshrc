@@ -3,6 +3,7 @@
 #	~/.tcshrc
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 
+# if global new-style configuration exists; read it
 [ -r /etc/tcsh/tcshrc ] && source /etc/tcsh/tcshrc
 
 # (non-)interactive absolute values
@@ -70,9 +71,9 @@ endif
 #
 #	setup several local directories
 #
-setenv backup $home/.backup
+setenv BACKUPDIR "$HOME/.backup"
 # setup several local directories
-set list = ( $backup $backup/text $backup/saves $home/.bin $home/.help $home/.misc )
+set list = ( $BACKUPDIR $BACKUPDIR/text $BACKUPDIR/saves $HOME/.bin $HOME/.help $HOME/.misc )
 foreach e ( $list )
 	if ( ! -e $e ) then
 		mkdir -p $e
