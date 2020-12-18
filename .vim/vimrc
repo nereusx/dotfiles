@@ -100,6 +100,9 @@ if has("gui_running")
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 10
 	endif
 else
+	if has("nvim")
+		set guifont="Cousine Bold:h14"
+	endif
 	colorscheme cbrief
 endif
 
@@ -125,7 +128,7 @@ source ~/.vim/cbrief.vim
 " :verbose set showmode?
 "
 set noshowmode
-set showcmd
+set noshowcmd
 set laststatus=2
 set lazyredraw
 set backspace=indent,eol,start
@@ -148,6 +151,9 @@ au FileType qf setlocal nonumber
 
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
+
+" fix lost highlight bug!
+autocmd BufEnter * :syntax sync fromstart
 
 "set digraph
 "digraph kk 983 " greek ampersand

@@ -15,6 +15,7 @@ set virtualedit=onemore
 set startofline
 set backspace=indent,eol,start
 
+" fix conflict with compose key
 if has("gui_running") == 0 && has("nvim") == 0
 	if $TERM != "linux" " terminal emulator
 		set esckeys
@@ -50,13 +51,15 @@ nnoremap <F10> <ESC>:
 func! cbrief#toggle_insert_mode()
 	if &insertmode == 1
 		set noinsertmode
+		echo "Insert mode is OFF"
 	else
 		set insertmode
+		echo "Insert mode is ON"
 	endif
 endfunc
 
-inoremap <F11> <C-O>:call cbrief#toggle_insert_mode()<CR>
-nnoremap <F11> <ESC>:call cbrief#toggle_insert_mode()<CR><ESC>
+inoremap <silent> <F11> <C-O>:call cbrief#toggle_insert_mode()<CR>
+nnoremap <silent> <F11> <ESC>:call cbrief#toggle_insert_mode()<CR><ESC>
 
 " Alt+X: Quit
 func! s:CountModBufs()
@@ -246,48 +249,45 @@ endwhile
 endfunc
 
 " buffer list
-func! cbrief#buflist()
+func! s:BufList()
 	call cbuflist#buflist()
-"	exec "call quickui#tools#list_buffer('e')"
-"	exec 'buffers' " if !quickui
 endfunc
-inoremap <silent> <A-b>	<C-O>:call cbrief#buflist()<CR>
+inoremap <silent> <A-b>	<C-O>:call <SID>BufList()<CR>
 
-function! s:FpMan(word)
-	let opts = {"close":"button", "title":"Free Pascal Documentation: [" .. a:word .. "]"}
-	let cmd = "fpman " .. a:word .. " | col -bx"
-	call quickui#textbox#command(cmd, opts)
+func! s:HelpView(cmd, opts)
+"	let text = system(a:cmd)
+"	call popup_dialog(text, #{ callback: 'PopupEmptyHandler', })
+	call quickui#textbox#command(a:cmd, a:opts)
 endfunc
 
-function! s:UxMan(word)
-	let opts = {"close":"button", "title":"Unix Man Pages: [" .. a:word .. "]"}
-	let cmd = "man " .. a:word .. " | col -bx"
-	call quickui#textbox#command(cmd, opts)
-endfunc
+"
+func! s:HelpOnKey(word)
+let opts = { 'title': ' Unix Pages: [' . a:word . '] '}
+let cmd = ''
 
-function! s:HelpOnKey(word)
 if &filetype == "pascal"
-	call <SID>FpMan(a:word)
+	let opts['title'] = ' FPC Pages: [' . a:word . '] '
+	let cmd = printf('%s/.vim/pasdoc %s | col -bx', $HOME, a:word)
 else
-	call <SID>UxMan(a:word)
+	let cmd = printf('man %s | col -bx', a:word)
 endif
+call s:HelpView(cmd, opts)
 endfunc
 
-"inoremap <silent> <C-F1> <C-O>K
-inoremap <silent> <C-F1> <C-O>:call <SID>HelpOnKey(expand("<cword>"))<CR>
+inoremap <silent> <C-F1> <C-O>:call <SID>HelpOnKey(expand('<cword>'))<CR>
 
 let g:quickui_border_style = 2
 command! Routines :call quickui#tools#list_function()
 inoremap <silent> <C-G>	<C-O>:Routines<CR>
 
 " Alt+H
-func! cbrief#help()
-	let topk = inputdialog('Enter topic: ', 'index', '')
+func! s:VimHelp()
+	let topk = inputdialog('Enter topic: ', expand('<cword>'), '')
 	if topk != ''
 		call quickui#tools#display_help(topk)
 	endif
 endfunc
-inoremap <silent> <A-h>	<C-O>:call cbrief#help()<CR>
+inoremap <silent> <A-h>	<C-O>:call <SID>VimHelp()<CR>
 
 "command! NAV <C-L>:Explore<CR>
 
