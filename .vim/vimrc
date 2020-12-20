@@ -93,7 +93,7 @@ if has("gui_running")
 	" or use set lines, set columns in ~/.vimrc
 	colorscheme onedark
 	if hostname() == "quicksand64"
-		set gfn=Cousine\ Bold\ 14
+		set gfn=Iosevka\ Fixed\ Semi-Bold\ Expanded\ 14
 	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
@@ -161,6 +161,14 @@ autocmd BufEnter * :syntax sync fromstart
 " add to c
 "abb #i #include
 
+" reformat help
+"augroup help
+"	autocmd!
+"	autocmd Filetype help
+"		\ set modifiable noreadonly textwidth=120
+"		\| normal! gqG
+"augroup end
+						
 " ----------------------------------------------------------------------
 " stuff to ignore when tab completing
 set wildignore=*.o

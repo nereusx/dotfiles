@@ -6,31 +6,32 @@
 " Overview
 " --------
 " Advanced buffer list popup window using the quickui.
-" 
+" This is part of 'cbrief' project.
+"
+" Required:
+"	vim-quickui
 
-" prevent to load again
 if exists('g:loaded_cbuflist')
-    finish
+	finish
 endif
 let g:loaded_cbuflist = v:true
-let s:bids = []
-let s:idx2bid = []
 
-" list buffer ids
-func! s:makebids()
+" list of buffer ids
+func! s:make_bids()
     redir => buflist
     silent! ls
     redir END
-    let s:bids = []
+    let bids = []
     for curline in split(buflist, '\n')
         if curline =~ '^\s*\d\+'
-			call add(s:bids, str2nr(matchstr(curline, '^\s*\zs\d\+')))
+			call add(bids, str2nr(matchstr(curline, '^\s*\zs\d\+')))
         endif
     endfor
+	return bids
 endfunc
 
 " create item entry (the buffer line)
-func! s:citem(bid)
+func! s:make_item(bid)
 	let name = fnamemodify(bufname(a:bid), ':p')
 	let base = fnamemodify(name, ':t')
 	let path = fnamemodify(name, ':h')
@@ -43,73 +44,74 @@ func! s:citem(bid)
 endfunc
 
 " on-close
-func! cbuflist#popselect(id, result)
-	if a:result > 0
-		let bid = s:idx2bid[a:result-1]
-		silent! execute printf('b%d', bid)
-		redraw
-		echo 'File: ' . bufname(bid)
+func! cbuflist#popselect(bid)
+	let code = g:quickui#listbox#current.tag
+
+	if a:bid 	
+		if code == '' || code == 'e'
+			exec printf('b%d', a:bid)
+		elseif code == 's'
+			exec 'sp'
+			exec printf('b%d', a:bid)
+		elseif code == 'v'
+			exec 'vs'
+			exec printf('b%d', a:bid)
+		elseif code == 'w'
+		elseif code == 'd'
+		elseif code == 'R'
+		elseif code == 'q'
+		endif
+"		echom printf('Switch to: "%s"', bufname(a:bid))
 	endif
 endfunc
 
-func! cbuflist#popfilter(id, key)
-	" Handle shortcuts
-	if a:key == 'q' || a:key == 'x' " close
-		call popup_close(a:id)
-		return 1
-	endif
-"	if a:key == 'e' " edit
-"		call popup_close(a:id, 1)
-"		return 1
-"	endif
-	if a:key == 'w' " write buffer, need refresh
-		return 1
-	endif
-	if a:key == 'd' || a:key == "\<DEL>" " delete buffer, need refresh
-		return 1
-	endif
-	if a:key == 'r' " reload buffer
-		return 1
-	endif
-"	if a:key == 'e'
-"		exec 'b '. a:bid
-"	elseif a:key == 'v'
-"		exec 'vs'
-"		exec 'b '. a:bid
-"	elseif code == 's'
-"		exec 'split'
-"		exec 'b '. a:bid
-
-	" No shortcut, pass to generic filter
-	return popup_filter_menu(a:id, a:key)
-endfunc
-
-" get content
+" build and run...
 func! cbuflist#buflist()
-	call s:makebids()
-	let s:idx2bid = []
+	let bids = s:make_bids()
 	let content = []
-	let index = 0
-	for bid in s:bids
+	let ccount = 0
+	let curbid = bufnr()
+	let current = -1
+	for bid in bids
 		let buftype = getbufvar(bid, '&buftype')
 		if buftype == 'nofile' || buftype == 'quickfix' || buftype == 'popup'
 			continue
 		endif
-		call add(content, s:citem(bid))
-		call add(s:idx2bid, bid)
-		let index += 1
+		let cmd = printf('call cbuflist#popselect(%d)', bid)
+		let content += [[s:make_item(bid), cmd]]
+		if bid == curbid
+			let current = ccount
+		endif
+		let ccount += 1
 	endfor
+
 	let opts = {
-		\ 'title':    ' Buffer List ',
-		\ 'filter':   'cbuflist#popfilter',
-		\ 'callback': 'cbuflist#popselect' }
+		\ 'title': 'Buffer List',
+		\ 'index': current,
+        \ 'close': 'button',
+		\ 'callback': 'cbuflist#popselect'
+		\ }
+	
+	let opts.border = g:quickui#style#border
+	let opts.keymap = {}
+	let opts.keymap["e"] = 'TAG:e'
+	let opts.keymap["s"] = 'TAG:s'
+	let opts.keymap["v"] = 'TAG:v'
+	let opts.keymap["w"] = 'TAG:w'
+	let opts.keymap["d"] = 'TAG:d'
+	let opts.keymap["\<DEL>"] = 'TAG:d'
+	let opts.keymap["R"] = 'TAG:r'
+	let opts.keymap["q"] = 'TAG:q'
+
+	let hwnd = -1
 	if len(content)
 		redraw
-		echo "ENTER: select, (s)plit, (v)split, (w)rite, (d)elete, (r)eload"
-		call popup_menu(content, opts)
+		echo "ENTER: select, (e)dit, (s)plit, (v)split, (w)rite, (d)elete, (R)eload, (q)uit"
+        let hwnd = quickui#listbox#open(content, opts)
 	else
 		redraw
 		echom "*** the buffer list is empty! ***"
 	endif
+	return hwnd
 endfunc
 
