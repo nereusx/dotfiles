@@ -1,6 +1,11 @@
 #!/bin/sh
-if [ ! -d ~/.suve/fpman ]; then
+if [ ! -d /usr/share/man/fpc ]; then
+	MANDIR=/usr/share/man/fpc
+else
+	MANDIR=~/.suve/fpman
+endif
+if [ ! -d $MANDIR ]; then
 	echo "use fpman to create the man pages"
 	exit 1
 fi
-find ~/.suve/fpman/ -iname "$@.*" -exec man \{\} \;
+find $MANDIR -iname "$@.*" -exec man \{\} \;
