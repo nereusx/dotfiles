@@ -8,4 +8,5 @@ path++
 .vim/.undodir
 .vim/pack/downloads*
 .vim/spell*
+.vim/.netrwhist
 update-me
