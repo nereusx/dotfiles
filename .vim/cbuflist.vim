@@ -1,3 +1,5 @@
+" Modified version
+"
 " Original:
 "	VIM BUFFER LIST SCRIPT 1.3
 "	Copyright(c) 2005, Robert Lillack <rob@lillack.de>
@@ -63,10 +65,10 @@ function! BufferList()
       endif
 
       if bufwinnr(l:i) != -1
-        let l:bufname = l:bufname . '+'
+        let l:bufname = l:bufname . '>' " in window
       endif
       if getbufvar(l:i, '&modified')
-        let l:bufname = l:bufname . '*'
+        let l:bufname = l:bufname . '*' " modified
       endif
       " count displayed buffers
       let l:displayedbufs = l:displayedbufs + 1

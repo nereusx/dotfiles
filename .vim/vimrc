@@ -204,3 +204,4 @@ set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 " my session manager
 source ~/.vim/csession.vim
 
+
