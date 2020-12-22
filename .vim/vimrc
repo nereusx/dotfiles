@@ -6,6 +6,7 @@ set encoding=utf-8
 set noerrorbells
 "set mouse=a " Enable mouse for scrolling and resizing
 set nofoldenable " Disable folding by default
+set hidden
 
 " TAB
 set tabstop=4
@@ -17,7 +18,7 @@ set smartindent		" Enable smart-indent
 set smarttab		" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
 set wildmenu
-"set wildmode=longest,list " tcsh's style
+"set wildmode=longest,list " tcsh style
 set wildignorecase
 
 " it is not a dummy terminal
@@ -120,7 +121,7 @@ source ~/.vim/ccolors.vim
 " my buflist
 source ~/.vim/cbuflist.vim
 
-" my BRIEF's version
+" my BRIEF version
 source ~/.vim/cbrief.vim
 
 " -----------------------------------

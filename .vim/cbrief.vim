@@ -82,7 +82,7 @@ func! cbrief#quit()
 			redraw
 			echo "canceled"
 		elseif choice == 3
-			silent! execute 'wqa!'
+			silent! execute 'xa!'
 			echom "write all and quit!"
 		endif
 	else
@@ -142,7 +142,7 @@ func! cbrief#sys_paste()
 	let &smartindent = si
 	let &autoindent = ai
 	redraw
-	echom "Clipborad's text inserted."
+	echom "Clipborad text inserted."
 endfunc
 command! Bxpaste	call cbrief#sys_paste()
 
