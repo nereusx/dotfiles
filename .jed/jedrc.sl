@@ -114,7 +114,7 @@ private variable special_files = {
 	{ &make_mode, "Makefile|GNUmakefile|BSDmakefile", "mak" },
 	{ &sh_mode,   ".profile|.bashrc|.kshrc|.mkshrc|.yashrc|.zshrc", "sh" },
 	{ &csh_mode,  ".tcshrc|.cshrc|.login|.logout", "csh|tcsh" },
-	{ &vim_mode,  ".vimrc", "vim" },
+	{ &vim_mode,  ".vimrc|vimrc", "vim" },
 	{ &text_mode, "README|INSTALL|CHANGES|CHANGELOG|ChangeLog|NEWS|TODO|NOTES", "txt|log|hlp|doc" },
 	};
 
