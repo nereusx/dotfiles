@@ -38,7 +38,7 @@ ifnot ( BATCH ) {
 
 %% loading modules
 require("osl");
-require("pcre");
+%% require("pcre");
 require("cbrief");
 require("hyperman");
 require("recent");
@@ -60,11 +60,7 @@ add_mode_for_extension("CSH", "csh");
 add_mode_for_extension("CSH", "tcsh");
 
 autoload("sh_mode", "shmode");
-add_mode_for_extension("SH", ".profile");
-add_mode_for_extension("SH", ".bashrc");
-add_mode_for_extension("SH", ".kshrc");
-add_mode_for_extension("SH", ".mkshrc");
-add_mode_for_extension("SH", ".sh");
+add_mode_for_extension("SH", "sh");
 
 %% sql
 autoload("sql_mode", "sql");
@@ -105,16 +101,17 @@ add_mode_for_extension("awk", "awk");
 %% makefile
 autoload("make_mode", "make");
 
-%%
+%% --- special filenames --------------------------------------------------
 private variable special_files = {
+%	position is the priority too (the first wins)
+%      mode-proc,                    filenames list,                             extensions list
+	{ &text_mode, "README|INSTALL|CHANGES|CHANGELOG|ChangeLog|NEWS|TODO|NOTES", "txt|log|hlp|doc" },
 	{ &make_mode, "Makefile|GNUmakefile|BSDmakefile", "mak" },
 	{ &sh_mode,   ".profile|.bashrc|.kshrc|.mkshrc|.yashrc|.zshrc", "sh" },
 	{ &csh_mode,  ".tcshrc|.cshrc|.login|.logout", "csh|tcsh" },
 	{ &vim_mode,  ".vimrc|vimrc", "vim" },
-	{ &text_mode, "README|INSTALL|CHANGES|CHANGELOG|ChangeLog|NEWS|TODO|NOTES", "txt|log|hlp|doc" },
 	};
 
-	
 private define set_modes_hook(base, ext) {
 	variable e;
 	foreach e ( special_files ) {
@@ -127,6 +124,7 @@ private define set_modes_hook(base, ext) {
 	}
 list_append(Mode_Hook_Pointer_List, &set_modes_hook);
 
+%% --- spell --------------------------------------------------------------
 require("ispell");
 Ispell_Program_Name = "aspell";
 
@@ -149,10 +147,8 @@ DOLLAR_CHARACTER = '>'; % horizontal scroll character
 require("cmode");
 (C_INDENT, C_BRACE, C_BRA_NEWLINE, C_CONTINUED_OFFSET, C_Colon_Offset, C_Class_Offset) = (4,4,0,4,0,4);
 
-
 % Ratliff mode by Jed
-define c_set_style_hook (name)
-{
+define c_set_style_hook (name) {
 	if (name == "ratliff")  {
 		% Customize
 		C_INDENT = 4;
@@ -167,32 +163,20 @@ define c_set_style_hook (name)
 		C_Label_Indents_Relative = 0;
 		C_Outer_Block_Offset = 0;
 		}
-}
+	}
 
 %% --- colors -------------------------------------------------------------
-private variable term = getenv("TERM");
-
 #ifdef XWINDOWS
-%set_color_scheme ("Xjed/cbrief-xjed");
 set_color_scheme ("Xjed/atom-xjed");
 #else
-if ( term == "xterm" ) {
-	set_color_scheme ("cbrief-console");
-	DISPLAY_EIGHT_BIT = 0;
-	}
-else {
-	set_color_scheme ("cbrief-console");
-	}
+set_color_scheme ("cbrief-console");
+if ( getenv("TERM") == "xterm" ) DISPLAY_EIGHT_BIT = 0;
 #endif
 
-% set_color_scheme ("green-console");
-
-%% --- keyboard -----------------------------------------------------------
+%% --- finalize -----------------------------------------------------------
 
 % key-bindings (not loaded for batch processes)
 if ( BATCH == 0 ) {	() = evalfile("cbrief"); }
-
-%% --- finalize -----------------------------------------------------------
 
 % sessions - last command always
 require("nc-session");
