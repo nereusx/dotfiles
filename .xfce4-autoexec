@@ -67,4 +67,5 @@ xdo activate -N Pidgin; sleep 0.2
 xdo key_press -k $code ; sleep 0.2; xdo key_release -k $code
 
 # run a terminal
-exec urxvt -sl 0 -e tmux
+exec urxvt -sl 0 -e ~/.tmux/start-tmux.sh
+
