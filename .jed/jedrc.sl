@@ -45,7 +45,6 @@ require("recent");
 require("compile");
 
 % backup directory
-variable Backup_Directory = getenv("HOME") + "/.backup/text/";
 require("nc-backup-dir");
 
 %% --- custom modes -------------------------------------------------------
@@ -92,14 +91,11 @@ _autoload("help_for_help", "help",
 		     7);
 _add_completion("grep_definition", "set_variable", "help_search", 3);
 
-define hyperhelp_load_popup_hook(menubar)
-{
-	   menu_insert_item("&Info Reader", "Global.&Help",
-						                       "&Grep Definition", "grep_definition");
-	   menu_insert_item("&Info Reader", "Global.&Help",
-						                       "&/ Search in Help Docs", "help_search");
-	   menu_insert_separator("&Info Reader", "Global.&Help");
-}
+define hyperhelp_load_popup_hook(menubar) {
+	menu_insert_item("&Info Reader", "Global.&Help", "&Grep Definition", "grep_definition");
+	menu_insert_item("&Info Reader", "Global.&Help", "&/ Search in Help Docs", "help_search");
+	menu_insert_separator("&Info Reader", "Global.&Help");
+	}
 append_to_hook ("load_popup_hooks", &hyperhelp_load_popup_hook);
 
 %%
@@ -129,7 +125,7 @@ private define set_modes_hook(base, ext) {
 		}
 	return 0;
 	}
-list_append (Mode_Hook_Pointer_List, &set_modes_hook);
+list_append(Mode_Hook_Pointer_List, &set_modes_hook);
 
 require("ispell");
 Ispell_Program_Name = "aspell";
