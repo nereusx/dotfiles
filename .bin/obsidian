@@ -1,0 +1,3 @@
+#!/bin/sh
+/opt/Obsidian-0.10.1.AppImage --appimage-extract-and-run &
+

@@ -75,6 +75,15 @@ filetype plugin on
 runtime! ftplugin/man.vim
 packadd! vim-quickui
 packadd! lightline.vim
+
+let g:ranger_replace_netrw = 1
+let g:ranger_map_keys = 0
+set shell=bash
+if has("nvim")
+	packadd! bclose.vim
+endif
+packadd! ranger.vim
+
 "packadd! vim-airline
 "let g:airline#extensions#obsession#enabled = 1
 "packadd! fileselect " VIM version issues
