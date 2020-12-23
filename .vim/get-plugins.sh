@@ -1,49 +1,41 @@
 #!/bin/sh
 
-#mkdir ~/.vim/autoload
-#curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+getrepo() {
+	for b in $*; do
+		p=$(basename $b)
+		printf "\033[1m%02d. %s:\033[0m " $vid "$p"
+		if [ -d $p/.git ]; then
+			cd $p
+			git pull
+			cd ..
+		else
+			rm -rf $p
+			git clone --depth 1 $b
+		fi
+		vid=$(($vid+1))
+	done
+	}
 
-if [ ! -d ~/.vim/pack/downloads/opt ]; then
-	mkdir -p ~/.vim/pack/downloads/opt
-fi
-cd ~/.vim/pack/downloads/opt || exit 1
 
 vid=1
+
+[ ! -d ~/.vim/pack/downloads/opt ] && mkdir -p ~/.vim/pack/downloads/opt
+cd ~/.vim/pack/downloads/opt || exit 1
 
 echo "=== download/update vim plugins ==="
 
 list=""
-#list="$list borland"
-#list="$list bufselect"
-#list="$list scratch"
-#list="$list taglist"
-#list="$list brief fileselect mru lsp"
-for b in $list; do
-	printf "\033[1m%02d. %s:\033[0m " $vid "$b"
-	if [ -d $b/.git ]; then
-		cd $b
-		git pull
-		cd ..
-	else
-		rm -rf $b
-		git clone https://github.com/yegappan/$b
-	fi
-	vid=$(($vid+1))
-done
+list="$list https://github.com/sheerun/vim-polyglot"
 
-# polyglot
-if [ -d vim-polyglot ]; then
-	b=vim-polyglot
-	printf "\033[1m%02d. %s:\033[0m " $vid "$b"
-	cd vim-polyglot
-	git pull
-	cd ..
-	vid=$(($vid+1))
-else
-	git clone --depth 1 https://github.com/sheerun/vim-polyglot
-fi
+#list="$list https://github.com/yegappan/borland"
+#list="$list https://github.com/yegappan/bufselect"
+#list="$list https://github.com/yegappan/scratch"
+#list="$list https://github.com/yegappan/taglist"
+#list="$list https://github.com/yegappan/brief
+#list="$list https://github.com/yegappan/fileselect"
+#list="$list https://github.com/yegappan/mru"
+#list="$list https://github.com/yegappan/lsp"
 
-# python scripts
 #list="$list https://github.com/dense-analysis/ale"
 #list="$list https://github.com/ycm-core/YouCompleteMe"
 #list="$list https://github.com/aitjcize/cppman"
@@ -53,7 +45,6 @@ fi
 #list="$list https://github.com/xolox/vim-misc"
 #list="$list https://github.com/vim-syntastic/syntastic"
 
-list=""
 list="$list https://github.com/junegunn/vim-plug"
 #list="$list https://github.com/preservim/nerdtree"
 #list="$list https://github.com/vimwiki/vimwiki"
@@ -84,48 +75,17 @@ list="$list https://github.com/itchyny/lightline.vim"
 list="$list https://github.com/francoiscabrol/ranger.vim"
 list="$list https://github.com/rbgrouleff/bclose.vim"
 list="$list https://github.com/skywind3000/vim-quickui"
-for b in $list; do
-	p=$(basename $b)
-	printf "\033[1m%02d. %s:\033[0m " $vid "$p"
-	if [ -d $p/.git ]; then
-		cd $p
-		git pull
-		cd ..
-	else
-		rm -rf $p
-		git clone $b
-	fi
-	vid=$(($vid+1))
-done
+
+getrepo $list
 
 echo "=== ndc stuff ==="
-if [ ! -d ~/.vim/pack/ndc/opt ]; then
-	mkdir -p ~/.vim/pack/ndc/opt
-fi
+[ ! -d ~/.vim/pack/ndc/opt ] && mkdir -p ~/.vim/pack/ndc/opt
 cd ~/.vim/pack/ndc/opt || exit 1
 
 list=""
 list="$list https://github.com/nereusx/vim-cbrief"
-for b in $list; do
-	p=$(basename $b)
-	printf "\033[1m%02d. %s:\033[0m " $vid "$p"
-	if [ -d $p/.git ]; then
-		cd $p
-		git pull
-		cd ..
-	else
-		rm -rf $p
-		git clone $b
-	fi
-	vid=$(($vid+1))
-done
 
-#echo "=== apply patches ==="
-#d2u_list="borland/colors/borland.vim"
-#if command -v dos2unix > /dev/null 2>&1; then
-#	for p in $d2u_list; do
-#		dos2unix $p
-#	done
-#fi
+getrepo $list
+
 echo "=== done ==="
 
