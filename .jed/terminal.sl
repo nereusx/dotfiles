@@ -219,11 +219,8 @@ else if ( term == "screen" || term == "screen-color" || term == "screen-256color
 	Key_BS = "";
 	Key_Alt_BS = "";
 	Key_Ctrl_BS = "";
-%	Key_Shift_BS = "";
-%	Key_Shift_Tab = "\e\t";
 	Key_Shift_Tab = "[Z";
-%	Key_Ctrl_Left = "";
-%	Key_Ctrl_Right = "";
+	Key_Shift_Ins = "[2;2~";
 
 	Key_F1 = "OP";
 	Key_Ctrl_F1 = "[1;5P";

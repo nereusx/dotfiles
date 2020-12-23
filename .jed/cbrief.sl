@@ -94,6 +94,9 @@
 %%		hyperman.sl		-- a much better man-page viewer from jedmodes
 %%						(http://jedmodes.sourceforge.net/)
 %%
+%%	Required for X Clipboard:
+%%		xclip CLI utility
+%%	
 %%	Install:
 %%		Copy cbrief.sl, cbufed.sl, chelp.sl and mm-briefmsc.sl
 %%		to your $JED_HOME or $JED_ROOT/lib
@@ -750,7 +753,16 @@ define cbrief_xpaste()
 {
 %	if ( x_insert_selection_p != NULL )
 %		() = x_insert_selection_p();
+
+	variable file, dir, flags, name;
+	variable mode, mflags;
+	(file, dir, name, flags) = getbuf_info ();
+	(mode, mflags) = what_mode();
+	set_mode("text", 0);
+	setbuf_info(file, dir, name, flags | 0x10); % set overwrite mode
 	run_shell_cmd("xclip -o");
+	set_mode(mode, mflags);
+	setbuf_info(file, dir, name, flags);
 	message("Text inserted from clipboard");
 }
 
