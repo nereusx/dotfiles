@@ -43,12 +43,23 @@ set ruler			" Show row and column ruler information
 set showmatch
 set matchtime=1
 
+" Keep 5 columns next to the cursor when scrolling horizontally.
+if !&scrolloff
+	set scrolloff=1
+endif
+if !&sidescrolloff
+	set sidescrolloff=5
+endif
+
 " root of secondary directories
 if exists('$BACKUPDIR')
 	let g:backuproot = $BACKUPDIR
 else
 	let g:backuproot = $HOME."/.backup"
 endif
+
+" When 'wrap' is on, display last line even if it doesnt fit.
+set display+=lastline
 
 " backup & undo
 if !isdirectory(g:backuproot."/text")
@@ -72,25 +83,24 @@ filetype plugin on
 " -----------------------------------
 " extra packages
 
-runtime! ftplugin/man.vim
-packadd! vim-quickui
-packadd! lightline.vim
+runtime ftplugin/man.vim
+packadd vim-quickui
+packadd lightline.vim
+packadd vim-polyglot
 
 let g:ranger_replace_netrw = 1
 let g:ranger_map_keys = 0
-set shell=bash
+set shell=/bin/bash
 if has("nvim")
-	packadd! bclose.vim
+	packadd bclose.vim
 endif
-packadd! ranger.vim
+packadd ranger.vim
 
-"packadd! vim-airline
+"packadd vim-airline
 "let g:airline#extensions#obsession#enabled = 1
-"packadd! fileselect " VIM version issues
-"packadd! bufselect " modified
-"packadd! taglist
+"packadd taglist
 
-"packadd! vim-commentor
+"packadd vim-commentor
 "command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
 " on select mode press gc to (un)comment block
 
@@ -118,20 +128,7 @@ endif
 
 " -----------------------------------
 
-" fix ALT keys mapping
-source ~/.vim/altkeys.vim
-
-" load default BRIEF emulation
-source ~/.vim/brief.vim
-
-" colors
-source ~/.vim/ccolors.vim
-
-" my buflist
-source ~/.vim/cbuflist.vim
-
-" my BRIEF version
-source ~/.vim/cbrief.vim
+packadd vim-cbrief
 
 " -----------------------------------
 " Display who change it:
@@ -210,8 +207,5 @@ set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 " redraw
 "nnoremap <C-L> :nohl<CR><C-L>
 "inoremap <C-L> <C-O>:nohl<CR><C-L>
-
-" my session manager
-source ~/.vim/csession.vim
 
 

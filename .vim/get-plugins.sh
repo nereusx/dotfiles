@@ -11,6 +11,7 @@ cd ~/.vim/pack/downloads/opt || exit 1
 vid=1
 
 echo "=== download/update vim plugins ==="
+
 list=""
 #list="$list borland"
 #list="$list bufselect"
@@ -30,6 +31,18 @@ for b in $list; do
 	vid=$(($vid+1))
 done
 
+# polyglot
+if [ -d vim-polyglot ]; then
+	b=vim-polyglot
+	printf "\033[1m%02d. %s:\033[0m " $vid "$b"
+	cd vim-polyglot
+	git pull
+	cd ..
+	vid=$(($vid+1))
+else
+	git clone --depth 1 https://github.com/sheerun/vim-polyglot
+fi
+
 # python scripts
 #list="$list https://github.com/dense-analysis/ale"
 #list="$list https://github.com/ycm-core/YouCompleteMe"
@@ -47,7 +60,6 @@ list="$list https://github.com/junegunn/vim-plug"
 #list="$list https://github.com/bling/vim-bufferline"
 list="$list https://github.com/vim-airline/vim-airline"
 #list="$list https://github.com/frazrepo/vim-rainbow"
-list="$list https://github.com/skywind3000/vim-quickui"
 #list="$list https://github.com/skywind3000/quickmenu.vim"
 #list="$list https://github.com/entrez/reedline.vim"
 #list="$list https://github.com/preservim/tagbar"
@@ -71,6 +83,29 @@ list="$list https://github.com/itchyny/lightline.vim"
 #list="$list https://github.com/wincent/command-t"
 list="$list https://github.com/francoiscabrol/ranger.vim"
 list="$list https://github.com/rbgrouleff/bclose.vim"
+list="$list https://github.com/skywind3000/vim-quickui"
+for b in $list; do
+	p=$(basename $b)
+	printf "\033[1m%02d. %s:\033[0m " $vid "$p"
+	if [ -d $p/.git ]; then
+		cd $p
+		git pull
+		cd ..
+	else
+		rm -rf $p
+		git clone $b
+	fi
+	vid=$(($vid+1))
+done
+
+echo "=== ndc stuff ==="
+if [ ! -d ~/.vim/pack/ndc/opt ]; then
+	mkdir -p ~/.vim/pack/ndc/opt
+fi
+cd ~/.vim/pack/ndc/opt || exit 1
+
+list=""
+list="$list https://github.com/nereusx/vim-cbrief"
 for b in $list; do
 	p=$(basename $b)
 	printf "\033[1m%02d. %s:\033[0m " $vid "$p"
