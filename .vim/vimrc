@@ -80,6 +80,8 @@ syntax on
 filetype on
 filetype plugin on
 
+set shell=/bin/bash
+
 " -----------------------------------
 " extra packages
 
@@ -88,21 +90,47 @@ packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
 
-let g:ranger_replace_netrw = 1
-let g:ranger_map_keys = 0
-set shell=/bin/bash
 if has("nvim")
 	packadd bclose.vim
 endif
-packadd ranger.vim
+
+" rq: bclose
+let g:lf_map_keys = 0
+let g:lf_replace_netrw = 1		" open lf when vim open a directory
+" open file with 'l' or right-arrow instead of 'e'; otherwise it opens in $EDITOR
+let g:lf_command_override = 'lf -command "set hidden"'
+packadd lf.vim
 
 "packadd vim-airline
 "let g:airline#extensions#obsession#enabled = 1
 "packadd taglist
 
-"packadd vim-commentor
-"command! CommentBlock	:call commentor#CommentToggle(visualmode(), 1)
-" on select mode press gc to (un)comment block
+"NORMAL MODE
+"	gc{motion}   :: Toggle comments
+"	gc<Count>c{motion} :: Toggle comment with count argument 
+"	gcc          :: Toggle comment for the current line
+"	gC{motion}   :: Toggle comments by line
+"	g<{motion}   :: Uncomment region
+"	g<c          :: Uncomment the current line
+"	g<b          :: Uncomment the current region as block
+"	g>{motion}   :: Comment region
+"	g>c          :: Comment the current line
+"	g>b          :: Comment the current region as block
+"VISUAL MODE
+"	gc           :: Toggle comments
+"	g>           :: Comment selected text
+"INSERT MODE
+"	<c-_><c-_>   :: :TComment
+"	<c-_><space> :: :TComment <QUERY COMMENT-BEGIN ?COMMENT-END>
+"	<c-_>b       :: :TCommentBlock
+"	<c-_>a       :: :TCommentAs <QUERY COMMENT TYPE>
+"	<c-_>n       :: :TCommentAs &filetype <QUERY COUNT>
+"	<c-_>s       :: :TCommentAs &filetype_<QUERY COMMENT SUBTYPE>
+"	<c-_>i       :: :TCommentInline
+"	<c-_>r       :: :TCommentRight
+"	<c-_>p       :: Comment the current inner paragraph
+"	Most of the above maps are also available in visual mode.
+packadd tcomment_vim
 
 " -----------------------------------
 " colors
@@ -121,7 +149,7 @@ if has("gui_running")
 	endif
 else
 	if has("nvim")
-		set guifont="Cousine Bold:h14"
+		set gfn="Cousine Bold:h14"
 	endif
 	colorscheme cbrief
 endif

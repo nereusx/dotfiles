@@ -72,9 +72,11 @@ list="$list https://github.com/itchyny/lightline.vim"
 #list="$list https://github.com/prabirshrestha/quickpick.vim"
 #list="$list https://github.com/jeetsukumaran/vim-buffergator"
 #list="$list https://github.com/wincent/command-t"
-list="$list https://github.com/francoiscabrol/ranger.vim"
+#list="$list https://github.com/francoiscabrol/ranger.vim"
 list="$list https://github.com/rbgrouleff/bclose.vim"
 list="$list https://github.com/skywind3000/vim-quickui"
+list="$list https://github.com/ptzz/lf.vim"
+list="$list https://github.com/tomtom/tcomment_vim"
 
 getrepo $list
 
