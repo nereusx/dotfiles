@@ -1,12 +1,13 @@
 %
 %	Terminal key-codes
 %
-%	Use this file to fixup your terminals key-codes
+%	Use this file to fixup your terminals key-codes.
+%	Feel free to change everything...
 %
 %	An empty string means that key does not supported in this terminal
 %	
 
-require("x-keydefs");
+require("sys/x-keydefs");
 
 #ifdef XWINDOWS
 private variable term = "xjed";

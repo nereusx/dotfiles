@@ -37,7 +37,7 @@ ifnot ( BATCH ) {
 %}}}
 
 %% loading modules
-require("osl");
+require("sys/osl");
 %% require("pcre");
 require("cbrief");
 require("hyperman");
@@ -45,30 +45,30 @@ require("recent");
 require("compile");
 
 % backup directory
-require("nc-backup-dir");
+require("sys/backup");
 
 %% --- custom modes -------------------------------------------------------
 
 %% ndc-keymap
-autoload("kmap_mode", "nc-kmap-mode");
+autoload("kmap_mode", "syntax/kmap");
 add_mode_for_extension("kmap_mode", "kmap");
 
 %% ndc-csh
-autoload("csh_mode", "csh-mode");
-autoload("tcsh_mode", "tcsh-mode");
+autoload("csh_mode", "syntax/csh");
+autoload("tcsh_mode", "syntax/tcsh");
 add_mode_for_extension("CSH", "csh");
 add_mode_for_extension("CSH", "tcsh");
 
-autoload("sh_mode", "shmode");
+autoload("sh_mode", "syntax/shmode");
 add_mode_for_extension("SH", "sh");
 
 %% sql
-autoload("sql_mode", "sql");
-autoload("mysql_mode", "sql");
+autoload("sql_mode", "syntax/sql");
+autoload("mysql_mode", "syntax/sql");
 add_mode_for_extension("sql", "sql");
 
 %% vim
-autoload("vim_mode", "vim");
+autoload("vim_mode", "syntax/vim");
 add_mode_for_extension("vim", "vim");
 
 %%
@@ -95,11 +95,11 @@ define hyperhelp_load_popup_hook(menubar) {
 append_to_hook ("load_popup_hooks", &hyperhelp_load_popup_hook);
 
 %%
-autoload("awk_mode", "awk");
+autoload("awk_mode", "syntax/awk");
 add_mode_for_extension("awk", "awk");
 
 %% makefile
-autoload("make_mode", "make");
+autoload("make_mode", "syntax/make");
 
 %% --- special filenames --------------------------------------------------
 private variable special_files = {
@@ -179,5 +179,5 @@ if ( getenv("TERM") == "xterm" ) DISPLAY_EIGHT_BIT = 0;
 if ( BATCH == 0 ) {	() = evalfile("cbrief"); }
 
 % sessions - last command always
-require("nc-session");
+require("sys/session");
 

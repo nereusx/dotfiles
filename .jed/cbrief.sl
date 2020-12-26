@@ -107,12 +107,12 @@
 %%			require("cbrief");
 %%
 
-() = evalfile("mouse.sl");
-require("x-keydefs");				% fixed keys and keypad codes (jedmodes package)
+() = evalfile("sys/mouse.sl");
+require("sys/x-keydefs");			% fixed keys and keypad codes (jedmodes package)
 require("mm-briefmsc");				% Guenter Milde and Marko Mahnic BRIEF module
 require("cbufed");					% list_buffers() replacement
 require("chelp");					% help() replacement
-require("mini");
+require("sys/mini");
 require("tabs");					% Tab_Stops and tabs_edit()
 require("dired");					% Nice addon for F11
 
