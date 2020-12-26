@@ -20,6 +20,8 @@ usable_lines() {
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias dmesg='dmesg --color=always'
+alias f='egrep -n'
+alias nf='egrep -v'
 
 alias ll='ls --color=auto -lha'
 alias ls='ls --color=auto'
