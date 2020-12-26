@@ -501,6 +501,8 @@ alias mounted       'mount | grep -E \'^(tmpfs|/dev)\' | grep -Ev \'AppImage|/de
 alias mc			'mc --nomouse'
 alias fs			'du -sbh' # file or directory size
 alias xman          'xview-roff'
+alias f				'egrep -n'
+alias nf			'egrep -v'
 
 # you can get 'dof' at https://github.com/nereusx/unix-utils
 if ( -X dof ) then
