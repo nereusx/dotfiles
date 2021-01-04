@@ -29,6 +29,7 @@ while getopts afnhs: o; do
 	esac
 done
 
+echo "Viber: method=$method scaling=$scale"
 [ "$method" = "n" ] && QT_SCALE_FACTOR=$scale /opt/viber/Viber $@ &
 [ "$method" = "a" ] && QT_SCALE_FACTOR=$scale /opt/viber.AppImage $@ &
 [ "$method" = "f" ] && QT_SCALE_FACTOR=$scale flatpak run com.viber.Viber $@ &
