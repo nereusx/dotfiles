@@ -13,6 +13,8 @@
 %%	2019-11-26 Nicholas Christopoulos
 %%		xclip used for clipboard, allows to copy/paste text even from terminal version.
 %%		Alt+Ctrl+C = xcopy, Alt+Ctrl+V = xpaste, Alt+Ctrl+X = xcut
+%%	2021-01-09 Nicholas Christopoulos
+%%		'<!' and '<' at command line
 %%
 %%	Based on: BRIEF v3.1, 1991 and secondary on BRIEF v2.1, 1988
 %%	
@@ -69,8 +71,11 @@
 %% &	executes the rest commands with the shell in the background and
 %%		in new terminal.
 %%
-%% <	executes the rest commands with the shell and inserts the output
+%% <!	executes the rest commands with the shell and inserts the output
 %%		in the current buffer
+%%
+%% <	insert the contents of the file to current position, if file is not specified
+%% 		then it will prompt for the name.
 %%
 %% >	writes the selected text to a new file.
 %%
@@ -1508,15 +1513,19 @@ private define cbrief_file_do(argc, argv, prompt, do_f)
 	if ( strlen(file) ) {
 %		variable st = file_stat(file);
 		n = file_status(file);
-		switch ( n )
-			{ case 0: uerror("File does not exist."); }
-			{ case 1:
+		if ( n == 0 && do_f != &find_file ) {
+			uerror("File does not exist.");
+			}
+		else if ( n == 0 || n == 1 ) {
 				try ( ex ) { n = (@do_f)(file); }
 				catch AnyError: { uerrorf("Caught %s, %s:%d -- %s", ex.descr, ex.file, ex.line, ex.message); n = -1; }
 				if ( n > 0 )
 					vmess("%d lines inserted.", n);
 				}
-			{ case 2: uerror("This is a directory."); }
+		else if ( n == 2 ) {
+			uerror("This is a directory.");
+			}
+		else
 			{ uerror("Access denied."); }
 		}
 }
@@ -3155,13 +3164,28 @@ public define cbrief_cmd()
 #endif
 			err = 1; % exit
 			}
-		else if ( in[0] == '<' ) {	% run shell command, output in this buf
-			in = substr(in, 2, strlen(in) - 1);
+		else if ( in[0] == '<' && in[1] == '!' ) {	% run shell command, output in this buf
+			in = substr(in, 3, strlen(in) - 2);
 			err = 1; % exit
 #ifdef CBRIEF_PATCH_V5
 			save_screen();
 #endif
 			run_shell_cmd(in);
+#ifdef CBRIEF_PATCH_V5
+			restore_screen();
+			redraw_screen();
+#endif
+			}
+		else if ( in[0] == '<' ) {	% insert the contents of a file to this location
+			in = strtrim(substr(in, 2, strlen(in) - 1));
+			err = 1; % exit
+#ifdef CBRIEF_PATCH_V5
+			save_screen();
+#endif
+			if ( strlen(in) )
+				insert_file(in);
+			else
+				cbrief_read_file();
 #ifdef CBRIEF_PATCH_V5
 			restore_screen();
 			redraw_screen();
