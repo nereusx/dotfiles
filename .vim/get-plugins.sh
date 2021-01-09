@@ -29,7 +29,7 @@ list="$list https://github.com/sheerun/vim-polyglot"
 
 #list="$list https://github.com/yegappan/borland"
 #list="$list https://github.com/yegappan/bufselect"
-#list="$list https://github.com/yegappan/scratch"
+list="$list https://github.com/yegappan/scratch"
 #list="$list https://github.com/yegappan/taglist"
 #list="$list https://github.com/yegappan/brief
 #list="$list https://github.com/yegappan/fileselect"
