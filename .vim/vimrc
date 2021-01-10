@@ -68,13 +68,22 @@ endif
 set backupskip=/tmp/*,$HOME/tmp/*
 set backup
 set backupdir=g:backuproot."/text"
-set noswapfile
 
 if !isdirectory(g:backuproot."/vim-undo")
 	call mkdir(g:backuproot."/vim-undo", "p", 0700)
 endif
 set undodir=g:backuproot."/vim-undo"
 set undolevels=1000	" Number of undo levels
+
+" swap files
+"if !isdirectory(g:backuproot."/vim-swap")
+"	call mkdir(g:backuproot."/vim-swap", "p", 0700)
+"endif
+"set noswapfile
+"set directory   =g:backuproot."/vim-swap"
+"set updatecount =100
+" other files
+"set viminfo     ='100,n$HOME/.vim/files/info/viminfo
 
 " plugins
 syntax on
