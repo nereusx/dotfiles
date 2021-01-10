@@ -2,8 +2,10 @@
 
 These files are for ***personal use***, but **you may need**
 
-* the **'.jed/'** directory as I have it (BRIEF v3.1 texteditor,
+* the **'.jed/'** directory as I have it (BRIEF v3.1 text-editor emulation,
 with special configurations for desktops, laptops, and several terminal types).
+
+* the **'.vim/'** directory as I have it (BRIEF v3.1 text-editor emulation)
 
 * pulseaudio-system/, **system-wide pulseaudio** configuration for multiple users in local system, and/or in LAN.
 
