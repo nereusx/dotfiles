@@ -28,7 +28,7 @@ set notimeout ttimeout ttimeoutlen=50 " fandom
 " General
 set backspace=indent,eol,start	" Backspace behaviour
 set number			" Show line numbers
-"set no wrap		" Wrap lines
+set wrap			" Wrap lines
 set textwidth=80	" Line wrap (number of cols)
 set nospell
 set spelllang=en,el	" Enable spell-checking
@@ -203,7 +203,7 @@ au BufRead,BufNewFile *.txt setlocal filetype=text spell
 au FileType qf setlocal nonumber
 
 " enable spell on simple docs
-autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el
+autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el wrap
 
 " fix lost highlight bug!
 autocmd BufEnter * :syntax sync fromstart
