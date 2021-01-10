@@ -165,6 +165,34 @@ define c_set_style_hook (name) {
 		}
 	}
 
+%% --- abbrev -------------------------------------------------------------
+%% <F10>abbrev_mode
+
+create_abbrev_table("Global", "_A-Za-z0-9");
+define_abbrev("Global", "__ldq", "“");
+define_abbrev("Global", "__rdq", "”");
+define_abbrev("Global", "__lsq", "‘");
+define_abbrev("Global", "__rsq", "’");
+define_abbrev("Global", "__dag", "†");
+define_abbrev("Global", "__ddag", "‡");
+define_abbrev("Global", "__ss", "§");
+define_abbrev("Global", "__laq", "‹");
+define_abbrev("Global", "__raq", "›");
+define_abbrev("Global", "__2", "²");
+define_abbrev("Global", "__3", "³");
+define_abbrev("Global", "__deg", "°");
+define_abbrev("Global", "__OU", "Ȣ");
+define_abbrev("Global", "__ou", "ȣ");
+define_abbrev("Global", "__enter", "⏎");
+define_abbrev("Global", "__00", "‰");
+define_abbrev("Global", "__sq", "√");
+define_abbrev("Global", "__inf", "∞");
+define_abbrev("Global", "__aprox", "≈");
+define_abbrev("Global", "__kk", "☭");
+define_abbrev("Global", "__star", "★");
+define_abbrev("Global", "__space", "␣");
+set_abbrev_mode(1);
+
 %% --- colors -------------------------------------------------------------
 #ifdef XWINDOWS
 set_color_scheme ("Xjed/atom-xjed");
