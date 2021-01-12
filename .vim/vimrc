@@ -7,10 +7,10 @@ endif
 if getenv('VIMFILES') == v:null
 	let $VIMFILES=$VIMDIR.'/files'
 endif
-let $TMPL=$VIMDIR.'/tmpl'
 if getenv('BACKUPDIR') == v:null
 	let $BACKUPDIR=$VIMFILES
 endif
+let $TMPL=$VIMDIR.'/tmpl'
 
 set nocompatible
 scriptencoding utf-8

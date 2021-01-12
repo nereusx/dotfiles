@@ -34,4 +34,5 @@ iabbrev __kk   ☭
 iabbrev __star ★
 iabbrev __space ␣
 
+iabbrev #i #include
 
