@@ -1,0 +1,217 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	UTF8, xelatex
+\documentclass[10pt,a4paper]{article}
+
+\def\DocTitle{Θέμα}
+\def\DocAuthor{Νικόλας Χριστόπουλος}
+\def\DocCopyr{XYZ Inc}
+\def\DocVersion{1.0}
+
+\usepackage[margin=25mm]{geometry}
+\usepackage[cm-default]{fontspec} % fontspec
+\usepackage{latexsym} % extra latex symbols
+\usepackage{xunicode} % after fontspec, unicode support
+\usepackage{xltxtra}
+
+% Σίγουρες γραμματοσειρές
+\defaultfontfeatures{Mapping=tex-text,Numbers={SlashedZero}}
+
+\setromanfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont[Scale=0.9]{DejaVu Sans Mono}
+\setmainfont{DejaVu Sans}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\setlength{\textheight}{233mm}
+\setlength{\topmargin}{-2mm}
+\setlength{\topskip}{0mm}
+
+\pagestyle{fancy}
+
+\usepackage{pstricks}
+\usepackage{fancybox}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage{xtab}
+\usepackage{ifthen}
+
+\setlanguage{greek}
+
+% must be last
+\usepackage{hyperref}
+\hypersetup{
+	backref=true,linkcolor=blue,colorlinks=true,
+	bookmarks=true,bookmarksopen=true,bookmarksnumbered=true,
+	unicode=true,pdfstartview=FitH,pdfview=FitH,pdfpagemode=UseOutlines,
+	pdfauthor=\DocAuthor{},pdftitle=\DocTitle{}
+	}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% === ndc macros - begin ===
+
+% Σύμβολα
+\def\BS{\textbackslash}					% Συντομογραφία του '\'
+\def\SHARP{$\sharp$}					% Συντομογραφία του '#'
+\def\POW{\textasciicircum}				% Συντομογραφία του '^'
+\def\INV{\textasciitilde}				% Συντομογραφία του '~'  (C's inverse bits)
+\def\OR{\textbar}						% Συντομογραφία του '|'  (C's OR)
+\def\DEG{\circ}							% Μοίρες/Βαθμοί θερμ.
+\def\MUL{$\ast$}						% STD Multiplication
+\def\STAR{$\star$}						% pentagon star
+\def\RCON{$\Rightarrow$}				% right arrow
+\def\LCON{$\Leftarrow$}					% left arrow
+\def\DCON{$\Leftrightarrow$}			% double arrow
+\def\cchar#1{\lq{$\setminus$#1}}		% C-style control char: '\1'
+
+% Quoted text
+\def\dq#1{“#1”}							% latin double
+\def\lq#1{‘#1’}							% latin single
+\def\q#1{«#1»}							% greek
+
+% Keywords
+\def\opt#1{$\langle$#1$\rangle$}		% option: <xxx>
+%\def\URL#1{\texttt{#1}}					% URL % see hyperref
+\def\email#1{\texttt{#1}}				% e-mail
+\def\file#1{\lq{\texttt{#1}}}			% Αρχείο
+\def\key#1{[\texttt{#1}]}				% Πλήκτρο
+\def\code#1{\lq{\texttt{#1}}}			% Κώδικας
+\def\var#1{{\textit{#1}}}				% Μεταβλητή
+\def\term#1{\textsl{#1}}				% Ορολογία
+
+% notes on the margin
+\def\mnote#1{\marginpar{\footnotesize #1}}
+
+%
+\def\wimage#1{
+\begin{figure}
+\centering
+\includegraphics[width=\maxwidth]{#1}
+\end{figure}
+}
+
+% Diogenis apospasma
+%
+% aposp{text}{author}
+%
+\def\aposp#1#2{
+\vskip 6mm
+\begin{quote}
+{«\textit{\textsf{#1}}»}
+\end{quote}
+\par
+\begin{flushright}{ --- \textit{#2}}\end{flushright}
+\vskip 3mm
+}
+
+% right text comment
+%
+% \rr{title}
+%
+\def\rr#1{
+\\\rightline{ --- \textit{#1}}
+}
+
+% SuSE6 manual block comment
+%
+%\begin{susebox}{title}
+%text
+%\end{susebox}
+%
+\newenvironment{susebox}[2][]%
+{%
+\def\@boxtext{\textbf{\large \textsf{#2}}}
+\vrule{\hbox to 1em{\hrulefill}%
+\raisebox{-1ex}[0pt]{%
+\rule[-2ex]{0pt}{0pt}\ \@boxtext{} }\hrulefill}
+\\*\nopagebreak%
+\begin{minipage}{\linewidth}
+\begin{list}{}{%
+\setlength\topsep{0pt}%
+\setlength\rightmargin\leftmargin%
+}%
+\item[] \ifthenelse{\equal{#1}{}}{}{\textbf{\sffamily #1}\hspace*{\fill}\\*}}%
+{\nopagebreak\end{list}\end{minipage}\nopagebreak
+\par%
+\vglue -2ex % θέση κάτω γραμμής
+{\hrulefill\raisebox{-.5ex}[0pt]%
+{\rule[2.5ex]{0pt}{0pt}\ \@boxtext\ }%
+\hbox to 1em{\hrulefill}}\rule{0.4pt}{2.5ex}%\vrule%
+\vspace{1.5ex}%
+}
+
+% @example 4 xelatex
+%
+% \begin{example}
+% char mybuf[1024];
+% gets(mybuf);
+% \end{example}
+%
+\DefineVerbatimEnvironment%
+{example}{Verbatim}
+{commandchars=\\\{\},numbers=left,
+ numbersep=2mm,framesep=3mm,
+ frame=leftline,framerule=0.25mm}
+
+% LHNet2004 style block comment
+%
+% \result{text}
+%
+\newcounter{countresult}
+\def\result#1{
+\addtocounter{countresult}{1}
+\begin{quote}
+$\rhd$ \roman{countresult} $\lhd$ #1
+\end{quote}
+}
+
+% βιβλιογραφία
+%
+% \biblio{key}{title}{author}{info}
+\def\biblio#1#2#3#4{
+\bibitem{#1}
+\q{\textit{#2}}, #3,\\ #4\\
+}
+
+\definecolor{coms}{rgb}{0.0,0.3,0.0}
+%% === ndc macros - end ===
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%
+%% start
+
+\begin{document}
+
+\setlength{\parskip}{10pt}
+\setlength{\parindent}{0pt}
+\rm
+
+\author{\DocAuthor}
+\title{\DocTitle}
+\date{Έκδοση \DocVersion\\ \today}
+\maketitle
+
+\begin{abstract}
+Περίληψη{\ldots} 	
+\end{abstract}
+
+%% index
+\tableofcontents
+
+\section{Ενότητα}
+Κείμενο
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{thebibliography}{}
+%	\biblio{tcp}{TCP/IP Illustrated, Vol I}{W. Richard Stevens}{Addison-Wesley, 1994}
+%	\biblio{unxprg}{Advanced Programming in the Unix Environment}{W. Richard Stevens}{Addison-Wesley, 1993}
+%\end{thebibliography}
+
+\label{EOF}
+\hrulefill\\
+{\footnotesize
+\q{\DocTitle{}} -- Copyright \copyright{} 2011, \DocCopyr{}.\hfill{}Το κείμενο αυτό είναι σε μορφή \XeLaTeX
+}
+\end{document}

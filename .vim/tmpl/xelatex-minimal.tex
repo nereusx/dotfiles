@@ -1,0 +1,24 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{xltxtra}
+
+%%% not language but hyphenation - begin
+\usepackage{polyglossia}
+\setdefaultlanguage[variant=american]{english}
+\setotherlanguage{greek}
+%%% not language but hyphenation - end
+
+\setmainfont{Linux Libertine} % or any font on your system
+\setsansfont{Linux Biolinum} % or any font on your system
+
+\begin{document}
+Αυτό είναι στα Ελληνικά, this is in English.
+
+\section{Και στα ελληνικά}
+\begin{greek} % για hyphenation μόνο
+Αυτό είναι στα Ελληνικά, this is in English.
+Δοκιμή ύφανσης, δοκιμή ύφανσης, δοκιμή ύφανσης, σαρανταποδαρούσα,
+δοκιμή ύφανσης, δοκιμή ύφανσης, δοκιμή ύφανσης.
+\end{greek}
+
+\end{document}
