@@ -32,7 +32,7 @@ set smartindent		" Enable smart-indent
 set smarttab		" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
 set wildmenu
-"set wildmode=longest,list " tcsh style
+set wildmode=longest,list " tcsh style
 set wildignorecase
 "set termguicolors 
 set guicursor&
