@@ -1,17 +1,26 @@
 " .vimrc
-"
 
-if getenv('VIMDIR') == v:null
-	let $VIMDIR=$HOME.'/.vim'
-endif
-if getenv('VIMFILES') == v:null
-	let $VIMFILES=$VIMDIR.'/files'
-endif
+" === globals
+let $VIMDIR=$HOME.'/.vim'
 if getenv('BACKUPDIR') == v:null
-	let $BACKUPDIR=$VIMFILES
+	let $VIMFILES=$VIMDIR.'/files'
+else
+	let $VIMFILES=$BACKUPDIR
 endif
 let $TMPL=$VIMDIR.'/tmpl'
 
+" === create directories
+let dirs=['/text', '/swap', '/undo', '/sessions']
+for d in dirs
+	if !isdirectory($VIMFILES.d)
+		call mkdir($VIMFILES.d, 'p', 0700)
+	endif
+endfor
+if !isdirectory($TMPL)
+	call mkdir($TMPL, 'p', 0700)
+endif
+
+" === settings
 set nocompatible
 scriptencoding utf-8
 set encoding=utf-8
@@ -72,29 +81,19 @@ endif
 set display+=lastline
 
 " backup & undo
-if !isdirectory($BACKUPDIR.'/text')
-	call mkdir($BACKUPDIR.'/text', 'p', 0700)
-endif
-set backupskip=/tmp/*,$HOME/tmp/*,$BACKUPDIR/*
+set backupskip=/tmp/*,$HOME/tmp/*,$VIMFILES/*
 set backup
-set backupdir=$BACKUPDIR.'/text'
-
-if !isdirectory($BACKUPDIR.'/undo')
-	call mkdir($BACKUPDIR.'/undo', 'p', 0700)
-endif
-set undodir =$BACKUPDIR.'/undo'
-set undolevels =1000	" Number of undo levels
+set backupdir=$VIMFILES/text
+set undodir=$VIMFILES/undo
+set undolevels=1000	" Number of undo levels
 
 " swap files
-if !isdirectory($BACKUPDIR.'/swap')
-	call mkdir($BACKUPDIR.'/swap', 'p', 0700)
-endif
 "set noswapfile
-set directory   =$BACKUPDIR.'/swap'
-set updatecount =100
+set directory=$VIMFILES/swap
+set updatecount=100
 
 " other files
-set viminfo ='100,n$BACKUPDIR/viminfo
+set viminfo='100,n$VIMFILES/viminfo
 
 " plugins
 syntax on
