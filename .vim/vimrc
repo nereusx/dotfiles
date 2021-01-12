@@ -10,13 +10,14 @@ endif
 if getenv('BACKUPDIR') == v:null
 	let $BACKUPDIR=$VIMFILES
 endif
-	
+
 set nocompatible
 scriptencoding utf-8
 set encoding=utf-8
 set noerrorbells
 "set mouse=a " Enable mouse for scrolling and resizing
-set nofoldenable " Disable folding by default
+"set nofoldenable " Disable folding by default
+set nodigraph " Disable digraph, better use abbrev
 set hidden
 
 " TAB
@@ -33,8 +34,8 @@ set wildmenu
 set wildignorecase
 
 " it is not a dummy terminal
-"set notimeout nottimeout timeoutlen=0 ttimeoutlen=-1
-set notimeout ttimeout ttimeoutlen=50 " fandom
+set notimeout nottimeout timeoutlen=0 ttimeoutlen=-1
+"set notimeout ttimeout ttimeoutlen=50 " fandom
 
 " General
 set backspace=indent,eol,start	" Backspace behaviour
@@ -120,41 +121,6 @@ packadd lf.vim
 "let g:airline#extensions#obsession#enabled = 1
 "packadd taglist
 
-"NORMAL MODE
-"	gc{motion}   :: Toggle comments
-"	gc<Count>c{motion} :: Toggle comment with count argument 
-"	gcc          :: Toggle comment for the current line
-"	gC{motion}   :: Toggle comments by line
-"	g<{motion}   :: Uncomment region
-"	g<c          :: Uncomment the current line
-"	g<b          :: Uncomment the current region as block
-"	g>{motion}   :: Comment region
-"	g>c          :: Comment the current line
-"	g>b          :: Comment the current region as block
-"VISUAL MODE
-"	gc           :: Toggle comments
-"	g>           :: Comment selected text
-"INSERT MODE
-"	<c-_><c-_>   :: :TComment
-"	<c-_><space> :: :TComment <QUERY COMMENT-BEGIN ?COMMENT-END>
-"	<c-_>b       :: :TCommentBlock
-"	<c-_>a       :: :TCommentAs <QUERY COMMENT TYPE>
-"	<c-_>n       :: :TCommentAs &filetype <QUERY COUNT>
-"	<c-_>s       :: :TCommentAs &filetype_<QUERY COMMENT SUBTYPE>
-"	<c-_>i       :: :TCommentInline
-"	<c-_>r       :: :TCommentRight
-"	<c-_>p       :: Comment the current inner paragraph
-"	Most of the above maps are also available in visual mode.
-packadd tcomment_vim
-
-" You can use the following command to open/edit the scratch buffer: 
-"	:Scratch 
-" To open the scratch buffer in a new split window, use the following command: 
-"	:Sscratch 
-packadd scratch
-"inoremap <F10> <C-O>:Scratch<CR>
-"inoremap <F10> <C-O>:Sscratch<CR>
-
 " -----------------------------------
 " colors
 "let g:cc_schemes = ["cbrief", "turbo", "onedark"]
@@ -229,21 +195,12 @@ set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
 set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 
-" === Define Commands
-" Command Interface: 
-" com! -bar -nargs=0 SWP	call F()
-" com! -bar -nargs=? RWP	call F(<args>)
-" com! -bar -nargs=1 SM		call F(<q-args>)
-" 
-" Start nnn in the current file's directory
-"inoremap <C-E> <C-O>:NnnPicker %:p:h<CR>
-
-" redraw
-"nnoremap <C-L> :nohl<CR><C-L>
-"inoremap <C-L> <C-O>:nohl<CR><C-L>
-
-let abbrev_file=$VIMDIR.'/abbrev.vim'
-if filereadable(abbrev_file)
-	execute 'source '.abbrev_file
+" load abbrev
+let my_abbrev_file=$VIMDIR.'/abbrev.vim'
+if filereadable(my_abbrev_file)
+	execute 'source '.my_abbrev_file
 endif
+
+"inoremap <A-SPACE> <SPACE>
+"noremap <A-SPACE> <SPACE>
 
