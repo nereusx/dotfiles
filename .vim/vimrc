@@ -32,6 +32,9 @@ set softtabstop=4	" Number of spaces per Tab
 set wildmenu
 "set wildmode=longest,list " tcsh style
 set wildignorecase
+"set termguicolors 
+set guicursor&
+set guicursor=a:block,a:blinkwait700-blinkoff400-blinkon250
 
 " it is not a dummy terminal
 set notimeout nottimeout timeoutlen=0 ttimeoutlen=-1
