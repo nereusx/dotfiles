@@ -16,6 +16,7 @@ scriptencoding utf-8
 set encoding=utf-8
 set noerrorbells
 "set mouse=a " Enable mouse for scrolling and resizing
+set mouse= " Disable mouse
 "set nofoldenable " Disable folding by default
 set nodigraph " Disable digraph, better use abbrev
 set hidden
