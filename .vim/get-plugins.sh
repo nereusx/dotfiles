@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# 
 getrepo() {
 	for b in $*; do
 		p=$(basename $b)
@@ -16,7 +17,7 @@ getrepo() {
 	done
 	}
 
-
+#
 vid=1
 
 [ ! -d ~/.vim/pack/downloads/opt ] && mkdir -p ~/.vim/pack/downloads/opt
@@ -29,7 +30,7 @@ list="$list https://github.com/sheerun/vim-polyglot"
 
 #list="$list https://github.com/yegappan/borland"
 #list="$list https://github.com/yegappan/bufselect"
-list="$list https://github.com/yegappan/scratch"
+#list="$list https://github.com/yegappan/scratch"
 #list="$list https://github.com/yegappan/taglist"
 #list="$list https://github.com/yegappan/brief
 #list="$list https://github.com/yegappan/fileselect"
@@ -76,7 +77,7 @@ list="$list https://github.com/itchyny/lightline.vim"
 list="$list https://github.com/rbgrouleff/bclose.vim"
 list="$list https://github.com/skywind3000/vim-quickui"
 list="$list https://github.com/ptzz/lf.vim"
-list="$list https://github.com/tomtom/tcomment_vim"
+#list="$list https://github.com/tomtom/tcomment_vim"
 
 getrepo $list
 

@@ -27,17 +27,16 @@ set encoding=utf-8
 set noerrorbells
 "set mouse=a " Enable mouse for scrolling and resizing
 set mouse= " Disable mouse
-"set nofoldenable " Disable folding by default
 set nodigraph " Disable digraph, better use abbrev
 set hidden
 
 " TAB
 set tabstop=4
 set noexpandtab
-"set autoindent		" Auto-indent new lines
 set noautoindent
+set nosmartindent
+set nocindent
 set shiftwidth=4	" Number of auto-indent spaces
-set smartindent		" Enable smart-indent
 set smarttab		" Enable smart-tabs
 set softtabstop=4	" Number of spaces per Tab
 set wildmenu
@@ -88,9 +87,9 @@ set undodir=$VIMFILES/undo
 set undolevels=1000	" Number of undo levels
 
 " swap files
-"set noswapfile
-set directory=$VIMFILES/swap
-set updatecount=100
+set noswapfile
+"set directory=$VIMFILES/swap
+"set updatecount=100
 
 " other files
 set viminfo='100,n$VIMFILES/viminfo
@@ -134,7 +133,7 @@ if has("gui_running")
 	" or use set lines, set columns in ~/.vimrc
 	colorscheme onedark
 	if hostname() == "quicksand64"
-		set gfn=Iosevka\ Fixed\ Semi-Bold\ Expanded\ 14
+		set gfn=Iosevka\ Fixed\ Medium\ 14
 	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
@@ -160,6 +159,11 @@ set noshowcmd
 set laststatus=2
 set lazyredraw
 set backspace=indent,eol,start
+set noautoindent
+set nosmartindent
+set cindent
+set cinkeys-=0}
+
 " -----------------------------------
 
 " Markdown files
@@ -179,6 +183,9 @@ au FileType qf setlocal nonumber
 
 " enable spell on simple docs
 autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el wrap
+
+" all
+au BufRead,BufNewFile * setlocal noautoindent nosmartindent cindent cinkeys-=-0}
 
 " ----------------------------------------------------------------------
 " stuff to ignore when tab completing
@@ -207,4 +214,5 @@ endif
 
 "inoremap <A-SPACE> <SPACE>
 "noremap <A-SPACE> <SPACE>
+
 
