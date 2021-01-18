@@ -57,6 +57,7 @@ set wrap			" Wrap lines
 set textwidth=80	" Line wrap (number of cols)
 set nospell
 set spelllang=en,el	" Enable spell-checking
+set shell=/bin/bash
 
 set hlsearch		" Highlight all search results
 set smartcase		" Enable smart-case search
@@ -95,11 +96,18 @@ set noswapfile
 set viminfo='100,n$VIMFILES/viminfo
 
 " plugins
-syntax on
 filetype on
+filetype indent off
 filetype plugin on
+syntax on
 
-set shell=/bin/bash
+" highlight white-spaces (color = SpecialKey)
+set listchars=tab:»·,trail:·
+au OptionSet number :if v:option_new | set showbreak= |
+                   \ else | set showbreak=↪ |
+                   \ endif
+set list
+"set nolist
 
 " -----------------------------------
 " extra packages
@@ -108,6 +116,7 @@ runtime ftplugin/man.vim
 packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
+"packadd indentLine
 
 if has("nvim")
 	packadd bclose.vim
@@ -214,5 +223,4 @@ endif
 
 "inoremap <A-SPACE> <SPACE>
 "noremap <A-SPACE> <SPACE>
-
 

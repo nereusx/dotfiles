@@ -78,7 +78,8 @@ list="$list https://github.com/rbgrouleff/bclose.vim"
 list="$list https://github.com/skywind3000/vim-quickui"
 list="$list https://github.com/ptzz/lf.vim"
 #list="$list https://github.com/tomtom/tcomment_vim"
-
+#list="$list https://github.com/Yggdroot/indentLine.git"
+ 
 getrepo $list
 
 echo "=== ndc stuff ==="
