@@ -20,6 +20,10 @@ getrepo() {
 #
 vid=1
 
+case "$1" in
+-c)	rm -rf ~/.vim/pack;;
+esac
+
 [ ! -d ~/.vim/pack/downloads/opt ] && mkdir -p ~/.vim/pack/downloads/opt
 cd ~/.vim/pack/downloads/opt || exit 1
 
