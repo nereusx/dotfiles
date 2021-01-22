@@ -4,7 +4,7 @@
 #	Nicholas Christopoulos <mailto:nereus@freemail.gr>
 
 # if global new-style configuration exists; read it
-[ -r /etc/tcsh/tcshrc ] && source /etc/tcsh/tcshrc
+#[ -r /etc/tcsh/tcshrc ] && source /etc/tcsh/tcshrc
 
 # (non-)interactive absolute values
 set parseoctal

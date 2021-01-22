@@ -8,8 +8,8 @@ srv-x230)		S="SV";;
 void-t440s)		S="T4";;
 esac
 
-# create default layout
-tmux new-session -d -s $S 
+# create default layout (-d -s)
+tmux new-session -A -d -s $S 
 tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
 tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
 #tmux new-window -n "root" 'sudo su -c "cd ; $SHELL"'
