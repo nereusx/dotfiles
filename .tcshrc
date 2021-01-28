@@ -73,7 +73,7 @@ endif
 #
 setenv BACKUPDIR "$HOME/.backup"
 # setup several local directories
-set list = ( $BACKUPDIR $BACKUPDIR/text $BACKUPDIR/saves $HOME/.bin $HOME/.help $HOME/.misc )
+set list = ( $BACKUPDIR $BACKUPDIR/text $HOME/.bin $HOME/.help $HOME/.misc )
 foreach e ( $list )
 	if ( ! -e $e ) then
 		mkdir -p $e
@@ -210,15 +210,17 @@ history -L
 switch ( $PICKER )
 case fzy:
 	alias hc 'set _=`history -hr | fzy` && if ( "$_" != "hc" ) eval "$_"'
-	bindkey -c '[5~' hc
 	breaksw
 case pick:
 	alias hc 'set _=`history -h | pick -S` && if ( "$_" != "hc" ) eval "$_"'
-	bindkey -c '[5~' hc
+	breaksw
+case smenu:
+	alias hc 'set _=`history -hr | smenu -l` && if ( "$_" != "hc" ) eval "$_"'
 	breaksw
 default:
-	bindkey -c '[5~' hist
+	alias hc hist
 endsw
+bindkey -c '[5~' hc
 
 #
 #	tcsh's directory stuff
@@ -248,21 +250,15 @@ alias save-last-cmd 'history -hr | head -n 2 | tail -n 1 >> ~/.scrap'
 alias gg--	'set _=`dirs | $PICKER | cut -f1`; [ -n "$_" ] && cd =$_'
 alias gg++	'set _=`ls -d1 */ --color=never | $PICKER` && cd "$_"'
 alias gg	'set _=\!*; [ -z "$_" -o "$_" = "++" ] && gg++ || [ "$_" = "-" ] && cd - || [ "$_" = "--" ] && gg-- || pushd "$_"'
-if ( $PICKER != "none" ) then
-	# change dir with lf (binds to ctrl+/)
-	if ( ! -X lf ) then
-		bindkey -c '' gg++
-	endif
-	# change dir from history; menu (binds to page-down)
-	bindkey -c '[6~' gg--
-endif
+# change dir from history; menu (binds to page-down)
+bindkey -c '[6~' gg--
 
 #
 #	tcsh's completion
 #
 #	complete [command [word/pattern/list[:select]/[[suffix]/] ...]] (+)
 set hosts = `cat /etc/hosts | awk '/^[1-9]+/ {if (substr($2,1,5) != "local") print $2}'`
-set hosts = ( $hosts github.com gitlab.com sourceforge.net freemail.gr yandex.com yandex.ru duckduckgo.com )
+set hosts = ( $hosts github.com gitlab.com sourceforge.net freemail.gr yandex.com duckduckgo.com )
 
 if ( -e /etc/complete.tcsh ) then
 	source /etc/complete.tcsh
@@ -325,9 +321,11 @@ bindkey 'v'	yank
 # shift+f5; alt+p (tcsh's default)
 bindkey '[15;2~' history-search-backward
 bindkey 'p' history-search-backward
+bindkey '' history-search-backward
 # f5; alt+n (tcsh's default)
 bindkey '[15~' history-search-forward
 bindkey 'n' history-search-forward
+bindkey 'f' history-search-forward
 
 # keypad
 bindkey "\033Om" kill-region
@@ -374,7 +372,7 @@ setenv GRDICTIONARIES	"en,el"
 setenv GRDICTIONARY		"/usr/share/aspell"
 
 # select default editor
-set list = ( jed nano joe vim vi emacs ed )
+set list = ( jed nano joe nvim vim vi emacs ed )
 foreach e ( $list )
 	if ( -X $e ) then
 		setenv EDITOR $e
@@ -394,18 +392,9 @@ foreach e ( $list )
 end
 alias hexedit "$HEXEDITOR"
 
-# default hex dumper
-if ( ! -X hex ) then
-	if ( -X hexdump ) then
-		alias hex 'hexdump -C'
-	else
-		alias hex 'od -t x1'
-	endif
-endif
-
 # select BRIEF editor
 alias b "$EDITOR"
-set list = ( jed gr nano )
+set list = ( jed gr nvim nano )
 foreach e ( $list )
 	if ( -X $e ) then
 		alias b "$e"
@@ -528,7 +517,8 @@ alias diff			'diff  --color=auto'
 
 # sudo
 if ( $USER != 'root' ) then
-	set list = ( htop iotop fdisk cfdsik gparted reboot halt poweroff pmsleep slackpkg apt dpkg apt-get )
+	set list = ( htop iotop fdisk cfdsik gparted reboot halt \
+		poweroff pmsleep slackpkg apt dpkg apt-get app mount umount )
 	foreach e ( $list )
 		if ( -X $e ) then
 			alias $e "sudo $e"
@@ -647,16 +637,6 @@ if ( $?loginsh ) then
 		echo -n '\033='
 	endif
 	
-	# ssh agent
-#	if ( -X ssh-agent ) then
-#		pgrep ssh-agent -u $USER > /dev/null || set loadssh
-#		if ( $?loadssh ) then
-#			eval `ssh-agent`
-##			ssh-add
-#			unset loadssh
-#		endif
-#	endif
-
 	# welcome screen
 	echo "Welcome to tenex c-shell"
 	echo
