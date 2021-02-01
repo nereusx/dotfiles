@@ -138,6 +138,9 @@ let g:nnn#replace_netrw = 1
 let g:nnn#set_default_mappings = 0
 let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
 packadd nnn.vim
+command! -bar -nargs=? -complete=dir NP call nnn#pick(<f-args>)
+command! -bar -nargs=? -complete=dir NNN call nnn#pick(<f-args>)
+inoremap <silent> <C-A-E> <C-O>:call nnn#pick()<CR>
 
 " === AirLine
 "packadd vim-airline
