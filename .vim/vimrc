@@ -1,5 +1,9 @@
 " .vimrc
 
+" disable netrw
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1.3
+
 " === globals
 let $VIMDIR=$HOME.'/.vim'
 if getenv('BACKUPDIR') == v:null
@@ -116,19 +120,25 @@ runtime ftplugin/man.vim
 packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
-"packadd indentLine
 
 if has("nvim")
 	packadd bclose.vim
 endif
 
-" rq: bclose
-let g:lf_map_keys = 0
-let g:lf_replace_netrw = 1		" open lf when vim open a directory
-" open file with 'l' or right-arrow instead of 'e'; otherwise it opens in $EDITOR
-let g:lf_command_override = 'lf -command "set hidden"'
-packadd lf.vim
+" === LF
+"" rq: bclose
+"let g:lf_map_keys = 0
+"let g:lf_replace_netrw = 1		" open lf when vim open a directory
+"" open file with 'l' or right-arrow instead of 'e'; otherwise it opens in $EDITOR
+"let g:lf_command_override = 'lf -command "set hidden"'
+"packadd lf.vim
 
+" === NNN
+let g:nnn#set_default_mappings = 0
+let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
+packadd nnn.vim
+
+" === AirLine
 "packadd vim-airline
 "let g:airline#extensions#obsession#enabled = 1
 "packadd taglist
@@ -142,7 +152,8 @@ if has("gui_running")
 	" or use set lines, set columns in ~/.vimrc
 	colorscheme onedark
 	if hostname() == "quicksand64"
-		set gfn=Iosevka\ Fixed\ Medium\ 14
+"		set gfn=Iosevka\ Fixed\ Medium\ 14
+		set gfn=D2Coding\ Bold\ 14
 	elseif hostname() == "void-t440s"
 		set gfn=Iosevka\ Fixed\ Semi-Bold\ 11
 	else
@@ -187,14 +198,22 @@ au BufRead,BufNewFile *.sqlite setlocal filetype=sql
 au BufRead,BufNewFile *.h setlocal filetype=c
 " set spell on text files
 au BufRead,BufNewFile *.txt,*.log,*.doc,*.ini,*.conf,*.cnf setlocal filetype=text spell
-" quickfix
-au FileType qf setlocal nonumber
 
-" enable spell on simple docs
-autocmd FileType markdown,text,pandoc,tex setlocal spell spelllang=en,el wrap
+autocmd FileType markdown,text,pandoc,tex,nroff setlocal spell spelllang=en,el wrap
+
+" help and explorer in normal mode
+autocmd FileType help,netrw,dirvish :let w:noins=1 | setlocal noinsertmode
 
 " all
-au BufRead,BufNewFile * setlocal noautoindent nosmartindent cindent cinkeys-=-0}
+autocmd BufRead,BufNewFile * setlocal noautoindent nosmartindent cindent cinkeys-=-0}
+
+" remember insert mode per window
+autocmd WinEnter *	if exists('w:noins') |
+						\ if w:noins | setlocal noinsertmode | else | setlocal insertmode | endif |
+					\ else |
+						\ setlocal insertmode |
+					\ endif
+autocmd WinLeave *	if &insertmode | let w:noins=0 | else | let w:noins=1 | endif
 
 " ----------------------------------------------------------------------
 " stuff to ignore when tab completing

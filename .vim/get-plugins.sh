@@ -70,7 +70,7 @@ list="$list https://github.com/itchyny/lightline.vim"
 #list="$list https://github.com/junegunn/fzf.vim"
 #list="$list https://github.com/thaerkh/vim-workspace"
 #list="$list https://github.com/farmergreg/vim-lastplace"
-#list="$list https://github.com/mcchrish/nnn.vim"
+list="$list https://github.com/mcchrish/nnn.vim"
 #list="$list https://github.com/voldikss/vim-floaterm"
 #list="$list https://github.com/tpope/vim-obsession"
 #list="$list https://github.com/arcticicestudio/nord-vim"
@@ -83,7 +83,8 @@ list="$list https://github.com/skywind3000/vim-quickui"
 list="$list https://github.com/ptzz/lf.vim"
 #list="$list https://github.com/tomtom/tcomment_vim"
 #list="$list https://github.com/Yggdroot/indentLine.git"
- 
+#list="$list https://github.com/justinmk/vim-dirvish"
+
 getrepo $list
 
 echo "=== ndc stuff ==="
