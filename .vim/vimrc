@@ -121,6 +121,10 @@ packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
 
+nmap <unique> <A-H> <plug>HelpWord
+cmap <unique> <A-H> <c-\><c-n><plug>HelpWord
+packadd vim-help
+
 if has("nvim")
 	packadd bclose.vim
 endif

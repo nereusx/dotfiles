@@ -84,6 +84,7 @@ list="$list https://github.com/ptzz/lf.vim"
 #list="$list https://github.com/tomtom/tcomment_vim"
 #list="$list https://github.com/Yggdroot/indentLine.git"
 #list="$list https://github.com/justinmk/vim-dirvish"
+list="$list https://github.com/dahu/vim-help"
 
 getrepo $list
 
