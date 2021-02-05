@@ -165,6 +165,12 @@ if ( -X fff ) then
 #	bindkey -c '' fffcd
 endif
 
+if ( -X nnn ) then
+	setenv NNN_COLORS '#0a1b2c3d;1234'
+	setenv NNN_TMPFILE ~/.config/nnn/.lastd
+	alias ncd 'nnn; [ -r $NNN_TMPFILE ] && source $NNN_TMPFILE; rm -f $NNN_TMPFILE'
+endif
+
 #
 #	tcsh's prompt
 #	man console_codes
@@ -423,9 +429,9 @@ setenv PAGER "less"
 setenv MANPAGER "$PAGER"
 if ( -X bat ) then
 	setenv BAT_PAGER 'less'
-	setenv PAGER 'bat --paging=always --tabs=4'
+	setenv PAGER 'bat --paging=always --tabs=4 --number'
 	# list code
-	alias list 'bat --paging=always --tabs=4'
+	alias list 'bat --paging=always --tabs=4 --number'
 else
 	# list code: just use something with syntax highlight
 	if ( -X source-highlight-esc.sh ) then
