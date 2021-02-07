@@ -121,6 +121,11 @@ packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
 
+" SoftPencil (or PencilSoft) - initialize pencil with soft line wrap mode
+" HardPencil (or PencilHard) - initialize pencil with hard line break mode (and Vim’s autoformat)
+"packadd vim-markdown
+"packadd vim-pencil
+
 nmap <unique> <A-H> <plug>HelpWord
 cmap <unique> <A-H> <c-\><c-n><plug>HelpWord
 packadd vim-help
