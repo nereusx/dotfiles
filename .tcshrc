@@ -427,7 +427,9 @@ setenv LESS_TERMCAP_mh	'[2m'
 #	setenv PAGER         'most'
 setenv PAGER "less"
 setenv MANPAGER "$PAGER"
-if ( -X bat ) then
+if ( -X lesspipe.sh ) then
+	setenv LESSOPEN "|lesspipe.sh %s"
+else if ( -X bat ) then
 	setenv BAT_PAGER 'less'
 	setenv PAGER 'bat --paging=always --tabs=4 --number'
 	# list code
