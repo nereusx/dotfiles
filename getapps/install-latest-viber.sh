@@ -6,7 +6,7 @@ if ! command -v alien >/dev/null 2>&1 ; then
 fi
 
 ###
-cd /usr/src
+#cd /usr/src
 
 ### install openssl-1.0
 # wget https://www.openssl.org/source/openssl-1.0.2s.tar.gz
@@ -17,7 +17,10 @@ cd /usr/src
 # make install
 # cd -
 
+cd /tmp
+
 ### install viber
+rm -f viber.deb viber-*.tgz
 
 echo '*** downloading...'
 wget https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb
@@ -32,7 +35,7 @@ case $yn in
 	break;;
 esac
 
-rm viber.deb viber-*.tgz
+rm -f viber.deb viber-*.tgz
 
 ### run it
 # /opt/viber/Viber &
