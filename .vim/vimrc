@@ -113,6 +113,9 @@ au OptionSet number :if v:option_new | set showbreak= |
 set list
 "set nolist
 
+" disable keys
+imap <MiddleMouse> <Nop>
+
 " -----------------------------------
 " extra packages
 

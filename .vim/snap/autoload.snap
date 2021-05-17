@@ -1,0 +1,25 @@
+# https://github.com/quintik/snap.vim # 
+
+# time #
+snipexpr time {
+	strftime('%H:%M')
+	}
+
+# unix time #
+snipexpr time {
+	strftime('%s')
+	}
+
+# date (locale) #
+snipexpr date {
+	strftime('%c')
+	}
+
+# date (RFC822) #
+snip rdate {<C-O>:r ! date -R<CR><BS>}
+
+# short date - yyyy-mm-dd #
+snipexpr sdate {
+	strftime('%F')
+	}
+
