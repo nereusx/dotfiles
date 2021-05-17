@@ -134,27 +134,47 @@ if has("nvim")
 	packadd bclose.vim
 endif
 
+" === snip
+if !has("nvim")
+	let g:snap_dir = $VIMDIR.'/snap'
+	let g:snap_prefix = '_'
+	packadd snap.vim
+endif
+
 " === LF
 "" rq: bclose
 "let g:lf_map_keys = 0
-"let g:lf_replace_netrw = 1		" open lf when vim open a directory
+let g:lf_replace_netrw = 1		" open lf when vim open a directory
 "" open file with 'l' or right-arrow instead of 'e'; otherwise it opens in $EDITOR
 "let g:lf_command_override = 'lf -command "set hidden"'
-"packadd lf.vim
+packadd lf.vim
+inoremap <silent> <F12>e <C-O>:Lf<CR>
 
 " === NNN
-let g:nnn#replace_netrw = 1
-let g:nnn#set_default_mappings = 0
-let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
-packadd nnn.vim
-command! -bar -nargs=? -complete=dir NP call nnn#pick(<f-args>)
-command! -bar -nargs=? -complete=dir NNN call nnn#pick(<f-args>)
-inoremap <silent> <C-A-E> <C-O>:call nnn#pick()<CR>
+"let g:nnn#replace_netrw = 1
+"let g:nnn#set_default_mappings = 0
+"let g:nnn#layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Debug' } }
+"packadd nnn.vim
+"command! -bar -nargs=? -complete=dir NP call nnn#pick(<f-args>)
+"command! -bar -nargs=? -complete=dir NNN call nnn#pick(<f-args>)
+"inoremap <silent> <C-A-E> <C-O>:call nnn#pick()<CR>
 
 " === AirLine
 "packadd vim-airline
 "let g:airline#extensions#obsession#enabled = 1
 "packadd taglist
+
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("."), l:modeline)
+endfunction
+command Modeline :call AppendModeline()
+inoremap <silent> <F12>m <C-O>:Modeline<CR>
 
 " -----------------------------------
 " colors
@@ -255,4 +275,5 @@ endif
 
 "inoremap <A-SPACE> <SPACE>
 "noremap <A-SPACE> <SPACE>
+inoremap <silent> <A-E> <C-O>:Lf<CR>
 

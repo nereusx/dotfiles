@@ -1,0 +1,8 @@
+snipexpr date {
+strftime('%H:%M')
+}
+
+snip for {
+for in ; do<CR>
+done<CR><UP>
+}

@@ -80,13 +80,15 @@ list="$list https://github.com/mcchrish/nnn.vim"
 #list="$list https://github.com/francoiscabrol/ranger.vim"
 list="$list https://github.com/rbgrouleff/bclose.vim"
 list="$list https://github.com/skywind3000/vim-quickui"
-list="$list https://github.com/ptzz/lf.vim"
+#list="$list https://github.com/ptzz/lf.vim"
+list="$list https://github.com/idanko/lf.vim"
 #list="$list https://github.com/tomtom/tcomment_vim"
 #list="$list https://github.com/Yggdroot/indentLine.git"
 #list="$list https://github.com/justinmk/vim-dirvish"
 list="$list https://github.com/dahu/vim-help"
 #list="$list https://github.com/reedes/vim-pencil"
 #list="$list https://github.com/tpope/vim-markdown"
+list="$list https://github.com/quintik/snap.vim"
 
 getrepo $list
 
