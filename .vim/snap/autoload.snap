@@ -16,7 +16,9 @@ snipexpr date {
 	}
 
 # date (RFC822) #
-snip rdate {<C-O>:r ! date -R<CR><BS>}
+snipexpr rdate {
+	trim(system("date -R"))
+	}
 
 # short date - yyyy-mm-dd #
 snipexpr sdate {
