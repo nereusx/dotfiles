@@ -146,12 +146,13 @@ endif
 
 " === LF
 "" rq: bclose
+packadd vim-floaterm
 "let g:lf_map_keys = 0
 let g:lf_replace_netrw = 1		" open lf when vim open a directory
 "" open file with 'l' or right-arrow instead of 'e'; otherwise it opens in $EDITOR
 "let g:lf_command_override = 'lf -command "set hidden"'
 packadd lf.vim
-inoremap <silent> <F12>e <C-O>:Lf<CR>
+"inoremap <silent> <F12>e <C-O>:Lf<CR>
 
 " === NNN
 "let g:nnn#replace_netrw = 1
@@ -177,7 +178,7 @@ function! AppendModeline()
   call append(line("."), l:modeline)
 endfunction
 command Modeline :call AppendModeline()
-inoremap <silent> <F12>m <C-O>:Modeline<CR>
+"inoremap <silent> <F12>m <C-O>:Modeline<CR>
 
 " -----------------------------------
 " colors
@@ -202,9 +203,15 @@ else
 	colorscheme cbrief
 endif
 
-" -----------------------------------
-
+" --- CBRIEF ------------------------
 packadd vim-cbrief
+" UMENU
+call umenu#additem("&l	LF", "Lf")
+call umenu#additem("&m	append modeline", "call AppendModeline()")
+" Ctrl+/
+inoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
+nnoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
+"vnoremap <silent> <C-_> :call umenu#show()<CR>
 
 " -----------------------------------
 " Display who change it:

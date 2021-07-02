@@ -600,6 +600,7 @@ endif
 # GIT
 if ( -X git ) then
 	alias git-q 	'set msg=''\!*''; if ( "$msg" == "" ) set msg="quick and dirty fix"; git add .; git commit -m "$msg"; git push'
+	alias git-m		'git commit --amend -m "\!*"'
 	alias git-co 	'git checkout'
 	alias git-bra	'git branch --no-color --list | cut -c 3-'
 	alias git-select-branch 'git switch `git-bra | $PICKER`'
