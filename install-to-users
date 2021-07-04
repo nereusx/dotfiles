@@ -26,5 +26,3 @@ foreach f ( $* )
 	end
 end
 
-
-
