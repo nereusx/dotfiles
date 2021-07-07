@@ -203,7 +203,11 @@ else
 	if ( system("pgrep -x -u $USER alacritty") )
 		colorscheme desert
 	else
-		colorscheme cbrief
+		if ( system("pgrep -x alacritty") && $USER == "root" )
+			colorscheme desert
+		else
+			colorscheme cbrief
+		endif
 	endif
 endif
 

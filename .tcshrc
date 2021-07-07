@@ -664,6 +664,8 @@ if ( -x /usr/src/dotfiles/dist/$DISTRO/$DISTRO ) then
 	alias app "sudo /usr/src/dotfiles/dist/$DISTRO/$DISTRO"
 else if ( -x /usr/src/dotfiles/dist/$DISTRO/app ) then
 	alias app "sudo /usr/src/dotfiles/dist/$DISTRO/app"
+else
+	alias app "sudo /usr/local/bin/void"
 endif
 
 #

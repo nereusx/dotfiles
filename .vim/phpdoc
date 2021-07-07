@@ -1,0 +1,4 @@
+#!/bin/sh
+url="https://www.php.net/manual/en/function.$1.php"
+#wget $url -O - | grep -v $1
+w3m $url
