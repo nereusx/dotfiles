@@ -200,14 +200,10 @@ else
 	if has("nvim")
 		set gfn="Cousine Bold:h14"
 	endif
-	if ( system("pgrep -x -u $USER alacritty") )
+	if ( system("pgrep -x alacritty") )
 		colorscheme desert
 	else
-		if ( system("pgrep -x alacritty") && $USER == "root" )
-			colorscheme desert
-		else
-			colorscheme cbrief
-		endif
+		colorscheme cbrief
 	endif
 endif
 
