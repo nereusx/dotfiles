@@ -61,7 +61,7 @@ set wrap			" Wrap lines
 set textwidth=80	" Line wrap (number of cols)
 set nospell
 set spelllang=en,el	" Enable spell-checking
-set shell=/bin/yash
+set shell=/bin/ash
 
 set hlsearch		" Highlight all search results
 set smartcase		" Enable smart-case search
@@ -98,6 +98,9 @@ set noswapfile
 
 " other files
 set viminfo='100,n$VIMFILES/viminfo
+
+"
+set background=dark
 
 " plugins
 filetype on
