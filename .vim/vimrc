@@ -61,7 +61,7 @@ set wrap			" Wrap lines
 set textwidth=80	" Line wrap (number of cols)
 set nospell
 set spelllang=en,el	" Enable spell-checking
-set shell=/bin/bash
+set shell=/bin/yash
 
 set hlsearch		" Highlight all search results
 set smartcase		" Enable smart-case search
@@ -210,8 +210,9 @@ endif
 " --- CBRIEF ------------------------
 packadd vim-cbrief
 " UMENU
-call umenu#additem("&l	LF", "Lf")
-call umenu#additem("&m	append modeline", "call AppendModeline()")
+call umenu#addfiles('&t	Templates', "$TMPL", '*', 'r %f')
+call umenu#additem ('&l	LF', 'Lf')
+call umenu#additem ('&m	Append Modeline', 'call AppendModeline()')
 " Ctrl+/
 inoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
 nnoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
