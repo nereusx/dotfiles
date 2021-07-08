@@ -217,6 +217,8 @@ packadd vim-cbrief
 call umenu#addfiles('&t	Templates', "$TMPL", '*', 'r %f')
 call umenu#additem ('&l	LF', 'Lf')
 call umenu#additem ('&m	Append Modeline', 'call AppendModeline()')
+let my_abbrev_file=$VIMDIR.'/abbrev.vim'
+call umenu#additem ('&a	Abbrev file', 'e '.my_abbrev_file)
 " Ctrl+/
 inoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
 nnoremap <silent> <C-_> <C-O>:call umenu#show()<CR>
@@ -287,7 +289,7 @@ set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 
 " load abbrev
-let my_abbrev_file=$VIMDIR.'/abbrev.vim'
+"let my_abbrev_file=$VIMDIR.'/abbrev.vim'
 if filereadable(my_abbrev_file)
 	execute 'source '.my_abbrev_file
 endif
