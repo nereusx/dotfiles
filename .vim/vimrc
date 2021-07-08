@@ -120,6 +120,7 @@ imap <MiddleMouse> <Nop>
 " extra packages
 
 runtime ftplugin/man.vim
+let g:quickui_border_style = 2
 packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
