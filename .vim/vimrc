@@ -127,6 +127,7 @@ let g:quickui_border_style = 2
 packadd vim-quickui
 packadd lightline.vim
 packadd vim-polyglot
+packadd ctrlp.vim
 
 " SoftPencil (or PencilSoft) - initialize pencil with soft line wrap mode
 " HardPencil (or PencilHard) - initialize pencil with hard line break mode (and Vim’s autoformat)
